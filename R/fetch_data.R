@@ -48,6 +48,36 @@ GetIndiaDailyData <- function(url = "https://data.covid19bharat.org/csv/latest/s
   return(statewise_cases)
 }
 
+#' Get daily cases for India for a given status type
+#' @param url URL to fetch data from
+#' @param status One of "Confirmed", "Recovered", or "Deceased"
+#' @returns A data frame containing daily cases for each state
+
+#' @importFrom magrittr %>%
+#' @importFrom dplyr arrange funs group_by summarise_all
+#
+#' @export
+GetIndiaDailyCasesCumulative <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv", status = "Confirmed") {
+    statewise_cases <- GetIndiaDailyData(url = url)
+    select_status <- statewise_cases[statewise_cases$Status == status, ]
+    select_status$MonthYear <- GetMonthYear(select_status$Date_YMD)
+    state_names <- GetIndianStates()
+
+    select_status_subset <- select_status[, c("MonthYear", as.character(state_names))]
+
+    for (col in as.character(state_names)) {
+        select_status_subset[, col] <- as.numeric(select_status_subset[, col])
+    }
+    select_status_subset_monthwise <- select_status_subset %>%
+        group_by(MonthYear) %>%
+        summarise_all(sum, na.rm = T) %>%
+        arrange(MonthYear)
+    select_status_subset_monthwise_cumsum <- select_status_subset_monthwise
+    for (col in state_names) {
+        select_status_subset_monthwise_cumsum[, col] <- cumsum(select_status_subset_monthwise[, col])
+    }
+    return(select_status_subset_monthwise_cumsum)
+}
 
 #' Get daily confirmed cases for India
 #' @param url URL to fetch data from
@@ -57,26 +87,22 @@ GetIndiaDailyData <- function(url = "https://data.covid19bharat.org/csv/latest/s
 #' @importFrom dplyr arrange funs group_by summarise_all
 #
 #' @export
-GetIndiaConfirmedCases <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
-  statewise_cases <- GetIndiaDailyData(url = url)
-  confirmed <- statewise_cases[statewise_cases$Status == "Confirmed", ]
-  confirmed$MonthYear <- GetMonthYear(confirmed, datecol = "Date_YMD")
-  state_names <- GetIndianStates()
+GetIndiaConfirmedCasesCumulative <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
+  statewise_cases <- GetIndiaDailyCases(url = url)
+  return(statewise_cases)
+}
 
-  confirmed_subset <- confirmed[, c("MonthYear", as.character(state_names))]
+#' Get daily deceased cases for India
+#' @param url URL to fetch data from
+#' @returns A data frame containing daily cases for each state
 
-  for (col in as.character(state_names)) {
-    confirmed_subset[, col] <- as.numeric(confirmed_subset[, col])
-  }
-  confirmed_subset_monthwise <- confirmed_subset %>%
-    group_by(MonthYear) %>%
-    summarise_all(sum, na.rm = T) %>%
-    arrange(MonthYear)
-  confirmed_subset_monthwise_cumsum <- confirmed_subset_monthwise
-  for (col in state_names) {
-    confirmed_subset_monthwise_cumsum[, col] <- cumsum(confirmed_subset_monthwise[, col])
-  }
-  return(confirmed_subset_monthwise_cumsum)
+#' @importFrom magrittr %>%
+#' @importFrom dplyr arrange funs group_by summarise_all
+#
+#' @export
+GetIndiaDeceasedCasesCumulative <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
+    statewise_cases <- GetIndiaDailyCases(url = url, status = "Deceased")
+    return(statewise_cases)
 }
 
 #' Get hospitalization data for India
