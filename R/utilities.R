@@ -159,3 +159,22 @@ CombineCases <- function(cases_sequenced, confirmed_long) {
   cases_and_shared["percent_sequenced_collected"] <- 100 * cases_and_shared$Sequenced / cases_and_shared$Confirmed
   return(cases_and_shared)
 }
+
+
+#' Filter GISAID India Metadata for India
+#' @param gisaid_metadata_all A dataframe with all GISAID metadata
+#' @returns A dataframe with only Indian entries in Human and where the date is known
+#' @export
+#' @importFrom magrittr %>%
+#' @importFrom dplyr bind_rows funs group_by summarise_all
+FilterGISAIDIndia <- function(gisaid_metadata_all) {
+  gisaid_india_all <- gisaid_metadata_all %>%
+    filter(Country == "India") %>%
+    filter(Host == "Human")
+  india_states <- GetIndianStates()
+  gisaid_india_all$State <- CleanIndianStates(gisaid_india_all$State)
+  gisaid_india_all <- gisaid_india_all %>% filter(State %in% india_states)
+  gisaid_india_all <- gisaid_india_all %>%
+    arrange(State, MonthYearCollected)
+  return(gisaid_india_all)
+}
