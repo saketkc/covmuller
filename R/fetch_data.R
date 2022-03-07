@@ -119,19 +119,19 @@ GetIndiaHospitalization <- function(url = "") {
 
 #' @importFrom magrittr %>%
 #' @importFrom dplyr arrange funs group_by summarise_all
-#
+#' @importFrom reshape2 melt
 #' @export
 GetIndiaMonthlyCasesLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
-  statewise_cases <- GetIndiaDailyCases(url = url, status = "Deceased")
+  statewise_cases <- GetIndiaDailyData(url = url)
   confirmed <- statewise_cases[statewise_cases$Status == "Confirmed", ]
-
-  indian_states <- GetIndianStates()
-  confirmed_subset <- confirmed[, c("MonthYear", as.character(indian_states))]
+  confirmed$MonthYear <- GetMonthYear(confirmed$Date_YMD)
+  state_names <- GetIndianStates()
+  confirmed_subset <- confirmed[, c("MonthYear", as.character(state_names))]
   confirmed_subset_monthwise <- confirmed_subset %>%
     group_by(MonthYear) %>%
     summarise_all(funs(sum)) %>%
     arrange(MonthYear)
-  confirmed_subset_monthwise_long <- melt(confirmed_subset_monthwise, id.vars = "MonthYear", varnames = c("State")) %>%
+  confirmed_subset_monthwise_long <- melt(data = confirmed_subset_monthwise, id.vars = "MonthYear", varnames = c("State")) %>%
     rename(State = variable)
   confirmed_subset_monthwise_long$State <- as.character(confirmed_subset_monthwise_long$State)
   confirmed_subset_monthwise_long$type <- "Confirmed"

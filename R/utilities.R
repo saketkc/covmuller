@@ -88,6 +88,45 @@ SanitizeColumn <- function(col) {
   return(col)
 }
 
+#' Clean Indian States
+#' @param state A vector of state names
+#' @returns A vector of cleaned state names
+#' @importFrom stringr str_squish str_to_title
+#' @importFrom dplyr recode
+#' @export
+CleanIndianStates <- function(states) {
+  states <- str_squish(states)
+  states <- str_to_title(states)
+  states <- recode(
+    .x = states,
+    `Maharastra` = "Maharashtra",
+    `Andhra pradesh` = "Andhra Pradesh", Pondicherry = "Puducherry",
+    `Jammu and Kashmīr` = "Jammu and Kashmir", `Andaman & Nicobar` = "Andaman & Nicobar",
+    Chhatisgarh = "Chhattisgarh", Jaipur = "Rajasthan", `Dadra and Nagar Haveli` = "Dadra and Nagar Haveli and Daman and Diu",
+    Harayana = "Haryana", Jammu = "Jammu and Kashmir", `Jammu and kashmir` = "Jammu and Kashmir",
+    `Jammu & Kashmir` = "Jammu and Kashmir", Maharasthra = "Maharashtra",
+    `Andaman and Nicobar Islands` = "Andaman & Nicobar",
+    `Andaman And Nicobar Islands` = "Andaman & Nicobar",
+    `Dadra And Nagar Haveli` = "Dadra and Nagar Haveli and Daman and Diu",
+    `Dadra and Nagar Haveli and Daman and Diu` = "Dadra and Nagar Haveli and Daman and Diu",
+    `Dadra And Nagar Haveli And Daman And Diu` = "Dadra and Nagar Haveli and Daman and Diu",
+    `Dadra and Nagar Haveli and Daman and Diui` = "Dadra and Nagar Haveli and Daman and Diu",
+    Tamilnadu = "Tamil Nadu",
+    Maharshtra = "Maharashtra",
+    `Jammu & kashmīr` = "Jammu and Kashmir",
+    `Gujrat` = "Gujarat",
+    `Gujart` = "Gujarat",
+    `Chandighar` = "Chandigarh",
+    `Jammu And Kashmir` = "Jammu and Kashmir",
+    `Jammu And Kashmīr` = "Jammu and Kashmir",
+    `New Delhi` = "Delhi"
+  )
+  states[states == "Undefined"] <- "Unknown"
+  states[is.na(states)] <- "Unknown"
+  states[states == ""] <- "Unknown"
+  return(states)
+}
+
 
 #' Create a combined dataframe of sequenced cases and confirmed cases
 #' @param cases_sequenced A long dataframe of per state sequenced cases
