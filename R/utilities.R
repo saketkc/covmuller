@@ -89,4 +89,34 @@ SanitizeColumn <- function(col) {
 }
 
 
+#' Create a combined dataframe of sequenced cases and confirmed cases
+#' @param cases_sequenced A long dataframe of per state sequenced cases
+#' @param cases_total A long dataframe of total monthly cases
 #'
+#' @returns a combined dataframe with case load and sequenced
+#' @importFrom zoo as.yearmon
+#' @importFrom magrittr %>%
+#' @importFrom dplyr bind_rows funs group_by summarise_all
+#' @importFrom tidyr spread
+#'
+#' @export
+CombineCases <- function(cases_sequenced, confirmed_long) {
+  empty_df <- expand.grid(as.yearmon(x = unique(x = as.character(confirmed_long$MonthYear))),
+    sort(unique(confirmed_long$State)),
+    0,
+    stringsAsFactors = F
+  )
+  colnames(empty_df) <- c("MonthYear", "State", "value") # , 'type')
+  empty_df <- empty_df %>% arrange(State, MonthYear)
+  total_seq <- bind_rows(empty_df, cases_sequenced) %>%
+    group_by(State, MonthYear) %>%
+    summarise_all(funs(sum))
+  total_seq$type <- "Sequenced"
+
+  cases_and_shared <- bind_rows(confirmed_long, total_seq) %>% arrange(State, MonthYear)
+  cases_and_shared <- spread(data = cases_and_shared, key = type, value = value)
+  cases_and_shared[is.na(cases_and_shared)] <- 0
+
+  cases_and_shared["percent_sequenced_collected"] <- 100 * cases_and_shared$Sequenced / cases_and_shared$Confirmed
+  return(cases_and_shared)
+}

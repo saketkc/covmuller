@@ -58,25 +58,25 @@ GetIndiaDailyData <- function(url = "https://data.covid19bharat.org/csv/latest/s
 #
 #' @export
 GetIndiaDailyCasesCumulative <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv", status = "Confirmed") {
-    statewise_cases <- GetIndiaDailyData(url = url)
-    select_status <- statewise_cases[statewise_cases$Status == status, ]
-    select_status$MonthYear <- GetMonthYear(select_status$Date_YMD)
-    state_names <- GetIndianStates()
+  statewise_cases <- GetIndiaDailyData(url = url)
+  select_status <- statewise_cases[statewise_cases$Status == status, ]
+  select_status$MonthYear <- GetMonthYear(select_status$Date_YMD)
+  state_names <- GetIndianStates()
 
-    select_status_subset <- select_status[, c("MonthYear", as.character(state_names))]
+  select_status_subset <- select_status[, c("MonthYear", as.character(state_names))]
 
-    for (col in as.character(state_names)) {
-        select_status_subset[, col] <- as.numeric(select_status_subset[, col])
-    }
-    select_status_subset_monthwise <- select_status_subset %>%
-        group_by(MonthYear) %>%
-        summarise_all(sum, na.rm = T) %>%
-        arrange(MonthYear)
-    select_status_subset_monthwise_cumsum <- select_status_subset_monthwise
-    for (col in state_names) {
-        select_status_subset_monthwise_cumsum[, col] <- cumsum(select_status_subset_monthwise[, col])
-    }
-    return(select_status_subset_monthwise_cumsum)
+  for (col in as.character(state_names)) {
+    select_status_subset[, col] <- as.numeric(select_status_subset[, col])
+  }
+  select_status_subset_monthwise <- select_status_subset %>%
+    group_by(MonthYear) %>%
+    summarise_all(sum, na.rm = T) %>%
+    arrange(MonthYear)
+  select_status_subset_monthwise_cumsum <- select_status_subset_monthwise
+  for (col in state_names) {
+    select_status_subset_monthwise_cumsum[, col] <- cumsum(select_status_subset_monthwise[, col])
+  }
+  return(select_status_subset_monthwise_cumsum)
 }
 
 #' Get daily confirmed cases for India
@@ -101,12 +101,39 @@ GetIndiaConfirmedCasesCumulative <- function(url = "https://data.covid19bharat.o
 #
 #' @export
 GetIndiaDeceasedCasesCumulative <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
-    statewise_cases <- GetIndiaDailyCases(url = url, status = "Deceased")
-    return(statewise_cases)
+  statewise_cases <- GetIndiaDailyCases(url = url, status = "Deceased")
+  return(statewise_cases)
 }
 
 #' Get hospitalization data for India
 #'
 GetIndiaHospitalization <- function(url = "") {
   return(NA)
+}
+
+
+#' Get India monthwose cases long
+#'
+#' @param url URL to fetch data from
+#' @returns A data frame containing monthly cases for each state in long form
+
+#' @importFrom magrittr %>%
+#' @importFrom dplyr arrange funs group_by summarise_all
+#
+#' @export
+GetIndiaMonthlyCasesLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
+  statewise_cases <- GetIndiaDailyCases(url = url, status = "Deceased")
+  confirmed <- statewise_cases[statewise_cases$Status == "Confirmed", ]
+
+  indian_states <- GetIndianStates()
+  confirmed_subset <- confirmed[, c("MonthYear", as.character(indian_states))]
+  confirmed_subset_monthwise <- confirmed_subset %>%
+    group_by(MonthYear) %>%
+    summarise_all(funs(sum)) %>%
+    arrange(MonthYear)
+  confirmed_subset_monthwise_long <- melt(confirmed_subset_monthwise, id.vars = "MonthYear", varnames = c("State")) %>%
+    rename(State = variable)
+  confirmed_subset_monthwise_long$State <- as.character(confirmed_subset_monthwise_long$State)
+  confirmed_subset_monthwise_long$type <- "Confirmed"
+  return(confirmed_subset_monthwise_long)
 }
