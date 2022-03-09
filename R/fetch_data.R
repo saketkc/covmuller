@@ -30,7 +30,6 @@ GetIndianStates <- function() {
   return(state_names)
 }
 
-
 #' Get daily statewise data for India
 #'
 #' The 'Status' column is one of 'Confirmed', 'Deceased' or 'Recovered'
