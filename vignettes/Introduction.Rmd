@@ -1,0 +1,47 @@
+---
+title: "Introduction to epicovr"
+output: html_notebook
+---
+
+```{r}
+suppressPackageStartupMessages({
+  library(epicovr)
+  library(ggplot2)
+  library(ggpubr)
+  library(tidyverse)
+})
+
+theme_set(theme_pubr())
+```
+
+
+# Get cases data
+
+```{r}
+
+indian_state_cases <- GetIndiaConfirmedCasesMonthlyLong()
+india_cases <- indian_state_cases %>% filter(State == "India")
+
+
+head(india_cases)
+```
+
+
+## Plot cases for India
+
+```{r}
+ggplot(india_cases, aes(factor(MonthYear), value)) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_discrete(guide = guide_axis(angle = 30)) +
+  xlab("") +
+  ylab("Cases per month") +
+  EpicovrTheme()
+```
+
+
+# Read variant data from GISAID
+
+```{r}
+
+```

@@ -117,10 +117,10 @@ GetIndiaHospitalization <- function(url = "") {
 #' @returns A data frame containing monthly cases for each state in long form
 
 #' @importFrom magrittr %>%
-#' @importFrom dplyr arrange funs group_by summarise_all
+#' @importFrom dplyr arrange funs group_by summarise_all rename
 #' @importFrom reshape2 melt
 #' @export
-GetIndiaMonthlyCasesLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
+GetIndiaConfirmedCasesMonthlyLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
   statewise_cases <- GetIndiaDailyData(url = url)
   confirmed <- statewise_cases[statewise_cases$Status == "Confirmed", ]
   confirmed$MonthYear <- GetMonthYear(confirmed$Date_YMD)

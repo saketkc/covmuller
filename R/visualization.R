@@ -3,7 +3,7 @@
 #' @importFrom ggtext element_markdown
 #' @export
 EpicovrTheme <- function() {
-  themex <- theme(
+  themex <- hrbrthemes::theme_ipsum() + theme(
     axis.text = element_text(size = 10, color = "black"),
     axis.title.x = element_text(size = 14),
     axis.title.y = element_text(size = 14),
