@@ -1,6 +1,7 @@
 #' Get a list of Indian name states
 #'
 #' @returns A list with state abbreviation as the key and full name as the value
+#' @export
 GetIndianStates <- function() {
   state_names <- list(
     TT = "India",

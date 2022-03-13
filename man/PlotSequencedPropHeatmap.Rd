@@ -4,7 +4,7 @@
 \alias{PlotSequencedPropHeatmap}
 \title{Plot heatmap of cases sequenced}
 \usage{
-PlotSequencedPropHeatmap(cases_and_shared)
+PlotSequencedPropHeatmap(df)
 }
 \arguments{
 \item{cases_and_shared}{A dataframe containing counts of confirmed cases and sequenced cases}

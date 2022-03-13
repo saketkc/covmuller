@@ -139,7 +139,7 @@ CleanIndianStates <- function(states) {
 #' @importFrom tidyr spread
 #'
 #' @export
-CombineCases <- function(cases_sequenced, confirmed_long) {
+CombineSequencedCases<- function(cases_sequenced, confirmed_long) {
   empty_df <- expand.grid(as.yearmon(x = unique(x = as.character(confirmed_long$MonthYear))),
     sort(unique(confirmed_long$State)),
     0,
@@ -157,6 +157,8 @@ CombineCases <- function(cases_sequenced, confirmed_long) {
   cases_and_shared[is.na(cases_and_shared)] <- 0
 
   cases_and_shared["percent_sequenced_collected"] <- 100 * cases_and_shared$Sequenced / cases_and_shared$Confirmed
+  cases_and_shared$percent_sequenced_collected[is.infinite(cases_and_shared$percent_sequenced_collected)] <- NA
+
   return(cases_and_shared)
 }
 

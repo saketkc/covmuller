@@ -28,14 +28,11 @@ EpicovrTheme <- function() {
 #' scale_x_discrete
 #' @importFrom hrbrthemes theme_ipsum
 #' @importFrom ggtext element_markdown
-PlotSequencedPropHeatmap <- function(cases_and_shared) {
-  ggplot(
-    cases_and_shared,
-    aes(factor(MonthYear),
-      State,
-      fill = percent_sequenced_toplot
-    )
-  ) +
+PlotSequencedPropHeatmap <- function(df) {
+    p <- ggplot(df, aes(MonthYear,
+    State,
+    fill = percent_sequenced_toplot
+  )) +
     geom_tile(color = "black") +
     geom_text(aes(
       label = round(percent_sequenced_collected, 1),
@@ -45,13 +42,18 @@ PlotSequencedPropHeatmap <- function(cases_and_shared) {
     )) +
     scale_color_identity() +
     scale_fill_gradient2(
-      low = "red", mid = "white", high = "blue", midpoint = 0.1, space = "Lab",
-      na.value = "grey50", name = "% cases sequenced and shared"
+      low = "red",
+      mid = "white",
+      high = "#1c9099",
+      midpoint = 0.1,
+      space = "Lab",
+      na.value = "grey50",
+      name = "% cases sequenced and shared"
     ) +
-    theme_ipsum() +
-    EpicovrTheme() +
+    scale_x_discrete(guide = guide_axis(angle = 45)) +
     xlab("Month collected") +
     ylab("") +
-    labs(caption = "**Source:** gisaid.org<br>**") +
-    scale_x_discrete(guide = guide_axis(angle = 30))
+    EpicovrTheme()
+
+  return(p)
 }

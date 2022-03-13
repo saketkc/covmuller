@@ -1768,15 +1768,15 @@ pre code {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKHtcbiAgbGlicmFyeShlcGljb3ZyKVxuICBsaWJyYXJ5KGdncGxvdDIpXG4gIGxpYnJhcnkoZ2dwdWJyKVxuICBsaWJyYXJ5KHRpZHl2ZXJzZSlcbn0pXG5cbnRoZW1lX3NldCh0aGVtZV9wdWJyKCkpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKHtcbiAgbGlicmFyeShlcGljb3ZyKVxuICBsaWJyYXJ5KGdncGxvdDIpXG4gIGxpYnJhcnkodGlkeXZlcnNlKVxuICBsaWJyYXJ5KHNjYWxlcylcbn0pXG5cbnRoZW1lX3NldChFcGljb3ZyVGhlbWUoKSlcbmBgYCJ9 -->
 <pre class="r"><code>suppressPackageStartupMessages({
   library(epicovr)
   library(ggplot2)
-  library(ggpubr)
   library(tidyverse)
+  library(scales)
 })
 
-theme_set(theme_pubr())</code></pre>
+theme_set(EpicovrTheme())</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1798,10 +1798,11 @@ head(india_cases)</code></pre>
 <h2>Plot cases for India</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KGluZGlhX2Nhc2VzLCBhZXMoZmFjdG9yKE1vbnRoWWVhciksIHZhbHVlKSkgK1xuICBnZW9tX2JhcihzdGF0ID0gXCJpZGVudGl0eVwiKSArXG4gIHNjYWxlX3lfY29udGludW91cyhsYWJlbHMgPSBzY2FsZXM6OmNvbW1hKSArXG4gIHNjYWxlX3hfZGlzY3JldGUoZ3VpZGUgPSBndWlkZV9heGlzKGFuZ2xlID0gMzApKSArXG4gIHhsYWIoXCJcIikgK1xuICB5bGFiKFwiQ2FzZXMgcGVyIG1vbnRoXCIpICtcbiAgRXBpY292clRoZW1lKClcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KGluZGlhX2Nhc2VzLCBhZXMoZmFjdG9yKE1vbnRoWWVhciksIHZhbHVlKSkgK1xuICBnZW9tX2JhcihzdGF0ID0gXCJpZGVudGl0eVwiKSArXG4gICMgc2NhbGVfeV9jb250aW51b3VzKGxhYmVscyA9IHNjYWxlczo6Y29tbWEpICtcbiAgc2NhbGVfeV9jb250aW51b3VzKGxhYmVscyA9IGxhYmVsX251bWJlcl9zaShhY2N1cmFjeSA9IDAuMSkpICtcbiAgc2NhbGVfeF9kaXNjcmV0ZShndWlkZSA9IGd1aWRlX2F4aXMoYW5nbGUgPSAzMCkpICtcbiAgeGxhYihcIlwiKSArXG4gIHlsYWIoXCJDYXNlcyBwZXIgbW9udGhcIikgK1xuICBFcGljb3ZyVGhlbWUoKVxuYGBgIn0= -->
 <pre class="r"><code>ggplot(india_cases, aes(factor(MonthYear), value)) +
   geom_bar(stat = &quot;identity&quot;) +
-  scale_y_continuous(labels = scales::comma) +
+  # scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
   scale_x_discrete(guide = guide_axis(angle = 30)) +
   xlab(&quot;&quot;) +
   ylab(&quot;Cases per month&quot;) +
@@ -1815,10 +1816,117 @@ head(india_cases)</code></pre>
 <h1>Read variant data from GISAID</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2lzYWlkX21ldGFkYXRhIDwtIFJlYWRHSVNBSURNZXRhZGEocGF0aCA9IFwifi9naXRodWIvMjAyMV9Db3ZpZDE5X3N1cnZlaWxsYW5jZS9kYXRhL2FsbF9tZXRhZGF0YS9tZXRhZGF0YV90c3ZfMjAyMl8wM18xMS50YXIueHpcIilcbmBgYCJ9 -->
+<pre class="r"><code>gisaid_metadata &lt;- ReadGISAIDMetada(path = &quot;~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_03_11.tar.xz&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="plot-proportion-of-cases-that-been-deposited-from-india" class="section level2">
+<h2>Plot proportion of cases that been deposited from India</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2lzYWlkX2luZGlhIDwtIEZpbHRlckdJU0FJREluZGlhKGdpc2FpZF9tZXRhZGF0YV9hbGwgPSBnaXNhaWRfbWV0YWRhdGEpXG5cblxuc3RhdGVfc2VxX3N0YXRzIDwtIGdpc2FpZF9pbmRpYSAlPiVcbiAgZ3JvdXBfYnkoU3RhdGUsIE1vbnRoWWVhckNvbGxlY3RlZCkgJT4lXG4gIGNvdW50KCkgJT4lXG4gIGFycmFuZ2UoU3RhdGUsIE1vbnRoWWVhckNvbGxlY3RlZCkgJT4lXG4gIGRyb3BfbmEoKSAlPiVcbiAgcmVuYW1lKE1vbnRoWWVhciA9IE1vbnRoWWVhckNvbGxlY3RlZCwgdmFsdWUgPSBuKVxuXG5jb3VudHJ5X3NlcV9zdGF0cyA8LSBzdGF0ZV9zZXFfc3RhdHMgJT4lXG4gIGdyb3VwX2J5KE1vbnRoWWVhcikgJT4lXG4gIHN1bW1hcmlzZSh2YWx1ZSA9IHN1bSh2YWx1ZSkpICU+JVxuICBtdXRhdGUoU3RhdGUgPSBcIkluZGlhXCIpXG5cbnNlcV9zdGF0cyA8LSByYmluZChjb3VudHJ5X3NlcV9zdGF0cywgc3RhdGVfc2VxX3N0YXRzKVxuXG5cbmluZGlhX2Nhc2VzX2xvbmcgPC0gR2V0SW5kaWFDb25maXJtZWRDYXNlc01vbnRobHlMb25nKClcblxuaW5kaWFfc2VxdWVuY2luZ19wcm9wb3J0aW9uIDwtIENvbWJpbmVTZXF1ZW5jZWRDYXNlcyhjYXNlc19zZXF1ZW5jZWQgPSBzZXFfc3RhdHMsIGNvbmZpcm1lZF9sb25nID0gaW5kaWFfY2FzZXNfbG9uZylcbmluZGlhX3NlcXVlbmNpbmdfcHJvcG9ydGlvbiA8LSBpbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24gJT4lXG4gIGZpbHRlcihNb250aFllYXIgPiBcIkZlYiAyMDIwXCIpICU+JVxuICBmaWx0ZXIoTW9udGhZZWFyIDwgXCJNYXIgMjAyMlwiKVxuaW5kaWFfc2VxdWVuY2luZ19wcm9wb3J0aW9uJHBlcmNlbnRfc2VxdWVuY2VkX3RvcGxvdCA8LSBpbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24kcGVyY2VudF9zZXF1ZW5jZWRfY29sbGVjdGVkXG5pbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24kcGVyY2VudF9zZXF1ZW5jZWRfdG9wbG90W2luZGlhX3NlcXVlbmNpbmdfcHJvcG9ydGlvbiRwZXJjZW50X3NlcXVlbmNlZF90b3Bsb3QgPiA1XSA8LSA1XG5pbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24kU3RhdGUgPC0gZmFjdG9yKHggPSBpbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24kU3RhdGUsIGxldmVscyA9IGFzLmNoYXJhY3RlcihHZXRJbmRpYW5TdGF0ZXMoKSkpXG5pbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24kTW9udGhZZWFyIDwtIGZhY3Rvcih4ID0gaW5kaWFfc2VxdWVuY2luZ19wcm9wb3J0aW9uJE1vbnRoWWVhcilcblxuUGxvdFNlcXVlbmNlZFByb3BIZWF0bWFwKGluZGlhX3NlcXVlbmNpbmdfcHJvcG9ydGlvbilcbmBgYCJ9 -->
+<pre class="r"><code>gisaid_india &lt;- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
+
+
+state_seq_stats &lt;- gisaid_india %&gt;%
+  group_by(State, MonthYearCollected) %&gt;%
+  count() %&gt;%
+  arrange(State, MonthYearCollected) %&gt;%
+  drop_na() %&gt;%
+  rename(MonthYear = MonthYearCollected, value = n)
+
+country_seq_stats &lt;- state_seq_stats %&gt;%
+  group_by(MonthYear) %&gt;%
+  summarise(value = sum(value)) %&gt;%
+  mutate(State = &quot;India&quot;)
+
+seq_stats &lt;- rbind(country_seq_stats, state_seq_stats)
+
+
+india_cases_long &lt;- GetIndiaConfirmedCasesMonthlyLong()
+
+india_sequencing_proportion &lt;- CombineSequencedCases(cases_sequenced = seq_stats, confirmed_long = india_cases_long)
+india_sequencing_proportion &lt;- india_sequencing_proportion %&gt;%
+  filter(MonthYear &gt; &quot;Feb 2020&quot;) %&gt;%
+  filter(MonthYear &lt; &quot;Mar 2022&quot;)
+india_sequencing_proportion$percent_sequenced_toplot &lt;- india_sequencing_proportion$percent_sequenced_collected
+india_sequencing_proportion$percent_sequenced_toplot[india_sequencing_proportion$percent_sequenced_toplot &gt; 5] &lt;- 5
+india_sequencing_proportion$State &lt;- factor(x = india_sequencing_proportion$State, levels = as.character(GetIndianStates()))
+india_sequencing_proportion$MonthYear &lt;- factor(x = india_sequencing_proportion$MonthYear)
+
+PlotSequencedPropHeatmap(india_sequencing_proportion)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5kaWFfbW9udGhfY291bnRzIDwtIGdpc2FpZF9pbmRpYSAlPiVcbiAgZ3JvdXBfYnkoTW9udGhZZWFyQ29sbGVjdGVkLCBwYW5nb2xpbl9saW5lYWdlKSAlPiVcbiAgY291bnQoKSAlPiVcbiAgdW5ncm91cCgpICU+JVxuICBtdXRhdGUoU3RhdGUgPSBcIkluZGlhXCIpXG5cbmluZGlhX21vbnRoX3ByZXZhbGVuY2UgPC0gaW5kaWFfbW9udGhfY291bnRzICU+JVxuICBncm91cF9ieShNb250aFllYXJDb2xsZWN0ZWQpICU+JVxuICBtdXRhdGUobl9zdW0gPSBzdW0obikpICU+JVxuICB1bmdyb3VwKCkgJT4lXG4gIGdyb3VwX2J5KE1vbnRoWWVhckNvbGxlY3RlZCwgcGFuZ29saW5fbGluZWFnZSkgJT4lXG4gIHN1bW1hcmlzZShwcmV2YWxlbmNlID0gMTAwICogbiAvIG5fc3VtKSAlPiVcbiAgdW5ncm91cCgpICU+JVxuICBmaWx0ZXIoIWlzLm5hKE1vbnRoWWVhckNvbGxlY3RlZCkpXG5cbnZvY3MgPC0gR2V0Vk9DcygpXG5cbmluZGlhX21vbnRoX3ByZXZhbGVuY2UgPC0gaW5kaWFfbW9udGhfcHJldmFsZW5jZSAlPiUgbXV0YXRlKGxpbmVhZ2VfY29sbGFwc2VkID0gY2FzZV93aGVuKFxuICBwYW5nb2xpbl9saW5lYWdlICVpbiUgdm9jc1tbXCJhbHBoYVwiXV0gfiBcIkFscGhhXCIsXG4gIHBhbmdvbGluX2xpbmVhZ2UgJWluJSB2b2NzW1tcImJldGFcIl1dIH4gXCJCZXRhXCIsXG4gIHBhbmdvbGluX2xpbmVhZ2UgJWluJSB2b2NzW1tcImdhbW1hXCJdXSB+IFwiR2FtbWFcIixcbiAgcGFuZ29saW5fbGluZWFnZSAlaW4lIHZvY3NbW1wiZGVsdGFcIl1dIH4gXCJEZWx0YVwiLFxuICBwYW5nb2xpbl9saW5lYWdlICVpbiUgYyhcIkJBLjEuMVwiKX4gXCJPbWktQkEuMS4xXCIsXG4gIHBhbmdvbGluX2xpbmVhZ2UgJWluJSBjKFwiQkEuMVwiKX4gXCJPbWktQkEuMVwiLFxuICBwYW5nb2xpbl9saW5lYWdlICVpbiUgYyhcIkJBLjJcIil+IFwiT21pLUJBLjJcIixcbiAgVFJVRSB+IFwiT3RoZXJzXCJcbikpXG5cbmluZGlhX21vbnRoX3ByZXZhbGVuY2UkcGFuZ29saW5fbGluZWFnZSA8LSBOVUxMXG5cbmluZGlhX21vbnRoX3ByZXZhbGVuY2UgPC0gaW5kaWFfbW9udGhfcHJldmFsZW5jZSAlPiVcbiAgZ3JvdXBfYnkoTW9udGhZZWFyQ29sbGVjdGVkLCBsaW5lYWdlX2NvbGxhcHNlZCkgJT4lXG4gIHN1bW1hcmlzZV9hbGwoZnVucyhzdW0pKSAlPiVcbiAgdW5ncm91cCgpXG5cbmluZGlhX21vbnRoX3ByZXZhbGVuY2UkcHJldmFsZW5jZSA8LSBhcy5udW1lcmljKGluZGlhX21vbnRoX3ByZXZhbGVuY2UkcHJldmFsZW5jZSlcblxuaW5kaWFfbW9udGhfcHJldmFsZW5jZSRNb250aFllYXJDb2xsZWN0ZWRGYWN0b3IgPC0gZmFjdG9yKGFzLmNoYXJhY3RlcihpbmRpYV9tb250aF9wcmV2YWxlbmNlJE1vbnRoWWVhckNvbGxlY3RlZCksXG4gIGxldmVscyA9IGFzLmNoYXJhY3Rlcihzb3J0KHVuaXF1ZShpbmRpYV9tb250aF9wcmV2YWxlbmNlJE1vbnRoWWVhckNvbGxlY3RlZCkpKVxuKVxuXG5gYGAifQ== -->
+<pre class="r"><code>india_month_counts &lt;- gisaid_india %&gt;%
+  group_by(MonthYearCollected, pangolin_lineage) %&gt;%
+  count() %&gt;%
+  ungroup() %&gt;%
+  mutate(State = &quot;India&quot;)
+
+india_month_prevalence &lt;- india_month_counts %&gt;%
+  group_by(MonthYearCollected) %&gt;%
+  mutate(n_sum = sum(n)) %&gt;%
+  ungroup() %&gt;%
+  group_by(MonthYearCollected, pangolin_lineage) %&gt;%
+  summarise(prevalence = 100 * n / n_sum) %&gt;%
+  ungroup() %&gt;%
+  filter(!is.na(MonthYearCollected))
+
+vocs &lt;- GetVOCs()
+
+india_month_prevalence &lt;- india_month_prevalence %&gt;% mutate(lineage_collapsed = case_when(
+  pangolin_lineage %in% vocs[[&quot;alpha&quot;]] ~ &quot;Alpha&quot;,
+  pangolin_lineage %in% vocs[[&quot;beta&quot;]] ~ &quot;Beta&quot;,
+  pangolin_lineage %in% vocs[[&quot;gamma&quot;]] ~ &quot;Gamma&quot;,
+  pangolin_lineage %in% vocs[[&quot;delta&quot;]] ~ &quot;Delta&quot;,
+  pangolin_lineage %in% c(&quot;BA.1.1&quot;)~ &quot;Omi-BA.1.1&quot;,
+  pangolin_lineage %in% c(&quot;BA.1&quot;)~ &quot;Omi-BA.1&quot;,
+  pangolin_lineage %in% c(&quot;BA.2&quot;)~ &quot;Omi-BA.2&quot;,
+  TRUE ~ &quot;Others&quot;
+))
+
+india_month_prevalence$pangolin_lineage &lt;- NULL
+
+india_month_prevalence &lt;- india_month_prevalence %&gt;%
+  group_by(MonthYearCollected, lineage_collapsed) %&gt;%
+  summarise_all(funs(sum)) %&gt;%
+  ungroup()
+
+india_month_prevalence$prevalence &lt;- as.numeric(india_month_prevalence$prevalence)
+
+india_month_prevalence$MonthYearCollectedFactor &lt;- factor(as.character(india_month_prevalence$MonthYearCollected),
+  levels = as.character(sort(unique(india_month_prevalence$MonthYearCollected)))
+)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KFxuICBkYXRhID0gaW5kaWFfbW9udGhfcHJldmFsZW5jZSxcbiAgYWVzKHggPSBNb250aFllYXJDb2xsZWN0ZWRGYWN0b3IsIHkgPSBwcmV2YWxlbmNlLCBmaWxsID0gbGluZWFnZV9jb2xsYXBzZWQpXG4pICtcbiAgZ2VvbV9iYXIoc3RhdCA9IFwiaWRlbnRpdHlcIikgK1xuICBzY2FsZV9maWxsX2JyZXdlcih0eXBlID0gXCJxdWFsXCIsIG5hbWUgPSBcIlBhbmdvbGluIGxpbmVhZ2VcIikgK1xuICBFcGljb3ZyVGhlbWUoKSArXG4gIHhsYWIoXCJEYXRlIGNvbGxlY3RlZFwiKSArXG4gIHlsYWIoXCIlIGNvbXBvc2l0aW9uIG9mIHZhcmlhbnRcIikgK1xuICBsYWJzKGNhcHRpb24gPSBcIioqU291cmNlOioqIGdpc2FpZC5vcmc8YnI+XCIpICtcbiAgc2NhbGVfeF9kaXNjcmV0ZShndWlkZSA9IGd1aWRlX2F4aXMoYW5nbGUgPSAzMCkpIFxuXG5gYGAifQ== -->
+<pre class="r"><code>ggplot(
+  data = india_month_prevalence,
+  aes(x = MonthYearCollectedFactor, y = prevalence, fill = lineage_collapsed)
+) +
+  geom_bar(stat = &quot;identity&quot;) +
+  scale_fill_brewer(type = &quot;qual&quot;, name = &quot;Pangolin lineage&quot;) +
+  EpicovrTheme() +
+  xlab(&quot;Date collected&quot;) +
+  ylab(&quot;% composition of variant&quot;) +
+  labs(caption = &quot;**Source:** gisaid.org&lt;br&gt;&quot;) +
+  scale_x_discrete(guide = guide_axis(angle = 30)) 
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 </div>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm9kdWN0aW9uIHRvIGVwaWNvdnIiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCmBgYHtyfQpzdXBwcmVzc1BhY2thZ2VTdGFydHVwTWVzc2FnZXMoewogIGxpYnJhcnkoZXBpY292cikKICBsaWJyYXJ5KGdncGxvdDIpCiAgbGlicmFyeShnZ3B1YnIpCiAgbGlicmFyeSh0aWR5dmVyc2UpCn0pCgp0aGVtZV9zZXQodGhlbWVfcHVicigpKQpgYGAKCgojIEdldCBjYXNlcyBkYXRhCgpgYGB7cn0KCmluZGlhbl9zdGF0ZV9jYXNlcyA8LSBHZXRJbmRpYUNvbmZpcm1lZENhc2VzTW9udGhseUxvbmcoKQppbmRpYV9jYXNlcyA8LSBpbmRpYW5fc3RhdGVfY2FzZXMgJT4lIGZpbHRlcihTdGF0ZSA9PSAiSW5kaWEiKQoKCmhlYWQoaW5kaWFfY2FzZXMpCmBgYAoKCiMjIFBsb3QgY2FzZXMgZm9yIEluZGlhCgpgYGB7cn0KZ2dwbG90KGluZGlhX2Nhc2VzLCBhZXMoZmFjdG9yKE1vbnRoWWVhciksIHZhbHVlKSkgKwogIGdlb21fYmFyKHN0YXQgPSAiaWRlbnRpdHkiKSArCiAgc2NhbGVfeV9jb250aW51b3VzKGxhYmVscyA9IHNjYWxlczo6Y29tbWEpICsKICBzY2FsZV94X2Rpc2NyZXRlKGd1aWRlID0gZ3VpZGVfYXhpcyhhbmdsZSA9IDMwKSkgKwogIHhsYWIoIiIpICsKICB5bGFiKCJDYXNlcyBwZXIgbW9udGgiKSArCiAgRXBpY292clRoZW1lKCkKYGBgCgoKIyBSZWFkIHZhcmlhbnQgZGF0YSBmcm9tIEdJU0FJRAoKYGBge3J9CgpgYGAK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm9kdWN0aW9uIHRvIGVwaWNvdnIiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCmBgYHtyfQpzdXBwcmVzc1BhY2thZ2VTdGFydHVwTWVzc2FnZXMoewogIGxpYnJhcnkoZXBpY292cikKICBsaWJyYXJ5KGdncGxvdDIpCiAgbGlicmFyeSh0aWR5dmVyc2UpCiAgbGlicmFyeShzY2FsZXMpCn0pCgp0aGVtZV9zZXQoRXBpY292clRoZW1lKCkpCmBgYAoKCiMgR2V0IGNhc2VzIGRhdGEKCmBgYHtyfQoKaW5kaWFuX3N0YXRlX2Nhc2VzIDwtIEdldEluZGlhQ29uZmlybWVkQ2FzZXNNb250aGx5TG9uZygpCmluZGlhX2Nhc2VzIDwtIGluZGlhbl9zdGF0ZV9jYXNlcyAlPiUgZmlsdGVyKFN0YXRlID09ICJJbmRpYSIpCgoKaGVhZChpbmRpYV9jYXNlcykKYGBgCgoKIyMgUGxvdCBjYXNlcyBmb3IgSW5kaWEKCmBgYHtyLCBmaWcud2lkdGg9OCwgZmlnLmhlaWdodD01fQpnZ3Bsb3QoaW5kaWFfY2FzZXMsIGFlcyhmYWN0b3IoTW9udGhZZWFyKSwgdmFsdWUpKSArCiAgZ2VvbV9iYXIoc3RhdCA9ICJpZGVudGl0eSIpICsKICAjIHNjYWxlX3lfY29udGludW91cyhsYWJlbHMgPSBzY2FsZXM6OmNvbW1hKSArCiAgc2NhbGVfeV9jb250aW51b3VzKGxhYmVscyA9IGxhYmVsX251bWJlcl9zaShhY2N1cmFjeSA9IDAuMSkpICsKICBzY2FsZV94X2Rpc2NyZXRlKGd1aWRlID0gZ3VpZGVfYXhpcyhhbmdsZSA9IDMwKSkgKwogIHhsYWIoIiIpICsKICB5bGFiKCJDYXNlcyBwZXIgbW9udGgiKSArCiAgRXBpY292clRoZW1lKCkKYGBgCgoKIyBSZWFkIHZhcmlhbnQgZGF0YSBmcm9tIEdJU0FJRAoKYGBge3J9Cmdpc2FpZF9tZXRhZGF0YSA8LSBSZWFkR0lTQUlETWV0YWRhKHBhdGggPSAifi9naXRodWIvMjAyMV9Db3ZpZDE5X3N1cnZlaWxsYW5jZS9kYXRhL2FsbF9tZXRhZGF0YS9tZXRhZGF0YV90c3ZfMjAyMl8wM18xMS50YXIueHoiKQpgYGAKCgoKIyMgUGxvdCBwcm9wb3J0aW9uIG9mIGNhc2VzIHRoYXQgYmVlbiBkZXBvc2l0ZWQgZnJvbSBJbmRpYQoKYGBge3IsIGZpZy53aWR0aD0xMSwgZmlnLmhlaWdodD0xMSwgd2FybmluZz1GQUxTRSwgbWVzc2FnZT1GQUxTRX0KZ2lzYWlkX2luZGlhIDwtIEZpbHRlckdJU0FJREluZGlhKGdpc2FpZF9tZXRhZGF0YV9hbGwgPSBnaXNhaWRfbWV0YWRhdGEpCgoKc3RhdGVfc2VxX3N0YXRzIDwtIGdpc2FpZF9pbmRpYSAlPiUKICBncm91cF9ieShTdGF0ZSwgTW9udGhZZWFyQ29sbGVjdGVkKSAlPiUKICBjb3VudCgpICU+JQogIGFycmFuZ2UoU3RhdGUsIE1vbnRoWWVhckNvbGxlY3RlZCkgJT4lCiAgZHJvcF9uYSgpICU+JQogIHJlbmFtZShNb250aFllYXIgPSBNb250aFllYXJDb2xsZWN0ZWQsIHZhbHVlID0gbikKCmNvdW50cnlfc2VxX3N0YXRzIDwtIHN0YXRlX3NlcV9zdGF0cyAlPiUKICBncm91cF9ieShNb250aFllYXIpICU+JQogIHN1bW1hcmlzZSh2YWx1ZSA9IHN1bSh2YWx1ZSkpICU+JQogIG11dGF0ZShTdGF0ZSA9ICJJbmRpYSIpCgpzZXFfc3RhdHMgPC0gcmJpbmQoY291bnRyeV9zZXFfc3RhdHMsIHN0YXRlX3NlcV9zdGF0cykKCgppbmRpYV9jYXNlc19sb25nIDwtIEdldEluZGlhQ29uZmlybWVkQ2FzZXNNb250aGx5TG9uZygpCgppbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24gPC0gQ29tYmluZVNlcXVlbmNlZENhc2VzKGNhc2VzX3NlcXVlbmNlZCA9IHNlcV9zdGF0cywgY29uZmlybWVkX2xvbmcgPSBpbmRpYV9jYXNlc19sb25nKQppbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24gPC0gaW5kaWFfc2VxdWVuY2luZ19wcm9wb3J0aW9uICU+JQogIGZpbHRlcihNb250aFllYXIgPiAiRmViIDIwMjAiKSAlPiUKICBmaWx0ZXIoTW9udGhZZWFyIDwgIk1hciAyMDIyIikKaW5kaWFfc2VxdWVuY2luZ19wcm9wb3J0aW9uJHBlcmNlbnRfc2VxdWVuY2VkX3RvcGxvdCA8LSBpbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24kcGVyY2VudF9zZXF1ZW5jZWRfY29sbGVjdGVkCmluZGlhX3NlcXVlbmNpbmdfcHJvcG9ydGlvbiRwZXJjZW50X3NlcXVlbmNlZF90b3Bsb3RbaW5kaWFfc2VxdWVuY2luZ19wcm9wb3J0aW9uJHBlcmNlbnRfc2VxdWVuY2VkX3RvcGxvdCA+IDVdIDwtIDUKaW5kaWFfc2VxdWVuY2luZ19wcm9wb3J0aW9uJFN0YXRlIDwtIGZhY3Rvcih4ID0gaW5kaWFfc2VxdWVuY2luZ19wcm9wb3J0aW9uJFN0YXRlLCBsZXZlbHMgPSBhcy5jaGFyYWN0ZXIoR2V0SW5kaWFuU3RhdGVzKCkpKQppbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24kTW9udGhZZWFyIDwtIGZhY3Rvcih4ID0gaW5kaWFfc2VxdWVuY2luZ19wcm9wb3J0aW9uJE1vbnRoWWVhcikKClBsb3RTZXF1ZW5jZWRQcm9wSGVhdG1hcChpbmRpYV9zZXF1ZW5jaW5nX3Byb3BvcnRpb24pCmBgYAoKYGBge3J9CmluZGlhX21vbnRoX2NvdW50cyA8LSBnaXNhaWRfaW5kaWEgJT4lCiAgZ3JvdXBfYnkoTW9udGhZZWFyQ29sbGVjdGVkLCBwYW5nb2xpbl9saW5lYWdlKSAlPiUKICBjb3VudCgpICU+JQogIHVuZ3JvdXAoKSAlPiUKICBtdXRhdGUoU3RhdGUgPSAiSW5kaWEiKQoKaW5kaWFfbW9udGhfcHJldmFsZW5jZSA8LSBpbmRpYV9tb250aF9jb3VudHMgJT4lCiAgZ3JvdXBfYnkoTW9udGhZZWFyQ29sbGVjdGVkKSAlPiUKICBtdXRhdGUobl9zdW0gPSBzdW0obikpICU+JQogIHVuZ3JvdXAoKSAlPiUKICBncm91cF9ieShNb250aFllYXJDb2xsZWN0ZWQsIHBhbmdvbGluX2xpbmVhZ2UpICU+JQogIHN1bW1hcmlzZShwcmV2YWxlbmNlID0gMTAwICogbiAvIG5fc3VtKSAlPiUKICB1bmdyb3VwKCkgJT4lCiAgZmlsdGVyKCFpcy5uYShNb250aFllYXJDb2xsZWN0ZWQpKQoKdm9jcyA8LSBHZXRWT0NzKCkKCmluZGlhX21vbnRoX3ByZXZhbGVuY2UgPC0gaW5kaWFfbW9udGhfcHJldmFsZW5jZSAlPiUgbXV0YXRlKGxpbmVhZ2VfY29sbGFwc2VkID0gY2FzZV93aGVuKAogIHBhbmdvbGluX2xpbmVhZ2UgJWluJSB2b2NzW1siYWxwaGEiXV0gfiAiQWxwaGEiLAogIHBhbmdvbGluX2xpbmVhZ2UgJWluJSB2b2NzW1siYmV0YSJdXSB+ICJCZXRhIiwKICBwYW5nb2xpbl9saW5lYWdlICVpbiUgdm9jc1tbImdhbW1hIl1dIH4gIkdhbW1hIiwKICBwYW5nb2xpbl9saW5lYWdlICVpbiUgdm9jc1tbImRlbHRhIl1dIH4gIkRlbHRhIiwKICBwYW5nb2xpbl9saW5lYWdlICVpbiUgYygiQkEuMS4xIil+ICJPbWktQkEuMS4xIiwKICBwYW5nb2xpbl9saW5lYWdlICVpbiUgYygiQkEuMSIpfiAiT21pLUJBLjEiLAogIHBhbmdvbGluX2xpbmVhZ2UgJWluJSBjKCJCQS4yIil+ICJPbWktQkEuMiIsCiAgVFJVRSB+ICJPdGhlcnMiCikpCgppbmRpYV9tb250aF9wcmV2YWxlbmNlJHBhbmdvbGluX2xpbmVhZ2UgPC0gTlVMTAoKaW5kaWFfbW9udGhfcHJldmFsZW5jZSA8LSBpbmRpYV9tb250aF9wcmV2YWxlbmNlICU+JQogIGdyb3VwX2J5KE1vbnRoWWVhckNvbGxlY3RlZCwgbGluZWFnZV9jb2xsYXBzZWQpICU+JQogIHN1bW1hcmlzZV9hbGwoZnVucyhzdW0pKSAlPiUKICB1bmdyb3VwKCkKCmluZGlhX21vbnRoX3ByZXZhbGVuY2UkcHJldmFsZW5jZSA8LSBhcy5udW1lcmljKGluZGlhX21vbnRoX3ByZXZhbGVuY2UkcHJldmFsZW5jZSkKCmluZGlhX21vbnRoX3ByZXZhbGVuY2UkTW9udGhZZWFyQ29sbGVjdGVkRmFjdG9yIDwtIGZhY3Rvcihhcy5jaGFyYWN0ZXIoaW5kaWFfbW9udGhfcHJldmFsZW5jZSRNb250aFllYXJDb2xsZWN0ZWQpLAogIGxldmVscyA9IGFzLmNoYXJhY3Rlcihzb3J0KHVuaXF1ZShpbmRpYV9tb250aF9wcmV2YWxlbmNlJE1vbnRoWWVhckNvbGxlY3RlZCkpKQopCgpgYGAKCgoKYGBge3IsIGZpZy53aWR0aD04LCBmaWcuaGVpZ2h0PTV9CmdncGxvdCgKICBkYXRhID0gaW5kaWFfbW9udGhfcHJldmFsZW5jZSwKICBhZXMoeCA9IE1vbnRoWWVhckNvbGxlY3RlZEZhY3RvciwgeSA9IHByZXZhbGVuY2UsIGZpbGwgPSBsaW5lYWdlX2NvbGxhcHNlZCkKKSArCiAgZ2VvbV9iYXIoc3RhdCA9ICJpZGVudGl0eSIpICsKICBzY2FsZV9maWxsX2JyZXdlcih0eXBlID0gInF1YWwiLCBuYW1lID0gIlBhbmdvbGluIGxpbmVhZ2UiKSArCiAgRXBpY292clRoZW1lKCkgKwogIHhsYWIoIkRhdGUgY29sbGVjdGVkIikgKwogIHlsYWIoIiUgY29tcG9zaXRpb24gb2YgdmFyaWFudCIpICsKICBsYWJzKGNhcHRpb24gPSAiKipTb3VyY2U6KiogZ2lzYWlkLm9yZzxicj4iKSArCiAgc2NhbGVfeF9kaXNjcmV0ZShndWlkZSA9IGd1aWRlX2F4aXMoYW5nbGUgPSAzMCkpIAoKYGBgCg==</div>
 
 
 
