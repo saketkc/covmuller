@@ -244,6 +244,7 @@ CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mappi
 #' @param variant_df A dataframe
 #' @returns A dataframe with monthwise counts of each variant sequenced
 #' @importFrom dplyr count group_by ungroup
+#' @export
 SummarizeVariantsMonthwise <- function(variant_df) {
   df <- df %>%
     group_by(MonthYearCollected, pangolin_lineage) %>%
@@ -258,6 +259,7 @@ SummarizeVariantsMonthwise <- function(variant_df) {
 #' @importFrom magrittr %>%
 #' @importFrom stringr str_to_title
 #' @importFrom dplyr group_by mutate summarise ungroup filter
+#' @export
 CountsToPrevalence <- function(variant_df) {
   variant_df <- variant_df %>%
     group_by(MonthYearCollected) %>%
