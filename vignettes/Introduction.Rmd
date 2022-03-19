@@ -6,12 +6,8 @@ output: html_notebook
 ```{r}
 suppressPackageStartupMessages({
   library(epicovr)
-  library(ggplot2)
   library(tidyverse)
-  library(scales)
 })
-
-theme_set(EpicovrTheme())
 ```
 
 
@@ -22,7 +18,6 @@ theme_set(EpicovrTheme())
 indian_state_cases <- GetIndiaConfirmedCasesMonthlyLong()
 india_cases <- indian_state_cases %>% filter(State == "India")
 
-
 head(india_cases)
 ```
 
@@ -30,21 +25,14 @@ head(india_cases)
 ## Plot cases for India
 
 ```{r, fig.width=8, fig.height=5}
-ggplot(india_cases, aes(factor(MonthYear), value)) +
-  geom_bar(stat = "identity") +
-  # scale_y_continuous(labels = scales::comma) +
-  scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
-  scale_x_discrete(guide = guide_axis(angle = 30)) +
-  xlab("") +
-  ylab("Cases per month") +
-  EpicovrTheme()
+BarPlotCasesPerMonth(india_cases)
 ```
 
 
 # Read variant data from GISAID
 
 ```{r}
-gisaid_metadata <- ReadGISAIDMetada(path = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_03_11.tar.xz")
+gisaid_metadata <- ReadGISAIDMetada(path = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_03_17.tar.xz")
 ```
 
 
@@ -54,93 +42,36 @@ gisaid_metadata <- ReadGISAIDMetada(path = "~/github/2021_Covid19_surveillance/d
 ```{r, fig.width=11, fig.height=11, warning=FALSE, message=FALSE}
 gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
 
-
-state_seq_stats <- gisaid_india %>%
-  group_by(State, MonthYearCollected) %>%
-  count() %>%
-  arrange(State, MonthYearCollected) %>%
-  drop_na() %>%
-  rename(MonthYear = MonthYearCollected, value = n)
-
-country_seq_stats <- state_seq_stats %>%
-  group_by(MonthYear) %>%
-  summarise(value = sum(value)) %>%
-  mutate(State = "India")
-
+state_seq_stats <- TotalSequencesPerMonthStatewise(gisaid_india, drop_country = TRUE)
+country_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_india, rename_country_as_state = TRUE)
 seq_stats <- rbind(country_seq_stats, state_seq_stats)
 
-
 india_cases_long <- GetIndiaConfirmedCasesMonthlyLong()
-
-india_sequencing_proportion <- CombineSequencedCases(cases_sequenced = seq_stats, confirmed_long = india_cases_long)
-india_sequencing_proportion <- india_sequencing_proportion %>%
-  filter(MonthYear > "Feb 2020") %>%
-  filter(MonthYear < "Mar 2022")
-india_sequencing_proportion$percent_sequenced_toplot <- india_sequencing_proportion$percent_sequenced_collected
-india_sequencing_proportion$percent_sequenced_toplot[india_sequencing_proportion$percent_sequenced_toplot > 5] <- 5
+india_sequencing_proportion <- CombineSequencedCases(cases_sequenced = seq_stats,
+                                                     confirmed_long = india_cases_long,
+                                                     month.min = "Feb 2020",
+                                                     month.max = "Feb 2022",
+                                                     max.percent = 5)
 india_sequencing_proportion$State <- factor(x = india_sequencing_proportion$State, levels = as.character(GetIndianStates()))
-india_sequencing_proportion$MonthYear <- factor(x = india_sequencing_proportion$MonthYear)
-
 PlotSequencedPropHeatmap(india_sequencing_proportion)
 ```
 
 ```{r}
-india_month_counts <- gisaid_india %>%
-  group_by(MonthYearCollected, pangolin_lineage) %>%
-  count() %>%
-  ungroup() %>%
-  mutate(State = "India")
-
-india_month_prevalence <- india_month_counts %>%
-  group_by(MonthYearCollected) %>%
-  mutate(n_sum = sum(n)) %>%
-  ungroup() %>%
-  group_by(MonthYearCollected, pangolin_lineage) %>%
-  summarise(prevalence = 100 * n / n_sum) %>%
-  ungroup() %>%
-  filter(!is.na(MonthYearCollected))
-
+india_month_counts <- SummarizeVariantsMonthwise(gisaid_india)
+india_month_counts$State <- "India"
+india_month_prevalence <- CountsToPrevalence(india_month_counts)
 vocs <- GetVOCs()
-
-india_month_prevalence <- india_month_prevalence %>% mutate(lineage_collapsed = case_when(
-  pangolin_lineage %in% vocs[["alpha"]] ~ "Alpha",
-  pangolin_lineage %in% vocs[["beta"]] ~ "Beta",
-  pangolin_lineage %in% vocs[["gamma"]] ~ "Gamma",
-  pangolin_lineage %in% vocs[["delta"]] ~ "Delta",
-  pangolin_lineage %in% c("BA.1.1")~ "Omi-BA.1.1",
-  pangolin_lineage %in% c("BA.1")~ "Omi-BA.1",
-  pangolin_lineage %in% c("BA.2")~ "Omi-BA.2",
-  TRUE ~ "Others"
-))
-
-india_month_prevalence$pangolin_lineage <- NULL
-
-india_month_prevalence <- india_month_prevalence %>%
-  group_by(MonthYearCollected, lineage_collapsed) %>%
-  summarise_all(funs(sum)) %>%
-  ungroup()
-
-india_month_prevalence$prevalence <- as.numeric(india_month_prevalence$prevalence)
-
-india_month_prevalence$MonthYearCollectedFactor <- factor(as.character(india_month_prevalence$MonthYearCollected),
-  levels = as.character(sort(unique(india_month_prevalence$MonthYearCollected)))
+custom_voc_mapping <- list(
+  `BA.1.1` = "Omicron-BA.1.1", `BA.1` = "Omicron-BA.1",
+  `BA.1` = "Omicron-BA.2"
 )
-
+india_month_prevalence <- CollapseLineageToVOCs(variant_df = india_month_prevalence, 
+                                                vocs = vocs, 
+                                                custom_voc_mapping = custom_voc_mapping)
 ```
 
 
 
 ```{r, fig.width=8, fig.height=5}
-ggplot(
-  data = india_month_prevalence,
-  aes(x = MonthYearCollectedFactor, y = prevalence, fill = lineage_collapsed)
-) +
-  geom_bar(stat = "identity") +
-  scale_fill_brewer(type = "qual", name = "Pangolin lineage") +
-  EpicovrTheme() +
-  xlab("Date collected") +
-  ylab("% composition of variant") +
-  labs(caption = "**Source:** gisaid.org<br>") +
-  scale_x_discrete(guide = guide_axis(angle = 30)) 
-
+StackedBarPlotPrevalence(india_month_prevalence)
 ```

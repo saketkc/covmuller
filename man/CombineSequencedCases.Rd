@@ -4,10 +4,19 @@
 \alias{CombineSequencedCases}
 \title{Create a combined dataframe of sequenced cases and confirmed cases}
 \usage{
-CombineSequencedCases(cases_sequenced, confirmed_long)
+CombineSequencedCases(
+  cases_sequenced,
+  confirmed_long,
+  prune_oversequenced = TRUE,
+  month.min = NULL,
+  month.max = NULL,
+  max.percent = 100
+)
 }
 \arguments{
 \item{cases_sequenced}{A long dataframe of per state sequenced cases}
+
+\item{prune_oversequenced}{Whether to round of percentages above 100 to 100. Default is TRUE}
 
 \item{cases_total}{A long dataframe of total monthly cases}
 }

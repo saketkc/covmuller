@@ -29,7 +29,7 @@ EpicovrTheme <- function() {
 #' @importFrom hrbrthemes theme_ipsum
 #' @importFrom ggtext element_markdown
 PlotSequencedPropHeatmap <- function(df) {
-    p <- ggplot(df, aes(MonthYear,
+  p <- ggplot(df, aes(MonthYear,
     State,
     fill = percent_sequenced_toplot
   )) +
@@ -55,5 +55,43 @@ PlotSequencedPropHeatmap <- function(df) {
     ylab("") +
     EpicovrTheme()
 
+  return(p)
+}
+
+#' @importFrom ggplot2 ggplot geom_bar scale_y_continuous scale_x_discrete xlab ylab guide_axis
+#' @importFrom scales label_number_si
+#' @importFrom ggtext element_markdown
+#' @export
+BarPlotCasesPerMonth <- function(cases_df) {
+  p <- ggplot(cases_df, aes(factor(MonthYear), value)) +
+    geom_bar(stat = "identity") +
+    scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
+    scale_x_discrete(guide = guide_axis(angle = 30)) +
+    xlab("") +
+    ylab("Cases per month") +
+    EpicovrTheme()
+  return(p)
+}
+
+#' @importFrom ggplot2 ggplot geom_bar labs scale_fill_brewer scale_x_discrete xlab ylab guide_axis
+#' @importFrom scales label_number_si
+#' @importFrom ggtext element_markdown
+#' @export
+StackedBarPlotPrevalence <- function(prevalence_df) {
+  p <- ggplot(
+    data = prevalence_df,
+    aes(
+      x = MonthYearCollectedFactor,
+      y = prevalence,
+      fill = lineage_collapsed
+    )
+  ) +
+    geom_bar(stat = "identity") +
+    scale_fill_brewer(type = "qual", name = "Pangolin lineage") +
+    EpicovrTheme() +
+    xlab("Date collected") +
+    ylab("% composition of variant") +
+    labs(caption = "**Source:** gisaid.org<br>") +
+    scale_x_discrete(guide = guide_axis(angle = 30))
   return(p)
 }

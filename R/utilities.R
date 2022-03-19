@@ -131,15 +131,18 @@ CleanIndianStates <- function(states) {
 #' Create a combined dataframe of sequenced cases and confirmed cases
 #' @param cases_sequenced A long dataframe of per state sequenced cases
 #' @param cases_total A long dataframe of total monthly cases
+#' @param prune_oversequenced Whether to round of percentages above 100 to 100. Default is TRUE
 #'
 #' @returns a combined dataframe with case load and sequenced
 #' @importFrom zoo as.yearmon
 #' @importFrom magrittr %>%
-#' @importFrom dplyr bind_rows funs group_by summarise_all
+#' @importFrom dplyr bind_rows group_by summarise_all filter
 #' @importFrom tidyr spread
-#'
 #' @export
-CombineSequencedCases<- function(cases_sequenced, confirmed_long) {
+CombineSequencedCases <- function(cases_sequenced, confirmed_long,
+                                  prune_oversequenced = TRUE,
+                                  month.min = NULL, month.max = NULL,
+                                  max.percent = 100) {
   empty_df <- expand.grid(as.yearmon(x = unique(x = as.character(confirmed_long$MonthYear))),
     sort(unique(confirmed_long$State)),
     0,
@@ -149,7 +152,7 @@ CombineSequencedCases<- function(cases_sequenced, confirmed_long) {
   empty_df <- empty_df %>% arrange(State, MonthYear)
   total_seq <- bind_rows(empty_df, cases_sequenced) %>%
     group_by(State, MonthYear) %>%
-    summarise_all(funs(sum))
+    summarise_all(list(value = sum))
   total_seq$type <- "Sequenced"
 
   cases_and_shared <- bind_rows(confirmed_long, total_seq) %>% arrange(State, MonthYear)
@@ -158,6 +161,18 @@ CombineSequencedCases<- function(cases_sequenced, confirmed_long) {
 
   cases_and_shared["percent_sequenced_collected"] <- 100 * cases_and_shared$Sequenced / cases_and_shared$Confirmed
   cases_and_shared$percent_sequenced_collected[is.infinite(cases_and_shared$percent_sequenced_collected)] <- NA
+  if (prune_oversequenced) {
+    cases_and_shared$percent_sequenced_collected[(cases_and_shared$percent_sequenced_collected) > 100] <- 100
+  }
+  if (!is.null(month.min)) {
+    cases_and_shared <- cases_and_shared %>% filter(MonthYear > month.min)
+  }
+  if (!is.null(month.max)) {
+    cases_and_shared <- cases_and_shared %>% filter(MonthYear <= month.max)
+  }
+  cases_and_shared$percent_sequenced_toplot <- cases_and_shared$percent_sequenced_collected
+  cases_and_shared$percent_sequenced_toplot[cases_and_shared$percent_sequenced_toplot > max.percent] <- max.percent
+  cases_and_shared$MonthYear <- factor(x = cases_and_shared$MonthYear)
 
   return(cases_and_shared)
 }
@@ -179,4 +194,122 @@ FilterGISAIDIndia <- function(gisaid_metadata_all) {
   gisaid_india_all <- gisaid_india_all %>%
     arrange(State, MonthYearCollected)
   return(gisaid_india_all)
+}
+
+
+#' Collpase pangolin lineage a list of VOCs
+#' @param variant_df A dataframe with "pangolin_lineage" column
+#' @param vocs A named list with VOC (variant of concernt) name as key and a list of lineages under the VOC.
+#' The method will replace all lineages under a VOC to its name.
+#' @param custom_voc_mapping A named vector with a custom mapping for naming some lineages. See example.
+#' @returns  A dataframe with a new column "lineage_collpased".
+#'
+#' @importFrom magrittr %>%
+#' @importFrom dplyr case_when  group_by mutate summarise_all
+#' @importFrom stringr str_to_title
+#' @export
+CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mapping = NULL) {
+  if (!"pangolin_lineage" %in% colnames(variant_df)) {
+    stop("pangolin_lineage column is not present in the input")
+  }
+  variant_df$lineage_collapsed <- "Others"
+  for (name in names(vocs)) {
+    variant_df <- variant_df %>% mutate(lineage_collapsed = case_when(
+      pangolin_lineage %in% vocs[[!!name]] ~ str_to_title(!!name),
+      TRUE ~ lineage_collapsed
+    ))
+  }
+  if (!is.null(custom_voc_mapping)) {
+    for (name in names(custom_voc_mapping)) {
+      variant_df <- variant_df %>% mutate(lineage_collapsed = case_when(
+        pangolin_lineage %in% !!name ~ custom_voc_mapping[[!!name]],
+        TRUE ~ lineage_collapsed
+      ))
+    }
+  }
+  variant_df$pangolin_lineage <- NULL
+  variant_df <- variant_df %>%
+    group_by(MonthYearCollected, lineage_collapsed) %>%
+    summarise_all(list(value = sum)) %>%
+    ungroup()
+  variant_df$prevalence <- as.numeric(variant_df$prevalence)
+  variant_df$MonthYearCollectedFactor <- factor(as.character(variant_df$MonthYearCollected),
+    levels = as.character(sort(unique(variant_df$MonthYearCollected)))
+  )
+
+  return(variant_df)
+}
+
+#' Summarize the total number of variants per month
+#' @param variant_df A dataframe
+#' @returns A dataframe with monthwise counts of each variant sequenced
+#' @importFrom dplyr count group_by ungroup
+SummarizeVariantsMonthwise <- function(variant_df) {
+  df <- df %>%
+    group_by(MonthYearCollected, pangolin_lineage) %>%
+    count() %>%
+    ungroup()
+  return(df)
+}
+
+#' Convert monthwise counts to prevalence
+#' @param variant_df A dataframe
+#' @returns A dataframe with monthwise prevalence of variants
+#' @importFrom magrittr %>%
+#' @importFrom stringr str_to_title
+#' @importFrom dplyr group_by mutate summarise ungroup filter
+CountsToPrevalence <- function(variant_df) {
+  variant_df <- variant_df %>%
+    group_by(MonthYearCollected) %>%
+    mutate(n_sum = sum(n)) %>%
+    ungroup() %>%
+    group_by(MonthYearCollected, pangolin_lineage) %>%
+    summarise(prevalence = 100 * n / n_sum) %>%
+    ungroup() %>%
+    filter(!is.na(MonthYearCollected))
+  return(variant_df)
+}
+
+
+#' Get total number of sequenced samples per month in a Country
+#' @returns A dataframe with sequencing statistics per state per country
+#' @importFrom dplyr arrange count group_by rename
+#' @importFrom tidyr drop_na
+#' @export
+TotalSequencesPerMonthStatewise <- function(variant_df, drop_country = FALSE) {
+  df <- variant_df %>%
+    group_by(Country, State, MonthYearCollected) %>%
+    count() %>%
+    arrange(Country, State, MonthYearCollected) %>%
+    drop_na() %>%
+    rename(MonthYear = MonthYearCollected, value = n)
+
+  if (drop_country) {
+    df$Country <- NULL
+  }
+
+  return(df)
+}
+
+#' Get total sequenced samples per country
+#' @param variant_df A dataframe
+#' @returns A dataframe with sequencing statistics per country
+#' @importFrom dplyr arrange count group_by rename
+#' @importFrom tidyr drop_na
+#' @export
+TotalSequencesPerMonthCountrywise <- function(variant_df, rename_country_as_state = TRUE) {
+  df <- variant_df %>%
+    group_by(Country, MonthYearCollected) %>%
+    count() %>%
+    arrange(Country, MonthYearCollected) %>%
+    drop_na() %>%
+    rename(MonthYear = MonthYearCollected, value = n)
+
+  if (rename_country_as_state) {
+    # drop the country
+    # replace the state with
+    df$State <- df$Country
+    df$Country <- NULL
+  }
+  return(df)
 }
