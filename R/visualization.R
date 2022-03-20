@@ -22,12 +22,13 @@ EpicovrTheme <- function() {
 #' Plot heatmap of cases sequenced
 #' @param cases_and_shared A dataframe containing counts of confirmed cases and sequenced cases
 #' @returns A heatmap of total percentage of cases sequenced
-#' @export
 #' @importFrom ggplot2 ggplot geom_tile geom_text scale_color_identity
 #' scale_fill_gradient2 labs guides theme ylab xlab element_text element_blank
 #' scale_x_discrete
 #' @importFrom hrbrthemes theme_ipsum
 #' @importFrom ggtext element_markdown
+#' @importFrom patchwork wrap_plots
+#' @export
 PlotSequencedPropHeatmap <- function(df) {
   p <- ggplot(df, aes(MonthYear,
     State,
@@ -55,31 +56,71 @@ PlotSequencedPropHeatmap <- function(df) {
     ylab("") +
     EpicovrTheme()
 
-  return(p)
+  return(wrap_plots(p))
 }
 
+#' @importFrom magrittr %>%
+#' @importFrom tibble deframe
 #' @importFrom ggplot2 coord_cartesian ggplot geom_bar geom_text scale_y_continuous scale_x_discrete xlab ylab guide_axis
-#' @importFrom scales comma label_number_si
+#' @importFrom scales comma label_percent label_number_si
 #' @importFrom ggtext element_markdown
+#' @importFrom patchwork wrap_plots
 #' @export
-BarPlot <- function(df, yaxis="value", ylabel=NULL) {
+BarPlot <- function(df, yaxis = "value", color = "dodgerblue2", ylabel = NULL, label_si = FALSE,
+                    label_as_percent = TRUE) {
   df$MonthYearFactor <- as.factor(df$MonthYear)
+  values <- df %>% pull(!!yaxis)
+  is_int <- (values[length(values)] %% 1 == 0)
   p <- ggplot(df, aes_string("MonthYearFactor", yaxis)) +
-    geom_bar(stat = "identity", fill="dodgerblue2") +
-    #geom_text(data=df, mapping = aes_string(label=deparse(comma(yaxis, accuracy = 1))),
-    #          position=position_dodge(width=0.9), vjust=-0.25) +
-    scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
+    geom_bar(stat = "identity", fill = color)
+  if (is_int) {
+    if (!label_si) {
+      df[, paste0(yaxis, "_acc")] <- comma(x = values, accuracy = 1)
+      p <- p + geom_text(
+        data = df,
+        mapping = aes_string(
+          label = paste0(yaxis, "_acc")
+        ),
+        position = position_dodge(width = 0.9), vjust = -0.25
+      )
+    } else {
+      df[, paste0(yaxis, "_acc")] <- label_number_si(accuracy = 1)(values)
+      p <- p + geom_text(
+        data = df,
+        mapping = aes_string(
+          label = paste0(yaxis, "_acc")
+        ),
+        position = position_dodge(width = 0.9), vjust = -0.25
+      )
+    }
+  } else {
+    if (label_as_percent) {
+      df[, paste0(yaxis, "_acc")] <- label_percent(accuracy = .1)(values / 100)
+    } else {
+      df[, paste0(yaxis, "_acc")] <- round(x = values, digits = 2)
+    }
+
+    p <- p + geom_text(
+      data = df,
+      mapping = aes_string(
+        label = paste0(yaxis, "_acc")
+      ),
+      position = position_dodge(width = 0.9), vjust = -0.25
+    )
+  }
+  p <- p + scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
     scale_x_discrete(guide = guide_axis(angle = 30)) +
     xlab("") +
     ylab(ylabel) +
     EpicovrTheme() +
     coord_cartesian(clip = "off")
-  return(p)
+  return(wrap_plots(p))
 }
 
 #' @importFrom ggplot2 ggplot geom_bar labs scale_fill_brewer scale_x_discrete xlab ylab guide_axis
 #' @importFrom scales label_number_si
 #' @importFrom ggtext element_markdown
+#' @importFrom patchwork wrap_plots
 #' @export
 StackedBarPlotPrevalence <- function(prevalence_df) {
   p <- ggplot(
@@ -97,5 +138,5 @@ StackedBarPlotPrevalence <- function(prevalence_df) {
     ylab("% composition of variant") +
     labs(caption = "**Source:** gisaid.org<br>") +
     scale_x_discrete(guide = guide_axis(angle = 30))
-  return(p)
+  return(wrap_plots(p))
 }

@@ -101,7 +101,8 @@
 <h3 id="plot-cases-for-india">Plot cases for India<a class="anchor" aria-label="anchor" href="#plot-cases-for-india"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">BarPlotCasesPerMonth</span><span class="op">(</span><span class="va">india_cases</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">india_cases</span>, ylabel <span class="op">=</span> <span class="st">"Cases per month"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">p1</span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-3-1.png" width="768"></p>
 </div>
 </div>
@@ -111,27 +112,59 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadGISAIDMetada.html">ReadGISAIDMetada</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_03_17.tar.xz"</span><span class="op">)</span></code></pre></div>
 <div class="section level3">
-<h3 id="plot-proportion-of-cases-that-been-deposited-from-india">Plot proportion of cases that been deposited from India<a class="anchor" aria-label="anchor" href="#plot-proportion-of-cases-that-been-deposited-from-india"></a>
+<h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span>
-
-<span class="va">state_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthStatewise.html">TotalSequencesPerMonthStatewise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, drop_country <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">country_seq_stats</span>, <span class="va">state_seq_stats</span><span class="op">)</span>
-
-<span class="va">india_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">india_sequencing_proportion</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CombineSequencedCases.html">CombineSequencedCases</a></span><span class="op">(</span>cases_sequenced <span class="op">=</span> <span class="va">seq_stats</span>,
-                                                     confirmed_long <span class="op">=</span> <span class="va">india_cases_long</span>,
-                                                     month.min <span class="op">=</span> <span class="st">"Feb 2020"</span>,
-                                                     month.max <span class="op">=</span> <span class="st">"Feb 2022"</span>,
-                                                     max.percent <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="va">india_sequencing_proportion</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">india_sequencing_proportion</span><span class="op">$</span><span class="va">State</span>, 
-                                            levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="../reference/GetIndianStates.html">GetIndianStates</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/PlotSequencedPropHeatmap.html">PlotSequencedPropHeatmap</a></span><span class="op">(</span><span class="va">india_sequencing_proportion</span><span class="op">)</span></code></pre></div>
-<p><img src="Introduction_files/figure-html/unnamed-chunk-5-1.png" width="1056">
-# Plot Prevalence</p>
+<span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">p2</span></code></pre></div>
+<p><img src="Introduction_files/figure-html/unnamed-chunk-5-1.png" width="768"></p>
+</div>
+<div class="section level3">
+<h3 id="overall-how-much-has-india-sequenced-over-months">Overall, how much has India sequenced over months?<a class="anchor" aria-label="anchor" href="#overall-how-much-has-india-sequenced-over-months"></a>
+</h3>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">india_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span>
+<span class="va">india_sequencing_proportion</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CombineSequencedCases.html">CombineSequencedCases</a></span><span class="op">(</span>
+  cases_sequenced <span class="op">=</span> <span class="va">country_seq_stats</span>,
+  confirmed_long <span class="op">=</span> <span class="va">india_cases_long</span>
+<span class="op">)</span>
+<span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">india_sequencing_proportion</span>, yaxis <span class="op">=</span> <span class="st">"percent_sequenced_collected"</span>, ylabel <span class="op">=</span> <span class="st">"%  deposited to GISAID"</span>, color <span class="op">=</span> <span class="st">"yellowgreen"</span><span class="op">)</span>
+<span class="va">p3</span></code></pre></div>
+<p><img src="Introduction_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
+<p>We can combine all the three plots at once:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span></code></pre></div>
+<p><img src="Introduction_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
+</div>
+<div class="section level3">
+<h3 id="plot-proportion-of-cases-that-been-deposited-from-india">Plot proportion of cases that been deposited from India<a class="anchor" aria-label="anchor" href="#plot-proportion-of-cases-that-been-deposited-from-india"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">state_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthStatewise.html">TotalSequencesPerMonthStatewise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, drop_country <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">country_seq_stats</span>, <span class="va">state_seq_stats</span><span class="op">)</span>
+<span class="va">state_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">india_sequencing_proportion</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CombineSequencedCases.html">CombineSequencedCases</a></span><span class="op">(</span>
+  cases_sequenced <span class="op">=</span> <span class="va">seq_stats</span>,
+  confirmed_long <span class="op">=</span> <span class="va">state_cases_long</span>,
+  month.min <span class="op">=</span> <span class="st">"Feb 2020"</span>,
+  month.max <span class="op">=</span> <span class="st">"Feb 2022"</span>,
+  max.percent <span class="op">=</span> <span class="fl">5</span>
+<span class="op">)</span>
+<span class="va">india_sequencing_proportion</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span>
+  x <span class="op">=</span> <span class="va">india_sequencing_proportion</span><span class="op">$</span><span class="va">State</span>,
+  levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="../reference/GetIndianStates.html">GetIndianStates</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PlotSequencedPropHeatmap.html">PlotSequencedPropHeatmap</a></span><span class="op">(</span><span class="va">india_sequencing_proportion</span><span class="op">)</span>
+<span class="va">p4</span></code></pre></div>
+<p><img src="Introduction_files/figure-html/unnamed-chunk-8-1.png" width="1056"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="plot-prevalence">Plot Prevalence<a class="anchor" aria-label="anchor" href="#plot-prevalence"></a>
+</h2>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">india_month_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsMonthwise.html">SummarizeVariantsMonthwise</a></span><span class="op">(</span><span class="va">gisaid_india</span><span class="op">)</span>
 <span class="va">india_month_counts</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"India"</span>
 <span class="va">india_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CountsToPrevalence.html">CountsToPrevalence</a></span><span class="op">(</span><span class="va">india_month_counts</span><span class="op">)</span>
@@ -141,13 +174,15 @@
   `BA.1.1` <span class="op">=</span> <span class="st">"Omicron-BA.1.1"</span>, `BA.1` <span class="op">=</span> <span class="st">"Omicron-BA.1"</span>,
   `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>
 <span class="op">)</span>
-<span class="va">india_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>variant_df <span class="op">=</span> <span class="va">india_month_prevalence</span>, 
-                                                vocs <span class="op">=</span> <span class="va">vocs</span>, 
-                                                custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span><span class="op">)</span>
+<span class="va">india_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
+  variant_df <span class="op">=</span> <span class="va">india_month_prevalence</span>,
+  vocs <span class="op">=</span> <span class="va">vocs</span>,
+  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>
+<span class="op">)</span>
 
-<span class="fu">StackedBarPlotPrevalence</span><span class="op">(</span><span class="va">india_month_prevalence</span><span class="op">)</span></code></pre></div>
-<p><img src="Introduction_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
-</div>
+<span class="va">p5</span> <span class="op">&lt;-</span> <span class="fu">StackedBarPlotPrevalence</span><span class="op">(</span><span class="va">india_month_prevalence</span><span class="op">)</span>
+<span class="va">p5</span></code></pre></div>
+<p><img src="Introduction_files/figure-html/unnamed-chunk-9-1.png" width="768"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
