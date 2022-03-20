@@ -23,7 +23,7 @@ head(india_cases)
 ## Plot cases for India
 
 ```{r, fig.width=8, fig.height=5}
-BarPlotCasesPerMonth(india_cases)
+BarPlot(india_cases, ylabel = "Cases per month")
 ```
 
 
@@ -34,19 +34,37 @@ gisaid_metadata <- ReadGISAIDMetada(path = "~/github/2021_Covid19_surveillance/d
 ```
 
 
+## Plot total seqeunced cases
+
+
+```{r, fig.width=8, fig.height=5}
+gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
+country_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_india, rename_country_as_state = TRUE)
+BarPlot(country_seq_stats, ylabel ="Cases sequenced per month")
+```
+
+
+## Overall, how much has India sequenced over months?
+
+```{r}
+india_cases_long <- GetIndiaConfirmedCasesMonthlyLong() %>% filter(State == "India")
+india_sequencing_proportion <- CombineSequencedCases(cases_sequenced = country_seq_stats,
+                                                     confirmed_long = india_cases_long,
+                                                     month.min = "Mar 2020")
+BarPlot(india_sequencing_proportion, yaxis = "percent_sequenced_collected")
+```
 
 ## Plot proportion of cases that been deposited from India
 
 ```{r, fig.width=11, fig.height=11, warning=FALSE, message=FALSE}
-gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
-
 state_seq_stats <- TotalSequencesPerMonthStatewise(gisaid_india, drop_country = TRUE)
-country_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_india, rename_country_as_state = TRUE)
+
 seq_stats <- rbind(country_seq_stats, state_seq_stats)
 
-india_cases_long <- GetIndiaConfirmedCasesMonthlyLong()
+
+state_cases_long <- GetIndiaConfirmedCasesMonthlyLong()
 india_sequencing_proportion <- CombineSequencedCases(cases_sequenced = seq_stats,
-                                                     confirmed_long = india_cases_long,
+                                                     confirmed_long = state_cases_long,
                                                      month.min = "Feb 2020",
                                                      month.max = "Feb 2022",
                                                      max.percent = 5)
@@ -54,7 +72,9 @@ india_sequencing_proportion$State <- factor(x = india_sequencing_proportion$Stat
                                             levels = as.character(GetIndianStates()))
 PlotSequencedPropHeatmap(india_sequencing_proportion)
 ```
+
 # Plot Prevalence
+
 ```{r, fig.width=8, fig.height=5}
 india_month_counts <- SummarizeVariantsMonthwise(gisaid_india)
 india_month_counts$State <- "India"

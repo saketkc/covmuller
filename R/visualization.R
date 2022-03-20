@@ -58,18 +58,22 @@ PlotSequencedPropHeatmap <- function(df) {
   return(p)
 }
 
-#' @importFrom ggplot2 ggplot geom_bar scale_y_continuous scale_x_discrete xlab ylab guide_axis
-#' @importFrom scales label_number_si
+#' @importFrom ggplot2 coord_cartesian ggplot geom_bar geom_text scale_y_continuous scale_x_discrete xlab ylab guide_axis
+#' @importFrom scales comma label_number_si
 #' @importFrom ggtext element_markdown
 #' @export
-BarPlotCasesPerMonth <- function(cases_df) {
-  p <- ggplot(cases_df, aes(factor(MonthYear), value)) +
-    geom_bar(stat = "identity") +
+BarPlot <- function(df, yaxis="value", ylabel=NULL) {
+  df$MonthYearFactor <- as.factor(df$MonthYear)
+  p <- ggplot(df, aes_string("MonthYearFactor", yaxis)) +
+    geom_bar(stat = "identity", fill="dodgerblue2") +
+    #geom_text(data=df, mapping = aes_string(label=deparse(comma(yaxis, accuracy = 1))),
+    #          position=position_dodge(width=0.9), vjust=-0.25) +
     scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
     scale_x_discrete(guide = guide_axis(angle = 30)) +
     xlab("") +
-    ylab("Cases per month") +
-    EpicovrTheme()
+    ylab(ylabel) +
+    EpicovrTheme() +
+    coord_cartesian(clip = "off")
   return(p)
 }
 
