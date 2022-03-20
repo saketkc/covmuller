@@ -183,7 +183,7 @@ CombineSequencedCases <- function(cases_sequenced, confirmed_long,
 #' @returns A dataframe with only Indian entries in Human and where the date is known
 #' @export
 #' @importFrom magrittr %>%
-#' @importFrom dplyr bind_rows funs group_by summarise_all
+#' @importFrom dplyr bind_rows group_by summarise_all
 FilterGISAIDIndia <- function(gisaid_metadata_all) {
   gisaid_india_all <- gisaid_metadata_all %>%
     filter(Country == "India") %>%
@@ -230,9 +230,8 @@ CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mappi
   variant_df$pangolin_lineage <- NULL
   variant_df <- variant_df %>%
     group_by(MonthYearCollected, lineage_collapsed) %>%
-    summarise_all(list(value = sum)) %>%
+    summarise_all(list(prevalence = sum)) %>%
     ungroup()
-  variant_df$prevalence <- as.numeric(variant_df$prevalence)
   variant_df$MonthYearCollectedFactor <- factor(as.character(variant_df$MonthYearCollected),
     levels = as.character(sort(unique(variant_df$MonthYearCollected)))
   )
@@ -246,11 +245,11 @@ CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mappi
 #' @importFrom dplyr count group_by ungroup
 #' @export
 SummarizeVariantsMonthwise <- function(variant_df) {
-  df <- df %>%
+  variant_df <- variant_df %>%
     group_by(MonthYearCollected, pangolin_lineage) %>%
     count() %>%
     ungroup()
-  return(df)
+  return(variant_df)
 }
 
 #' Convert monthwise counts to prevalence
@@ -269,6 +268,7 @@ CountsToPrevalence <- function(variant_df) {
     summarise(prevalence = 100 * n / n_sum) %>%
     ungroup() %>%
     filter(!is.na(MonthYearCollected))
+  variant_df$prevalence <- as.numeric(variant_df$prevalence)
   return(variant_df)
 }
 
@@ -285,11 +285,9 @@ TotalSequencesPerMonthStatewise <- function(variant_df, drop_country = FALSE) {
     arrange(Country, State, MonthYearCollected) %>%
     drop_na() %>%
     rename(MonthYear = MonthYearCollected, value = n)
-
   if (drop_country) {
     df$Country <- NULL
   }
-
   return(df)
 }
 

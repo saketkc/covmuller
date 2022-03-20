@@ -25,6 +25,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Introduction.html">Introduction to epicovr</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling.html">Multinomial modeling</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -54,13 +55,22 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">CombineSequencedCases</span><span class="op">(</span><span class="va">cases_sequenced</span>, <span class="va">confirmed_long</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">CombineSequencedCases</span><span class="op">(</span>
+  <span class="va">cases_sequenced</span>,
+  <span class="va">confirmed_long</span>,
+  prune_oversequenced <span class="op">=</span> <span class="cn">TRUE</span>,
+  month.min <span class="op">=</span> <span class="cn">NULL</span>,
+  month.max <span class="op">=</span> <span class="cn">NULL</span>,
+  max.percent <span class="op">=</span> <span class="fl">100</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>cases_sequenced</dt>
 <dd><p>A long dataframe of per state sequenced cases</p></dd>
+<dt>prune_oversequenced</dt>
+<dd><p>Whether to round of percentages above 100 to 100. Default is TRUE</p></dd>
 <dt>cases_total</dt>
 <dd><p>A long dataframe of total monthly cases</p></dd>
 </dl></div>

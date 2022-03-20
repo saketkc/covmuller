@@ -54,7 +54,7 @@ GetIndiaDailyData <- function(url = "https://data.covid19bharat.org/csv/latest/s
 #' @returns A data frame containing daily cases for each state
 
 #' @importFrom magrittr %>%
-#' @importFrom dplyr arrange funs group_by summarise_all
+#' @importFrom dplyr arrange group_by summarise_all
 #
 #' @export
 GetIndiaDailyCasesCumulative <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv", status = "Confirmed") {
@@ -84,7 +84,7 @@ GetIndiaDailyCasesCumulative <- function(url = "https://data.covid19bharat.org/c
 #' @returns A data frame containing daily cases for each state
 
 #' @importFrom magrittr %>%
-#' @importFrom dplyr arrange funs group_by summarise_all
+#' @importFrom dplyr arrange group_by summarise_all
 #
 #' @export
 GetIndiaConfirmedCasesCumulative <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
@@ -97,7 +97,7 @@ GetIndiaConfirmedCasesCumulative <- function(url = "https://data.covid19bharat.o
 #' @returns A data frame containing daily cases for each state
 
 #' @importFrom magrittr %>%
-#' @importFrom dplyr arrange funs group_by summarise_all
+#' @importFrom dplyr arrange group_by summarise_all
 #
 #' @export
 GetIndiaDeceasedCasesCumulative <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
@@ -118,7 +118,7 @@ GetIndiaHospitalization <- function(url = "") {
 #' @returns A data frame containing monthly cases for each state in long form
 
 #' @importFrom magrittr %>%
-#' @importFrom dplyr arrange funs group_by summarise_all rename
+#' @importFrom dplyr arrange group_by summarise_all rename
 #' @importFrom reshape2 melt
 #' @export
 GetIndiaConfirmedCasesMonthlyLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
@@ -129,7 +129,7 @@ GetIndiaConfirmedCasesMonthlyLong <- function(url = "https://data.covid19bharat.
   confirmed_subset <- confirmed[, c("MonthYear", as.character(state_names))]
   confirmed_subset_monthwise <- confirmed_subset %>%
     group_by(MonthYear) %>%
-    summarise_all(funs(sum)) %>%
+    summarise_all(list(~ sum(., na.rm=TRUE))) %>%
     arrange(MonthYear)
   confirmed_subset_monthwise_long <- melt(data = confirmed_subset_monthwise, id.vars = "MonthYear", varnames = c("State")) %>%
     rename(State = variable)

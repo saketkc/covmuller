@@ -14,10 +14,8 @@ suppressPackageStartupMessages({
 # Get cases data
 
 ```{r}
-
 indian_state_cases <- GetIndiaConfirmedCasesMonthlyLong()
 india_cases <- indian_state_cases %>% filter(State == "India")
-
 head(india_cases)
 ```
 
@@ -52,26 +50,24 @@ india_sequencing_proportion <- CombineSequencedCases(cases_sequenced = seq_stats
                                                      month.min = "Feb 2020",
                                                      month.max = "Feb 2022",
                                                      max.percent = 5)
-india_sequencing_proportion$State <- factor(x = india_sequencing_proportion$State, levels = as.character(GetIndianStates()))
+india_sequencing_proportion$State <- factor(x = india_sequencing_proportion$State, 
+                                            levels = as.character(GetIndianStates()))
 PlotSequencedPropHeatmap(india_sequencing_proportion)
 ```
-
-```{r}
+# Plot Prevalence
+```{r, fig.width=8, fig.height=5}
 india_month_counts <- SummarizeVariantsMonthwise(gisaid_india)
 india_month_counts$State <- "India"
 india_month_prevalence <- CountsToPrevalence(india_month_counts)
 vocs <- GetVOCs()
+vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
   `BA.1.1` = "Omicron-BA.1.1", `BA.1` = "Omicron-BA.1",
-  `BA.1` = "Omicron-BA.2"
+  `BA.2` = "Omicron-BA.2"
 )
 india_month_prevalence <- CollapseLineageToVOCs(variant_df = india_month_prevalence, 
                                                 vocs = vocs, 
                                                 custom_voc_mapping = custom_voc_mapping)
-```
 
-
-
-```{r, fig.width=8, fig.height=5}
 StackedBarPlotPrevalence(india_month_prevalence)
 ```
