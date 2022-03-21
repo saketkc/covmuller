@@ -12,4 +12,4 @@ Epicovr currently supports the following features:
 * Plot percentage of cases sequenced
 
 
-Please see the Introduction [vignette](articles/introduction.html) for examples.
+Please see the Introduction [vignette](articles/Introduction.html) for examples.
