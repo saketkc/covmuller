@@ -43,6 +43,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Introduction.html">Introduction to epicovr</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling.html">Multinomial modeling</a>
+    <a class="dropdown-item" href="../articles/VariantAnimation.html">Animation of projected weekly cases</a>
   </div>
 </li>
       </ul>
@@ -81,7 +82,113 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span>
   <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/epicovr" class="external-link">epicovr</a></span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span></code></pre></div>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">nnet</a></span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/EpicovrTheme.html">EpicovrTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">gisaid_india_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
+  variant_df <span class="op">=</span> <span class="va">gisaid_india</span>,
+  vocs <span class="op">=</span> <span class="va">vocs</span>,
+  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,
+  summarize <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span>
+
+<span class="va">gisaid_india_shared_dateweek</span> <span class="op">&lt;-</span> <span class="va">gisaid_india_collapsed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Nov 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">DateCollectedNumeric</span>, <span class="va">State</span>, <span class="va">lineage_collapsed</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>total_sequences <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">DateCollectedNumeric</span>, <span class="va">State</span>, <span class="va">lineage_collapsed</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## `summarise()` has grouped output by 'DateCollectedNumeric', 'State'. You can</span>
+<span class="co">## override using the `.groups` argument.</span></code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span>
+<span class="co">## <span style="color: #949494;"># Groups:   DateCollectedNumeric, State [4]</span></span>
+<span class="co">##   DateCollectedNumeric State          lineage_collapsed total_sequences</span>
+<span class="co">##                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="co">## <span style="color: #BCBCBC;">1</span>                <span style="text-decoration: underline;">18</span>932 Andhra Pradesh Delta                          26</span>
+<span class="co">## <span style="color: #BCBCBC;">2</span>                <span style="text-decoration: underline;">18</span>932 Andhra Pradesh Others                          9</span>
+<span class="co">## <span style="color: #BCBCBC;">3</span>                <span style="text-decoration: underline;">18</span>932 Assam          Delta                           3</span>
+<span class="co">## <span style="color: #BCBCBC;">4</span>                <span style="text-decoration: underline;">18</span>932 Assam          Others                          1</span>
+<span class="co">## <span style="color: #BCBCBC;">5</span>                <span style="text-decoration: underline;">18</span>932 Chandigarh     Others                          1</span>
+<span class="co">## <span style="color: #BCBCBC;">6</span>                <span style="text-decoration: underline;">18</span>932 Chhattisgarh   Delta                           1</span></code></pre>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">multinom</a></span><span class="op">(</span>
+  formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">as.formula</a></span><span class="op">(</span><span class="st">"lineage_collapsed ~ State + DateCollectedNumeric"</span><span class="op">)</span>,
+  data <span class="op">=</span> <span class="va">gisaid_india_shared_dateweek</span>,
+  weights <span class="op">=</span> <span class="va">gisaid_india_shared_dateweek</span><span class="op">$</span><span class="va">total_sequences</span>,
+  maxit <span class="op">=</span> <span class="fl">1000</span>
+<span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## # weights:  228 (185 variable)</span>
+<span class="co">## initial  value 94472.309775 </span>
+<span class="co">## iter  10 value 65576.971506</span>
+<span class="co">## iter  20 value 63566.259346</span>
+<span class="co">## iter  30 value 62507.097461</span>
+<span class="co">## iter  40 value 60022.645959</span>
+<span class="co">## iter  50 value 58194.288475</span>
+<span class="co">## iter  60 value 55197.479476</span>
+<span class="co">## iter  70 value 51557.245571</span>
+<span class="co">## iter  80 value 45234.912491</span>
+<span class="co">## iter  90 value 42168.248919</span>
+<span class="co">## iter 100 value 40883.922255</span>
+<span class="co">## iter 110 value 40294.351854</span>
+<span class="co">## iter 120 value 39842.171387</span>
+<span class="co">## iter 130 value 39499.557036</span>
+<span class="co">## iter 140 value 39363.752274</span>
+<span class="co">## iter 150 value 39270.708997</span>
+<span class="co">## iter 160 value 39227.811043</span>
+<span class="co">## iter 170 value 39213.089571</span>
+<span class="co">## iter 180 value 39211.255860</span>
+<span class="co">## iter 190 value 39209.716064</span>
+<span class="co">## final  value 39209.628430 </span>
+<span class="co">## converged</span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">date.from</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">$</span><span class="va">DateCollectedNumeric</span><span class="op">)</span>
+<span class="va">date.to</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">$</span><span class="va">DateCollectedNumeric</span><span class="op">)</span>
+
+<span class="va">fit_india_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>,
+  <span class="op">~</span><span class="va">lineage_collapsed</span>,
+  by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DateCollectedNumeric"</span>, <span class="st">"State"</span><span class="op">)</span>,
+  at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>DateCollectedNumeric <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">date.from</span>, <span class="va">date.to</span>, by <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span>,
+  mode <span class="op">=</span> <span class="st">"prob"</span>, df <span class="op">=</span> <span class="cn">NA</span>
+<span class="op">)</span><span class="op">)</span>
+
+<span class="va">fit_india_multi_predsbystate</span><span class="op">$</span><span class="va">DateCollected</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">fit_india_multi_predsbystate</span><span class="op">$</span><span class="va">DateCollectedNumeric</span>, origin <span class="op">=</span> <span class="st">"1970-01-01"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_india_multi_predsbystate</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric             State         prob</span>
+<span class="co">## 1             Alpha                18932 Andaman &amp; Nicobar 8.495304e-14</span>
+<span class="co">## 2             Delta                18932 Andaman &amp; Nicobar 9.957438e-01</span>
+<span class="co">## 3      Omicron-BA.1                18932 Andaman &amp; Nicobar 2.870979e-03</span>
+<span class="co">## 4    Omicron-BA.1.1                18932 Andaman &amp; Nicobar 1.310175e-03</span>
+<span class="co">## 5      Omicron-BA.2                18932 Andaman &amp; Nicobar 7.499924e-05</span>
+<span class="co">## 6            Others                18932 Andaman &amp; Nicobar 2.679038e-08</span>
+<span class="co">##             SE df     asymp.LCL    asymp.UCL DateCollected</span>
+<span class="co">## 1 5.961578e-14 NA -3.189173e-14 2.017978e-13    2021-11-01</span>
+<span class="co">## 2 7.671099e-05 NA  9.955935e-01 9.958942e-01    2021-11-01</span>
+<span class="co">## 3 5.817258e-05 NA  2.756963e-03 2.984995e-03    2021-11-01</span>
+<span class="co">## 4 3.125055e-05 NA  1.248925e-03 1.371425e-03    2021-11-01</span>
+<span class="co">## 5 1.330554e-06 NA  7.239140e-05 7.760708e-05    2021-11-01</span>
+<span class="co">## 6 5.405045e-10 NA  2.573101e-08 2.784975e-08    2021-11-01</span></code></pre>
+<div class="section level2">
+<h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
+</h2>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">muller_indiabystate_mfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">fit_india_multi_predsbystate</span>,
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DateCollected</span>, y <span class="op">=</span> <span class="va">prob</span>, group <span class="op">=</span> <span class="va">lineage_collapsed</span><span class="op">)</span>
+<span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">State</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_area</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fl">1.2</span><span class="op">)</span>, colour <span class="op">=</span> <span class="cn">NULL</span>, fill <span class="op">=</span> <span class="va">lineage_collapsed</span>, group <span class="op">=</span> <span class="va">lineage_collapsed</span><span class="op">)</span>, position <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, name <span class="op">=</span> <span class="st">"Pangolin lineage"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>date_breaks <span class="op">=</span> <span class="st">"1 month"</span>, date_labels <span class="op">=</span>  <span class="st">"%b %Y"</span><span class="op">)</span> 
+
+<span class="va">muller_indiabystate_mfit</span></code></pre></div>
+<p><img src="MultinomialModeling_files/figure-html/unnamed-chunk-5-1.png" width="1248"></p>
+</div>
   </main>
 </div>
 
