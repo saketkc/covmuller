@@ -4,7 +4,12 @@
 \alias{CollapseLineageToVOCs}
 \title{Collpase pangolin lineage a list of VOCs}
 \usage{
-CollapseLineageToVOCs(variant_df, vocs = GetVOCs(), custom_voc_mapping = NULL)
+CollapseLineageToVOCs(
+  variant_df,
+  vocs = GetVOCs(),
+  custom_voc_mapping = NULL,
+  summarize = TRUE
+)
 }
 \arguments{
 \item{variant_df}{A dataframe with "pangolin_lineage" column}

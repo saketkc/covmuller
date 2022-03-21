@@ -4,7 +4,7 @@
 \alias{SummarizeVariantsMonthwise}
 \title{Summarize the total number of variants per month}
 \usage{
-SummarizeVariantsMonthwise(variant_df)
+SummarizeVariantsMonthwise(variant_df, by_state = FALSE)
 }
 \arguments{
 \item{variant_df}{A dataframe}

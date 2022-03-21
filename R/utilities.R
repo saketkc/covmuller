@@ -205,10 +205,10 @@ FilterGISAIDIndia <- function(gisaid_metadata_all) {
 #' @returns  A dataframe with a new column "lineage_collpased".
 #'
 #' @importFrom magrittr %>%
-#' @importFrom dplyr case_when  group_by mutate summarise_all
+#' @importFrom dplyr case_when  group_by mutate select_if summarise_all
 #' @importFrom stringr str_to_title
 #' @export
-CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mapping = NULL) {
+CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mapping = NULL, summarize = TRUE) {
   if (!"pangolin_lineage" %in% colnames(variant_df)) {
     stop("pangolin_lineage column is not present in the input")
   }
@@ -228,10 +228,13 @@ CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mappi
     }
   }
   variant_df$pangolin_lineage <- NULL
-  variant_df <- variant_df %>%
-    group_by(MonthYearCollected, lineage_collapsed) %>%
-    summarise_all(list(prevalence = sum)) %>%
-    ungroup()
+  if (summarize) {
+    variant_df <- variant_df %>%
+      group_by(MonthYearCollected, lineage_collapsed) %>%
+      select_if(is.numeric) %>%
+      summarise_all(list(prevalence = sum)) %>%
+      ungroup()
+  }
   variant_df$MonthYearCollectedFactor <- factor(as.character(variant_df$MonthYearCollected),
     levels = as.character(sort(unique(variant_df$MonthYearCollected)))
   )
@@ -244,11 +247,19 @@ CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mappi
 #' @returns A dataframe with monthwise counts of each variant sequenced
 #' @importFrom dplyr count group_by ungroup
 #' @export
-SummarizeVariantsMonthwise <- function(variant_df) {
-  variant_df <- variant_df %>%
-    group_by(MonthYearCollected, pangolin_lineage) %>%
-    count() %>%
-    ungroup()
+SummarizeVariantsMonthwise <- function(variant_df, by_state = FALSE) {
+  if (by_state) {
+    variant_df <- variant_df %>%
+      group_by(State, MonthYearCollected, pangolin_lineage) %>%
+      count() %>%
+      ungroup()
+    return(variant_df)
+  } else {
+    variant_df <- variant_df %>%
+      group_by(MonthYearCollected, pangolin_lineage) %>%
+      count() %>%
+      ungroup()
+  }
   return(variant_df)
 }
 

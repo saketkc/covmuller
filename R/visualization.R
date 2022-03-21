@@ -4,9 +4,9 @@
 #' @export
 EpicovrTheme <- function() {
   themex <- hrbrthemes::theme_ipsum() + theme(
-    axis.text = element_text(size = 10, color = "black"),
-    axis.title.x = element_text(size = 14),
-    axis.title.y = element_text(size = 14),
+    axis.text = element_text(size = 9, color = "black"),
+    axis.title.x = element_text(size = 12),
+    axis.title.y = element_text(size = 12),
     axis.text.x = element_text(angle = 20),
     legend.position = "bottom", legend.direction = "horizontal",
     plot.title = element_text(face = "bold", hjust = 0.5),
@@ -81,7 +81,10 @@ BarPlot <- function(df, yaxis = "value", color = "dodgerblue2", ylabel = NULL, l
         mapping = aes_string(
           label = paste0(yaxis, "_acc")
         ),
-        position = position_dodge(width = 0.9), vjust = -0.25
+        position = position_dodge(width = 0.9),
+        hjust = -0.25,
+        angle = 90,
+        size=3
       )
     } else {
       df[, paste0(yaxis, "_acc")] <- label_number_si(accuracy = 1)(values)
@@ -90,7 +93,10 @@ BarPlot <- function(df, yaxis = "value", color = "dodgerblue2", ylabel = NULL, l
         mapping = aes_string(
           label = paste0(yaxis, "_acc")
         ),
-        position = position_dodge(width = 0.9), vjust = -0.25
+        position = position_dodge(width = 0.9),
+        hjust = -0.25,
+        angle = 90,
+        size=3
       )
     }
   } else {
@@ -105,7 +111,10 @@ BarPlot <- function(df, yaxis = "value", color = "dodgerblue2", ylabel = NULL, l
       mapping = aes_string(
         label = paste0(yaxis, "_acc")
       ),
-      position = position_dodge(width = 0.9), vjust = -0.25
+      position = position_dodge(width = 0.9),
+      hjust = -0.25,
+      angle = 90,
+      size=3
     )
   }
   p <- p + scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
