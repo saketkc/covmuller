@@ -28,6 +28,7 @@ ReadGISAIDMetada <- function(path, showProgress = FALSE, ...) {
     gisaid_metadata[, new_columns[i]] <- str_trim(string = gsub(pattern = "\\/", replacement = "", x = location_split[, i]))
   }
   gisaid_metadata$pangolin_lineage <- gisaid_metadata$`Pango lineage`
+  gisaid_metadata$`Pango lineage` <- NULL
   gisaid_metadata <- FormatGISAIDMetadata(df = gisaid_metadata)
   gisaid_metadata$delay <- gisaid_metadata$DateSubmitted - gisaid_metadata$DateCollected
   gisaid_metadata$delay <- as.numeric(gisaid_metadata$delay, units = "days")
@@ -47,17 +48,20 @@ ReadGISAIDMetada <- function(path, showProgress = FALSE, ...) {
 #'
 #' @importFrom  dplyr pull
 #' @importFrom lubridate year month week
+#' @importFrom tsibble yearweek
 #' @export
 FormatGISAIDMetadata <- function(df, collection_col = "Collection date", submission_col = "Submission date") {
   datecol_sel <- pull(df, as.name(collection_col))
   Date <- as.Date(datecol_sel, format = "%Y-%m-%d")
   df$DateCollected <- Date
-  df$MonthYearCollected <- GetMonthYear(
-    datecol = datecol_sel, datefmt = "%Y-%m-%d"
-  )
   df$YearCollected <- year(df$DateCollected)
   df$MonthCollected <- month(df$DateCollected)
   df$WeekCollected <- week(df$DateCollected)
+  df$MonthYearCollected <- GetMonthYear(
+    datecol = datecol_sel, datefmt = "%Y-%m-%d"
+  )
+  df$WeekYearCollected <- yearweek(df$DateCollected)
+
   df$DateCollectedNumeric <- as.numeric(df$DateCollected)
   df$MonthYearCollectedNumeric <- as.numeric(df$MonthYearCollected)
 
@@ -65,6 +69,8 @@ FormatGISAIDMetadata <- function(df, collection_col = "Collection date", submiss
   Date <- as.Date(datecol_sel, format = "%Y-%m-%d")
   df$DateSubmitted <- Date
   df$MonthYearSubmitted <- GetMonthYear(datecol = datecol_sel, datefmt = "%Y-%m-%d")
+  df$WeekYearSubmitted <- yearweek(datecol_sel)
+
   df$YearSubmitted <- year(df$DateSubmitted)
   df$MonthSubmitted <- month(df$DateSubmitted)
   df$WeekSubmitted <- week(df$DateSubmitted)

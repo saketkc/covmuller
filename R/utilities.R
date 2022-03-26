@@ -263,6 +263,28 @@ SummarizeVariantsMonthwise <- function(variant_df, by_state = FALSE) {
   return(variant_df)
 }
 
+#' Summarize the total number of variants per week
+#' @param variant_df A dataframe
+#' @returns A dataframe with monthwise counts of each variant sequenced
+#' @importFrom dplyr count group_by ungroup
+#' @export
+SummarizeVariantsWeekwise <- function(variant_df, by_state = FALSE) {
+
+  if (by_state) {
+    variant_df <- variant_df %>%
+      group_by(State, WeekYearCollected, lineage_collapsed) %>%
+      count() %>%
+      ungroup()
+    return(variant_df)
+  } else {
+    variant_df <- variant_df %>%
+      group_by(WeekYearCollected, lineage_collapsed) %>%
+      count() %>%
+      ungroup()
+  }
+}
+
+
 #' Convert monthwise counts to prevalence
 #' @param variant_df A dataframe
 #' @returns A dataframe with monthwise prevalence of variants
