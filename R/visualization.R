@@ -84,7 +84,7 @@ BarPlot <- function(df, yaxis = "value", color = "dodgerblue2", ylabel = NULL, l
         position = position_dodge(width = 0.9),
         hjust = -0.25,
         angle = 90,
-        size=3
+        size = 3
       )
     } else {
       df[, paste0(yaxis, "_acc")] <- label_number_si(accuracy = 1)(values)
@@ -96,7 +96,7 @@ BarPlot <- function(df, yaxis = "value", color = "dodgerblue2", ylabel = NULL, l
         position = position_dodge(width = 0.9),
         hjust = -0.25,
         angle = 90,
-        size=3
+        size = 3
       )
     }
   } else {
@@ -114,7 +114,7 @@ BarPlot <- function(df, yaxis = "value", color = "dodgerblue2", ylabel = NULL, l
       position = position_dodge(width = 0.9),
       hjust = -0.25,
       angle = 90,
-      size=3
+      size = 3
     )
   }
   p <- p + scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
@@ -148,4 +148,55 @@ StackedBarPlotPrevalence <- function(prevalence_df) {
     labs(caption = "**Source:** gisaid.org<br>") +
     scale_x_discrete(guide = guide_axis(angle = 30))
   return(wrap_plots(p))
+}
+
+#' @importFrom ggplot2 ggplot facet_wrap geom_area scale_fill_brewer scale_x_date xlab ylab guide_axis
+#' @importFrom scales label_number_si
+#' @importFrom ggtext element_markdown
+#' @importFrom patchwork wrap_plots
+#' @export
+#'
+PlotMullerDailyPrevalence <- function(df) {
+  p <- ggplot(
+    data = df,
+    aes(x = DateCollected, y = prob, group = lineage_collapsed)
+  ) +
+    facet_wrap(~State, ncol = 4) +
+    geom_area(aes(lwd = I(1.2), colour = NULL, fill = lineage_collapsed, group = lineage_collapsed), position = "stack") +
+    scale_fill_brewer(type = "qual", name = "Pangolin lineage") +
+    scale_x_date(date_breaks = "1 month", date_labels = "%b %Y")
+  wrap_plots(p)
+}
+
+#' @importFrom ggplot2 ggplot geom_line geom_label scale_fill_brewer scale_y_continuous xlab ylab labs ggtitle guide_axis theme element_text
+#' @importFrom scales label_number_si
+#' @importFrom gganimate transition_reveal view_follow animate gifski_renderer
+#' @importFrom tsibble scale_x_yearweek
+#' @importFrom ggtext element_markdown
+#' @importFrom patchwork wrap_plots
+#' @export
+#'
+PlotVariantPrevalenceAnimated <- function(df, title = NULL) {
+  the_anim <- ggplot(
+    df,
+    aes(x = WeekYearCollected, color = variant, y = value, group = variant)
+  ) +
+    geom_line() +
+    scale_x_yearweek(date_breaks = "1 month", date_labels = "%b %Y", guide = guide_axis(angle = 30)) +
+    scale_y_continuous(label = scales::label_number_si(accuracy = 1)) +
+    geom_label(hjust = 0, aes(label = variant), nudge_x = 10) +
+    geom_point() +
+    coord_cartesian(ylim = c(0, NA), clip = "off") +
+    scale_color_brewer(type = "qual", name = "Variant") +
+    xlab("") +
+    ylab("\nAverage weekly cases\n") +
+    ggtitle(title) +
+    labs(
+      subtitle = "Estimation based on a multinomial fit to weekly genomic surveillance data deposited to GISAID",
+      caption = "**Source: gisaid.org<br>**"
+    ) +
+    theme(legend.position = "none", axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
+  anim <- the_anim + transition_reveal(Date) + view_follow(fixed_y = c(0, NA), fixed_x = T) + transition_reveal(Date)
+  anim <- animate(anim, renderer = gifski_renderer(), height = 800, width = 1100, res = 120, nframes = 200, rewind = T, end_pause = 30)
+  return(anim)
 }

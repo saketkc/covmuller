@@ -227,8 +227,9 @@ CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mappi
       ))
     }
   }
-  variant_df$pangolin_lineage <- NULL
   if (summarize) {
+    variant_df$pangolin_lineage <- NULL
+
     variant_df <- variant_df %>%
       group_by(MonthYearCollected, lineage_collapsed) %>%
       select_if(is.numeric) %>%
@@ -246,19 +247,22 @@ CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mappi
 #' @param variant_df A dataframe
 #' @returns A dataframe with monthwise counts of each variant sequenced
 #' @importFrom dplyr count group_by ungroup
+#' @importFrom tidyr drop_na
 #' @export
 SummarizeVariantsMonthwise <- function(variant_df, by_state = FALSE) {
   if (by_state) {
     variant_df <- variant_df %>%
       group_by(State, MonthYearCollected, pangolin_lineage) %>%
       count() %>%
-      ungroup()
+      ungroup() %>%
+      drop_na()
     return(variant_df)
   } else {
     variant_df <- variant_df %>%
       group_by(MonthYearCollected, pangolin_lineage) %>%
       count() %>%
-      ungroup()
+      ungroup() %>%
+      drop_na()
   }
   return(variant_df)
 }
@@ -267,22 +271,49 @@ SummarizeVariantsMonthwise <- function(variant_df, by_state = FALSE) {
 #' @param variant_df A dataframe
 #' @returns A dataframe with monthwise counts of each variant sequenced
 #' @importFrom dplyr count group_by ungroup
+#' @importFrom tidyr drop_na
 #' @export
 SummarizeVariantsWeekwise <- function(variant_df, by_state = FALSE) {
-
   if (by_state) {
     variant_df <- variant_df %>%
       group_by(State, WeekYearCollected, lineage_collapsed) %>%
       count() %>%
-      ungroup()
+      ungroup() %>%
+      drop_na()
     return(variant_df)
   } else {
     variant_df <- variant_df %>%
       group_by(WeekYearCollected, lineage_collapsed) %>%
       count() %>%
-      ungroup()
+      ungroup() %>%
+      drop_na()
   }
 }
+
+
+#' Summarize the total number of variants per week
+#' @param variant_df A dataframe
+#' @returns A dataframe with monthwise counts of each variant sequenced
+#' @importFrom dplyr count group_by ungroup
+#' @importFrom tidyr drop_na
+#' @export
+SummarizeVariantsDatewise <- function(variant_df, by_state = FALSE) {
+  if (by_state) {
+    variant_df <- variant_df %>%
+      group_by(State, DateCollectedNumeric, lineage_collapsed) %>%
+      count() %>%
+      ungroup() %>%
+      drop_na()
+    return(variant_df)
+  } else {
+    variant_df <- variant_df %>%
+      group_by(DateCollectedNumeric, lineage_collapsed) %>%
+      count() %>%
+      ungroup() %>%
+      drop_na()
+  }
+}
+
 
 
 #' Convert monthwise counts to prevalence

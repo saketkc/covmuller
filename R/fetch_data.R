@@ -137,3 +137,33 @@ GetIndiaConfirmedCasesMonthlyLong <- function(url = "https://data.covid19bharat.
   confirmed_subset_monthwise_long$type <- "Confirmed"
   return(confirmed_subset_monthwise_long)
 }
+
+
+#' Get India weekwise cases long
+#'
+#' @param url URL to fetch data from
+#' @returns A data frame containing monthly cases for each state in long form
+
+#' @importFrom magrittr %>%
+#' @importFrom dplyr arrange group_by summarise_all rename
+#' @importFrom reshape2 melt
+#' @importFrom tsibble yearweek
+#' @export
+GetIndiaConfirmedCasesWeeklyLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
+  statewise_cases <- GetIndiaDailyData(url = url)
+  confirmed <- statewise_cases[statewise_cases$Status == "Confirmed", ]
+  confirmed$MonthYear <- GetMonthYear(confirmed$Date_YMD)
+  confirmed$WeekYear <- yearweek(confirmed$Date_YMD)
+
+  state_names <- GetIndianStates()
+  confirmed_subset <- confirmed[, c("WeekYear", as.character(state_names))]
+  confirmed_subset_weekwise <- confirmed_subset %>%
+    group_by(WeekYear) %>%
+    summarise_all(list(~ sum(., na.rm=TRUE))) %>%
+    arrange(WeekYear)
+  confirmed_subset_weekwise_long <- melt(data = confirmed_subset_weekwise, id.vars = "WeekYear", varnames = c("State")) %>%
+    rename(State = variable)
+  confirmed_subset_weekwise_long$State <- as.character(confirmed_subset_weekwise_long$State)
+  confirmed_subset_weekwise_long$type <- "Confirmed"
+  return(confirmed_subset_weekwise_long)
+}
