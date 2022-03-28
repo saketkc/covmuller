@@ -156,12 +156,12 @@ StackedBarPlotPrevalence <- function(prevalence_df) {
 #' @importFrom patchwork wrap_plots
 #' @export
 #'
-PlotMullerDailyPrevalence <- function(df) {
+PlotMullerDailyPrevalence <- function(df, ncol=4) {
   p <- ggplot(
     data = df,
     aes(x = DateCollected, y = prob, group = lineage_collapsed)
   ) +
-    facet_wrap(~State, ncol = 4) +
+    facet_wrap(~State, ncol = ncol) +
     geom_area(aes(lwd = I(1.2), colour = NULL, fill = lineage_collapsed, group = lineage_collapsed), position = "stack") +
     scale_fill_brewer(type = "qual", name = "Pangolin lineage") +
     scale_x_date(date_breaks = "1 month", date_labels = "%b %Y")

@@ -128,6 +128,29 @@ CleanIndianStates <- function(states) {
 }
 
 
+#' Clean states from the USA
+#' @param state A vector of state names
+#' @returns A vector of cleaned state names
+#' @importFrom stringr str_squish str_to_title str_split_fixed
+#' @importFrom dplyr recode
+#' @export
+CleanAmericanStates <- function(states) {
+  states <- str_squish(states)
+  states <- str_to_title(states)
+  states <- str_split_fixed(string = states, pattern = ",", n = 2)[,1]
+  states <- recode(
+    .x = states,
+    `Virgin Islands Of The U.s.` = "US Virgin Islands",
+    `Us Virgin Islands`  = "US Virgin Islands",
+  )
+  states[states == "Undefined"] <- "Unknown"
+  states[is.na(states)] <- "Unknown"
+  states[states == ""] <- "Unknown"
+  states[states == "Southwest"] <- "Unknown"
+  return(states)
+}
+
+
 #' Create a combined dataframe of sequenced cases and confirmed cases
 #' @param cases_sequenced A long dataframe of per state sequenced cases
 #' @param cases_total A long dataframe of total monthly cases
