@@ -9,7 +9,7 @@ Epicovr currently supports the following features:
 
 * Read and preprocess metadata file downloaded from GISAID: [Vignette](articles/Introduction.html)
 * Plot variant prevalence: [Vignette](articles/Introduction.html)
-* Fit multinomial models to variant prevalence data: [India](articles/MultinomialModeling_India.html) and [USA](articles/MultinomialModeling_USA.html)
+* Fit multinomial models to variant prevalence data: [India](articles/MultinomialModeling_India.html), [USA](articles/MultinomialModeling_USA.html), [Canada](articles/MultinomialModeling_Canada.html)
 * Estimate totals prevalence of variants by projecting case prevalence data on multinomila fits:  [Vignette](articles/VariantAnimation.html)
 
 

@@ -36,6 +36,10 @@ gisaid_india_collapsed <- CollapseLineageToVOCs(
 )
 
 gisaid_india_collapsed_sel <- gisaid_india_collapsed %>% filter(MonthYearCollected >= "Nov 2021") 
+vocs_to_keep <- table(gisaid_india_collapsed_sel$lineage_collapsed)
+vocs_to_keep <- vocs_to_keep[vocs_to_keep > 100]
+
+gisaid_india_collapsed_sel <- gisaid_india_collapsed_sel %>% filter(lineage_collapsed %in% names(vocs_to_keep))
 
 gisaid_india_shared_dateweek <- SummarizeVariantsDatewise(gisaid_india_collapsed_sel, by_state = TRUE)
 head(gisaid_india_shared_dateweek)

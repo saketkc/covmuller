@@ -150,6 +150,23 @@ CleanAmericanStates <- function(states) {
   return(states)
 }
 
+#' Clean states from Canada
+#' @param state A vector of state names
+#' @returns A vector of cleaned state names
+#' @importFrom stringr str_squish str_to_title str_split_fixed
+#' @importFrom dplyr recode
+#' @export
+CleanCanadaStates <- function(states) {
+  states <- str_squish(states)
+  states <- recode(
+    .x = states,
+    `Newfoundland` = "Newfoundland and Labrador"
+  )
+  states[states == "Undefined"] <- "Unknown"
+  states[is.na(states)] <- "Unknown"
+  states[states == ""] <- "Unknown"
+  return(states)
+}
 
 #' Create a combined dataframe of sequenced cases and confirmed cases
 #' @param cases_sequenced A long dataframe of per state sequenced cases
