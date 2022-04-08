@@ -15,7 +15,7 @@ theme_set(EpicovrTheme())
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
-gisaid_metadata <- qs::qread(file = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_03_31.qs")
+gisaid_metadata <- qs::qread(file = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_07.qs")
 gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
 
 vocs <- GetVOCs()
@@ -28,6 +28,8 @@ custom_voc_mapping <- list(
 for (omi in omicron) {
   if (grepl(pattern = "^BA.1", x = omi)) {
     custom_voc_mapping[[omi]] <- "Omicron-BA.1"
+  } else if (grepl(pattern = "^BA.2", x = omi)) {
+    custom_voc_mapping[[omi]] <- "Omicron-BA.2"
   }
 }
 ```
