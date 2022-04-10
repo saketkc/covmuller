@@ -17,7 +17,20 @@ theme_set(EpicovrTheme())
 ```{r, eval=TRUE, echo=FALSE}
 gisaid_metadata <- qs::qread(file = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_07.qs")
 gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
+```
 
+## Plot total sequenced cases
+
+
+```{r, fig.width=8, fig.height=5, warning=FALSE}
+country_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_india, rename_country_as_state = TRUE)
+p0 <- BarPlot(country_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, xangle = 90, title = "India")
+p0
+```
+
+## Get VOCs
+
+```{r}
 vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
@@ -33,7 +46,6 @@ for (omi in omicron) {
   }
 }
 ```
-
 
 ```{r}
 gisaid_india_collapsed <- CollapseLineageToVOCs(

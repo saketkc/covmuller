@@ -129,7 +129,7 @@ GetIndiaConfirmedCasesMonthlyLong <- function(url = "https://data.covid19bharat.
   confirmed_subset <- confirmed[, c("MonthYear", as.character(state_names))]
   confirmed_subset_monthwise <- confirmed_subset %>%
     group_by(MonthYear) %>%
-    summarise_all(list(~ sum(., na.rm=TRUE))) %>%
+    summarise_all(list(~ sum(., na.rm = TRUE))) %>%
     arrange(MonthYear)
   confirmed_subset_monthwise_long <- melt(data = confirmed_subset_monthwise, id.vars = "MonthYear", varnames = c("State")) %>%
     rename(State = variable)
@@ -159,7 +159,7 @@ GetIndiaConfirmedCasesWeeklyLong <- function(url = "https://data.covid19bharat.o
   confirmed_subset <- confirmed[, c("WeekYear", as.character(state_names))]
   confirmed_subset_weekwise <- confirmed_subset %>%
     group_by(WeekYear) %>%
-    summarise_all(list(~ sum(., na.rm=TRUE))) %>%
+    summarise_all(list(~ sum(., na.rm = TRUE))) %>%
     arrange(WeekYear)
   confirmed_subset_weekwise_long <- melt(data = confirmed_subset_weekwise, id.vars = "WeekYear", varnames = c("State")) %>%
     rename(State = variable)

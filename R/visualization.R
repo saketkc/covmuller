@@ -66,8 +66,9 @@ PlotSequencedPropHeatmap <- function(df) {
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
-BarPlot <- function(df, yaxis = "value", color = "dodgerblue2", ylabel = NULL, label_si = FALSE,
-                    label_as_percent = TRUE) {
+BarPlot <- function(df, yaxis = "value", color = "dodgerblue2",
+                    ylabel = NULL, label_si = FALSE,
+                    label_as_percent = TRUE, xangle = 30, title=NULL) {
   df$MonthYearFactor <- as.factor(df$MonthYear)
   values <- df %>% pull(!!yaxis)
   is_int <- (values[length(values)] %% 1 == 0)
@@ -118,11 +119,12 @@ BarPlot <- function(df, yaxis = "value", color = "dodgerblue2", ylabel = NULL, l
     )
   }
   p <- p + scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
-    scale_x_discrete(guide = guide_axis(angle = 30)) +
+    scale_x_discrete(guide = guide_axis(angle = xangle)) +
     xlab("") +
     ylab(ylabel) +
     EpicovrTheme() +
-    coord_cartesian(clip = "off")
+    coord_cartesian(clip = "off")+
+    ggtitle(title)
   return(wrap_plots(p))
 }
 
@@ -156,7 +158,7 @@ StackedBarPlotPrevalence <- function(prevalence_df) {
 #' @importFrom patchwork wrap_plots
 #' @export
 #'
-PlotMullerDailyPrevalence <- function(df, ncol=4) {
+PlotMullerDailyPrevalence <- function(df, ncol = 4) {
   p <- ggplot(
     data = df,
     aes(x = DateCollected, y = prob, group = lineage_collapsed)

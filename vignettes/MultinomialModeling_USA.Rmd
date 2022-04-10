@@ -24,7 +24,20 @@ gisaid_usa <- gisaid_usa %>%
   arrange(State, MonthYearCollected)
 gisaid_usa$State <- CleanAmericanStates(gisaid_usa$State)
 gisaid_usa <- gisaid_usa %>% filter(State %in% datasets::state.name)
+```
 
+## Plot total sequenced cases
+
+
+```{r, fig.width=8, fig.height=5, warning=FALSE}
+country_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_usa, rename_country_as_state = TRUE)
+p0 <- BarPlot(country_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, xangle = 90, title = "USA")
+p0
+```
+
+## Get VOCs
+
+```{r}
 vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL

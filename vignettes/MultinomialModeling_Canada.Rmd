@@ -23,8 +23,20 @@ gisaid_canada <- FormatGISAIDMetadata(gisaid_canada)
 gisaid_canada <- gisaid_canada %>%
   arrange(State, MonthYearCollected)
 gisaid_canada$State <- CleanCanadaStates(gisaid_canada$State)
-gisaid_canada <- gisaid_canada %>% filter(State!="Unknown")
+gisaid_canada <- gisaid_canada %>% filter(State != "Unknown")
+```
+## Plot total sequenced cases
 
+
+```{r, fig.width=8, fig.height=5, warning=FALSE}
+country_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_canada, rename_country_as_state = TRUE)
+p0 <- BarPlot(country_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, xangle = 90, title = "Canada")
+p0
+```
+
+## Get VOCs
+
+```{r}
 vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
