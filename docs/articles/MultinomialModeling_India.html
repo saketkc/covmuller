@@ -48,8 +48,10 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Introduction.html">Introduction to epicovr</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_Australia.html">Multinomial modeling - Australia</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_Canada.html">Multinomial modeling - Canada</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_India.html">Multinomial modeling - India</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_UK.html">Multinomial modeling - United Kingdom</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_USA.html">Multinomial modeling - USA</a>
     <a class="dropdown-item" href="../articles/VariantAnimation.html">Animation of projected weekly cases</a>
   </div>
@@ -139,54 +141,53 @@
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span>
 <span class="co">##   State             DateCollectedNumeric lineage_collapsed     n</span>
 <span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>970 Delta                 7</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>971 Delta                 2</span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>976 Delta                 1</span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>981 Delta                 1</span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>983 Delta                 1</span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>984 Omicron-BA.1          2</span></code></pre>
+<span class="co">## <span style="color: #BCBCBC;">1</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>970 Delta                 6</span>
+<span class="co">## <span style="color: #BCBCBC;">2</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>970 Others                1</span>
+<span class="co">## <span style="color: #BCBCBC;">3</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>971 Delta                 2</span>
+<span class="co">## <span style="color: #BCBCBC;">4</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>976 Delta                 1</span>
+<span class="co">## <span style="color: #BCBCBC;">5</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>981 Delta                 1</span>
+<span class="co">## <span style="color: #BCBCBC;">6</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>983 Delta                 1</span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_india_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  152 (111 variable)</span>
-<span class="co">## initial  value 88372.106638 </span>
-<span class="co">## iter  10 value 69889.391942</span>
-<span class="co">## iter  20 value 68058.883807</span>
-<span class="co">## iter  30 value 65562.399815</span>
-<span class="co">## iter  40 value 64184.441542</span>
-<span class="co">## iter  50 value 61457.573892</span>
-<span class="co">## iter  60 value 55914.991142</span>
-<span class="co">## iter  70 value 50532.127068</span>
-<span class="co">## iter  80 value 48591.856381</span>
-<span class="co">## iter  90 value 47013.898816</span>
-<span class="co">## iter 100 value 45273.966416</span>
-<span class="co">## iter 110 value 42338.717051</span>
-<span class="co">## iter 120 value 40509.337536</span>
-<span class="co">## iter 130 value 40179.675285</span>
-<span class="co">## iter 140 value 39955.133459</span>
-<span class="co">## iter 150 value 39905.435526</span>
-<span class="co">## iter 160 value 39901.037055</span>
-<span class="co">## iter 170 value 39900.782053</span>
-<span class="co">## iter 180 value 39900.740273</span>
-<span class="co">## iter 180 value 39900.739997</span>
-<span class="co">## iter 180 value 39900.739997</span>
-<span class="co">## final  value 39900.739997 </span>
+<span class="co">## initial  value 93038.373458 </span>
+<span class="co">## iter  10 value 84013.085305</span>
+<span class="co">## iter  20 value 82282.503994</span>
+<span class="co">## iter  30 value 80995.680222</span>
+<span class="co">## iter  40 value 79443.394038</span>
+<span class="co">## iter  50 value 78292.618184</span>
+<span class="co">## iter  60 value 75423.220081</span>
+<span class="co">## iter  70 value 70419.219083</span>
+<span class="co">## iter  80 value 66238.518837</span>
+<span class="co">## iter  90 value 64621.437491</span>
+<span class="co">## iter 100 value 62975.979855</span>
+<span class="co">## iter 110 value 58527.947812</span>
+<span class="co">## iter 120 value 56975.832202</span>
+<span class="co">## iter 130 value 56542.167163</span>
+<span class="co">## iter 140 value 56196.907115</span>
+<span class="co">## iter 150 value 56165.974264</span>
+<span class="co">## iter 160 value 56162.178219</span>
+<span class="co">## iter 170 value 56160.786360</span>
+<span class="co">## iter 170 value 56160.785958</span>
+<span class="co">## iter 170 value 56160.785956</span>
+<span class="co">## final  value 56160.785956 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_india_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric             State         prob</span>
-<span class="co">## 1             Delta                18932 Andaman &amp; Nicobar 9.953859e-01</span>
-<span class="co">## 2      Omicron-BA.1                18932 Andaman &amp; Nicobar 4.529199e-03</span>
-<span class="co">## 3      Omicron-BA.2                18932 Andaman &amp; Nicobar 8.405564e-05</span>
-<span class="co">## 4            Others                18932 Andaman &amp; Nicobar 8.302971e-07</span>
-<span class="co">## 5             Delta                18939 Andaman &amp; Nicobar 9.908626e-01</span>
-<span class="co">## 6      Omicron-BA.1                18939 Andaman &amp; Nicobar 8.845911e-03</span>
+<span class="co">## 1             Delta                18932 Andaman &amp; Nicobar 0.9924166943</span>
+<span class="co">## 2      Omicron-BA.1                18932 Andaman &amp; Nicobar 0.0068389503</span>
+<span class="co">## 3      Omicron-BA.2                18932 Andaman &amp; Nicobar 0.0003406649</span>
+<span class="co">## 4            Others                18932 Andaman &amp; Nicobar 0.0004036906</span>
+<span class="co">## 5             Delta                18939 Andaman &amp; Nicobar 0.9855235962</span>
+<span class="co">## 6      Omicron-BA.1                18939 Andaman &amp; Nicobar 0.0124982387</span>
 <span class="co">##             SE df    asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 7.632791e-05 NA 9.952363e-01 9.955355e-01    2021-11-01</span>
-<span class="co">## 2 7.545809e-05 NA 4.381304e-03 4.677094e-03    2021-11-01</span>
-<span class="co">## 3 1.364547e-06 NA 8.138118e-05 8.673010e-05    2021-11-01</span>
-<span class="co">## 4 1.652408e-08 NA 7.979105e-07 8.626837e-07    2021-11-01</span>
-<span class="co">## 5 1.497611e-04 NA 9.905690e-01 9.911561e-01    2021-11-08</span>
-<span class="co">## 6 1.467725e-04 NA 8.558243e-03 9.133580e-03    2021-11-08</span></code></pre>
+<span class="co">## 1 1.159616e-04 NA 0.9921894137 0.9926439748    2021-11-01</span>
+<span class="co">## 2 1.085449e-04 NA 0.0066262062 0.0070516945    2021-11-01</span>
+<span class="co">## 3 5.303557e-06 NA 0.0003302701 0.0003510596    2021-11-01</span>
+<span class="co">## 4 6.526198e-06 NA 0.0003908995 0.0004164817    2021-11-01</span>
+<span class="co">## 5 2.169832e-04 NA 0.9850983169 0.9859488755    2021-11-08</span>
+<span class="co">## 6 1.971599e-04 NA 0.0121118123 0.0128846650    2021-11-08</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>

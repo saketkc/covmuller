@@ -48,8 +48,10 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Introduction.html">Introduction to epicovr</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_Australia.html">Multinomial modeling - Australia</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_Canada.html">Multinomial modeling - Canada</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_India.html">Multinomial modeling - India</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_UK.html">Multinomial modeling - United Kingdom</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_USA.html">Multinomial modeling - USA</a>
     <a class="dropdown-item" href="../articles/VariantAnimation.html">Animation of projected weekly cases</a>
   </div>
@@ -148,52 +150,50 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_usa_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_usa_shared_dateweek</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  208 (153 variable)</span>
-<span class="co">## initial  value 1687594.350154 </span>
-<span class="co">## iter  10 value 925465.614996</span>
-<span class="co">## iter  20 value 917280.105999</span>
-<span class="co">## iter  30 value 795044.630373</span>
-<span class="co">## iter  40 value 728060.245292</span>
-<span class="co">## iter  50 value 695798.601743</span>
-<span class="co">## iter  60 value 642618.609568</span>
-<span class="co">## iter  70 value 599340.901424</span>
-<span class="co">## iter  80 value 558243.783763</span>
-<span class="co">## iter  90 value 537490.374438</span>
-<span class="co">## iter 100 value 503042.277002</span>
-<span class="co">## iter 110 value 478068.068205</span>
-<span class="co">## iter 120 value 454750.348072</span>
-<span class="co">## iter 130 value 422877.848441</span>
-<span class="co">## iter 140 value 389541.690425</span>
-<span class="co">## iter 150 value 355746.411211</span>
-<span class="co">## iter 160 value 328733.036681</span>
-<span class="co">## iter 170 value 299042.288814</span>
-<span class="co">## iter 180 value 289222.430981</span>
-<span class="co">## iter 190 value 283633.097198</span>
-<span class="co">## iter 200 value 280731.927205</span>
-<span class="co">## iter 210 value 279901.767003</span>
-<span class="co">## iter 220 value 279732.729203</span>
-<span class="co">## iter 230 value 279686.394327</span>
-<span class="co">## iter 240 value 279649.271045</span>
-<span class="co">## iter 250 value 279629.879262</span>
-<span class="co">## iter 260 value 279624.034306</span>
-<span class="co">## iter 270 value 279623.693894</span>
-<span class="co">## final  value 279623.688223 </span>
+<span class="co">## initial  value 1739687.133362 </span>
+<span class="co">## iter  10 value 969048.344105</span>
+<span class="co">## iter  20 value 959121.918643</span>
+<span class="co">## iter  30 value 863934.868721</span>
+<span class="co">## iter  40 value 796557.000345</span>
+<span class="co">## iter  50 value 770118.347461</span>
+<span class="co">## iter  60 value 720603.073768</span>
+<span class="co">## iter  70 value 676257.550148</span>
+<span class="co">## iter  80 value 637396.456775</span>
+<span class="co">## iter  90 value 615569.041685</span>
+<span class="co">## iter 100 value 594627.143468</span>
+<span class="co">## iter 110 value 554858.356969</span>
+<span class="co">## iter 120 value 537280.701230</span>
+<span class="co">## iter 130 value 500908.538332</span>
+<span class="co">## iter 140 value 465353.772147</span>
+<span class="co">## iter 150 value 418419.336257</span>
+<span class="co">## iter 160 value 373934.918321</span>
+<span class="co">## iter 170 value 326458.311081</span>
+<span class="co">## iter 180 value 312755.995634</span>
+<span class="co">## iter 190 value 308232.114440</span>
+<span class="co">## iter 200 value 306687.433492</span>
+<span class="co">## iter 210 value 306611.584360</span>
+<span class="co">## iter 220 value 306529.840023</span>
+<span class="co">## iter 230 value 306464.798377</span>
+<span class="co">## iter 240 value 306449.986058</span>
+<span class="co">## iter 250 value 306449.281668</span>
+<span class="co">## final  value 306449.235559 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_usa_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span>
-<span class="co">## 1             Delta                18932 Alabama 9.998832e-01 5.557255e-07 NA</span>
-<span class="co">## 2      Omicron-BA.1                18932 Alabama 9.053178e-05 3.941524e-07 NA</span>
-<span class="co">## 3      Omicron-BA.2                18932 Alabama 4.978320e-11 4.315190e-13 NA</span>
-<span class="co">## 4            Others                18932 Alabama 2.622329e-05 2.955617e-07 NA</span>
-<span class="co">## 5             Delta                18939 Alabama 9.995640e-01 1.962904e-06 NA</span>
-<span class="co">## 6      Omicron-BA.1                18939 Alabama 3.679577e-04 1.602093e-06 NA</span>
+<span class="co">## 1             Delta                18932 Alabama 9.999043e-01 4.141157e-07 NA</span>
+<span class="co">## 2      Omicron-BA.1                18932 Alabama 9.561665e-05 4.139161e-07 NA</span>
+<span class="co">## 3      Omicron-BA.2                18932 Alabama 8.602893e-11 7.119902e-13 NA</span>
+<span class="co">## 4            Others                18932 Alabama 4.723636e-08 4.627761e-10 NA</span>
+<span class="co">## 5             Delta                18939 Alabama 9.996131e-01 1.674810e-06 NA</span>
+<span class="co">## 6      Omicron-BA.1                18939 Alabama 3.866318e-04 1.673826e-06 NA</span>
 <span class="co">##      asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 9.998822e-01 9.998843e-01    2021-11-01</span>
-<span class="co">## 2 8.975925e-05 9.130430e-05    2021-11-01</span>
-<span class="co">## 3 4.893744e-11 5.062896e-11    2021-11-01</span>
-<span class="co">## 4 2.564400e-05 2.680258e-05    2021-11-01</span>
-<span class="co">## 5 9.995601e-01 9.995678e-01    2021-11-08</span>
-<span class="co">## 6 3.648176e-04 3.710977e-04    2021-11-08</span></code></pre>
+<span class="co">## 1 9.999035e-01 9.999051e-01    2021-11-01</span>
+<span class="co">## 2 9.480539e-05 9.642791e-05    2021-11-01</span>
+<span class="co">## 3 8.463345e-11 8.742440e-11    2021-11-01</span>
+<span class="co">## 4 4.632934e-08 4.814339e-08    2021-11-01</span>
+<span class="co">## 5 9.996099e-01 9.996164e-01    2021-11-08</span>
+<span class="co">## 6 3.833512e-04 3.899125e-04    2021-11-08</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>

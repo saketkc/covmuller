@@ -48,8 +48,10 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Introduction.html">Introduction to epicovr</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_Australia.html">Multinomial modeling - Australia</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_Canada.html">Multinomial modeling - Canada</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_India.html">Multinomial modeling - India</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_UK.html">Multinomial modeling - United Kingdom</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_USA.html">Multinomial modeling - USA</a>
     <a class="dropdown-item" href="../articles/VariantAnimation.html">Animation of projected weekly cases</a>
   </div>
@@ -148,37 +150,45 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_canada_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_canada_shared_dateweek</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  44 (30 variable)</span>
-<span class="co">## initial  value 134022.779950 </span>
-<span class="co">## iter  10 value 100568.112939</span>
-<span class="co">## iter  20 value 85148.858423</span>
-<span class="co">## iter  30 value 76928.153852</span>
-<span class="co">## iter  40 value 46460.929344</span>
-<span class="co">## iter  50 value 34700.771387</span>
-<span class="co">## iter  60 value 33930.276470</span>
-<span class="co">## iter  70 value 33826.670102</span>
-<span class="co">## iter  80 value 33187.196687</span>
-<span class="co">## iter  90 value 33003.740476</span>
-<span class="co">## iter 100 value 32974.244617</span>
-<span class="co">## iter 110 value 32950.090546</span>
-<span class="co">## iter 120 value 32918.959243</span>
-<span class="co">## final  value 32918.506131 </span>
+<span class="co">## initial  value 138479.716321 </span>
+<span class="co">## iter  10 value 105111.982947</span>
+<span class="co">## iter  20 value 93203.363150</span>
+<span class="co">## iter  30 value 84453.245191</span>
+<span class="co">## iter  40 value 57803.523668</span>
+<span class="co">## iter  50 value 45770.452399</span>
+<span class="co">## iter  60 value 40730.474198</span>
+<span class="co">## iter  70 value 40445.726409</span>
+<span class="co">## iter  80 value 40387.178420</span>
+<span class="co">## iter  90 value 40240.362033</span>
+<span class="co">## iter 100 value 39428.699745</span>
+<span class="co">## iter 110 value 39293.258379</span>
+<span class="co">## iter 120 value 39284.446585</span>
+<span class="co">## iter 130 value 39276.831400</span>
+<span class="co">## iter 140 value 39275.237479</span>
+<span class="co">## iter 150 value 39274.642801</span>
+<span class="co">## iter 160 value 39256.794264</span>
+<span class="co">## iter 170 value 39231.376607</span>
+<span class="co">## iter 180 value 39215.940687</span>
+<span class="co">## iter 180 value 39215.940497</span>
+<span class="co">## iter 180 value 39215.940497</span>
+<span class="co">## final  value 39215.940497 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_canada_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span>
-<span class="co">## 1             Delta                18932 Alberta 9.996214e-01 1.836766e-05 NA</span>
-<span class="co">## 2      Omicron-BA.1                18932 Alberta 1.628662e-04 2.262730e-06 NA</span>
-<span class="co">## 3      Omicron-BA.2                18932 Alberta 8.491664e-08 1.705185e-09 NA</span>
-<span class="co">## 4            Others                18932 Alberta 2.156527e-04 1.817791e-05 NA</span>
-<span class="co">## 5             Delta                18939 Alberta 9.991435e-01 2.056555e-05 NA</span>
-<span class="co">## 6      Omicron-BA.1                18939 Alberta 6.382358e-04 8.866183e-06 NA</span>
+<span class="co">## 1             Delta                18932 Alberta 9.998408e-01 2.214432e-06 NA</span>
+<span class="co">## 2      Omicron-BA.1                18932 Alberta 1.591339e-04 2.213364e-06 NA</span>
+<span class="co">## 3      Omicron-BA.2                18932 Alberta 5.801563e-08 1.172922e-09 NA</span>
+<span class="co">## 4            Others                18932 Alberta 1.918636e-08 5.125748e-10 NA</span>
+<span class="co">## 5             Delta                18939 Alberta 9.993735e-01 8.712719e-06 NA</span>
+<span class="co">## 6      Omicron-BA.1                18939 Alberta 6.260224e-04 8.706378e-06 NA</span>
 <span class="co">##      asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 9.995854e-01 9.996574e-01    2021-11-01</span>
-<span class="co">## 2 1.584313e-04 1.673011e-04    2021-11-01</span>
-<span class="co">## 3 8.157454e-08 8.825874e-08    2021-11-01</span>
-<span class="co">## 4 1.800247e-04 2.512808e-04    2021-11-01</span>
-<span class="co">## 5 9.991032e-01 9.991838e-01    2021-11-08</span>
-<span class="co">## 6 6.208584e-04 6.556132e-04    2021-11-08</span></code></pre>
+<span class="co">## 1 9.998364e-01 9.998451e-01    2021-11-01</span>
+<span class="co">## 2 1.547958e-04 1.634720e-04    2021-11-01</span>
+<span class="co">## 3 5.571675e-08 6.031452e-08    2021-11-01</span>
+<span class="co">## 4 1.818173e-08 2.019099e-08    2021-11-01</span>
+<span class="co">## 5 9.993564e-01 9.993906e-01    2021-11-08</span>
+<span class="co">## 6 6.089582e-04 6.430865e-04    2021-11-08</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
