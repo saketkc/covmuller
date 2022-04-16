@@ -15,11 +15,11 @@ theme_set(EpicovrTheme())
 ```
 
 ```{r, eval=TRUE, echo=FALSE}
-gisaid_metadata <- qs::qread(file = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_07.qs")
+gisaid_metadata <- qs::qread(file = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_15.qs")
 gisaid_uk <- gisaid_metadata %>%
   filter(Country == "United Kingdom") %>%
   filter(Host == "Human")
-gisaid_uk <- FormatGISAIDMetadata(gisaid_uk)
+gisaid_uk <- FormatGISAIDMetadata(gisaid_uk) 
 gisaid_uk <- gisaid_uk %>% filter(State!="") %>%
   arrange(State, MonthYearCollected)
 ```
@@ -60,7 +60,7 @@ gisaid_uk_collapsed <- CollapseLineageToVOCs(
   summarize = FALSE
 )
 
-gisaid_uk_collapsed_sel <- gisaid_uk_collapsed %>% filter(MonthYearCollected >= "Nov 2021")
+gisaid_uk_collapsed_sel <- gisaid_uk_collapsed %>% filter(MonthYearCollected >= "Nov 2021") %>% filter(lineage_collapsed!="Unassigned")
 
 vocs_to_keep <- table(gisaid_uk_collapsed_sel$lineage_collapsed)
 vocs_to_keep <- vocs_to_keep[vocs_to_keep > 100]

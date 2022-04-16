@@ -55,7 +55,7 @@ gisaid_india_collapsed <- CollapseLineageToVOCs(
   summarize = FALSE
 )
 
-gisaid_india_collapsed_sel <- gisaid_india_collapsed %>% filter(MonthYearCollected >= "Nov 2021")
+gisaid_india_collapsed_sel <- gisaid_india_collapsed %>% filter(MonthYearCollected >= "Nov 2021") %>% filter(lineage_collapsed!="Unassigned")
 vocs_to_keep <- table(gisaid_india_collapsed_sel$lineage_collapsed)
 vocs_to_keep <- vocs_to_keep[vocs_to_keep > 100]
 
