@@ -39,9 +39,9 @@ custom_voc_mapping <- list(
   `BA.2` = "Omicron-BA.2"
 )
 for (omi in omicron) {
-  if (grepl(pattern = "^BA.1", x = omi)) {
+  if (grepl(pattern = "^BA.1.*", x = omi)) {
     custom_voc_mapping[[omi]] <- "Omicron-BA.1"
-  } else if (grepl(pattern = "^BA.2", x = omi)) {
+  } else if (grepl(pattern = "^BA.2.*", x = omi)) {
     custom_voc_mapping[[omi]] <- "Omicron-BA.2"
   }
 }
@@ -55,7 +55,9 @@ gisaid_india_collapsed <- CollapseLineageToVOCs(
   summarize = FALSE
 )
 
-gisaid_india_collapsed_sel <- gisaid_india_collapsed %>% filter(MonthYearCollected >= "Nov 2021") %>% filter(lineage_collapsed!="Unassigned")
+gisaid_india_collapsed_sel <- gisaid_india_collapsed %>%
+  filter(MonthYearCollected >= "Nov 2021") %>%
+  filter(lineage_collapsed != "Unassigned")
 vocs_to_keep <- table(gisaid_india_collapsed_sel$lineage_collapsed)
 vocs_to_keep <- vocs_to_keep[vocs_to_keep > 100]
 
