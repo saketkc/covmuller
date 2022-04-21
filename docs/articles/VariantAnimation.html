@@ -48,8 +48,10 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Introduction.html">Introduction to epicovr</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_Australia.html">Multinomial modeling - Australia</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_Canada.html">Multinomial modeling - Canada</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_India.html">Multinomial modeling - India</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_UK.html">Multinomial modeling - United Kingdom</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_USA.html">Multinomial modeling - USA</a>
     <a class="dropdown-item" href="../articles/VariantAnimation.html">Animation of projected weekly cases</a>
   </div>
@@ -97,7 +99,7 @@
 <h2 id="get-variants-data-for-india">Get variants data for India<a class="anchor" aria-label="anchor" href="#get-variants-data-for-india"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_03_31.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_21.qs"</span><span class="op">)</span>
 <span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span>
 
 <span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span>
@@ -150,14 +152,14 @@
 
 <span class="va">india_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_india_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  24 (15 variable)</span>
-<span class="co">## initial  value 265988.484966 </span>
-<span class="co">## iter  10 value 119110.724632</span>
-<span class="co">## iter  20 value 69537.774439</span>
-<span class="co">## iter  30 value 67302.852095</span>
-<span class="co">## iter  40 value 67196.024708</span>
-<span class="co">## iter  50 value 66934.264180</span>
-<span class="co">## iter  60 value 66932.134615</span>
-<span class="co">## final  value 66930.998492 </span>
+<span class="co">## initial  value 302581.588606 </span>
+<span class="co">## iter  10 value 142285.385830</span>
+<span class="co">## iter  20 value 98234.056574</span>
+<span class="co">## iter  30 value 97403.250585</span>
+<span class="co">## iter  40 value 97151.132322</span>
+<span class="co">## iter  50 value 96834.260234</span>
+<span class="co">## iter  60 value 95828.250660</span>
+<span class="co">## final  value 95791.927464 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">india_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span><span class="op">)</span>

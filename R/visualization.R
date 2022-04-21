@@ -68,7 +68,7 @@ PlotSequencedPropHeatmap <- function(df) {
 #' @export
 BarPlot <- function(df, yaxis = "value", color = "dodgerblue2",
                     ylabel = NULL, label_si = FALSE,
-                    label_as_percent = TRUE, xangle = 30, title=NULL) {
+                    label_as_percent = TRUE, xangle = 30, title = NULL) {
   df$MonthYearFactor <- as.factor(df$MonthYear)
   values <- df %>% pull(!!yaxis)
   is_int <- (values[length(values)] %% 1 == 0)
@@ -123,7 +123,7 @@ BarPlot <- function(df, yaxis = "value", color = "dodgerblue2",
     xlab("") +
     ylab(ylabel) +
     EpicovrTheme() +
-    coord_cartesian(clip = "off")+
+    coord_cartesian(clip = "off") +
     ggtitle(title)
   return(wrap_plots(p))
 }
