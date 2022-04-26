@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">epicovr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,8 +121,8 @@
 <h2 id="read-variant-data-from-gisaid">Read variant data from GISAID<a class="anchor" aria-label="anchor" href="#read-variant-data-from-gisaid"></a>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadGISAIDMetada.html">ReadGISAIDMetada</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_21.tar.xz"</span><span class="op">)</span>
-<span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html" class="external-link">qsave</a></span><span class="op">(</span><span class="va">gisaid_metadata</span>, <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_21.qs"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadGISAIDMetada.html">ReadGISAIDMetada</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_25.tar.xz"</span><span class="op">)</span>
+<span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html" class="external-link">qsave</a></span><span class="op">(</span><span class="va">gisaid_metadata</span>, <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_25.qs"</span><span class="op">)</span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
 </h3>
@@ -161,9 +161,10 @@
   cases_sequenced <span class="op">=</span> <span class="va">seq_stats</span>,
   confirmed_long <span class="op">=</span> <span class="va">state_cases_long</span>,
   month.min <span class="op">=</span> <span class="st">"Feb 2020"</span>,
-  month.max <span class="op">=</span> <span class="st">"Mar 2022"</span>,
+  month.max <span class="op">=</span> <span class="st">"Apr 2022"</span>,
   max.percent <span class="op">=</span> <span class="fl">5</span>
 <span class="op">)</span>
+
 <span class="va">india_sequencing_proportion</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span>
   x <span class="op">=</span> <span class="va">india_sequencing_proportion</span><span class="op">$</span><span class="va">State</span>,
   levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="../reference/GetIndianStates.html">GetIndianStates</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
@@ -189,16 +190,16 @@
   `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>
 <span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">omi</span> <span class="kw">in</span> <span class="va">omicron</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"^BA.1.*"</span>, x <span class="op">=</span> <span class="va">omi</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"BA.1.*"</span>, x <span class="op">=</span> <span class="va">omi</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">custom_voc_mapping</span><span class="op">[[</span><span class="va">omi</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Omicron-BA.1"</span>
-  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"^BA.2.*"</span>, x <span class="op">=</span> <span class="va">omi</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"BA.2.*"</span>, x <span class="op">=</span> <span class="va">omi</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">custom_voc_mapping</span><span class="op">[[</span><span class="va">omi</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Omicron-BA.2"</span>
   <span class="op">}</span>
 <span class="op">}</span>
 <span class="va">india_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
   variant_df <span class="op">=</span> <span class="va">india_month_prevalence</span>,
   vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>
+  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,summarize <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
 
 <span class="va">p5</span> <span class="op">&lt;-</span> <span class="fu">StackedBarPlotPrevalence</span><span class="op">(</span><span class="va">india_month_prevalence</span><span class="op">)</span>
@@ -218,8 +219,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer>

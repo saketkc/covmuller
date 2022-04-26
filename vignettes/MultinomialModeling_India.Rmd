@@ -28,6 +28,16 @@ p0 <- BarPlot(country_seq_stats, ylabel = "Sequenced per month", color = "slateb
 p0
 ```
 
+# Plot stateswise sequenced cases
+
+```{r, fig.width=8, fig.height=5, warning=FALSE}
+state_seq_stats <- TotalSequencesPerMonthStatewise(gisaid_india)
+state_seq_stats_summary <- state_seq_stats %>% group_by(State) %>% summarise(value = sum(value))
+state_seq_stats_summary$State[state_seq_stats_summary$State=="Dadra and Nagar Haveli and Daman and Diu"] <- "Dadra/N Haveli/Daman/Diu"
+p1 <- BarPlot(state_seq_stats_summary,xaxis = "State", ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, xangle = 90, title = "India")
+p1
+```
+
 ## Get VOCs
 
 ```{r}
@@ -36,7 +46,7 @@ omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
   `BA.1.1` = "Omicron-BA.1.1", `BA.1` = "Omicron-BA.1",
-  `BA.2` = "Omicron-BA.2"
+  `BA.2` = "Omicron-BA.2", `BA.2.10` = "Omicron-BA.2.10"
 )
 for (omi in omicron) {
   if (grepl(pattern = "^BA.1.*", x = omi)) {

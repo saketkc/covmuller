@@ -61,15 +61,16 @@ PlotSequencedPropHeatmap <- function(df) {
 
 #' @importFrom magrittr %>%
 #' @importFrom tibble deframe
-#' @importFrom ggplot2 coord_cartesian ggplot geom_bar geom_text scale_y_continuous scale_x_discrete xlab ylab guide_axis
+#' @importFrom ggplot2 aes_string coord_cartesian ggplot geom_bar geom_text scale_y_continuous scale_x_discrete xlab ylab guide_axis
 #' @importFrom scales comma label_percent label_number_si
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
-BarPlot <- function(df, yaxis = "value", color = "dodgerblue2",
+BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblue2",
                     ylabel = NULL, label_si = FALSE,
                     label_as_percent = TRUE, xangle = 30, title = NULL) {
-  df$MonthYearFactor <- as.factor(df$MonthYear)
+  df <- as.data.frame(df)
+  df$MonthYearFactor <- as.factor(df[, xaxis])
   values <- df %>% pull(!!yaxis)
   is_int <- (values[length(values)] %% 1 == 0)
   p <- ggplot(df, aes_string("MonthYearFactor", yaxis)) +
