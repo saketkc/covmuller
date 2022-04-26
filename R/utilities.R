@@ -113,6 +113,26 @@ CleanIndianStates <- function(states) {
   return(states)
 }
 
+#' Clean states from South Africa
+#' @param state A vector of state names
+#' @returns A vector of cleaned state names
+#' @importFrom stringr str_squish str_to_title
+#' @importFrom dplyr recode
+#' @export
+CleanSouthAfricanStates <- function(states) {
+  states <- str_squish(states)
+  states <- str_to_title(states)
+  states <- gsub(pattern = " Province", replacement = "", x = states)
+  states <- recode(
+    .x = states,
+    `Kwazulu Natal` = "Kwazulu-Natal",
+    `Kzn` = "Kwazulu-Natal"
+  )
+  states[states == "Undefined"] <- "Unknown"
+  states[is.na(states)] <- "Unknown"
+  states[states == ""] <- "Unknown"
+  return(states)
+}
 
 #' Clean states from the USA
 #' @param state A vector of state names

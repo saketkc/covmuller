@@ -14,7 +14,7 @@ suppressPackageStartupMessages({
 theme_set(EpicovrTheme())
 ```
 
-```{r, eval=TRUE, echo=FALSE}
+```{r, warning=FALSE, message=FALSE}
 gisaid_metadata <- qs::qread(file = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_21.qs")
 gisaid_australia <- gisaid_metadata %>%
   filter(Country == "Australia") %>%
@@ -27,6 +27,7 @@ gisaid_australia <- gisaid_australia %>%
   arrange(State, MonthYearCollected)
 gisaid_australia <- gisaid_australia %>% filter(State != "Unknown")
 ```
+
 ## Plot total sequenced cases
 
 
