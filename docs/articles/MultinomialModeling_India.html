@@ -97,7 +97,7 @@
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/EpicovrTheme.html">EpicovrTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_21.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_27.qs"</span><span class="op">)</span>
 <span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
@@ -127,7 +127,11 @@
 <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 <span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
   `BA.1.1` <span class="op">=</span> <span class="st">"Omicron-BA.1.1"</span>, `BA.1` <span class="op">=</span> <span class="st">"Omicron-BA.1"</span>,
-  `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>, `BA.2.10` <span class="op">=</span> <span class="st">"Omicron-BA.2.10"</span>
+  `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>, `BA.2.10` <span class="op">=</span> <span class="st">"Omicron-BA.2.10"</span>,
+  `BA.2.12` <span class="op">=</span> <span class="st">"Omicron-BA.2.12"</span>,
+  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,
+  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,
+  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>
 <span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">omi</span> <span class="kw">in</span> <span class="va">omicron</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"^BA.1.*"</span>, x <span class="op">=</span> <span class="va">omi</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -165,41 +169,50 @@
 <span class="co">## <span style="color: #BCBCBC;">6</span> Andaman &amp; Nicobar                <span style="text-decoration: underline;">18</span>983 Delta                 1</span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_india_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  152 (111 variable)</span>
-<span class="co">## initial  value 93626.162267 </span>
-<span class="co">## iter  10 value 84815.213057</span>
-<span class="co">## iter  20 value 83005.566800</span>
-<span class="co">## iter  30 value 81710.214652</span>
-<span class="co">## iter  40 value 80069.750289</span>
-<span class="co">## iter  50 value 78984.086545</span>
-<span class="co">## iter  60 value 76154.489514</span>
-<span class="co">## iter  70 value 70634.146052</span>
-<span class="co">## iter  80 value 66462.714011</span>
-<span class="co">## iter  90 value 65041.810732</span>
-<span class="co">## iter 100 value 63217.542290</span>
-<span class="co">## iter 110 value 58000.825688</span>
-<span class="co">## iter 120 value 57346.039669</span>
-<span class="co">## iter 130 value 56668.835264</span>
-<span class="co">## iter 140 value 56538.399392</span>
-<span class="co">## iter 150 value 56520.304755</span>
-<span class="co">## final  value 56520.268727 </span>
+<pre><code><span class="co">## # weights:  228 (185 variable)</span>
+<span class="co">## initial  value 122051.071525 </span>
+<span class="co">## iter  10 value 96718.819332</span>
+<span class="co">## iter  20 value 94778.748213</span>
+<span class="co">## iter  30 value 93420.698039</span>
+<span class="co">## iter  40 value 91360.043085</span>
+<span class="co">## iter  50 value 89130.995311</span>
+<span class="co">## iter  60 value 86224.525626</span>
+<span class="co">## iter  70 value 83534.316317</span>
+<span class="co">## iter  80 value 78571.642734</span>
+<span class="co">## iter  90 value 73635.791981</span>
+<span class="co">## iter 100 value 70213.470864</span>
+<span class="co">## iter 110 value 68310.782820</span>
+<span class="co">## iter 120 value 67397.279262</span>
+<span class="co">## iter 130 value 66592.408487</span>
+<span class="co">## iter 140 value 65713.888572</span>
+<span class="co">## iter 150 value 64341.198795</span>
+<span class="co">## iter 160 value 63743.489416</span>
+<span class="co">## iter 170 value 63648.030783</span>
+<span class="co">## iter 180 value 63566.469658</span>
+<span class="co">## iter 190 value 63453.215711</span>
+<span class="co">## iter 200 value 63388.349729</span>
+<span class="co">## iter 210 value 63323.216433</span>
+<span class="co">## iter 220 value 62909.826126</span>
+<span class="co">## iter 230 value 62888.462677</span>
+<span class="co">## iter 240 value 62875.992300</span>
+<span class="co">## final  value 62875.989997 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_india_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric             State         prob</span>
-<span class="co">## 1             Delta                18932 Andaman &amp; Nicobar 0.9923262678</span>
-<span class="co">## 2      Omicron-BA.1                18932 Andaman &amp; Nicobar 0.0069189038</span>
-<span class="co">## 3      Omicron-BA.2                18932 Andaman &amp; Nicobar 0.0003426286</span>
-<span class="co">## 4            Others                18932 Andaman &amp; Nicobar 0.0004121998</span>
-<span class="co">## 5             Delta                18939 Andaman &amp; Nicobar 0.9853746892</span>
-<span class="co">## 6      Omicron-BA.1                18939 Andaman &amp; Nicobar 0.0126240711</span>
+<span class="co">## 1              BA.3                18932 Andaman &amp; Nicobar 6.026070e-11</span>
+<span class="co">## 2             Delta                18932 Andaman &amp; Nicobar 9.936353e-01</span>
+<span class="co">## 3      Omicron-BA.1                18932 Andaman &amp; Nicobar 3.523536e-03</span>
+<span class="co">## 4      Omicron-BA.2                18932 Andaman &amp; Nicobar 9.262844e-05</span>
+<span class="co">## 5   Omicron-BA.2.12                18932 Andaman &amp; Nicobar 7.701846e-06</span>
+<span class="co">## 6            Others                18932 Andaman &amp; Nicobar 2.740793e-03</span>
 <span class="co">##             SE df    asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 1.169973e-04 NA 0.9920969573 0.9925555784    2021-11-01</span>
-<span class="co">## 2 1.094963e-04 NA 0.0067042949 0.0071335126    2021-11-01</span>
-<span class="co">## 3 5.319986e-06 NA 0.0003322016 0.0003530555    2021-11-01</span>
-<span class="co">## 4 6.643210e-06 NA 0.0003991794 0.0004252203    2021-11-01</span>
-<span class="co">## 5 2.185577e-04 NA 0.9849463240 0.9858030543    2021-11-08</span>
-<span class="co">## 6 1.985581e-04 NA 0.0122349044 0.0130132378    2021-11-08</span></code></pre>
+<span class="co">## 1 1.978711e-12 NA 5.638250e-11 6.413890e-11    2021-11-01</span>
+<span class="co">## 2 9.241121e-05 NA 9.934542e-01 9.938165e-01    2021-11-01</span>
+<span class="co">## 3 5.705373e-05 NA 3.411713e-03 3.635360e-03    2021-11-01</span>
+<span class="co">## 4 1.487353e-06 NA 8.971329e-05 9.554360e-05    2021-11-01</span>
+<span class="co">## 5 1.490005e-07 NA 7.409810e-06 7.993881e-06    2021-11-01</span>
+<span class="co">## 6 5.102934e-05 NA 2.640777e-03 2.840808e-03    2021-11-01</span></code></pre>
 </div>
 </div>
 <div class="section level2">

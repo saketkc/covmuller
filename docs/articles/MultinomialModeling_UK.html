@@ -97,7 +97,7 @@
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/EpicovrTheme.html">EpicovrTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_21.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_27.qs"</span><span class="op">)</span>
 <span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"United Kingdom"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
@@ -122,7 +122,11 @@
 <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 <span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
   `BA.1.1` <span class="op">=</span> <span class="st">"Omicron-BA.1.1"</span>, `BA.1` <span class="op">=</span> <span class="st">"Omicron-BA.1"</span>,
-  `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>
+  `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>, `BA.2.10` <span class="op">=</span> <span class="st">"Omicron-BA.2.10"</span>,
+  `BA.2.12` <span class="op">=</span> <span class="st">"Omicron-BA.2.12"</span>,
+  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,
+  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,
+  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>
 <span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">omi</span> <span class="kw">in</span> <span class="va">omicron</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"^BA.1.*"</span>, x <span class="op">=</span> <span class="va">omi</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -150,40 +154,44 @@
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span>
 <span class="co">##   State   DateCollectedNumeric lineage_collapsed     n</span>
 <span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> England                <span style="text-decoration: underline;">18</span>932 Delta              <span style="text-decoration: underline;">5</span>532</span>
+<span class="co">## <span style="color: #BCBCBC;">1</span> England                <span style="text-decoration: underline;">18</span>932 Delta              <span style="text-decoration: underline;">5</span>534</span>
 <span class="co">## <span style="color: #BCBCBC;">2</span> England                <span style="text-decoration: underline;">18</span>932 Others                3</span>
 <span class="co">## <span style="color: #BCBCBC;">3</span> England                <span style="text-decoration: underline;">18</span>933 Delta              <span style="text-decoration: underline;">4</span>313</span>
 <span class="co">## <span style="color: #BCBCBC;">4</span> England                <span style="text-decoration: underline;">18</span>933 Omicron-BA.1          1</span>
 <span class="co">## <span style="color: #BCBCBC;">5</span> England                <span style="text-decoration: underline;">18</span>933 Others                1</span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> England                <span style="text-decoration: underline;">18</span>934 Delta              <span style="text-decoration: underline;">5</span>838</span></code></pre>
+<span class="co">## <span style="color: #BCBCBC;">6</span> England                <span style="text-decoration: underline;">18</span>934 Delta              <span style="text-decoration: underline;">5</span>835</span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_uk_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_uk_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  24 (15 variable)</span>
-<span class="co">## initial  value 1948292.549940 </span>
-<span class="co">## iter  10 value 1621035.981969</span>
-<span class="co">## iter  20 value 651105.459254</span>
-<span class="co">## iter  30 value 581055.156413</span>
-<span class="co">## iter  40 value 578643.617209</span>
-<span class="co">## iter  50 value 576434.719093</span>
-<span class="co">## iter  60 value 575596.868110</span>
-<span class="co">## final  value 575594.692058 </span>
+<pre><code><span class="co">## # weights:  36 (25 variable)</span>
+<span class="co">## initial  value 2545122.655660 </span>
+<span class="co">## iter  10 value 1813514.355932</span>
+<span class="co">## iter  20 value 1323830.742046</span>
+<span class="co">## iter  30 value 755232.699623</span>
+<span class="co">## iter  40 value 731051.904548</span>
+<span class="co">## iter  50 value 729787.894173</span>
+<span class="co">## iter  60 value 729658.277089</span>
+<span class="co">## iter  70 value 729591.989469</span>
+<span class="co">## iter  80 value 729429.352160</span>
+<span class="co">## iter  90 value 729423.444376</span>
+<span class="co">## iter 100 value 729400.686102</span>
+<span class="co">## final  value 729383.980113 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_uk_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span>
-<span class="co">## 1             Delta                18932 England 9.999465e-01 2.613466e-07 NA</span>
-<span class="co">## 2      Omicron-BA.1                18932 England 5.345655e-05 2.613432e-07 NA</span>
-<span class="co">## 3      Omicron-BA.2                18932 England 5.541486e-10 3.266352e-12 NA</span>
-<span class="co">## 4            Others                18932 England 1.526168e-10 1.120753e-12 NA</span>
-<span class="co">## 5             Delta                18939 England 9.997444e-01 1.249702e-06 NA</span>
-<span class="co">## 6      Omicron-BA.1                18939 England 2.555712e-04 1.249669e-06 NA</span>
+<span class="co">## 1              BA.3                18932 England 6.335349e-09 4.295583e-10 NA</span>
+<span class="co">## 2             Delta                18932 England 9.999416e-01 2.846660e-07 NA</span>
+<span class="co">## 3      Omicron-BA.1                18932 England 5.817905e-05 2.836771e-07 NA</span>
+<span class="co">## 4      Omicron-BA.2                18932 England 1.627498e-09 9.445525e-12 NA</span>
+<span class="co">## 5   Omicron-BA.2.12                18932 England 2.718737e-10 2.076996e-12 NA</span>
+<span class="co">## 6            Others                18932 England 1.980053e-07 1.416391e-09 NA</span>
 <span class="co">##      asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 9.999460e-01 9.999471e-01    2021-11-01</span>
-<span class="co">## 2 5.294432e-05 5.396877e-05    2021-11-01</span>
-<span class="co">## 3 5.477467e-10 5.605506e-10    2021-11-01</span>
-<span class="co">## 4 1.504202e-10 1.548135e-10    2021-11-01</span>
-<span class="co">## 5 9.997420e-01 9.997469e-01    2021-11-08</span>
-<span class="co">## 6 2.531218e-04 2.580205e-04    2021-11-08</span></code></pre>
+<span class="co">## 1 5.493430e-09 7.177268e-09    2021-11-01</span>
+<span class="co">## 2 9.999411e-01 9.999422e-01    2021-11-01</span>
+<span class="co">## 3 5.762305e-05 5.873505e-05    2021-11-01</span>
+<span class="co">## 4 1.608985e-09 1.646011e-09    2021-11-01</span>
+<span class="co">## 5 2.678029e-10 2.759446e-10    2021-11-01</span>
+<span class="co">## 6 1.952292e-07 2.007813e-07    2021-11-01</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
