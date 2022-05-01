@@ -182,7 +182,8 @@ PlotMullerDailyPrevalence <- function(df, ncol = 4) {
 #' @importFrom patchwork wrap_plots
 #' @export
 #'
-PlotVariantPrevalenceAnimated <- function(df, title = NULL) {
+PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source: gisaid.org<br>**") {
+  color_values <- as.character(x = paletteer::paletteer_d("ggsci::default_igv"))
   the_anim <- ggplot(
     df,
     aes(x = WeekYearCollected, color = variant, y = value, group = variant)
@@ -190,19 +191,20 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL) {
     geom_line() +
     scale_x_yearweek(date_breaks = "1 month", date_labels = "%b %Y", guide = guide_axis(angle = 30)) +
     scale_y_continuous(label = label_number(accuracy = 1, scale_cut = cut_short_scale())) +
-    geom_label(hjust = 0, aes(label = variant), nudge_x = 10) +
+    geom_label(hjust = 0, aes(label = variant), nudge_x = 10, show.legend = FALSE) +
     geom_point() +
     coord_cartesian(ylim = c(0, NA), clip = "off") +
-    scale_color_brewer(type = "qual", palette = "Paired", name = "Variant") +
+    # scale_color_brewer(type = "qual", palette = "Paired", name = "Variant") +
+    scale_color_manual(values = color_values, name = "Variant") +
     xlab("") +
     ylab("\nAverage weekly cases\n") +
     ggtitle(title) +
     labs(
       subtitle = "Estimation based on a multinomial fit to weekly genomic surveillance data deposited to GISAID",
-      caption = "**Source: gisaid.org<br>**"
+      caption = caption
     ) +
-    theme(legend.position = "none", axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
+    theme(legend.position = "bottom", axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
   anim <- the_anim + transition_reveal(Date) + view_follow(fixed_y = c(0, NA), fixed_x = T) + transition_reveal(Date)
-  anim <- animate(anim, renderer = gifski_renderer(), height = 800, width = 1100, res = 120, nframes = 200, rewind = T, end_pause = 30)
+  anim <- animate(anim, renderer = gifski_renderer(), height = 800, width = 1100, res = 150, nframes = 300, rewind = T, end_pause = 30)
   return(anim)
 }

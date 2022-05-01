@@ -2,3 +2,5 @@
 
 ## Changes
 - Update theme to use Set3 colors by default 
+- Add `caption` parameter to `PlotVariantPrevalenceAnimated()`
+- Use 
