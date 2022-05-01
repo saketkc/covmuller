@@ -62,7 +62,7 @@ PlotSequencedPropHeatmap <- function(df) {
 #' @importFrom magrittr %>%
 #' @importFrom tibble deframe
 #' @importFrom ggplot2 aes_string coord_cartesian ggplot geom_bar geom_text scale_y_continuous scale_x_discrete xlab ylab guide_axis
-#' @importFrom scales comma label_percent label_number_si
+#' @importFrom scales comma label_percent label_number cut_short_scale
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
@@ -72,7 +72,10 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
   df <- as.data.frame(df)
   df$MonthYearFactor <- as.factor(df[, xaxis])
   values <- df %>% pull(!!yaxis)
-  is_int <- (values[length(values)] %% 1 == 0)
+  values[is.nan(values)] <- NA
+  df[, yaxis] <- values
+  is_int <- (values %% 1 == 0)
+  is_int <- all(is_int, na.rm = TRUE)
   p <- ggplot(df, aes_string("MonthYearFactor", yaxis)) +
     geom_bar(stat = "identity", fill = color)
   if (is_int) {
@@ -89,7 +92,7 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
         size = 3
       )
     } else {
-      df[, paste0(yaxis, "_acc")] <- label_number_si(accuracy = 1)(values)
+      df[, paste0(yaxis, "_acc")] <- label_number(accuracy = 1, scale_cut = cut_short_scale())(values)
       p <- p + geom_text(
         data = df,
         mapping = aes_string(
@@ -119,7 +122,7 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
       size = 3
     )
   }
-  p <- p + scale_y_continuous(labels = label_number_si(accuracy = 0.1)) +
+  p <- p + scale_y_continuous(labels = label_number(accuracy = 1, scale_cut = cut_short_scale())) +
     scale_x_discrete(guide = guide_axis(angle = xangle)) +
     xlab("") +
     ylab(ylabel) +
@@ -130,7 +133,7 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
 }
 
 #' @importFrom ggplot2 ggplot geom_bar labs scale_fill_brewer scale_x_discrete xlab ylab guide_axis
-#' @importFrom scales label_number_si
+#' @importFrom scales label_number cut_short_scale
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
@@ -144,7 +147,7 @@ StackedBarPlotPrevalence <- function(prevalence_df) {
     )
   ) +
     geom_bar(stat = "identity") +
-    scale_fill_brewer(type = "qual", name = "Pangolin lineage") +
+    scale_fill_brewer(type = "qual", palette = "Set3", name = "Pangolin lineage") +
     EpicovrTheme() +
     xlab("Date collected") +
     ylab("% composition of variant") +
@@ -154,7 +157,7 @@ StackedBarPlotPrevalence <- function(prevalence_df) {
 }
 
 #' @importFrom ggplot2 ggplot facet_wrap geom_area scale_fill_brewer scale_x_date xlab ylab guide_axis
-#' @importFrom scales label_number_si
+#' @importFrom scales label_number cut_short_scale
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
@@ -166,13 +169,13 @@ PlotMullerDailyPrevalence <- function(df, ncol = 4) {
   ) +
     facet_wrap(~State, ncol = ncol) +
     geom_area(aes(lwd = I(1.2), colour = NULL, fill = lineage_collapsed, group = lineage_collapsed), position = "stack") +
-    scale_fill_brewer(type = "qual", name = "Pangolin lineage") +
+    scale_fill_brewer(type = "qual", palette = "Set3", name = "Pangolin lineage") +
     scale_x_date(date_breaks = "1 month", date_labels = "%b %Y")
   wrap_plots(p)
 }
 
 #' @importFrom ggplot2 ggplot geom_line geom_label scale_fill_brewer scale_y_continuous xlab ylab labs ggtitle guide_axis theme element_text
-#' @importFrom scales label_number_si
+#' @importFrom scales label_number cut_short_scale
 #' @importFrom gganimate transition_reveal view_follow animate gifski_renderer
 #' @importFrom tsibble scale_x_yearweek
 #' @importFrom ggtext element_markdown
@@ -186,11 +189,11 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL) {
   ) +
     geom_line() +
     scale_x_yearweek(date_breaks = "1 month", date_labels = "%b %Y", guide = guide_axis(angle = 30)) +
-    scale_y_continuous(label = scales::label_number_si(accuracy = 1)) +
+    scale_y_continuous(label = label_number(accuracy = 1, scale_cut = cut_short_scale())) +
     geom_label(hjust = 0, aes(label = variant), nudge_x = 10) +
     geom_point() +
     coord_cartesian(ylim = c(0, NA), clip = "off") +
-    scale_color_brewer(type = "qual", name = "Variant") +
+    scale_color_brewer(type = "qual", palette = "Paired", name = "Variant") +
     xlab("") +
     ylab("\nAverage weekly cases\n") +
     ggtitle(title) +

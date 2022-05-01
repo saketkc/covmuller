@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">epicovr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,6 +56,9 @@
     <a class="dropdown-item" href="../articles/MultinomialModeling_USA.html">Multinomial modeling - USA</a>
     <a class="dropdown-item" href="../articles/VariantAnimation.html">Animation of projected weekly cases</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -108,18 +111,16 @@
 <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 <span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
   `BA.1.1` <span class="op">=</span> <span class="st">"Omicron-BA.1.1"</span>, `BA.1` <span class="op">=</span> <span class="st">"Omicron-BA.1"</span>,
-  `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>, `BA.2.10` <span class="op">=</span> <span class="st">"Omicron-BA.2.10"</span>,
-  `BA.2.12` <span class="op">=</span> <span class="st">"Omicron-BA.2.12"</span>,
-  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,
-  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,
-  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>
+  `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>, 
+  `BA.2.1` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>, 
+  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.10"</span>,
+  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.10"</span>,
+  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.12"</span>,
+  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.12"</span>,
+  `BA.3` <span class="op">=</span> <span class="st">"Omicron-BA.3"</span>,
+  `BA.4` <span class="op">=</span> <span class="st">"Omicron-BA.4"</span>,
+  `BA.5` <span class="op">=</span> <span class="st">"Omicron-BA.5"</span>
 <span class="op">)</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">omi</span> <span class="kw">in</span> <span class="va">omicron</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"^BA.1"</span>, x <span class="op">=</span> <span class="va">omi</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">custom_voc_mapping</span><span class="op">[[</span><span class="va">omi</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Omicron-BA.1"</span>
-  <span class="op">}</span>
-<span class="op">}</span>
-
 <span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="va">gisaid_india</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">"None"</span><span class="op">)</span>
 
 <span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
@@ -156,27 +157,31 @@
 <span class="va">gisaid_india_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_india_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span>
 
 <span class="va">india_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_india_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  36 (24 variable)</span>
-<span class="co">## initial  value 372247.196219 </span>
-<span class="co">## iter  10 value 223956.834951</span>
-<span class="co">## iter  20 value 158261.721641</span>
-<span class="co">## iter  30 value 131947.817825</span>
-<span class="co">## iter  40 value 129672.157852</span>
-<span class="co">## iter  50 value 129095.475844</span>
-<span class="co">## iter  60 value 129061.619366</span>
-<span class="co">## iter  70 value 128791.754656</span>
-<span class="co">## iter  80 value 128222.161818</span>
-<span class="co">## iter  90 value 127396.225700</span>
-<span class="co">## iter 100 value 126850.489796</span>
-<span class="co">## iter 110 value 126848.857158</span>
-<span class="co">## iter 120 value 126810.714045</span>
-<span class="co">## iter 130 value 126457.715872</span>
-<span class="co">## iter 140 value 126428.624269</span>
-<span class="co">## iter 150 value 126204.483735</span>
-<span class="co">## iter 160 value 126204.365102</span>
-<span class="co">## iter 160 value 126204.364891</span>
-<span class="co">## iter 160 value 126204.364741</span>
-<span class="co">## final  value 126204.364741 </span>
+<pre><code><span class="co">## # weights:  40 (27 variable)</span>
+<span class="co">## initial  value 390097.058700 </span>
+<span class="co">## iter  10 value 178248.743762</span>
+<span class="co">## iter  20 value 146140.552484</span>
+<span class="co">## iter  30 value 126267.710711</span>
+<span class="co">## iter  40 value 125868.710205</span>
+<span class="co">## iter  50 value 125468.176073</span>
+<span class="co">## iter  60 value 125436.880514</span>
+<span class="co">## iter  70 value 125420.104607</span>
+<span class="co">## iter  80 value 125297.844401</span>
+<span class="co">## iter  90 value 124823.115937</span>
+<span class="co">## iter 100 value 124459.757857</span>
+<span class="co">## iter 110 value 124167.683437</span>
+<span class="co">## iter 120 value 124033.635921</span>
+<span class="co">## iter 130 value 124012.447827</span>
+<span class="co">## iter 140 value 123986.653588</span>
+<span class="co">## iter 150 value 123964.465896</span>
+<span class="co">## iter 160 value 123833.698243</span>
+<span class="co">## iter 170 value 123803.428152</span>
+<span class="co">## iter 180 value 123796.541234</span>
+<span class="co">## iter 190 value 123790.764485</span>
+<span class="co">## iter 200 value 123787.290033</span>
+<span class="co">## iter 210 value 123769.180636</span>
+<span class="co">## iter 220 value 123761.696812</span>
+<span class="co">## final  value 123761.459795 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">india_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span><span class="op">)</span>

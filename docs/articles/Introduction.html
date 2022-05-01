@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">epicovr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,6 +56,9 @@
     <a class="dropdown-item" href="../articles/MultinomialModeling_USA.html">Multinomial modeling - USA</a>
     <a class="dropdown-item" href="../articles/VariantAnimation.html">Animation of projected weekly cases</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -98,6 +101,9 @@
 <div class="section level2">
 <h2 id="get-cases-data">Get cases data<a class="anchor" aria-label="anchor" href="#get-cases-data"></a>
 </h2>
+<p>We use <a href="https://covid19bharat.org/" class="external-link">covid19bharat.org</a> to
+get a tally of daily confirmed cases and then summarize it to monthly
+level.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">indian_state_cases</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">india_cases</span> <span class="op">&lt;-</span> <span class="va">indian_state_cases</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span>
@@ -112,6 +118,7 @@
 <div class="section level3">
 <h3 id="plot-cases-for-india">Plot cases for India<a class="anchor" aria-label="anchor" href="#plot-cases-for-india"></a>
 </h3>
+<p>It is easy to visualize the monthly case counts on a bar plot:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">india_cases</span>, ylabel <span class="op">=</span> <span class="st">"Cases per month"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">p1</span></code></pre></div>
@@ -121,12 +128,27 @@
 <div class="section level2">
 <h2 id="read-variant-data-from-gisaid">Read variant data from GISAID<a class="anchor" aria-label="anchor" href="#read-variant-data-from-gisaid"></a>
 </h2>
+<p>We utilize <a href="https://www.gisaid.org/" class="external-link">GISAID</a> data to look
+at prevalence of variants. To access this data, GISAID requires
+registration.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadGISAIDMetada.html">ReadGISAIDMetada</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_27.tar.xz"</span><span class="op">)</span>
-<span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html" class="external-link">qsave</a></span><span class="op">(</span><span class="va">gisaid_metadata</span>, <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_27.qs"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2022_04_29"</span>
+<span class="va">fpath.tar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".tar.xz"</span><span class="op">)</span>
+<span class="va">fpath.qs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".qs"</span><span class="op">)</span>
+
+<span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">fpath.qs</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">fpath.qs</span><span class="op">)</span>
+<span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+  <span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadGISAIDMetada.html">ReadGISAIDMetada</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">fpath.tar</span><span class="op">)</span>
+  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html" class="external-link">qsave</a></span><span class="op">(</span><span class="va">gisaid_metadata</span>, <span class="va">fpath.qs</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
 </h3>
+<p>We can look at the absolute number of cases that have been sequenced
+from a country by filtering out information from the metadata made
+available by GISAID (which includes all countries). Here, we visualize
+the total sequenced cases coming from India:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span>
 <span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -137,6 +159,10 @@
 <div class="section level3">
 <h3 id="overall-how-much-has-india-sequenced-over-months">Overall, how much has India sequenced over months?<a class="anchor" aria-label="anchor" href="#overall-how-much-has-india-sequenced-over-months"></a>
 </h3>
+<p>While the absolute numbers are informative, a more useful metric is
+the proportion of cases (cases sequenced over total cases) that are
+getting sequenced. Here we look at the proportion of cases that have
+been sequenced in India over the course of the pandemic:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">india_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span>
 <span class="va">india_sequencing_proportion</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CombineSequencedCases.html">CombineSequencedCases</a></span><span class="op">(</span>
@@ -146,14 +172,16 @@
 <span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">india_sequencing_proportion</span>, yaxis <span class="op">=</span> <span class="st">"percent_sequenced_collected"</span>, ylabel <span class="op">=</span> <span class="st">"%  deposited to GISAID"</span>, color <span class="op">=</span> <span class="st">"yellowgreen"</span><span class="op">)</span>
 <span class="va">p3</span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
-<p>We can combine all the three plots at once:</p>
+<p>For more context, we can combine all the three plots at once:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
 </div>
 <div class="section level3">
-<h3 id="plot-proportion-of-cases-that-been-deposited-from-india">Plot proportion of cases that been deposited from India<a class="anchor" aria-label="anchor" href="#plot-proportion-of-cases-that-been-deposited-from-india"></a>
+<h3 id="plot-proportion-of-cases-that-been-deposited-from-each-state">Plot proportion of cases that been deposited from each state<a class="anchor" aria-label="anchor" href="#plot-proportion-of-cases-that-been-deposited-from-each-state"></a>
 </h3>
+<p>We can further break down the proportion of sequenced cases at the
+state level:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">state_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthStatewise.html">TotalSequencesPerMonthStatewise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, drop_country <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">country_seq_stats</span>, <span class="va">state_seq_stats</span><span class="op">)</span>
@@ -178,6 +206,8 @@
 <div class="section level2">
 <h2 id="plot-prevalence">Plot Prevalence<a class="anchor" aria-label="anchor" href="#plot-prevalence"></a>
 </h2>
+<p>Finally, we look at the prevalence of variants and variants of
+concern (VOCs):</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">india_month_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsMonthwise.html">SummarizeVariantsMonthwise</a></span><span class="op">(</span><span class="va">gisaid_india</span><span class="op">)</span>
 <span class="va">india_month_counts</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"India"</span>
@@ -188,30 +218,26 @@
 <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 <span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
   `BA.1.1` <span class="op">=</span> <span class="st">"Omicron-BA.1.1"</span>, `BA.1` <span class="op">=</span> <span class="st">"Omicron-BA.1"</span>,
-  `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>, `BA.2.10` <span class="op">=</span> <span class="st">"Omicron-BA.2.10"</span>,
-  `BA.2.12` <span class="op">=</span> <span class="st">"Omicron-BA.2.12"</span>,
-  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,
-  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,
-  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>
+  `BA.2` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>, 
+  `BA.2.1` <span class="op">=</span> <span class="st">"Omicron-BA.2"</span>, 
+  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.10"</span>,
+  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.10"</span>,
+  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.12"</span>,
+  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.12"</span>,
+  `BA.3` <span class="op">=</span> <span class="st">"Omicron-BA.3"</span>,
+  `BA.4` <span class="op">=</span> <span class="st">"Omicron-BA.4"</span>,
+  `BA.5` <span class="op">=</span> <span class="st">"Omicron-BA.5"</span>
 <span class="op">)</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">omi</span> <span class="kw">in</span> <span class="va">omicron</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"BA.1.*"</span>, x <span class="op">=</span> <span class="va">omi</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">custom_voc_mapping</span><span class="op">[[</span><span class="va">omi</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Omicron-BA.1"</span>
-  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"BA.2.*"</span>, x <span class="op">=</span> <span class="va">omi</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">custom_voc_mapping</span><span class="op">[[</span><span class="va">omi</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Omicron-BA.2"</span>
-  <span class="op">}</span>
-<span class="op">}</span>
 <span class="va">india_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
   variant_df <span class="op">=</span> <span class="va">india_month_prevalence</span>,
   vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,summarize <span class="op">=</span> <span class="cn">FALSE</span>
+  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>, summarize <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
 
 <span class="va">p5</span> <span class="op">&lt;-</span> <span class="fu">StackedBarPlotPrevalence</span><span class="op">(</span><span class="va">india_month_prevalence</span><span class="op">)</span>
 <span class="va">p5</span></code></pre></div>
-<pre><code><span class="co">## Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Accent is 8</span>
-<span class="co">## Returning the palette you asked for with that many colors</span></code></pre>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-9-1.png" width="768"></p>
+<p>For an animated version of the prevalence plot, check out <a href="VariantAnimation.html">VariantAnimation</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

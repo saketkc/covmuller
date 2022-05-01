@@ -27,18 +27,16 @@ omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
   `BA.1.1` = "Omicron-BA.1.1", `BA.1` = "Omicron-BA.1",
-  `BA.2` = "Omicron-BA.2", `BA.2.10` = "Omicron-BA.2.10",
-  `BA.2.12` = "Omicron-BA.2.12",
-  `BA.3` = "BA.3",
-  `BA.4` = "BA.4",
-  `BA.5` = "BA.5"
+  `BA.2` = "Omicron-BA.2", 
+  `BA.2.1` = "Omicron-BA.2", 
+  `BA.2.10` = "BA.2.10",
+  `BA.2.10.1` = "BA.2.10",
+  `BA.2.12` = "BA.2.12",
+  `BA.2.12.1` = "BA.2.12",
+  `BA.3` = "Omicron-BA.3",
+  `BA.4` = "Omicron-BA.4",
+  `BA.5` = "Omicron-BA.5"
 )
-for (omi in omicron) {
-  if (grepl(pattern = "^BA.1", x = omi)) {
-    custom_voc_mapping[[omi]] <- "Omicron-BA.1"
-  }
-}
-
 gisaid_india <- gisaid_india %>% filter(pangolin_lineage != "None")
 
 gisaid_india <- CollapseLineageToVOCs(
