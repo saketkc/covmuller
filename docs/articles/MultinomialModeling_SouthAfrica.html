@@ -156,7 +156,9 @@
 
 <span class="va">gisaid_southafrica_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_southafrica_collapsed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Nov 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op">!=</span> <span class="st">"Unassigned"</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op">!=</span> <span class="st">"Unassigned"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span><span class="op">!=</span><span class="st">"Unknown"</span><span class="op">)</span>
+
 <span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">gisaid_southafrica_collapsed_sel</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span>
 <span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="va">vocs_to_keep</span><span class="op">[</span><span class="va">vocs_to_keep</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">]</span>
 
@@ -175,50 +177,48 @@
 <span class="co">## <span style="color: #BCBCBC;">6</span> Eastern Cape                <span style="text-decoration: underline;">18</span>945 Delta                 1</span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_southafrica_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_southafrica_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  96 (77 variable)</span>
-<span class="co">## initial  value 26030.449219 </span>
-<span class="co">## iter  10 value 16258.409751</span>
-<span class="co">## iter  20 value 15503.742010</span>
-<span class="co">## iter  30 value 15235.071081</span>
-<span class="co">## iter  40 value 15112.533024</span>
-<span class="co">## iter  50 value 14391.225541</span>
-<span class="co">## iter  60 value 13855.968108</span>
-<span class="co">## iter  70 value 13622.630706</span>
-<span class="co">## iter  80 value 13216.826470</span>
-<span class="co">## iter  90 value 13091.147960</span>
-<span class="co">## iter 100 value 12866.234220</span>
-<span class="co">## iter 110 value 12767.761757</span>
-<span class="co">## iter 120 value 12713.292185</span>
-<span class="co">## iter 130 value 12578.127697</span>
-<span class="co">## iter 140 value 12541.199480</span>
-<span class="co">## iter 150 value 12534.479345</span>
-<span class="co">## iter 160 value 12533.676371</span>
-<span class="co">## iter 170 value 12533.660374</span>
-<span class="co">## final  value 12533.660079 </span>
+<pre><code><span class="co">## # weights:  88 (70 variable)</span>
+<span class="co">## initial  value 26005.495920 </span>
+<span class="co">## iter  10 value 16247.427737</span>
+<span class="co">## iter  20 value 15501.553155</span>
+<span class="co">## iter  30 value 15234.444973</span>
+<span class="co">## iter  40 value 15107.627440</span>
+<span class="co">## iter  50 value 14400.877430</span>
+<span class="co">## iter  60 value 13848.772573</span>
+<span class="co">## iter  70 value 13603.510704</span>
+<span class="co">## iter  80 value 13219.351758</span>
+<span class="co">## iter  90 value 13070.225282</span>
+<span class="co">## iter 100 value 12856.833514</span>
+<span class="co">## iter 110 value 12748.143034</span>
+<span class="co">## iter 120 value 12675.820692</span>
+<span class="co">## iter 130 value 12581.669874</span>
+<span class="co">## iter 140 value 12576.232656</span>
+<span class="co">## iter 150 value 12566.762909</span>
+<span class="co">## final  value 12566.761558 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_southafrica_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric        State         prob           SE</span>
-<span class="co">## 1           BA.2.10                18932 Eastern Cape 1.429494e-03 8.937343e-05</span>
-<span class="co">## 2             Delta                18932 Eastern Cape 6.027343e-01 1.716893e-02</span>
-<span class="co">## 3      Omicron-BA.1                18932 Eastern Cape 1.414271e-01 6.689260e-03</span>
-<span class="co">## 4      Omicron-BA.2                18932 Eastern Cape 2.045086e-03 1.068267e-04</span>
-<span class="co">## 5      Omicron-BA.3                18932 Eastern Cape 8.909845e-04 7.016379e-05</span>
-<span class="co">## 6      Omicron-BA.4                18932 Eastern Cape 5.500322e-10 4.821114e-11</span>
+<span class="co">## 1           BA.2.10                18932 Eastern Cape 1.627587e-03 8.548874e-05</span>
+<span class="co">## 2             Delta                18932 Eastern Cape 3.612843e-01 1.614315e-02</span>
+<span class="co">## 3      Omicron-BA.1                18932 Eastern Cape 2.278710e-01 7.166105e-03</span>
+<span class="co">## 4      Omicron-BA.2                18932 Eastern Cape 2.967278e-03 1.162455e-04</span>
+<span class="co">## 5      Omicron-BA.3                18932 Eastern Cape 2.241367e-03 1.575879e-04</span>
+<span class="co">## 6      Omicron-BA.4                18932 Eastern Cape 5.481813e-10 4.444790e-11</span>
 <span class="co">##   df    asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 NA 1.254326e-03 1.604663e-03    2021-11-01</span>
-<span class="co">## 2 NA 5.690838e-01 6.363848e-01    2021-11-01</span>
-<span class="co">## 3 NA 1.283164e-01 1.545378e-01    2021-11-01</span>
-<span class="co">## 4 NA 1.835710e-03 2.254463e-03    2021-11-01</span>
-<span class="co">## 5 NA 7.534660e-04 1.028503e-03    2021-11-01</span>
-<span class="co">## 6 NA 4.555401e-10 6.445243e-10    2021-11-01</span></code></pre>
+<span class="co">## 1 NA 1.460032e-03 1.795142e-03    2021-11-01</span>
+<span class="co">## 2 NA 3.296443e-01 3.929243e-01    2021-11-01</span>
+<span class="co">## 3 NA 2.138257e-01 2.419163e-01    2021-11-01</span>
+<span class="co">## 4 NA 2.739441e-03 3.195115e-03    2021-11-01</span>
+<span class="co">## 5 NA 1.932500e-03 2.550233e-03    2021-11-01</span>
+<span class="co">## 6 NA 4.610650e-10 6.352976e-10    2021-11-01</span></code></pre>
 </div>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">muller_southafricabystate_mfit</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit_southafrica_multi_predsbystate</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">muller_southafricabystate_mfit</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit_southafrica_multi_predsbystate</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="va">muller_southafricabystate_mfit</span></code></pre></div>
 <p><img src="MultinomialModeling_SouthAfrica_files/figure-html/unnamed-chunk-8-1.png" width="1248"></p>
 </div>
