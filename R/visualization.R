@@ -189,7 +189,7 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
     aes(x = WeekYearCollected, color = variant, y = value, group = variant)
   ) +
     geom_line() +
-    scale_x_yearweek(date_breaks = "1 month", date_labels = "%b %Y", guide = guide_axis(angle = 30)) +
+    scale_x_yearweek(date_breaks = "1 month", date_labels = "%b %Y", guide = guide_axis(angle = 90)) +
     scale_y_continuous(label = label_number(accuracy = 1, scale_cut = cut_short_scale())) +
     geom_label(hjust = 0, aes(label = variant), nudge_x = 10, show.legend = FALSE) +
     geom_point() +
@@ -204,7 +204,7 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
       caption = caption
     ) +
     theme(legend.position = "bottom", axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
-  anim <- the_anim + transition_reveal(Date) + view_follow(fixed_y = c(0, NA), fixed_x = T) + transition_reveal(Date)
-  anim <- animate(anim, renderer = gifski_renderer(), height = 800, width = 1100, res = 150, nframes = 300, rewind = T, end_pause = 30)
+  anim <- the_anim + transition_reveal(Date) + view_follow(fixed_y = c(0, NA), fixed_x = T)
+  anim <- animate(anim, renderer = gifski_renderer(), height = 900, width = 1100, res = 150, nframes = 300, rewind = T, end_pause = 30)
   return(anim)
 }

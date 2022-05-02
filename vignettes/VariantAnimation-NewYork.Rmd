@@ -20,7 +20,7 @@ theme_set(EpicovrTheme())
 # Get variants data for NYC
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_04_27.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_01.qs")
 gisaid_usa <- gisaid_metadata %>%
   filter(Country == "USA") %>%
   filter(Host == "Human")
@@ -34,10 +34,16 @@ gisaid_NY <- gisaid_usa %>% filter(State == "New York")
 vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
+vocs[["lambda"]] <- NULL
+vocs[["beta"]] <- NULL
+vocs[["gamma"]] <- NULL
+
 custom_voc_mapping <- list(
   `BA.1.1` = "Omicron-BA.1.1", `BA.1` = "Omicron-BA.1",
   `BA.2` = "Omicron-BA.2",
   `BA.2.1` = "Omicron-BA.2",
+  `BA.2.9` = "BA.2.9",
+  `BA.1.17.2` = "BA.1.17.2",
   `BA.2.10` = "BA.2.10",
   `BA.2.10.1` = "BA.2.10",
   `BA.2.12` = "BA.2.12",
@@ -92,6 +98,6 @@ voc_to_keep <- gisaid_NY_weekwise %>%
 gisaid_NY_weekwise <- gisaid_NY_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 newyork_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_NY_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(newyork_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York state by variant")
+the_anim <- PlotVariantPrevalenceAnimated(newyork_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York state by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**")
 the_anim
 ```
