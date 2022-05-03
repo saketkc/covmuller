@@ -39,18 +39,18 @@ vocs[["beta"]] <- NULL
 vocs[["gamma"]] <- NULL
 
 custom_voc_mapping <- list(
-  `BA.1.1` = "Omicron-BA.1.1", `BA.1` = "Omicron-BA.1",
-  `BA.2` = "Omicron-BA.2",
-  `BA.2.1` = "Omicron-BA.2",
+  `BA.1.1` = "BA.1.1", `BA.1` = "BA.1",
+  `BA.2` = "BA.2",
+  `BA.2.1` = "BA.2",
   `BA.2.9` = "BA.2.9",
   `BA.1.17.2` = "BA.1.17.2",
   `BA.2.10` = "BA.2.10",
-  `BA.2.10.1` = "BA.2.10",
+  `BA.2.10.1` = "BA.2.10.1",
   `BA.2.12` = "BA.2.12",
-  `BA.2.12.1` = "BA.2.12",
-  `BA.3` = "Omicron-BA.3",
-  `BA.4` = "Omicron-BA.4",
-  `BA.5` = "Omicron-BA.5"
+  `BA.2.12.1` = "BA.2.12.1",
+  `BA.3` = "BA.3",
+  `BA.4` = "BA.4",
+  `BA.5` = "BA.5"
 )
 gisaid_NY <- gisaid_NY %>% filter(pangolin_lineage != "None")
 
@@ -99,5 +99,33 @@ gisaid_NY_weekwise <- gisaid_NY_weekwise %>% filter(lineage_collapsed %in% voc_t
 
 newyork_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_NY_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(newyork_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York state by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**")
+the_anim
+```
+
+Look at cases after October,2021 only:
+
+```{r}
+
+confirmed$MonthYear <- GetMonthYear(confirmed$date)
+
+confirmed_subset_dateweekwise_long <- confirmed %>% filter(MonthYear>"Oct 2021") %>%
+  group_by(WeekYear) %>%
+  summarise(n = sum(daily_cases)) %>%
+  arrange(WeekYear) %>%
+  rename(WeekYearCollected = WeekYear)
+
+gisaid_NY <- gisaid_NY %>% filter(MonthYearCollected > "Oct 2021")
+gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_NY)
+
+voc_to_keep <- gisaid_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the USA by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**")
 the_anim
 ```
