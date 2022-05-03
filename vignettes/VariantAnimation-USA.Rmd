@@ -20,7 +20,7 @@ theme_set(EpicovrTheme())
 # Get variants data for NYC
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_01.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_03.qs")
 gisaid_usa <- gisaid_metadata %>%
   filter(Country == "USA") %>%
   filter(Host == "Human")
@@ -38,9 +38,10 @@ vocs[["beta"]] <- NULL
 vocs[["gamma"]] <- NULL
 
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1.1", `BA.1` = "BA.1",
+  `BA.1.1` = "BA.1.1", 
+  `BA.1` = "BA.1",
   `BA.2` = "BA.2",
-  `BA.2.1` = "BA.2",
+  `BA.2.1` = "BA.2.1",
   `BA.2.9` = "BA.2.9",
   `BA.1.17.2` = "BA.1.17.2",
   `BA.2.10` = "BA.2.10",
