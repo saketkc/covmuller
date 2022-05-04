@@ -79,7 +79,7 @@ gisaid_southafrica_collapsed_sel <- gisaid_southafrica_collapsed %>%
   filter(State!="Unknown")
 
 vocs_to_keep <- table(gisaid_southafrica_collapsed_sel$lineage_collapsed)
-vocs_to_keep <- vocs_to_keep[vocs_to_keep > 100]
+vocs_to_keep <- vocs_to_keep[vocs_to_keep > 50]
 
 gisaid_southafrica_collapsed_sel <- gisaid_southafrica_collapsed_sel %>% filter(lineage_collapsed %in% names(vocs_to_keep))
 

@@ -4,3 +4,4 @@
 - Update theme to use Set3 colors by default 
 - Add `caption` parameter to `PlotVariantPrevalenceAnimated()`
 - Change default xlable rotation to 90 in `PlotVariantPrevalenceAnimated()`
+- `FitMultinomStatewiseDaily` uses a second degree spline for fitting prevalence 

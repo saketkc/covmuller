@@ -52,10 +52,10 @@ FitMultinomWeekly <- function(variant_df, newdata_df) {
 #'
 FitMultinomStatewiseDaily <- function(variant_df, newdata_df) {
   fit <- multinom(
-    formula = as.formula("lineage_collapsed ~ State + DateCollectedNumeric"),
+    formula = lineage_collapsed ~ State + ns(DateCollectedNumeric, 2),
     data = variant_df,
     weights = n,
-    maxit = 1000
+    maxit = 10000
   )
 
   date.from <- min(variant_df$DateCollectedNumeric)
