@@ -1,10 +1,21 @@
 ---
 title: "Animation of projected weekly cases - USA"
-output:
-  html_document:
-    df_print: paged
+vignette: >
+  %\VignetteIndexEntry{Getting Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  gganimate = list(
+    nframes =0
+  ),
+  out.width = '100%'
+)
+```
 
 
 
@@ -17,10 +28,10 @@ suppressPackageStartupMessages({
 theme_set(EpicovrTheme())
 ```
 
-# Get variants data for NYC
+# Get variants data for USA
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_03.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_05.qs")
 gisaid_usa <- gisaid_metadata %>%
   filter(Country == "USA") %>%
   filter(Host == "Human")
@@ -96,9 +107,10 @@ gisaid_usa_weekwise <- gisaid_usa_weekwise %>% filter(lineage_collapsed %in% voc
 
 usa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_usa_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the USA by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**")
-the_anim
+gganimate::anim_save(filename = here::here("docs/articles/USA_animated.gif"), animation = the_anim)
 ```
 
+![](USA_animated.gif)
 
 Look at cases after October,2021 only:
 
@@ -125,5 +137,8 @@ gisaid_usa_weekwise <- gisaid_usa_weekwise %>% filter(lineage_collapsed %in% voc
 
 usa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_usa_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the USA by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**")
-the_anim
+gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2021.gif"), animation = the_anim)
 ```
+
+![](USA_animated_2021.gif)
+

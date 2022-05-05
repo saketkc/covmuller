@@ -117,7 +117,7 @@
 GISAID for faster loading. See the <a href="Intoduction.html">Introduction vignette</a> to see how the object
 was created.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">date</span> <span class="op">&lt;-</span> <span class="st">"2022_05_03"</span>
+<code class="sourceCode R"><span class="va">date</span> <span class="op">&lt;-</span> <span class="st">"2022_05_05"</span>
 <span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">date</span>, <span class="st">".qs"</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># filter our sequences from USA</span>
 <span class="va">gisaid_usa</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -186,71 +186,72 @@ was created.</p>
 <span class="co">## <span style="color: #BCBCBC;">6</span> Alabama                <span style="text-decoration: underline;">18</span>936 Delta                 8</span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_usa_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_usa_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  636 (572 variable)</span>
-<span class="co">## initial  value 3316997.520722 </span>
-<span class="co">## iter  10 value 1183111.985953</span>
-<span class="co">## iter  20 value 1159947.559112</span>
-<span class="co">## iter  30 value 1155145.397454</span>
-<span class="co">## iter  40 value 1150348.593296</span>
-<span class="co">## iter  50 value 1138275.730302</span>
-<span class="co">## iter  60 value 1108070.038937</span>
-<span class="co">## iter  70 value 1089905.078320</span>
-<span class="co">## iter  80 value 1084996.833764</span>
-<span class="co">## iter  90 value 1076124.696818</span>
-<span class="co">## iter 100 value 1057118.723284</span>
-<span class="co">## iter 110 value 1043747.754577</span>
-<span class="co">## iter 120 value 1036167.949782</span>
-<span class="co">## iter 130 value 1028815.573239</span>
-<span class="co">## iter 140 value 1023753.625543</span>
-<span class="co">## iter 150 value 1018017.247525</span>
-<span class="co">## iter 160 value 1014559.851179</span>
-<span class="co">## iter 170 value 1010407.927443</span>
-<span class="co">## iter 180 value 1007578.444921</span>
-<span class="co">## iter 190 value 1004738.483086</span>
-<span class="co">## iter 200 value 1002946.896702</span>
-<span class="co">## iter 210 value 1001797.354943</span>
-<span class="co">## iter 220 value 1000977.501210</span>
-<span class="co">## iter 230 value 1000347.361246</span>
-<span class="co">## iter 240 value 1000021.300351</span>
-<span class="co">## iter 250 value 999827.220644</span>
-<span class="co">## iter 260 value 999727.390698</span>
-<span class="co">## iter 270 value 999638.190316</span>
-<span class="co">## iter 280 value 999563.438110</span>
-<span class="co">## iter 290 value 999511.248485</span>
-<span class="co">## iter 300 value 999457.241831</span>
-<span class="co">## iter 310 value 999410.755212</span>
-<span class="co">## iter 320 value 999387.398846</span>
-<span class="co">## iter 330 value 999360.923998</span>
-<span class="co">## iter 340 value 999335.136647</span>
-<span class="co">## iter 350 value 999312.592851</span>
-<span class="co">## iter 360 value 999293.322890</span>
-<span class="co">## iter 370 value 999270.352949</span>
-<span class="co">## iter 380 value 999242.498936</span>
-<span class="co">## iter 390 value 999205.159309</span>
-<span class="co">## iter 400 value 999134.740978</span>
-<span class="co">## iter 410 value 999039.609293</span>
-<span class="co">## iter 420 value 999003.428203</span>
-<span class="co">## iter 430 value 998987.898896</span>
-<span class="co">## iter 440 value 998980.904830</span>
-<span class="co">## iter 450 value 998977.760844</span>
-<span class="co">## final  value 998977.278360 </span>
+<pre><code><span class="co">## # weights:  689 (624 variable)</span>
+<span class="co">## initial  value 3446578.880506 </span>
+<span class="co">## iter  10 value 1192720.626355</span>
+<span class="co">## iter  20 value 1166911.230580</span>
+<span class="co">## iter  30 value 1158756.321820</span>
+<span class="co">## iter  40 value 1151190.345655</span>
+<span class="co">## iter  50 value 1145396.170441</span>
+<span class="co">## iter  60 value 1126683.659606</span>
+<span class="co">## iter  70 value 1100313.267399</span>
+<span class="co">## iter  80 value 1093407.340451</span>
+<span class="co">## iter  90 value 1088925.927079</span>
+<span class="co">## iter 100 value 1073249.863693</span>
+<span class="co">## iter 110 value 1058695.427113</span>
+<span class="co">## iter 120 value 1049440.502601</span>
+<span class="co">## iter 130 value 1043034.047221</span>
+<span class="co">## iter 140 value 1037277.132095</span>
+<span class="co">## iter 150 value 1032261.231063</span>
+<span class="co">## iter 160 value 1028257.536628</span>
+<span class="co">## iter 170 value 1024492.540187</span>
+<span class="co">## iter 180 value 1020763.815537</span>
+<span class="co">## iter 190 value 1016591.073653</span>
+<span class="co">## iter 200 value 1014657.324438</span>
+<span class="co">## iter 210 value 1013400.210222</span>
+<span class="co">## iter 220 value 1012629.644112</span>
+<span class="co">## iter 230 value 1012112.989819</span>
+<span class="co">## iter 240 value 1011781.247370</span>
+<span class="co">## iter 250 value 1011588.096798</span>
+<span class="co">## iter 260 value 1011460.094588</span>
+<span class="co">## iter 270 value 1011347.193189</span>
+<span class="co">## iter 280 value 1011239.696738</span>
+<span class="co">## iter 290 value 1011175.250278</span>
+<span class="co">## iter 300 value 1011134.561532</span>
+<span class="co">## iter 310 value 1011107.627702</span>
+<span class="co">## iter 320 value 1011075.141491</span>
+<span class="co">## iter 330 value 1011033.978619</span>
+<span class="co">## iter 340 value 1011004.934724</span>
+<span class="co">## iter 350 value 1010982.849691</span>
+<span class="co">## iter 360 value 1010951.777397</span>
+<span class="co">## iter 370 value 1010891.516660</span>
+<span class="co">## iter 380 value 1010825.218059</span>
+<span class="co">## iter 390 value 1010769.859274</span>
+<span class="co">## iter 400 value 1010699.625381</span>
+<span class="co">## iter 410 value 1010594.559159</span>
+<span class="co">## iter 420 value 1010553.218725</span>
+<span class="co">## iter 430 value 1010534.745604</span>
+<span class="co">## iter 440 value 1010523.588079</span>
+<span class="co">## iter 450 value 1010520.832741</span>
+<span class="co">## iter 460 value 1010519.005056</span>
+<span class="co">## final  value 1010518.643401 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_usa_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span>
-<span class="co">## 1              BA.1                18932 Alabama 6.149405e-07 8.537491e-08 NA</span>
-<span class="co">## 2            BA.1.1                18932 Alabama 7.940384e-07 7.230781e-08 NA</span>
-<span class="co">## 3              BA.2                18932 Alabama 4.504275e-14 1.839435e-14 NA</span>
-<span class="co">## 4            BA.2.1                18932 Alabama 1.517805e-20 6.311811e-20 NA</span>
-<span class="co">## 5           BA.2.10                18932 Alabama 1.841987e-12 9.454577e-13 NA</span>
-<span class="co">## 6         BA.2.10.1                18932 Alabama 3.199269e-18 3.939912e-18 NA</span>
+<span class="co">## 1              BA.1                18932 Alabama 6.235579e-07 8.610910e-08 NA</span>
+<span class="co">## 2            BA.1.1                18932 Alabama 8.027030e-07 7.283388e-08 NA</span>
+<span class="co">## 3              BA.2                18932 Alabama 3.389658e-14 1.362722e-14 NA</span>
+<span class="co">## 4            BA.2.1                18932 Alabama 1.022932e-18 3.263235e-18 NA</span>
+<span class="co">## 5           BA.2.10                18932 Alabama 1.414809e-12 7.231570e-13 NA</span>
+<span class="co">## 6         BA.2.10.1                18932 Alabama 3.739701e-18 4.204266e-18 NA</span>
 <span class="co">##       asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1  4.476088e-07 7.822723e-07    2021-11-01</span>
-<span class="co">## 2  6.523177e-07 9.357591e-07    2021-11-01</span>
-<span class="co">## 3  8.990482e-15 8.109502e-14    2021-11-01</span>
-<span class="co">## 4 -1.085312e-19 1.388873e-19    2021-11-01</span>
-<span class="co">## 5 -1.107554e-14 3.695050e-12    2021-11-01</span>
-<span class="co">## 6 -4.522816e-18 1.092135e-17    2021-11-01</span></code></pre>
+<span class="co">## 1  4.547872e-07 7.923287e-07    2021-11-01</span>
+<span class="co">## 2  6.599512e-07 9.454548e-07    2021-11-01</span>
+<span class="co">## 3  7.187724e-15 6.060543e-14    2021-11-01</span>
+<span class="co">## 4 -5.372891e-18 7.418756e-18    2021-11-01</span>
+<span class="co">## 5 -2.552873e-15 2.832171e-12    2021-11-01</span>
+<span class="co">## 6 -4.500508e-18 1.197991e-17    2021-11-01</span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -259,6 +260,8 @@ was created.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">muller_usabystate_mfit</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit_usa_multi_predsbystate</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="va">muller_usabystate_mfit</span></code></pre></div>
+<pre><code><span class="co">## Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Set3 is 12</span>
+<span class="co">## Returning the palette you asked for with that many colors</span></code></pre>
 <p><img src="MultinomialModeling_USA_files/figure-html/unnamed-chunk-7-1.png" width="1440"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

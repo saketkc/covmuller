@@ -18,7 +18,7 @@ theme_set(EpicovrTheme())
 # Get variants data for UK
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_03.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_05.qs")
 gisaid_uk <- gisaid_metadata %>%
   filter(Country == "United Kingdom") %>%
   filter(Host == "Human")
@@ -110,8 +110,9 @@ gisaid_uk_weekwise <- gisaid_uk_weekwise %>% filter(lineage_collapsed %in% voc_t
 
 uk_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_uk_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(uk_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York state by variant", caption = "**Source: gisaid.org and gov.uk<br>**")
-the_anim
+gganimate::anim_save(filename = here::here("docs/articles/UK_animated.gif"), animation = the_anim)
 ```
+![](UK_animated.gif)
 
 Look at cases after October,2021 only:
 
@@ -139,5 +140,6 @@ gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the USA by variant", caption = "**Source: gisaid.org and gov.uk<br>**")
-the_anim
+gganimate::anim_save(filename = here::here("docs/articles/UK_animated_2021.gif"), animation = the_anim)
 ```
+![](UK_animated_2021.gif)

@@ -12,10 +12,10 @@ suppressPackageStartupMessages({
 theme_set(EpicovrTheme())
 ```
 
-# Get variants data for NYC
+# Get variants data for South Africa
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_03.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_05.qs")
 gisaid_sa <- gisaid_metadata %>%
   filter(Country == "South Africa") %>%
   filter(Host == "Human")
@@ -45,7 +45,10 @@ custom_voc_mapping <- list(
   `BA.2.10` = "BA.2.10",
   `BA.2.10.1` = "BA.2.10.1",
   `BA.2.12` = "BA.2.12",
-  `BA.2.12.1` = "BA.2.12.1"
+  `BA.2.12.1` = "BA.2.12.1",
+  `BA.3` = "BA.3",
+  `BA.4` = "BA.4",
+  `BA.5` = "BA.5"
 )
 gisaid_sa <- gisaid_sa %>%
   filter(pangolin_lineage != "None") %>%
@@ -100,8 +103,10 @@ gisaid_sa_weekwise <- gisaid_sa_weekwise %>% filter(lineage_collapsed %in% voc_t
 
 sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_sa_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in South Africa by variant", caption = "**Source: gisaid.org and covid19datahub.io<br>**")
-the_anim
+gganimate::anim_save(filename = here::here("docs/articles/SA_animated.gif"), animation = the_anim)
 ```
+![](SA_animated.gif)
+
 
 
 Look at cases after October,2021 only:
@@ -130,5 +135,6 @@ gisaid_sa_weekwise <- gisaid_sa_weekwise %>% filter(lineage_collapsed %in% voc_t
 
 sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_sa_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in South Africa by variant", caption = "**Source: gisaid.org and covid19datahub.io<br>**")
-the_anim
+gganimate::anim_save(filename = here::here("docs/articles/SA_animated_2021.gif"), animation = the_anim)
 ```
+![](SA_animated_2021.gif)

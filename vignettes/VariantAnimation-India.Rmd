@@ -19,7 +19,7 @@ theme_set(EpicovrTheme())
 # Get variants data for India
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_03.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_05.qs")
 gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
 
 vocs <- GetVOCs()
@@ -76,5 +76,33 @@ gisaid_india_weekwise <- gisaid_india_weekwise %>% filter(lineage_collapsed %in%
 
 india_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_india_weekwise, confirmed_subset_dateweekwise_long_india)
 the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org**")
-the_anim
+gganimate::anim_save(filename = here::here("docs/articles/IN_animated.gif"), animation = the_anim)
 ```
+![](IN_animated.gif)
+
+
+Look at cases after October, 2021 only:
+
+```{r}
+confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>% filter(WeekYear >=tsibble::yearweek("2021 W35")) %>%
+  group_by(WeekYear) %>%
+  summarise(n = sum(value)) %>%
+  arrange(WeekYear) %>%
+  rename(WeekYearCollected = WeekYear)
+
+gisaid_india <- gisaid_india %>% filter(MonthYearCollected > "Oct 2021")
+gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
+
+voc_to_keep <- gisaid_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
+gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2021.gif"), animation = the_anim)
+```
+![](IN_animated_2021.gif)
