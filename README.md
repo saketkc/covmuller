@@ -2,6 +2,8 @@
 
 epicovr is an R-package designed for analysis of sequencing metadata deposited on [GISAID](https://www.gisaid.org/). 
 
+![](https://saket-choudhary.me/epicovr/articles/IN_animated.gif)
+
 ## Features
 
 
