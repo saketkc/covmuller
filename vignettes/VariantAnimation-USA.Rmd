@@ -11,9 +11,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   gganimate = list(
-    nframes =0
+    nframes = 0
   ),
-  out.width = '100%'
+  out.width = "100%"
 )
 ```
 
@@ -49,7 +49,7 @@ vocs[["beta"]] <- NULL
 vocs[["gamma"]] <- NULL
 
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1.1", 
+  `BA.1.1` = "BA.1.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.1` = "BA.2.1",
@@ -79,7 +79,9 @@ all_state_cases <- refresh_covid19nytimes_states()
 confirmed.tmp <- all_state_cases %>%
   filter(data_type == "cases_total") %>%
   arrange(date)
-confirmed <- confirmed.tmp %>% group_by(date) %>% summarise(value = sum(value))
+confirmed <- confirmed.tmp %>%
+  group_by(date) %>%
+  summarise(value = sum(value))
 
 confirmed$daily_cases <- c(confirmed$value[1], diff(confirmed$value))
 confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
@@ -118,7 +120,8 @@ Look at cases after October,2021 only:
 
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
-confirmed_subset_dateweekwise_long <- confirmed %>% filter(MonthYear>"Oct 2021") %>%
+confirmed_subset_dateweekwise_long <- confirmed %>%
+  filter(MonthYear > "Oct 2021") %>%
   group_by(WeekYear) %>%
   summarise(n = sum(daily_cases)) %>%
   arrange(WeekYear) %>%
@@ -141,4 +144,3 @@ gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2021.gif"
 ```
 
 ![](USA_animated_2021.gif)
-

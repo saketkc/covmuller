@@ -61,14 +61,14 @@ PlotSequencedPropHeatmap <- function(df) {
 
 #' @importFrom magrittr %>%
 #' @importFrom tibble deframe
-#' @importFrom ggplot2 aes_string coord_cartesian ggplot geom_bar geom_text scale_y_continuous scale_x_discrete xlab ylab guide_axis
+#' @importFrom ggplot2 aes_string coord_cartesian ggplot geom_bar geom_text labs scale_y_continuous scale_x_discrete xlab ylab guide_axis
 #' @importFrom scales comma label_percent label_number cut_short_scale
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
 BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblue2",
                     ylabel = NULL, label_si = FALSE,
-                    label_as_percent = TRUE, xangle = 30, title = NULL) {
+                    label_as_percent = TRUE, xangle = 90, title = NULL, caption = NULL) {
   df <- as.data.frame(df)
   df$MonthYearFactor <- as.factor(df[, xaxis])
   values <- df %>% pull(!!yaxis)
@@ -128,7 +128,8 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
     ylab(ylabel) +
     EpicovrTheme() +
     coord_cartesian(clip = "off") +
-    ggtitle(title)
+    ggtitle(title) +
+    labs(caption = caption)
   return(wrap_plots(p))
 }
 

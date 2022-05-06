@@ -39,7 +39,7 @@ vocs[["beta"]] <- NULL
 vocs[["gamma"]] <- NULL
 
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1.1", 
+  `BA.1.1` = "BA.1.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.1` = "BA.2.1",
@@ -111,7 +111,8 @@ Look at cases after October,2021 only:
 
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
-confirmed_subset_dateweekwise_long <- confirmed %>% filter(MonthYear>"Oct 2021") %>%
+confirmed_subset_dateweekwise_long <- confirmed %>%
+  filter(MonthYear > "Oct 2021") %>%
   group_by(WeekYear) %>%
   summarise(n = sum(daily_cases)) %>%
   arrange(WeekYear) %>%
@@ -133,5 +134,3 @@ the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Est
 gganimate::anim_save(filename = here::here("docs/articles/NY_animated_2021.gif"), animation = the_anim)
 ```
 ![](NY_animated_2021.gif)
-
-

@@ -32,9 +32,11 @@ p0
 
 ```{r, fig.width=8, fig.height=5, warning=FALSE}
 state_seq_stats <- TotalSequencesPerMonthStatewise(gisaid_india)
-state_seq_stats_summary <- state_seq_stats %>% group_by(State) %>% summarise(value = sum(value))
-state_seq_stats_summary$State[state_seq_stats_summary$State=="Dadra and Nagar Haveli and Daman and Diu"] <- "Dadra/N Haveli/Daman/Diu"
-p1 <- BarPlot(state_seq_stats_summary,xaxis = "State", ylabel = "Total sequences deposited", color = "slateblue1", label_si = TRUE, xangle = 90, title = "India")
+state_seq_stats_summary <- state_seq_stats %>%
+  group_by(State) %>%
+  summarise(value = sum(value))
+state_seq_stats_summary$State[state_seq_stats_summary$State == "Dadra and Nagar Haveli and Daman and Diu"] <- "Dadra/N Haveli/Daman/Diu"
+p1 <- BarPlot(state_seq_stats_summary, xaxis = "State", ylabel = "Total sequences deposited", color = "slateblue1", label_si = TRUE, xangle = 90, title = "India")
 p1
 ```
 
@@ -46,8 +48,8 @@ omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
   `BA.1.1` = "BA.1.1", `BA.1` = "BA.1",
-  `BA.2` = "BA.2", 
-  `BA.2.1` = "BA.2.1", 
+  `BA.2` = "BA.2",
+  `BA.2.1` = "BA.2.1",
   `BA.2.10` = "BA.2.10",
   `BA.2.10.1` = "BA.2.10.1",
   `BA.2.12` = "BA.2.12",
@@ -56,8 +58,6 @@ custom_voc_mapping <- list(
   `BA.4` = "BA.4",
   `BA.5` = "BA.5"
 )
-
-
 ```
 
 ```{r}

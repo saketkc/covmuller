@@ -26,10 +26,10 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1.1", 
+  `BA.1.1` = "BA.1.1",
   `BA.1` = "BA.1",
-  `BA.2` = "BA.2", 
-  `BA.2.1` = "BA.2.1", 
+  `BA.2` = "BA.2",
+  `BA.2.1` = "BA.2.1",
   `BA.2.10` = "BA.2.10",
   `BA.2.10.1` = "BA.2.10.1",
   `BA.2.12` = "BA.2.12",
@@ -84,7 +84,8 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated.gif"), ani
 Look at cases after October, 2021 only:
 
 ```{r}
-confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>% filter(WeekYear >=tsibble::yearweek("2021 W35")) %>%
+confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
+  filter(WeekYear >= tsibble::yearweek("2021 W35")) %>%
   group_by(WeekYear) %>%
   summarise(n = sum(value)) %>%
   arrange(WeekYear) %>%

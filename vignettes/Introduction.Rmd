@@ -28,7 +28,7 @@ head(india_cases)
 It is easy to visualize the monthly case counts on a bar plot:
 
 ```{r, fig.width=8, fig.height=5, warning=FALSE}
-p1 <- BarPlot(india_cases, ylabel = "Cases per month", label_si = TRUE)
+p1 <- BarPlot(india_cases, ylabel = "Cases per month", label_si = TRUE, title = "Total cases per month - India", caption = "**Source: covid19bharat.org<br>**")
 p1
 ```
 
@@ -48,7 +48,6 @@ if (file.exists(fpath.qs)) {
   gisaid_metadata <- ReadGISAIDMetada(path = fpath.tar)
   qs::qsave(gisaid_metadata, fpath.qs)
 }
-
 ```
 
 
@@ -59,7 +58,7 @@ We can look at the absolute number of cases that have been sequenced from  a cou
 ```{r, fig.width=8, fig.height=5, warning=FALSE}
 gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
 country_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_india, rename_country_as_state = TRUE)
-p2 <- BarPlot(country_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE)
+p2 <- BarPlot(country_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, title = "Total sequences deposited to GISAID from India", caption = "**Source: gisaid.org <br>**")
 p2
 ```
 
@@ -74,7 +73,7 @@ india_sequencing_proportion <- CombineSequencedCases(
   cases_sequenced = country_seq_stats,
   confirmed_long = india_cases_long
 )
-p3 <- BarPlot(india_sequencing_proportion, yaxis = "percent_sequenced_collected", ylabel = "%  deposited to GISAID", color = "yellowgreen")
+p3 <- BarPlot(india_sequencing_proportion, yaxis = "percent_sequenced_collected", ylabel = "%  deposited to GISAID", color = "yellowgreen", title = "Proportion of cases deposited to GISAID from India", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
 p3
 ```
 
@@ -122,7 +121,7 @@ omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
   `BA.1.1` = "BA.1+", `BA.1` = "BA.1+",
-  `BA.2` = "BA.2", 
+  `BA.2` = "BA.2",
   `BA.2.10` = "BA.2.10+",
   `BA.2.10.1` = "BA.2.10+",
   `BA.2.12` = "BA.2.12+",

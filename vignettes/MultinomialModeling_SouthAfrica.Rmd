@@ -38,9 +38,11 @@ p0
 
 ```{r, fig.width=8, fig.height=5, warning=FALSE}
 state_seq_stats <- TotalSequencesPerMonthStatewise(gisaid_southafrica)
-state_seq_stats_summary <- state_seq_stats %>% group_by(State) %>% summarise(value = sum(value))
-state_seq_stats_summary$State[state_seq_stats_summary$State=="Dadra and Nagar Haveli and Daman and Diu"] <- "Dadra/N Haveli/Daman/Diu"
-p1 <- BarPlot(state_seq_stats_summary,xaxis = "State", ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, xangle = 90, title = "South Africa")
+state_seq_stats_summary <- state_seq_stats %>%
+  group_by(State) %>%
+  summarise(value = sum(value))
+state_seq_stats_summary$State[state_seq_stats_summary$State == "Dadra and Nagar Haveli and Daman and Diu"] <- "Dadra/N Haveli/Daman/Diu"
+p1 <- BarPlot(state_seq_stats_summary, xaxis = "State", ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, xangle = 90, title = "South Africa")
 p1
 ```
 
@@ -51,10 +53,10 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1.1", 
+  `BA.1.1` = "BA.1.1",
   `BA.1` = "BA.1",
-  `BA.2` = "BA.2", 
-  `BA.2.1` = "BA.2.1", 
+  `BA.2` = "BA.2",
+  `BA.2.1` = "BA.2.1",
   `BA.2.10` = "BA.2.10",
   `BA.2.10.1` = "BA.2.10.1",
   `BA.2.12` = "BA.2.12",
@@ -76,7 +78,7 @@ gisaid_southafrica_collapsed <- CollapseLineageToVOCs(
 gisaid_southafrica_collapsed_sel <- gisaid_southafrica_collapsed %>%
   filter(MonthYearCollected >= "Nov 2021") %>%
   filter(lineage_collapsed != "Unassigned") %>%
-  filter(State!="Unknown")
+  filter(State != "Unknown")
 
 vocs_to_keep <- table(gisaid_southafrica_collapsed_sel$lineage_collapsed)
 vocs_to_keep <- vocs_to_keep[vocs_to_keep > 50]
