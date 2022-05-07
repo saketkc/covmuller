@@ -138,7 +138,7 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
-StackedBarPlotPrevalence <- function(prevalence_df) {
+StackedBarPlotPrevalence <- function(prevalence_df, xangle = 90) {
   p <- ggplot(
     data = prevalence_df,
     aes(
@@ -153,7 +153,7 @@ StackedBarPlotPrevalence <- function(prevalence_df) {
     xlab("Date collected") +
     ylab("% composition of variant") +
     labs(caption = "**Source:** gisaid.org<br>") +
-    scale_x_discrete(guide = guide_axis(angle = 30))
+    scale_x_discrete(guide = guide_axis(angle = xangle))
   return(wrap_plots(p))
 }
 
