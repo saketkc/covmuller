@@ -6,3 +6,5 @@
 - Change default xlable rotation to 90 in `PlotVariantPrevalenceAnimated()`
 - `FitMultinomStatewiseDaily` uses a second degree spline for fitting prevalence
 - Default to `angle=90` in barplots 
+- Add `colors` argument to `PlotVariantPrevalenceAnimated`
+

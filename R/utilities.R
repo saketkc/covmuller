@@ -41,10 +41,17 @@ GetVOCs <- function() {
   omicron_voc <- c("BA.1.1", "BA.2", "BA.1", "BA.1.17.2", "BA.1.15", "BA.2.9", "BA.1.17", "BA.1.1.1", "BA.1.18", "BA.1.1.2", "BA.2.10", "BA.2.3", "BA.1.15.1", "BA.1.20", "BA.1.1.14", "BA.1.1.15", "BA.1.16", "BA.2.1", "BA.1.14", "BA.1.1.13", "BA.2.12.1", "BA.1.21", "BA.2.8", "BA.1.1.12", "BA.2.10.1", "BA.1.1.11", "BA.1.1.16", "BA.2.12", "BA.1.19", "BA.1.13.1", "BA.1.13", "BA.1.1.10", "BA.1.14.1", "BA.3", "BA.1.12", "BA.2.7", "BA.1.10", "BA.1.15.2", "BA.1.1.4", "BA.2.5", "BA.1.1.9", "BA.2.2", "BA.2.14", "BA.2.6", "BA.1.1.7", "BA.1.1.8", "BA.1.21.1", "BA.2.3.2", "BA.1.8", "BA.1.1.6", "BA.1.7", "BA.1.9", "BA.1.17.1", "BA.1.14.2", "BA.2.3.1", "BA.1.5", "BA.1.1.17", "BA.1.6", "BA.2.16", "BA.1.3", "BA.4", "BA.1.1.3", "BA.1.4", "BA.1.1.5", "BA.2.13", "BA.2.4", "BA.2.9.1", "BA.2.11", "BA.2.15", "BA.5", "BA.1.16.1", "BA.1.2", "BA.1.16.2", "B.1.1.529", "BA.1.11")
   lambda_voc <- c("C.37", "C.37.1")
   mu_voc <- c("B.1.621", "B.1.621.1", "B.1.621.2", "BB.1", "BB.2")
+  epsilon_voc <- c("B.1.429", "B.1.427", "B.1.429.1")
+
+  eta_voc <- c("B.1.525")
+  iota_voc <- c("B.1.526")
+
   vocs <- list(
     alpha = alpha_voc, beta = beta_voc,
     gamma = gamma_voc, delta = delta_voc,
-    omicron = omicron_voc, lambda = lambda_voc, mu = mu_voc
+    omicron = omicron_voc, lambda = lambda_voc,
+    mu = mu_voc, epsilon = epsilon_voc,
+    eta = eta_voc, iota = iota_voc
   )
   return(vocs)
 }
@@ -268,7 +275,7 @@ CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mappi
   if (!is.null(custom_voc_mapping)) {
     for (name in names(custom_voc_mapping)) {
       variant_df <- variant_df %>% mutate(lineage_collapsed = case_when(
-        pangolin_lineage %in% !!name ~ custom_voc_mapping[[!!name]],
+        grepl(pattern = !!name, x = pangolin_lineage) ~ custom_voc_mapping[[!!name]],
         TRUE ~ lineage_collapsed
       ))
     }

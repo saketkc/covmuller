@@ -23,6 +23,6 @@ Epicovr currently supports the following features:
     - [United Kingdom](articles/VariantAnimation-UK.html)
     - [USA](articles/VariantAnimation-USA.html)
     
-
+* Compare prevalence between countries: [Inidia and South Africa](articles/Compare-SouthAfrica-India.html)
 
 
