@@ -84,6 +84,8 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated.gif"), ani
 Look at cases after October, 2021 only:
 
 ```{r}
+confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
+
 confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   filter(WeekYear >= tsibble::yearweek("2021 W35")) %>%
   group_by(WeekYear) %>%
@@ -107,3 +109,33 @@ the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Est
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2021.gif"), animation = the_anim)
 ```
 ![](IN_animated_2021.gif)
+
+
+Look at cases in the last few weeks:
+
+```{r}
+confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
+
+confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
+  filter(WeekYear >= tsibble::yearweek("2022 W12")) %>%
+  group_by(WeekYear) %>%
+  summarise(n = sum(value)) %>%
+  arrange(WeekYear) %>%
+  rename(WeekYearCollected = WeekYear)
+
+gisaid_india <- gisaid_india %>% filter(MonthYearCollected > "Oct 2021")
+gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
+
+voc_to_keep <- gisaid_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
+gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2022.gif"), animation = the_anim)
+```
+![](IN_animated_2022.gif)
