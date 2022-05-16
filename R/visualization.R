@@ -2,7 +2,7 @@
 #' @importFrom ggplot2 theme element_text
 #' @importFrom ggtext element_markdown
 #' @export
-EpicovrTheme <- function() {
+CovmullerTheme <- function() {
   themex <- hrbrthemes::theme_ipsum() + theme(
     axis.text = element_text(size = 9, color = "black"),
     axis.title.x = element_text(size = 12),
@@ -54,7 +54,7 @@ PlotSequencedPropHeatmap <- function(df) {
     scale_x_discrete(guide = guide_axis(angle = 45)) +
     xlab("Month collected") +
     ylab("") +
-    EpicovrTheme()
+    CovmullerTheme()
 
   return(wrap_plots(p))
 }
@@ -126,7 +126,7 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
     scale_x_discrete(guide = guide_axis(angle = xangle)) +
     xlab("") +
     ylab(ylabel) +
-    EpicovrTheme() +
+    CovmullerTheme() +
     coord_cartesian(clip = "off") +
     ggtitle(title) +
     labs(caption = caption)
@@ -149,7 +149,7 @@ StackedBarPlotPrevalence <- function(prevalence_df, xangle = 90) {
   ) +
     geom_bar(stat = "identity") +
     scale_fill_brewer(type = "qual", palette = "Set3", name = "Pangolin lineage") +
-    EpicovrTheme() +
+    CovmullerTheme() +
     xlab("Date collected") +
     ylab("% composition of variant") +
     labs(caption = "**Source:** gisaid.org<br>") +

@@ -1,11 +1,15 @@
-# Epicovr
+# Covmuller
 
-epicovr is an R-package designed for analysis of sequencing metadata deposited on [GISAID](https://www.gisaid.org/). 
+Covmuller is an R-package designed for analysis of sequencing metadata deposited on [GISAID](https://www.gisaid.org/). 
+
+![](https://saket-choudhary.me/covmuller/articles/SA_vs_India.png)
+
+![](https://saket-choudhary.me/covmuller/articles/IN_animated.gif)
+
 
 ## Features
 
-
-Epicovr currently supports the following features:
+Covmuller currently supports the following features:
 
 * Read and preprocess metadata file downloaded from GISAID: [Vignette](articles/Introduction.html)
 * Plot variant prevalence: [Vignette](articles/Introduction.html)
@@ -24,5 +28,7 @@ Epicovr currently supports the following features:
     - [USA](articles/VariantAnimation-USA.html)
     
 * Compare prevalence between countries: [India and South Africa](articles/SouthAfrica_contrast_India.html)
+
+
 
 
