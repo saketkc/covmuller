@@ -38,7 +38,7 @@ custom_voc_mapping <- list(
   `BA.4` = "BA.4",
   `BA.5` = "BA.5"
 )
-gisaid_india <- gisaid_india %>% filter(pangolin_lineage != "None")
+gisaid_india <- gisaid_india %>% filter(pangolin_lineage != "None") %>% filter(pangolin_lineage != "Unassigned")
 
 gisaid_india <- CollapseLineageToVOCs(
   variant_df = gisaid_india,
@@ -123,13 +123,13 @@ confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_india <- gisaid_india %>% filter(MonthYearCollected > "Mar 2022")
+gisaid_india <- gisaid_india %>% filter(MonthYearCollected >= "Mar 2022")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
 
 voc_to_keep <- gisaid_weekwise %>%
   group_by(lineage_collapsed) %>%
   summarise(n_sum = sum(n)) %>%
-  filter(n_sum > 50) %>%
+  filter(n_sum > 10) %>%
   pull(lineage_collapsed) %>%
   unique()
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
