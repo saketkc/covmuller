@@ -49,6 +49,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-variant-prevalence">
     <a class="dropdown-item" href="../articles/MultinomialModeling_Australia.html">Australia</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_Canada.html">Canada</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_Germany.html">Germany</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_India.html">India</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_SouthAfrica.html">South Africa</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_UK.html">United Kingdom</a>
@@ -58,8 +59,10 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-animation-vignettes">Animation Vignettes</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-animation-vignettes">
+    <a class="dropdown-item" href="../articles/VariantAnimation-Germany.html">Animated prevalence in Germany</a>
     <a class="dropdown-item" href="../articles/VariantAnimation-India.html">Animated prevalence in India</a>
     <a class="dropdown-item" href="../articles/VariantAnimation-NewYork.html">Animated prevalence in New York state</a>
+    <a class="dropdown-item" href="../articles/VariantAnimation-NYC.html">Animated prevalence in New York City</a>
     <a class="dropdown-item" href="../articles/VariantAnimation-SouthAfrica.html">Animated prevalence in South Africa</a>
     <a class="dropdown-item" href="../articles/VariantAnimation-UK.html">Animated prevalence in United Kingdom</a>
     <a class="dropdown-item" href="../articles/VariantAnimation-USA.html">Animated prevalence in USA</a>
@@ -117,7 +120,7 @@
 GISAID for faster loading. See the <a href="Intoduction.html">Introduction vignette</a> to see how the object
 was created.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">date</span> <span class="op">&lt;-</span> <span class="st">"2022_05_13"</span>
+<code class="sourceCode R"><span class="va">date</span> <span class="op">&lt;-</span> <span class="st">"2022_05_18"</span>
 <span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">date</span>, <span class="st">".qs"</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># filter our sequences from USA</span>
 <span class="va">gisaid_usa</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -187,83 +190,79 @@ was created.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_usa_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_usa_shared_dateweek</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  689 (624 variable)</span>
-<span class="co">## initial  value 3572661.531122 </span>
-<span class="co">## iter  10 value 1249087.138655</span>
-<span class="co">## iter  20 value 964684.967471</span>
-<span class="co">## iter  30 value 925106.236767</span>
-<span class="co">## iter  40 value 880618.782680</span>
-<span class="co">## iter  50 value 755911.417068</span>
-<span class="co">## iter  60 value 643809.895052</span>
-<span class="co">## iter  70 value 588288.685123</span>
-<span class="co">## iter  80 value 547007.831320</span>
-<span class="co">## iter  90 value 515772.006957</span>
-<span class="co">## iter 100 value 481716.965660</span>
-<span class="co">## iter 110 value 459388.834700</span>
-<span class="co">## iter 120 value 446726.794716</span>
-<span class="co">## iter 130 value 434953.417020</span>
-<span class="co">## iter 140 value 424877.166217</span>
-<span class="co">## iter 150 value 416424.035743</span>
-<span class="co">## iter 160 value 412580.334134</span>
-<span class="co">## iter 170 value 410688.301257</span>
-<span class="co">## iter 180 value 409157.429626</span>
-<span class="co">## iter 190 value 407671.998306</span>
-<span class="co">## iter 200 value 406397.632314</span>
-<span class="co">## iter 210 value 405395.113133</span>
-<span class="co">## iter 220 value 404706.901155</span>
-<span class="co">## iter 230 value 404200.326744</span>
-<span class="co">## iter 240 value 403822.773661</span>
-<span class="co">## iter 250 value 403606.010565</span>
-<span class="co">## iter 260 value 403296.642995</span>
-<span class="co">## iter 270 value 403054.996522</span>
-<span class="co">## iter 280 value 402773.456075</span>
-<span class="co">## iter 290 value 402446.836540</span>
-<span class="co">## iter 300 value 401999.761204</span>
-<span class="co">## iter 310 value 401370.714052</span>
-<span class="co">## iter 320 value 400441.185635</span>
-<span class="co">## iter 330 value 399278.967565</span>
-<span class="co">## iter 340 value 398248.667889</span>
-<span class="co">## iter 350 value 397704.445261</span>
-<span class="co">## iter 360 value 397346.236437</span>
-<span class="co">## iter 370 value 397033.371009</span>
-<span class="co">## iter 380 value 396657.407911</span>
-<span class="co">## iter 390 value 396455.676189</span>
-<span class="co">## iter 400 value 396287.961665</span>
-<span class="co">## iter 410 value 396094.542294</span>
-<span class="co">## iter 420 value 395933.546441</span>
-<span class="co">## iter 430 value 395804.625035</span>
-<span class="co">## iter 440 value 395730.509071</span>
-<span class="co">## iter 450 value 395687.006932</span>
-<span class="co">## iter 460 value 395665.585037</span>
-<span class="co">## iter 470 value 395650.527799</span>
-<span class="co">## iter 480 value 395640.118356</span>
-<span class="co">## iter 490 value 395634.232155</span>
-<span class="co">## iter 500 value 395628.914829</span>
-<span class="co">## iter 510 value 395621.359617</span>
-<span class="co">## iter 520 value 395615.491252</span>
-<span class="co">## iter 530 value 395610.529146</span>
-<span class="co">## iter 540 value 395604.869434</span>
-<span class="co">## iter 550 value 395600.493230</span>
-<span class="co">## iter 560 value 395598.365899</span>
-<span class="co">## iter 570 value 395597.004177</span>
-<span class="co">## iter 580 value 395596.648094</span>
-<span class="co">## final  value 395596.601960 </span>
+<span class="co">## initial  value 3625386.630114 </span>
+<span class="co">## iter  10 value 648034.228583</span>
+<span class="co">## iter  20 value 517663.732081</span>
+<span class="co">## iter  30 value 502151.953888</span>
+<span class="co">## iter  40 value 489009.799189</span>
+<span class="co">## iter  50 value 455167.267925</span>
+<span class="co">## iter  60 value 443656.635025</span>
+<span class="co">## iter  70 value 440206.305989</span>
+<span class="co">## iter  80 value 436103.405388</span>
+<span class="co">## iter  90 value 433690.439699</span>
+<span class="co">## iter 100 value 432247.376760</span>
+<span class="co">## iter 110 value 429491.505113</span>
+<span class="co">## iter 120 value 427771.711001</span>
+<span class="co">## iter 130 value 426508.000704</span>
+<span class="co">## iter 140 value 425536.652822</span>
+<span class="co">## iter 150 value 424824.874392</span>
+<span class="co">## iter 160 value 424085.795450</span>
+<span class="co">## iter 170 value 423660.809821</span>
+<span class="co">## iter 180 value 423423.923703</span>
+<span class="co">## iter 190 value 423242.098153</span>
+<span class="co">## iter 200 value 423054.355679</span>
+<span class="co">## iter 210 value 422840.978293</span>
+<span class="co">## iter 220 value 422596.708389</span>
+<span class="co">## iter 230 value 422310.745599</span>
+<span class="co">## iter 240 value 422081.746337</span>
+<span class="co">## iter 250 value 421884.797196</span>
+<span class="co">## iter 260 value 421669.013827</span>
+<span class="co">## iter 270 value 421343.610755</span>
+<span class="co">## iter 280 value 420560.215779</span>
+<span class="co">## iter 290 value 419251.944766</span>
+<span class="co">## iter 300 value 417733.239445</span>
+<span class="co">## iter 310 value 416843.090057</span>
+<span class="co">## iter 320 value 416551.952193</span>
+<span class="co">## iter 330 value 416319.386021</span>
+<span class="co">## iter 340 value 416161.165311</span>
+<span class="co">## iter 350 value 416023.438335</span>
+<span class="co">## iter 360 value 415877.501349</span>
+<span class="co">## iter 370 value 415720.077381</span>
+<span class="co">## iter 380 value 415599.649090</span>
+<span class="co">## iter 390 value 415451.965263</span>
+<span class="co">## iter 400 value 415292.034444</span>
+<span class="co">## iter 410 value 415201.803210</span>
+<span class="co">## iter 420 value 415171.790530</span>
+<span class="co">## iter 430 value 415150.555607</span>
+<span class="co">## iter 440 value 415136.636404</span>
+<span class="co">## iter 450 value 415127.343388</span>
+<span class="co">## iter 460 value 415119.764460</span>
+<span class="co">## iter 470 value 415116.293719</span>
+<span class="co">## iter 480 value 415113.641227</span>
+<span class="co">## iter 490 value 415112.197901</span>
+<span class="co">## iter 500 value 415111.391730</span>
+<span class="co">## iter 510 value 415111.016766</span>
+<span class="co">## iter 520 value 415110.822368</span>
+<span class="co">## iter 530 value 415110.666604</span>
+<span class="co">## iter 540 value 415110.494285</span>
+<span class="co">## final  value 415110.456529 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_usa_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span>
-<span class="co">## 1              BA.1                18932 Alabama 7.902776e-06 6.909419e-07 NA</span>
-<span class="co">## 2              BA.2                18932 Alabama 1.426489e-11 3.629907e-12 NA</span>
-<span class="co">## 3            BA.2.1                18932 Alabama 8.795756e-23 3.687205e-22 NA</span>
-<span class="co">## 4           BA.2.10                18932 Alabama 2.225634e-11 1.101501e-11 NA</span>
-<span class="co">## 5         BA.2.10.1                18932 Alabama 3.215391e-17 3.734560e-17 NA</span>
-<span class="co">## 6           BA.2.12                18932 Alabama 7.997025e-13 1.106916e-12 NA</span>
+<span class="co">## 1              BA.1                18932 Alabama 9.319587e-06 8.102165e-07 NA</span>
+<span class="co">## 2              BA.2                18932 Alabama 1.613121e-11 3.989713e-12 NA</span>
+<span class="co">## 3            BA.2.1                18932 Alabama 5.840462e-23 1.876419e-22 NA</span>
+<span class="co">## 4           BA.2.10                18932 Alabama 2.669363e-11 1.293546e-11 NA</span>
+<span class="co">## 5         BA.2.10.1                18932 Alabama 5.780779e-17 4.177552e-17 NA</span>
+<span class="co">## 6           BA.2.12                18932 Alabama 6.618247e-13 7.365863e-13 NA</span>
 <span class="co">##       asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1  6.548555e-06 9.256997e-06    2021-11-01</span>
-<span class="co">## 2  7.150406e-12 2.137938e-11    2021-11-01</span>
-<span class="co">## 3 -6.347212e-22 8.106364e-22    2021-11-01</span>
-<span class="co">## 4  6.673241e-13 4.384536e-11    2021-11-01</span>
-<span class="co">## 5 -4.104212e-17 1.053499e-16    2021-11-01</span>
-<span class="co">## 6 -1.369813e-12 2.969218e-12    2021-11-01</span></code></pre>
+<span class="co">## 1  7.731591e-06 1.090758e-05    2021-11-01</span>
+<span class="co">## 2  8.311516e-12 2.395090e-11    2021-11-01</span>
+<span class="co">## 3 -3.093667e-22 4.261760e-22    2021-11-01</span>
+<span class="co">## 4  1.340595e-12 5.204667e-11    2021-11-01</span>
+<span class="co">## 5 -2.407072e-17 1.396863e-16    2021-11-01</span>
+<span class="co">## 6 -7.818580e-13 2.105507e-12    2021-11-01</span></code></pre>
 </div>
 </div>
 <div class="section level2">

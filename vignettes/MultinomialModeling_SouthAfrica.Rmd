@@ -15,7 +15,7 @@ theme_set(CovmullerTheme())
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread(file = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_15.qs")
+gisaid_metadata <- qs::qread(file = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_18.qs")
 gisaid_southafrica <- gisaid_metadata %>%
   filter(Country == "South Africa") %>%
   filter(Host == "Human")
@@ -41,7 +41,6 @@ state_seq_stats <- TotalSequencesPerMonthStatewise(gisaid_southafrica)
 state_seq_stats_summary <- state_seq_stats %>%
   group_by(State) %>%
   summarise(value = sum(value))
-state_seq_stats_summary$State[state_seq_stats_summary$State == "Dadra and Nagar Haveli and Daman and Diu"] <- "Dadra/N Haveli/Daman/Diu"
 p1 <- BarPlot(state_seq_stats_summary, xaxis = "State", ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, xangle = 90, title = "South Africa")
 p1
 ```

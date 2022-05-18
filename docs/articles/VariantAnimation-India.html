@@ -49,6 +49,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-variant-prevalence">
     <a class="dropdown-item" href="../articles/MultinomialModeling_Australia.html">Australia</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_Canada.html">Canada</a>
+    <a class="dropdown-item" href="../articles/MultinomialModeling_Germany.html">Germany</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_India.html">India</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_SouthAfrica.html">South Africa</a>
     <a class="dropdown-item" href="../articles/MultinomialModeling_UK.html">United Kingdom</a>
@@ -58,6 +59,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-animation-vignettes">Animation Vignettes</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-animation-vignettes">
+    <a class="dropdown-item" href="../articles/VariantAnimation-Germany.html">Animated prevalence in Germany</a>
     <a class="dropdown-item" href="../articles/VariantAnimation-India.html">Animated prevalence in India</a>
     <a class="dropdown-item" href="../articles/VariantAnimation-NewYork.html">Animated prevalence in New York state</a>
     <a class="dropdown-item" href="../articles/VariantAnimation-NYC.html">Animated prevalence in New York City</a>
@@ -115,7 +117,7 @@
 <h2 id="get-variants-data-for-india">Get variants data for India<a class="anchor" aria-label="anchor" href="#get-variants-data-for-india"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_15.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_18.qs"</span><span class="op">)</span>
 <span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span>
 
 <span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span>
@@ -171,19 +173,19 @@
 
 <span class="va">india_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_india_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  40 (27 variable)</span>
-<span class="co">## initial  value 388211.241509 </span>
-<span class="co">## iter  10 value 223204.862475</span>
-<span class="co">## iter  20 value 165578.241049</span>
-<span class="co">## iter  30 value 117884.083207</span>
-<span class="co">## iter  40 value 113980.787936</span>
-<span class="co">## iter  50 value 113410.216965</span>
-<span class="co">## iter  60 value 113194.903999</span>
-<span class="co">## iter  70 value 112975.305204</span>
-<span class="co">## iter  80 value 112804.216395</span>
-<span class="co">## iter  90 value 112735.653558</span>
-<span class="co">## iter 100 value 112537.247141</span>
-<span class="co">## iter 110 value 112466.444830</span>
-<span class="co">## final  value 112465.814951 </span>
+<span class="co">## initial  value 388213.544094 </span>
+<span class="co">## iter  10 value 223187.891027</span>
+<span class="co">## iter  20 value 166924.413797</span>
+<span class="co">## iter  30 value 118824.144498</span>
+<span class="co">## iter  40 value 113985.180202</span>
+<span class="co">## iter  50 value 113418.119494</span>
+<span class="co">## iter  60 value 113157.271127</span>
+<span class="co">## iter  70 value 112945.042355</span>
+<span class="co">## iter  80 value 112797.031572</span>
+<span class="co">## iter  90 value 112732.644418</span>
+<span class="co">## iter 100 value 112546.353161</span>
+<span class="co">## iter 110 value 112482.825603</span>
+<span class="co">## final  value 112482.522325 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">india_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org**"</span><span class="op">)</span>
@@ -213,13 +215,13 @@
 
 <span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  28 (18 variable)</span>
-<span class="co">## initial  value 133654.838588 </span>
-<span class="co">## iter  10 value 82273.514079</span>
-<span class="co">## iter  20 value 71234.518405</span>
-<span class="co">## iter  30 value 70510.668511</span>
-<span class="co">## iter  40 value 70271.440411</span>
-<span class="co">## iter  50 value 70264.105741</span>
-<span class="co">## final  value 70263.248286 </span>
+<span class="co">## initial  value 133656.784498 </span>
+<span class="co">## iter  10 value 82292.893085</span>
+<span class="co">## iter  20 value 71232.425424</span>
+<span class="co">## iter  30 value 70497.383849</span>
+<span class="co">## iter  40 value 70272.405698</span>
+<span class="co">## iter  50 value 70264.324767</span>
+<span class="co">## final  value 70263.390547 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org&lt;br&gt;**"</span><span class="op">)</span>
@@ -249,10 +251,10 @@
 
 <span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  24 (15 variable)</span>
-<span class="co">## initial  value 5692.419834 </span>
-<span class="co">## iter  10 value 1897.571381</span>
-<span class="co">## iter  20 value 1891.751784</span>
-<span class="co">## final  value 1891.748675 </span>
+<span class="co">## initial  value 5694.211593 </span>
+<span class="co">## iter  10 value 1897.620032</span>
+<span class="co">## iter  20 value 1891.788693</span>
+<span class="co">## final  value 1891.785687 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org&lt;br&gt;**"</span><span class="op">)</span>
