@@ -171,7 +171,7 @@ PlotMullerDailyPrevalence <- function(df, ncol = 4) {
     facet_wrap(~State, ncol = ncol) +
     geom_area(aes(lwd = I(1.2), colour = NULL, fill = lineage_collapsed, group = lineage_collapsed), position = "stack") +
     scale_fill_brewer(type = "qual", palette = "Set3", name = "Pangolin lineage") +
-    scale_x_date(date_breaks = "1 month", date_labels = "%b %Y")
+    scale_x_date(date_breaks = "1 month", date_labels = "%b %Y", guide = guide_axis(angle = 90))
   wrap_plots(p)
 }
 
@@ -194,7 +194,7 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
     aes(x = WeekYearCollected, color = variant, y = value, group = variant)
   ) +
     geom_line() +
-    scale_x_yearweek(date_breaks = "31 days", date_labels = "%d %b %Y", guide = guide_axis(angle = 90)) +
+    scale_x_yearweek(date_breaks = "7 days", date_labels = "%d %b %Y", guide = guide_axis(angle = 90)) +
     scale_y_continuous(label = label_number(accuracy = 1, scale_cut = cut_short_scale())) +
     geom_label(hjust = 0, aes(label = variant), nudge_x = 10, show.legend = FALSE) +
     geom_point() +
