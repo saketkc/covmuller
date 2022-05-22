@@ -101,7 +101,7 @@ voc_to_keep <- gisaid_germany_weekwise %>%
 gisaid_germany_weekwise <- gisaid_germany_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_germany_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Germany by variant", caption = "**Source: gisaid.org and covid19datahub.io<br>**")
+the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Germany by variant", caption = "**Source: gisaid.org and covid19datahub.io<br>**", date_breaks = "28 days")
 gganimate::anim_save(filename = here::here("docs/articles/Germany_animated.gif"), animation = the_anim)
 ```
 ![](Germany_animated.gif)

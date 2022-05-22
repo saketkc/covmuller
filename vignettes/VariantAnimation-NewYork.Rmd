@@ -96,7 +96,7 @@ voc_to_keep <- gisaid_NY_weekwise %>%
 gisaid_NY_weekwise <- gisaid_NY_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 newyork_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_NY_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(newyork_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York state by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**")
+the_anim <- PlotVariantPrevalenceAnimated(newyork_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York state by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**", date_breaks = "28 days")
 gganimate::anim_save(filename = here::here("docs/articles/NY_animated.gif"), animation = the_anim)
 ```
 ![](NY_animated.gif)
