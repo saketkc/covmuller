@@ -4,7 +4,7 @@ Covmuller is an R-package designed for analysis of SARS-CoV-2 sequencing metadat
 
 ![](https://saket-choudhary.me/covmuller/articles/SA_vs_India.png)
 
-![](https://saket-choudhary.me/covmuller/articles/IN_animated.gif)
+![](https://raw.githubusercontent.com/saketkc/covmuller/master/docs/articles/SA_animated.gif)
 
 ## Features
 
