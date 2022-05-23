@@ -2,7 +2,7 @@
 
 Covmuller is an R-package designed for analysis of SARS-CoV-2 sequencing metadata deposited on [GISAID](https://www.gisaid.org/). 
 
-![](https://saket-choudhary.me/covmuller/articles/SA_vs_India.png)
+![](https://saket-choudhary.me/covmuller/articles/SouthAfrica_contrast_India_files/figure-html/unnamed-chunk-3-1.png)
 
 ![](https://raw.githubusercontent.com/saketkc/covmuller/master/docs/articles/SA_animated.gif)
 
