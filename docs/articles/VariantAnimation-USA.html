@@ -118,7 +118,7 @@
 <h2 id="get-variants-data-for-usa">Get variants data for USA<a class="anchor" aria-label="anchor" href="#get-variants-data-for-usa"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_21.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_23.qs"</span><span class="op">)</span>
 <span class="va">gisaid_usa</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"USA"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
@@ -195,25 +195,25 @@
 
 <span class="va">usa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_usa_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span>
 <span class="co">#&gt; # weights:  64 (45 variable)</span>
-<span class="co">#&gt; initial  value 9081578.316043 </span>
-<span class="co">#&gt; iter  10 value 3584051.399624</span>
-<span class="co">#&gt; iter  20 value 2586593.838286</span>
-<span class="co">#&gt; iter  30 value 2498569.640451</span>
-<span class="co">#&gt; iter  40 value 2140993.799674</span>
-<span class="co">#&gt; iter  50 value 1580872.951804</span>
-<span class="co">#&gt; iter  60 value 1394991.143230</span>
-<span class="co">#&gt; iter  70 value 1387519.165326</span>
-<span class="co">#&gt; iter  80 value 1381450.510979</span>
-<span class="co">#&gt; iter  90 value 1376591.418885</span>
-<span class="co">#&gt; iter 100 value 1375782.293239</span>
-<span class="co">#&gt; iter 110 value 1374085.436596</span>
-<span class="co">#&gt; iter 120 value 1369729.699485</span>
-<span class="co">#&gt; iter 130 value 1368020.024632</span>
-<span class="co">#&gt; iter 140 value 1366322.330377</span>
-<span class="co">#&gt; iter 150 value 1365215.485124</span>
-<span class="co">#&gt; iter 160 value 1363320.360772</span>
-<span class="co">#&gt; iter 170 value 1362918.427071</span>
-<span class="co">#&gt; final  value 1362401.040636 </span>
+<span class="co">#&gt; initial  value 9100445.782298 </span>
+<span class="co">#&gt; iter  10 value 3728113.245423</span>
+<span class="co">#&gt; iter  20 value 2687565.524431</span>
+<span class="co">#&gt; iter  30 value 2484899.390027</span>
+<span class="co">#&gt; iter  40 value 2023787.456798</span>
+<span class="co">#&gt; iter  50 value 1617939.961285</span>
+<span class="co">#&gt; iter  60 value 1408285.123615</span>
+<span class="co">#&gt; iter  70 value 1395126.632712</span>
+<span class="co">#&gt; iter  80 value 1389209.423819</span>
+<span class="co">#&gt; iter  90 value 1382869.858890</span>
+<span class="co">#&gt; iter 100 value 1380644.096860</span>
+<span class="co">#&gt; iter 110 value 1379715.861908</span>
+<span class="co">#&gt; iter 120 value 1375898.034118</span>
+<span class="co">#&gt; iter 130 value 1374256.039884</span>
+<span class="co">#&gt; iter 140 value 1372110.110510</span>
+<span class="co">#&gt; iter 150 value 1370839.901609</span>
+<span class="co">#&gt; iter 160 value 1370815.880580</span>
+<span class="co">#&gt; iter 170 value 1370793.001500</span>
+<span class="co">#&gt; final  value 1370790.305012 </span>
 <span class="co">#&gt; converged</span>
 <span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">usa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in the USA by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes&lt;br&gt;**"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span>
 <span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/USA_animated.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></code></pre></div>
@@ -243,17 +243,17 @@
 
 <span class="va">usa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_usa_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span>
 <span class="co">#&gt; # weights:  44 (30 variable)</span>
-<span class="co">#&gt; initial  value 3470262.813537 </span>
-<span class="co">#&gt; iter  10 value 960289.713769</span>
-<span class="co">#&gt; iter  20 value 825380.107904</span>
-<span class="co">#&gt; iter  30 value 726516.145914</span>
-<span class="co">#&gt; iter  40 value 583164.211169</span>
-<span class="co">#&gt; iter  50 value 576960.449441</span>
-<span class="co">#&gt; iter  60 value 575636.933021</span>
-<span class="co">#&gt; iter  70 value 575197.504310</span>
-<span class="co">#&gt; iter  80 value 574960.982593</span>
-<span class="co">#&gt; iter  90 value 574528.891283</span>
-<span class="co">#&gt; final  value 574517.844245 </span>
+<span class="co">#&gt; initial  value 3485383.941127 </span>
+<span class="co">#&gt; iter  10 value 945759.943701</span>
+<span class="co">#&gt; iter  20 value 818631.897710</span>
+<span class="co">#&gt; iter  30 value 676334.163773</span>
+<span class="co">#&gt; iter  40 value 587808.376302</span>
+<span class="co">#&gt; iter  50 value 581578.879147</span>
+<span class="co">#&gt; iter  60 value 580158.756477</span>
+<span class="co">#&gt; iter  70 value 579832.935256</span>
+<span class="co">#&gt; iter  80 value 579628.234186</span>
+<span class="co">#&gt; iter  90 value 579434.895337</span>
+<span class="co">#&gt; final  value 579425.814249 </span>
 <span class="co">#&gt; converged</span>
 <span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">usa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in the USA by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes&lt;br&gt;**"</span><span class="op">)</span>
 <span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/USA_animated_2021.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></code></pre></div>

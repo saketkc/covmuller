@@ -114,7 +114,7 @@
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_21.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_23.qs"</span><span class="op">)</span>
 <span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Australia"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
@@ -184,21 +184,18 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_australia_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_australia_shared_dateweek</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  77 (60 variable)</span>
-<span class="co">## initial  value 114042.010196 </span>
-<span class="co">## iter  10 value 44157.695831</span>
-<span class="co">## iter  20 value 37914.981005</span>
-<span class="co">## iter  30 value 35628.607149</span>
-<span class="co">## iter  40 value 34222.535207</span>
-<span class="co">## iter  50 value 33644.623333</span>
-<span class="co">## iter  60 value 33162.131958</span>
-<span class="co">## iter  70 value 33089.475910</span>
-<span class="co">## iter  80 value 33077.883049</span>
-<span class="co">## iter  90 value 33076.325000</span>
-<span class="co">## iter 100 value 33075.980052</span>
-<span class="co">## iter 110 value 33075.863442</span>
-<span class="co">## iter 110 value 33075.863222</span>
-<span class="co">## iter 110 value 33075.863220</span>
-<span class="co">## final  value 33075.863220 </span>
+<span class="co">## initial  value 116184.457270 </span>
+<span class="co">## iter  10 value 45610.986758</span>
+<span class="co">## iter  20 value 39286.716565</span>
+<span class="co">## iter  30 value 36204.020342</span>
+<span class="co">## iter  40 value 34662.388222</span>
+<span class="co">## iter  50 value 34172.549267</span>
+<span class="co">## iter  60 value 33723.967367</span>
+<span class="co">## iter  70 value 33653.138270</span>
+<span class="co">## iter  80 value 33640.183550</span>
+<span class="co">## iter  90 value 33639.392611</span>
+<span class="co">## iter 100 value 33639.089206</span>
+<span class="co">## final  value 33639.027397 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_australia_multi_predsbystate</span><span class="op">)</span></code></pre></div>
@@ -210,12 +207,12 @@
 <span class="co">## 5           BA.2.12                18932 Australian Capital Territory</span>
 <span class="co">## 6             Delta                18932 Australian Capital Territory</span>
 <span class="co">##           prob           SE df     asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 6.192551e-05 1.155083e-05 NA  3.928629e-05 8.456472e-05    2021-11-01</span>
-<span class="co">## 2 1.084380e-09 4.497819e-10 NA  2.028238e-10 1.965936e-09    2021-11-01</span>
-<span class="co">## 3 1.654301e-09 9.955270e-10 NA -2.968958e-10 3.605498e-09    2021-11-01</span>
-<span class="co">## 4 9.285772e-18 1.809249e-17 NA -2.617486e-17 4.474641e-17    2021-11-01</span>
-<span class="co">## 5 1.476505e-11 2.984963e-11 NA -4.373914e-11 7.326924e-11    2021-11-01</span>
-<span class="co">## 6 9.285180e-01 9.248634e-03 NA  9.103910e-01 9.466450e-01    2021-11-01</span></code></pre>
+<span class="co">## 1 7.416521e-05 1.361233e-05 NA  4.748553e-05 1.008449e-04    2021-11-01</span>
+<span class="co">## 2 9.902788e-10 4.022796e-10 NA  2.018252e-10 1.778732e-09    2021-11-01</span>
+<span class="co">## 3 2.945156e-09 1.647828e-09 NA -2.845271e-10 6.174838e-09    2021-11-01</span>
+<span class="co">## 4 4.722537e-17 8.203155e-17 NA -1.135535e-16 2.080042e-16    2021-11-01</span>
+<span class="co">## 5 2.415848e-11 4.453710e-11 NA -6.313263e-11 1.114496e-10    2021-11-01</span>
+<span class="co">## 6 9.287758e-01 9.215173e-03 NA  9.107144e-01 9.468372e-01    2021-11-01</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
