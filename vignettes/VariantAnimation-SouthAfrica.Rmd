@@ -15,7 +15,7 @@ theme_set(CovmullerTheme())
 # Get variants data for South Africa
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_26.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_28.qs")
 gisaid_sa <- gisaid_metadata %>%
   filter(Country == "South Africa") %>%
   filter(Host == "Human")
@@ -66,10 +66,6 @@ gisaid_sa <- CollapseLineageToVOCs(
 # Get weekly cases for South Africa
 
 ```{r, warning=FALSE, message=FALSE}
-
-confirmed.tmp <- COVID19::covid19(country = "South Africa", verbose = FALSE, level = 2) %>%
-  select(date, administrative_area_level_2, confirmed) %>%
-  rename(State = administrative_area_level_2)
 
 confirmed <- COVID19::covid19(country = "South Africa", verbose = FALSE) %>%
   select(date, confirmed) %>%
