@@ -118,7 +118,7 @@
 <h2 id="get-data">Get data<a class="anchor" aria-label="anchor" href="#get-data"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2022_05_28"</span>
+<code class="sourceCode R"><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2022_05_30"</span>
 <span class="va">fpath.tar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".tar.xz"</span><span class="op">)</span>
 <span class="va">fpath.qs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".qs"</span><span class="op">)</span>
 <span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">fpath.qs</span><span class="op">)</span>
@@ -224,38 +224,39 @@
 
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_sel_dateweek</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  50 (36 variable)</span>
-<span class="co">## initial  value 227101.665137 </span>
-<span class="co">## iter  10 value 79563.202850</span>
-<span class="co">## iter  20 value 74249.709396</span>
-<span class="co">## iter  30 value 62340.619617</span>
-<span class="co">## iter  40 value 54949.307457</span>
-<span class="co">## iter  50 value 53396.039767</span>
-<span class="co">## iter  60 value 53322.744658</span>
-<span class="co">## iter  70 value 53284.585644</span>
-<span class="co">## iter  80 value 53275.492728</span>
-<span class="co">## iter  90 value 53267.448697</span>
-<span class="co">## iter 100 value 53250.023925</span>
-<span class="co">## iter 110 value 53240.586750</span>
-<span class="co">## iter 120 value 53237.002438</span>
-<span class="co">## iter 130 value 53236.116148</span>
-<span class="co">## final  value 53236.087726 </span>
+<span class="co">## initial  value 228223.024077 </span>
+<span class="co">## iter  10 value 78000.182724</span>
+<span class="co">## iter  20 value 73085.388356</span>
+<span class="co">## iter  30 value 60219.241888</span>
+<span class="co">## iter  40 value 54028.604297</span>
+<span class="co">## iter  50 value 53632.358074</span>
+<span class="co">## iter  60 value 53533.942974</span>
+<span class="co">## iter  70 value 53496.209117</span>
+<span class="co">## iter  80 value 53474.215844</span>
+<span class="co">## iter  90 value 53467.280274</span>
+<span class="co">## iter 100 value 53455.907597</span>
+<span class="co">## iter 110 value 53449.013326</span>
+<span class="co">## iter 120 value 53444.745995</span>
+<span class="co">## iter 130 value 53443.247548</span>
+<span class="co">## iter 140 value 53443.090231</span>
+<span class="co">## final  value 53443.089003 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric State         prob           SE df</span>
-<span class="co">## 1             Alpha                18901 India 1.204298e-04 1.178422e-04 NA</span>
-<span class="co">## 2             BA.1+                18901 India 4.392329e-07 8.418216e-08 NA</span>
-<span class="co">## 3              BA.2                18901 India 1.005327e-11 2.335716e-12 NA</span>
-<span class="co">## 4              BA.3                18901 India 1.019499e-09 7.350893e-10 NA</span>
-<span class="co">## 5              BA.4                18901 India 4.541976e-32 2.720298e-31 NA</span>
-<span class="co">## 6              BA.5                18901 India 3.209709e-38 4.223789e-37 NA</span>
+<span class="co">## 1             Alpha                18901 India 1.174911e-04 1.152782e-04 NA</span>
+<span class="co">## 2             BA.1+                18901 India 5.220103e-07 9.769195e-08 NA</span>
+<span class="co">## 3              BA.2                18901 India 1.245458e-11 2.826363e-12 NA</span>
+<span class="co">## 4              BA.3                18901 India 1.774285e-09 1.250269e-09 NA</span>
+<span class="co">## 5              BA.4                18901 India 3.931929e-36 2.442387e-35 NA</span>
+<span class="co">## 6              BA.5                18901 India 9.935415e-44 1.311899e-42 NA</span>
 <span class="co">##       asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 -1.105367e-04 3.513963e-04    2021-10-01</span>
-<span class="co">## 2  2.742389e-07 6.042269e-07    2021-10-01</span>
-<span class="co">## 3  5.475353e-12 1.463119e-11    2021-10-01</span>
-<span class="co">## 4 -4.212498e-10 2.460247e-09    2021-10-01</span>
-<span class="co">## 5 -4.877489e-31 5.785884e-31    2021-10-01</span>
-<span class="co">## 6 -7.957503e-37 8.599445e-37    2021-10-01</span></code></pre>
+<span class="co">## 1 -1.084501e-04 3.434322e-04    2021-10-01</span>
+<span class="co">## 2  3.305376e-07 7.134830e-07    2021-10-01</span>
+<span class="co">## 3  6.915006e-12 1.799415e-11    2021-10-01</span>
+<span class="co">## 4 -6.761969e-10 4.224767e-09    2021-10-01</span>
+<span class="co">## 5 -4.393798e-35 5.180184e-35    2021-10-01</span>
+<span class="co">## 6 -2.471921e-42 2.670629e-42    2021-10-01</span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">muller</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
 <span class="va">muller</span></code></pre></div>
@@ -295,32 +296,32 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">preds_southafrica</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_southafrica_weekwise</span>, <span class="va">cases_southafrica</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  36 (24 variable)</span>
-<span class="co">## initial  value 34788.656733 </span>
-<span class="co">## iter  10 value 11634.424972</span>
-<span class="co">## iter  20 value 9703.121067</span>
-<span class="co">## iter  30 value 9301.920915</span>
-<span class="co">## iter  40 value 9246.781620</span>
-<span class="co">## iter  50 value 9208.632564</span>
-<span class="co">## iter  60 value 9208.114006</span>
-<span class="co">## iter  70 value 9204.821869</span>
-<span class="co">## iter  80 value 9203.216539</span>
-<span class="co">## iter  90 value 9203.121301</span>
-<span class="co">## final  value 9203.087360 </span>
+<span class="co">## initial  value 34982.012496 </span>
+<span class="co">## iter  10 value 11739.492343</span>
+<span class="co">## iter  20 value 10060.908412</span>
+<span class="co">## iter  30 value 9461.852955</span>
+<span class="co">## iter  40 value 9389.931252</span>
+<span class="co">## iter  50 value 9338.416364</span>
+<span class="co">## iter  60 value 9335.688386</span>
+<span class="co">## iter  70 value 9327.434982</span>
+<span class="co">## iter  80 value 9323.341172</span>
+<span class="co">## iter  90 value 9321.776167</span>
+<span class="co">## final  value 9321.731645 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">preds_india</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_india_weekwise</span>, <span class="va">cases_india</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  36 (24 variable)</span>
-<span class="co">## initial  value 181921.406105 </span>
-<span class="co">## iter  10 value 72421.660468</span>
-<span class="co">## iter  20 value 55341.399886</span>
-<span class="co">## iter  30 value 44759.305182</span>
-<span class="co">## iter  40 value 44305.309210</span>
-<span class="co">## iter  50 value 44171.006620</span>
-<span class="co">## iter  60 value 44149.641158</span>
-<span class="co">## iter  70 value 44137.189092</span>
-<span class="co">## iter  80 value 44135.196251</span>
-<span class="co">## iter  90 value 44134.774967</span>
-<span class="co">## final  value 44134.288528 </span>
+<span class="co">## initial  value 182798.098711 </span>
+<span class="co">## iter  10 value 72716.514344</span>
+<span class="co">## iter  20 value 53463.104038</span>
+<span class="co">## iter  30 value 44612.665456</span>
+<span class="co">## iter  40 value 44313.701104</span>
+<span class="co">## iter  50 value 44229.080645</span>
+<span class="co">## iter  60 value 44220.755927</span>
+<span class="co">## iter  70 value 44217.444256</span>
+<span class="co">## iter  80 value 44216.577526</span>
+<span class="co">## iter  90 value 44216.438354</span>
+<span class="co">## final  value 44215.968081 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sa_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">preds_southafrica</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in South Africa by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span>, colors <span class="op">=</span> <span class="va">colors_to_use</span><span class="op">)</span>

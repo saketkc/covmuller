@@ -114,7 +114,7 @@
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_28.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_30.qs"</span><span class="op">)</span>
 <span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
@@ -186,43 +186,44 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_india_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  273 (228 variable)</span>
-<span class="co">## initial  value 147659.553931 </span>
-<span class="co">## iter  10 value 96759.325743</span>
-<span class="co">## iter  20 value 89581.613779</span>
-<span class="co">## iter  30 value 83900.404201</span>
-<span class="co">## iter  40 value 81782.881662</span>
-<span class="co">## iter  50 value 79085.714824</span>
-<span class="co">## iter  60 value 77415.463764</span>
-<span class="co">## iter  70 value 76758.347958</span>
-<span class="co">## iter  80 value 76194.071369</span>
-<span class="co">## iter  90 value 75850.798694</span>
-<span class="co">## iter 100 value 75694.889999</span>
-<span class="co">## iter 110 value 75529.958211</span>
-<span class="co">## iter 120 value 75449.998582</span>
-<span class="co">## iter 130 value 75431.863499</span>
-<span class="co">## iter 140 value 75423.145605</span>
-<span class="co">## iter 150 value 75418.057942</span>
-<span class="co">## iter 160 value 75412.235520</span>
-<span class="co">## iter 170 value 75409.099463</span>
-<span class="co">## iter 180 value 75408.888161</span>
-<span class="co">## final  value 75408.881464 </span>
+<span class="co">## initial  value 148412.621158 </span>
+<span class="co">## iter  10 value 96983.450672</span>
+<span class="co">## iter  20 value 89326.452942</span>
+<span class="co">## iter  30 value 86227.138262</span>
+<span class="co">## iter  40 value 83024.468021</span>
+<span class="co">## iter  50 value 79924.665891</span>
+<span class="co">## iter  60 value 78202.284494</span>
+<span class="co">## iter  70 value 77408.173459</span>
+<span class="co">## iter  80 value 76620.872523</span>
+<span class="co">## iter  90 value 76287.186772</span>
+<span class="co">## iter 100 value 76106.894609</span>
+<span class="co">## iter 110 value 75946.609692</span>
+<span class="co">## iter 120 value 75849.589100</span>
+<span class="co">## iter 130 value 75814.802718</span>
+<span class="co">## iter 140 value 75799.887508</span>
+<span class="co">## iter 150 value 75791.482382</span>
+<span class="co">## iter 160 value 75782.907768</span>
+<span class="co">## iter 170 value 75775.194601</span>
+<span class="co">## iter 180 value 75773.053532</span>
+<span class="co">## iter 190 value 75772.737738</span>
+<span class="co">## final  value 75772.681169 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_india_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric             State         prob</span>
-<span class="co">## 1              BA.1                18932 Andaman &amp; Nicobar 6.788187e-04</span>
-<span class="co">## 2              BA.2                18932 Andaman &amp; Nicobar 1.885198e-05</span>
-<span class="co">## 3           BA.2.10                18932 Andaman &amp; Nicobar 1.590915e-05</span>
-<span class="co">## 4         BA.2.10.1                18932 Andaman &amp; Nicobar 9.993064e-08</span>
-<span class="co">## 5           BA.2.12                18932 Andaman &amp; Nicobar 6.561274e-10</span>
-<span class="co">## 6             Delta                18932 Andaman &amp; Nicobar 9.830681e-01</span>
+<span class="co">## 1              BA.1                18932 Andaman &amp; Nicobar 6.947322e-04</span>
+<span class="co">## 2              BA.2                18932 Andaman &amp; Nicobar 2.150024e-05</span>
+<span class="co">## 3           BA.2.10                18932 Andaman &amp; Nicobar 1.813436e-05</span>
+<span class="co">## 4         BA.2.10.1                18932 Andaman &amp; Nicobar 5.196746e-08</span>
+<span class="co">## 5           BA.2.12                18932 Andaman &amp; Nicobar 1.046920e-09</span>
+<span class="co">## 6             Delta                18932 Andaman &amp; Nicobar 9.839673e-01</span>
 <span class="co">##             SE df     asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 3.665001e-04 NA -3.950827e-05 1.397146e-03    2021-11-01</span>
-<span class="co">## 2 1.054367e-05 NA -1.813237e-06 3.951721e-05    2021-11-01</span>
-<span class="co">## 3 8.221232e-06 NA -2.041672e-07 3.202247e-05    2021-11-01</span>
-<span class="co">## 4 6.147669e-07 NA -1.104990e-06 1.304852e-06    2021-11-01</span>
-<span class="co">## 5 1.023384e-09 NA -1.349668e-09 2.661922e-09    2021-11-01</span>
-<span class="co">## 6 1.276465e-02 NA  9.580498e-01 1.008086e+00    2021-11-01</span></code></pre>
+<span class="co">## 1 3.745145e-04 NA -3.930274e-05 1.428767e-03    2021-11-01</span>
+<span class="co">## 2 1.196405e-05 NA -1.948870e-06 4.494935e-05    2021-11-01</span>
+<span class="co">## 3 9.314018e-06 NA -1.207809e-07 3.638950e-05    2021-11-01</span>
+<span class="co">## 4 4.535650e-07 NA -8.370035e-07 9.409384e-07    2021-11-01</span>
+<span class="co">## 5 9.349716e-10 NA -7.855908e-10 2.879431e-09    2021-11-01</span>
+<span class="co">## 6 1.197897e-02 NA  9.604890e-01 1.007446e+00    2021-11-01</span></code></pre>
 </div>
 </div>
 <div class="section level2">
