@@ -114,7 +114,7 @@
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_05_30.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_02.qs"</span><span class="op">)</span>
 <span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Canada"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
@@ -180,38 +180,38 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_canada_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_canada_shared_dateweek</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  84 (66 variable)</span>
-<span class="co">## initial  value 261592.593158 </span>
-<span class="co">## iter  10 value 99841.779205</span>
-<span class="co">## iter  20 value 88930.587323</span>
-<span class="co">## iter  30 value 77758.476341</span>
-<span class="co">## iter  40 value 69892.465137</span>
-<span class="co">## iter  50 value 63419.803734</span>
-<span class="co">## iter  60 value 61252.431234</span>
-<span class="co">## iter  70 value 59803.831806</span>
-<span class="co">## iter  80 value 59691.105910</span>
-<span class="co">## iter  90 value 59673.101477</span>
-<span class="co">## iter 100 value 59669.270979</span>
-<span class="co">## iter 110 value 59665.738259</span>
-<span class="co">## iter 120 value 59665.393781</span>
-<span class="co">## iter 130 value 59665.323812</span>
-<span class="co">## final  value 59665.313890 </span>
+<span class="co">## initial  value 262168.582562 </span>
+<span class="co">## iter  10 value 104395.822023</span>
+<span class="co">## iter  20 value 92589.975358</span>
+<span class="co">## iter  30 value 78780.115190</span>
+<span class="co">## iter  40 value 71722.053826</span>
+<span class="co">## iter  50 value 64873.180195</span>
+<span class="co">## iter  60 value 62609.604688</span>
+<span class="co">## iter  70 value 61032.881539</span>
+<span class="co">## iter  80 value 60754.857409</span>
+<span class="co">## iter  90 value 60718.663029</span>
+<span class="co">## iter 100 value 60715.058820</span>
+<span class="co">## iter 110 value 60711.282342</span>
+<span class="co">## iter 120 value 60710.510451</span>
+<span class="co">## iter 130 value 60710.374695</span>
+<span class="co">## final  value 60710.332107 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_canada_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span>
-<span class="co">## 1              BA.1                18932 Alberta 3.900747e-05 3.915615e-06 NA</span>
-<span class="co">## 2              BA.2                18932 Alberta 1.475725e-08 2.729022e-09 NA</span>
-<span class="co">## 3           BA.2.10                18932 Alberta 4.681303e-09 2.190557e-09 NA</span>
-<span class="co">## 4           BA.2.12                18932 Alberta 1.043340e-07 1.085067e-07 NA</span>
-<span class="co">## 5         BA.2.12.1                18932 Alberta 5.783883e-12 7.164046e-12 NA</span>
-<span class="co">## 6             Delta                18932 Alberta 9.999607e-01 3.953506e-06 NA</span>
+<span class="co">## 1              BA.1                18932 Alberta 3.817317e-05 3.831299e-06 NA</span>
+<span class="co">## 2              BA.2                18932 Alberta 1.371637e-08 2.529331e-09 NA</span>
+<span class="co">## 3           BA.2.10                18932 Alberta 4.703187e-09 2.185589e-09 NA</span>
+<span class="co">## 4           BA.2.12                18932 Alberta 7.139197e-08 7.609890e-08 NA</span>
+<span class="co">## 5         BA.2.12.1                18932 Alberta 4.741722e-12 5.806695e-12 NA</span>
+<span class="co">## 6             Delta                18932 Alberta 9.998339e-01 5.336322e-05 NA</span>
 <span class="co">##       asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1  3.133301e-05 4.668194e-05    2021-11-01</span>
-<span class="co">## 2  9.408462e-09 2.010603e-08    2021-11-01</span>
-<span class="co">## 3  3.878906e-10 8.974715e-09    2021-11-01</span>
-<span class="co">## 4 -1.083352e-07 3.170033e-07    2021-11-01</span>
-<span class="co">## 5 -8.257390e-12 1.982516e-11    2021-11-01</span>
-<span class="co">## 6  9.999529e-01 9.999684e-01    2021-11-01</span></code></pre>
+<span class="co">## 1  3.066396e-05 4.568238e-05    2021-11-01</span>
+<span class="co">## 2  8.758976e-09 1.867377e-08    2021-11-01</span>
+<span class="co">## 3  4.195108e-10 8.986864e-09    2021-11-01</span>
+<span class="co">## 4 -7.775914e-08 2.205431e-07    2021-11-01</span>
+<span class="co">## 5 -6.639191e-12 1.612264e-11    2021-11-01</span>
+<span class="co">## 6  9.997293e-01 9.999384e-01    2021-11-01</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
