@@ -149,21 +149,46 @@ GetIndiaConfirmedCasesMonthlyLong <- function(url = "https://data.covid19bharat.
 #' @importFrom reshape2 melt
 #' @importFrom tsibble yearweek
 #' @export
-GetIndiaConfirmedCasesWeeklyLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
-  statewise_cases <- GetIndiaDailyData(url = url)
-  confirmed <- statewise_cases[statewise_cases$Status == "Confirmed", ]
-  confirmed$MonthYear <- GetMonthYear(confirmed$Date_YMD)
-  confirmed$WeekYear <- yearweek(confirmed$Date_YMD)
+GetIndiaConfirmedCasesWeeklyLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv", level = "State") {
+  if (level == "State") {
+    statewise_cases <- GetIndiaDailyData(url = url)
+    confirmed <- statewise_cases[statewise_cases$Status == "Confirmed", ]
+    confirmed$MonthYear <- GetMonthYear(confirmed$Date_YMD)
+    confirmed$WeekYear <- yearweek(confirmed$Date_YMD)
 
-  state_names <- GetIndianStates()
-  confirmed_subset <- confirmed[, c("WeekYear", as.character(state_names))]
-  confirmed_subset_weekwise <- confirmed_subset %>%
-    group_by(WeekYear) %>%
-    summarise_all(list(~ sum(., na.rm = TRUE))) %>%
-    arrange(WeekYear)
-  confirmed_subset_weekwise_long <- melt(data = confirmed_subset_weekwise, id.vars = "WeekYear", varnames = c("State")) %>%
-    rename(State = variable)
-  confirmed_subset_weekwise_long$State <- as.character(confirmed_subset_weekwise_long$State)
+    state_names <- GetIndianStates()
+    confirmed_subset <- confirmed[, c("WeekYear", as.character(state_names))]
+    confirmed_subset_weekwise <- confirmed_subset %>%
+      group_by(WeekYear) %>%
+      summarise_all(list(~ mean(., na.rm = TRUE))) %>%
+      arrange(WeekYear)
+
+    confirmed_subset_weekwise_long <- melt(data = confirmed_subset_weekwise, id.vars = "WeekYear", varnames = c("State")) %>%
+      rename(State = variable)
+    confirmed_subset_weekwise_long$State <- as.character(confirmed_subset_weekwise_long$State)
+    confirmed_subset_weekwise_long$value <- ceiling(confirmed_subset_weekwise_long$value)
+  } else {
+    district_cases_cumulative <- read.csv("https://data.covid19bharat.org/csv/latest/districts.csv") %>% arrange(Date)
+    district_cases_cumulative$Date <- as.Date(district_cases_cumulative$Date, format = "%Y-%m-%d")
+    district_cases_cumulative <- district_cases_cumulative %>%
+      select(Date, State, District, Confirmed) %>%
+      group_by(State, District) %>%
+      arrange(Date) %>%
+      mutate(value = diff(c(0, Confirmed)))
+    confirmed_subset_weekwise_long <- district_cases_cumulative %>% select(-Confirmed)
+
+
+    confirmed_subset_weekwise_long$MonthYear <- GetMonthYear(confirmed_subset_weekwise_long$Date)
+    confirmed_subset_weekwise_long$WeekYear <- yearweek(confirmed_subset_weekwise_long$Date)
+
+    confirmed_subset_weekwise_long <- confirmed_subset_weekwise_long %>% select(WeekYear, State, District, value)
+
+    # take mean of weekly cases
+    confirmed_subset_weekwise_long <- confirmed_subset_weekwise_long %>%
+      group_by(WeekYear, State, District) %>%
+      summarise(value = mean(value, na.rm = TRUE))
+    confirmed_subset_weekwise_long$value <- ceiling(confirmed_subset_weekwise_long$value)
+  }
   confirmed_subset_weekwise_long$type <- "Confirmed"
   return(confirmed_subset_weekwise_long)
 }

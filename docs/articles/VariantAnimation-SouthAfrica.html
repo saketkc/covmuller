@@ -118,7 +118,7 @@
 <h2 id="get-variants-data-for-south-africa">Get variants data for South Africa<a class="anchor" aria-label="anchor" href="#get-variants-data-for-south-africa"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_02.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_04.qs"</span><span class="op">)</span>
 <span class="va">gisaid_sa</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"South Africa"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
@@ -180,7 +180,7 @@
 
 <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">daily_cases</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">daily_cases</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span>
 
@@ -200,26 +200,47 @@
 
 <span class="va">sa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_sa_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  44 (30 variable)</span>
-<span class="co">## initial  value 97050.015376 </span>
-<span class="co">## iter  10 value 40620.127917</span>
-<span class="co">## iter  20 value 32664.346879</span>
-<span class="co">## iter  30 value 22615.125100</span>
-<span class="co">## iter  40 value 21958.269010</span>
-<span class="co">## iter  50 value 21929.701273</span>
-<span class="co">## iter  60 value 21917.955227</span>
-<span class="co">## iter  70 value 21907.229967</span>
-<span class="co">## iter  80 value 21898.223307</span>
-<span class="co">## iter  90 value 21871.827008</span>
-<span class="co">## iter 100 value 21805.569471</span>
-<span class="co">## iter 110 value 21705.263606</span>
-<span class="co">## iter 120 value 21634.515270</span>
-<span class="co">## iter 130 value 21632.320263</span>
-<span class="co">## iter 140 value 21623.935787</span>
-<span class="co">## iter 150 value 21600.278566</span>
-<span class="co">## iter 160 value 21583.781314</span>
-<span class="co">## iter 170 value 21557.665769</span>
-<span class="co">## iter 180 value 21536.361694</span>
-<span class="co">## final  value 21496.473436 </span>
+<span class="co">## initial  value 97884.482931 </span>
+<span class="co">## iter  10 value 44576.858910</span>
+<span class="co">## iter  20 value 30837.109395</span>
+<span class="co">## iter  30 value 22632.408000</span>
+<span class="co">## iter  40 value 22193.781950</span>
+<span class="co">## iter  50 value 22172.639968</span>
+<span class="co">## iter  60 value 22150.579896</span>
+<span class="co">## iter  70 value 22147.765393</span>
+<span class="co">## iter  80 value 22142.172080</span>
+<span class="co">## iter  90 value 22082.084255</span>
+<span class="co">## iter 100 value 22067.745464</span>
+<span class="co">## iter 110 value 21956.051055</span>
+<span class="co">## iter 120 value 21888.390627</span>
+<span class="co">## iter 130 value 21886.498036</span>
+<span class="co">## iter 140 value 21885.773951</span>
+<span class="co">## iter 150 value 21857.268811</span>
+<span class="co">## iter 160 value 21853.288512</span>
+<span class="co">## iter 170 value 21834.256551</span>
+<span class="co">## iter 180 value 21816.410267</span>
+<span class="co">## iter 190 value 21786.726178</span>
+<span class="co">## iter 200 value 21783.116999</span>
+<span class="co">## iter 210 value 21776.833658</span>
+<span class="co">## iter 220 value 21773.033993</span>
+<span class="co">## iter 230 value 21767.009501</span>
+<span class="co">## iter 240 value 21763.430901</span>
+<span class="co">## iter 250 value 21760.833842</span>
+<span class="co">## iter 260 value 21760.752647</span>
+<span class="co">## iter 270 value 21760.381944</span>
+<span class="co">## iter 280 value 21759.706273</span>
+<span class="co">## iter 290 value 21755.760176</span>
+<span class="co">## iter 300 value 21747.613976</span>
+<span class="co">## iter 310 value 21743.344565</span>
+<span class="co">## iter 320 value 21743.057142</span>
+<span class="co">## iter 330 value 21742.551309</span>
+<span class="co">## iter 340 value 21741.318536</span>
+<span class="co">## iter 350 value 21740.747656</span>
+<span class="co">## iter 360 value 21740.160585</span>
+<span class="co">## iter 370 value 21738.669483</span>
+<span class="co">## iter 370 value 21738.669383</span>
+<span class="co">## iter 370 value 21738.669254</span>
+<span class="co">## final  value 21738.669254 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">sa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in South Africa by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span>
@@ -249,15 +270,15 @@
 
 <span class="va">sa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_sa_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  32 (21 variable)</span>
-<span class="co">## initial  value 31206.179216 </span>
-<span class="co">## iter  10 value 12705.361655</span>
-<span class="co">## iter  20 value 10867.501049</span>
-<span class="co">## iter  30 value 10533.149024</span>
-<span class="co">## iter  40 value 10487.752425</span>
-<span class="co">## iter  50 value 10473.129447</span>
-<span class="co">## iter  60 value 10455.867577</span>
-<span class="co">## iter  70 value 10447.697682</span>
-<span class="co">## final  value 10445.393399 </span>
+<span class="co">## initial  value 31881.997717 </span>
+<span class="co">## iter  10 value 12983.121344</span>
+<span class="co">## iter  20 value 11090.230170</span>
+<span class="co">## iter  30 value 10797.269406</span>
+<span class="co">## iter  40 value 10755.856146</span>
+<span class="co">## iter  50 value 10727.165803</span>
+<span class="co">## iter  60 value 10719.231715</span>
+<span class="co">## iter  70 value 10717.833301</span>
+<span class="co">## final  value 10717.286388 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">sa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in South Africa by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span><span class="op">)</span>

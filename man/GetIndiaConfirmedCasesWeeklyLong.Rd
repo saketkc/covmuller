@@ -5,7 +5,8 @@
 \title{Get India weekwise cases long}
 \usage{
 GetIndiaConfirmedCasesWeeklyLong(
-  url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv"
+  url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv",
+  level = "State"
 )
 }
 \arguments{

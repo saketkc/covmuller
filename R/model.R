@@ -26,7 +26,7 @@ FitMultinom <- function(data,
 FitMultinomWeekly <- function(variant_df, newdata_df) {
   model <- multinom(formula = lineage_collapsed ~ ns(WeekYearCollected, 2), weights = n, data = variant_df, maxit = 1000)
   preds <- predict(model, newdata = newdata_df, type = "prob")
-  x <- sweep(x = preds, MARGIN = 1, STATS = newdata_df$n / 7, FUN = "*")
+  x <- sweep(x = preds, MARGIN = 1, STATS = newdata_df$n, FUN = "*")
   mode(x) <- "integer"
 
   newdata_df <- cbind(newdata_df[, c("WeekYearCollected"), drop = FALSE], x)

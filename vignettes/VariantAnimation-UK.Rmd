@@ -18,7 +18,7 @@ theme_set(CovmullerTheme())
 # Get variants data for UK
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_02.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_04.qs")
 gisaid_uk <- gisaid_metadata %>%
   filter(Country == "United Kingdom") %>%
   filter(Host == "Human")
@@ -123,7 +123,7 @@ confirmed$MonthYear <- GetMonthYear(confirmed$date)
 confirmed_subset_dateweekwise_long <- confirmed %>%
   filter(MonthYear > "Oct 2021") %>%
   group_by(WeekYear) %>%
-  summarise(n = sum(daily_cases)) %>%
+  summarise(n = ceiling(mean(daily_cases))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
