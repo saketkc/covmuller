@@ -19,7 +19,7 @@ theme_set(CovmullerTheme())
 # Get variants data for India
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_04.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_06.qs")
 gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
 
 vocs <- GetVOCs()
@@ -38,13 +38,15 @@ custom_voc_mapping <- list(
   `BA.4` = "BA.4",
   `BA.5` = "BA.5"
 )
-gisaid_india <- gisaid_india %>% filter(pangolin_lineage != "None") %>% filter(pangolin_lineage != "Unassigned")
+gisaid_india <- gisaid_india %>%
+  filter(pangolin_lineage != "None") %>%
+  filter(pangolin_lineage != "Unassigned")
 
 gisaid_india$District <- stringr::str_to_title(gisaid_india$District)
 gisaid_india$City <- stringr::str_to_title(gisaid_india$City)
 
 gisaid_india$custom_city <- gisaid_india$City
-gisaid_india$custom_city[gisaid_india$custom_city==""] <- gisaid_india$District[gisaid_india$custom_city==""]
+gisaid_india$custom_city[gisaid_india$custom_city == ""] <- gisaid_india$District[gisaid_india$custom_city == ""]
 
 gisaid_india$custom_city <- stringr::str_to_title(gisaid_india$custom_city)
 
@@ -60,13 +62,63 @@ gisaid_india <- CollapseLineageToVOCs(
 # Top 10 cities with most number of sequenced samples
 
 ```{r}
-city_counts <- as.data.frame(table(gisaid_india$custom_city)) %>% rename(City=Var1, `Total sequences` = Freq)
+city_counts <- as.data.frame(table(gisaid_india$custom_city)) %>% rename(City = Var1, `Total sequences` = Freq)
 
 DT::datatable(city_counts %>% arrange(desc(`Total sequences`)))
+```
 
+# Get monthly cases for Bengaluru
+```{r}
+Bengaluru_monthly_cases <- GetIndiaConfirmedCasesMonthlyLong(level = "district") %>% filter(District %in% c("Bengaluru Urban", "Bengaluru Rural"))
+head(Bengaluru_monthly_cases)
+```
+
+
+## Plot monthly cases for Bengaluru
+
+
+```{r, fig.width=8, fig.height=5, warning=FALSE}
+p1 <- BarPlot(Bengaluru_monthly_cases, ylabel = "Cases per month", label_si = TRUE, title = "Total cases per month - Bengaluru (India)", caption = "**Source: covid19bharat.org<br>**")
+p1
 ```
 
 # Get weekly cases for Bengaluru
+
+```{r, fig.width=8, fig.height=5, warning=FALSE}
+Bengaluru_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_india %>% filter(custom_city == "Bengaluru"), rename_country_as_state = TRUE)
+
+
+p2 <- BarPlot(Bengaluru_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, title = "Total sequences deposited to GISAID from Bengaluru (India)", caption = "**Source: gisaid.org <br>**")
+p2
+```
+
+
+## Overall, how much has Bengaluru sequenced over months?
+
+While the absolute numbers are informative, a more useful metric is the proportion of cases (cases sequenced over total cases) that are getting sequenced. Here we look at the proportion of cases that have been sequenced in India over the course of the pandemic:
+
+```{r, fig.width=8, fig.height=5, warning=FALSE, message=FALSE}
+Bengaluru_monthly_cases_tmp <- Bengaluru_monthly_cases %>% select(MonthYear, value)
+Bengaluru_monthly_cases_tmp$State <- "India"
+Bengaluru_monthly_cases_tmp$type <- "Confirmed"
+
+Bengaluru_monthly_cases_tmp <- Bengaluru_monthly_cases_tmp %>% group_by(MonthYear, State, type) %>% summarise(value = sum(value))
+
+Bengaluru_monthly_cases_tmp <- Bengaluru_monthly_cases_tmp %>% select(MonthYear, State, value, type)
+sequencing_proportion <- CombineSequencedCases(
+  cases_sequenced = Bengaluru_seq_stats,
+  confirmed_long = Bengaluru_monthly_cases_tmp
+)
+p3 <- BarPlot(sequencing_proportion, yaxis = "percent_sequenced_collected", ylabel = "%  deposited to GISAID", color = "yellowgreen", title = "Proportion of cases deposited to GISAID from Bengaluru (India)", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
+p3
+```
+
+```{r, fig.width=8, fig.height=15, warning=FALSE}
+p1 / p2 / p3
+```
+
+# Project weekly cases to variant prevalence data from GISAID
+
 
 ```{r, warning=FALSE, message=FALSE}
 confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong(level = "district")
@@ -78,19 +130,14 @@ confirmed_subset_dateweekwise_long_dist <- confirmed_subset_dateweekwise_long %>
   filter(District %in% c("Bengaluru Urban", "Bengaluru Rural")) %>%
   rename(n = value) %>%
   rename(WeekYearCollected = WeekYear) %>%
-  dplyr::select(-contains("type")) %>% 
+  dplyr::select(-contains("type")) %>%
   filter(WeekYearCollected >= min(gisaid_dist_weekwise$WeekYearCollected))
 confirmed_subset_dateweekwise_long_dist$State <- NULL
-```
 
-
-# Project weekly cases to variant prevalence data from GISAID
-
-```{r, warning=FALSE, message=FALSE}
 voc_to_keep <- gisaid_dist_weekwise %>%
   group_by(lineage_collapsed) %>%
   summarise(n_sum = sum(n)) %>%
-  filter(n_sum > 10) %>%
+  filter(n_sum > 1) %>%
   pull(lineage_collapsed) %>%
   unique()
 gisaid_dist_weekwise <- gisaid_dist_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
@@ -109,20 +156,23 @@ confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong(level = "
 
 confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   filter(WeekYear >= tsibble::yearweek("2021 W35")) %>%
-    filter(District %in% c("Bengaluru Urban", "Bengaluru Rural")) %>%
+  filter(District %in% c("Bengaluru Urban", "Bengaluru Rural")) %>%
   group_by(WeekYear) %>%
   summarise(n = sum(value)) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_dist <- gisaid_india %>% filter(MonthYearCollected > "Oct 2021")  %>% filter(custom_city == "Bengaluru") %>% arrange(WeekYearCollected)
+gisaid_dist <- gisaid_india %>%
+  filter(MonthYearCollected > "Oct 2021") %>%
+  filter(custom_city == "Bengaluru") %>%
+  arrange(WeekYearCollected)
 
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_dist)
 
 voc_to_keep <- gisaid_weekwise %>%
   group_by(lineage_collapsed) %>%
   summarise(n_sum = sum(n)) %>%
-  filter(n_sum > 10) %>%
+  filter(n_sum > 1) %>%
   pull(lineage_collapsed) %>%
   unique()
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
@@ -141,21 +191,23 @@ confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong(level = "
 
 confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   filter(WeekYear >= tsibble::yearweek("2022 W12")) %>%
-    filter(District %in% c("Bengaluru Urban", "Bengaluru Rural")) %>%
-
+  filter(District %in% c("Bengaluru Urban", "Bengaluru Rural")) %>%
   group_by(WeekYear) %>%
   summarise(n = sum(value)) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_dist <- gisaid_india %>% filter(MonthYearCollected > "Oct 2021")  %>% filter(custom_city == "Bengaluru") %>% arrange(WeekYearCollected)
+gisaid_dist <- gisaid_india %>%
+  filter(MonthYearCollected > "Oct 2021") %>%
+  filter(custom_city == "Bengaluru") %>%
+  arrange(WeekYearCollected)
 
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_dist)
 
 voc_to_keep <- gisaid_weekwise %>%
   group_by(lineage_collapsed) %>%
   summarise(n_sum = sum(n)) %>%
-  filter(n_sum > 10) %>%
+  filter(n_sum > 1) %>%
   pull(lineage_collapsed) %>%
   unique()
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
