@@ -21,11 +21,27 @@ Covmuller currently supports the following features:
     - [Australia](articles/MultinomialModeling_Australia.html)
     - [SouthAfrica](articles/MultinomialModeling_SouthAfrica.html)
 * Estimate totals prevalence of variants by projecting case prevalence data on multinomila fits:  
-    - [India](articles/VariantAnimation-India.html)
-    - [New York state](articles/VariantAnimation-NewYork.html)
-    - [South Africa](articles/VariantAnimation-SouthAfrica.html)
-    - [United Kingdom](articles/VariantAnimation-UK.html)
-    - [USA](articles/VariantAnimation-USA.html)
+    - Countries:
+        - [India](articles/VariantAnimation-India.html)
+        - [New York state](articles/VariantAnimation-NewYork.html)
+        - [South Africa](articles/VariantAnimation-SouthAfrica.html)
+        - [United Kingdom](articles/VariantAnimation-UK.html)
+        - [USA](articles/VariantAnimation-USA.html)
+        
+    -  Cities:
+         - [Aizawl (India)](articles/VariantAnimation-Aizawl.html)
+         - [Bengaluru (India)](articles/VariantAnimation-Bengaluru.html)
+         - [Chennai (India)](articles/VariantAnimation-Chennai.html)
+         - [Delhi (India)](articles/VariantAnimation-Delhi.html)
+         - [Jaipur (India)](articles/VariantAnimation-Jaipur.html)
+         - [Mumbai (India)](articles/VariantAnimation-Mumbai.html)
+         - [Pune (India)](articles/VariantAnimation-Pune.html)
+         - [New York City (USA)](articles/VariantAnimation-NYC.html)
+
+    
+    
+    
+    
     
 * Compare prevalence between countries: [India and South Africa](articles/SouthAfrica_contrast_India.html)
 

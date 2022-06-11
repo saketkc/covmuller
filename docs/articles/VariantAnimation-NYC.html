@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covmuller</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +127,7 @@
 <span class="co"># Staten Island is Richmond County (ANSI / FIPS 36085)</span>
 <span class="va">fips.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">36005</span>, <span class="fl">36047</span>, <span class="fl">36061</span>, <span class="fl">36081</span>, <span class="fl">36085</span><span class="op">)</span>
 
-<span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_09.qs"</span><span class="op">)</span>
+<span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_11.qs"</span><span class="op">)</span>
 <span class="va">gisaid_usa</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"USA"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
@@ -189,7 +189,7 @@
 
 <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">daily_cases</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">daily_cases</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span>
 
@@ -209,46 +209,46 @@
 
 <span class="va">newyork_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_NYC_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  68 (48 variable)</span>
-<span class="co">## initial  value 270333.884436 </span>
-<span class="co">## iter  10 value 142719.895881</span>
-<span class="co">## iter  20 value 100476.533230</span>
-<span class="co">## iter  30 value 89409.432625</span>
-<span class="co">## iter  40 value 75244.911306</span>
-<span class="co">## iter  50 value 68317.606776</span>
-<span class="co">## iter  60 value 67185.870468</span>
-<span class="co">## iter  70 value 66809.534141</span>
-<span class="co">## iter  80 value 66610.981292</span>
-<span class="co">## iter  90 value 66480.902673</span>
-<span class="co">## iter 100 value 66285.707325</span>
-<span class="co">## iter 110 value 66275.500436</span>
-<span class="co">## iter 120 value 66234.633517</span>
-<span class="co">## iter 130 value 66166.431677</span>
-<span class="co">## iter 140 value 66151.604444</span>
-<span class="co">## iter 150 value 66145.914410</span>
-<span class="co">## iter 160 value 66070.341190</span>
-<span class="co">## iter 170 value 65992.845822</span>
-<span class="co">## iter 180 value 65876.105385</span>
-<span class="co">## iter 190 value 65796.892594</span>
-<span class="co">## iter 200 value 65794.121465</span>
-<span class="co">## iter 210 value 65793.973030</span>
-<span class="co">## iter 220 value 65792.182524</span>
-<span class="co">## iter 230 value 65779.739016</span>
-<span class="co">## iter 240 value 65736.196568</span>
-<span class="co">## iter 250 value 65720.957245</span>
-<span class="co">## iter 260 value 65715.511050</span>
-<span class="co">## iter 270 value 65688.720234</span>
-<span class="co">## iter 280 value 65656.688278</span>
-<span class="co">## iter 290 value 65623.132694</span>
-<span class="co">## iter 300 value 65587.171564</span>
-<span class="co">## iter 310 value 65586.816000</span>
-<span class="co">## iter 320 value 65579.867418</span>
-<span class="co">## iter 330 value 65564.992459</span>
-<span class="co">## iter 340 value 65543.544993</span>
-<span class="co">## iter 350 value 65539.127970</span>
-<span class="co">## iter 360 value 65530.976317</span>
-<span class="co">## iter 370 value 65519.316758</span>
-<span class="co">## iter 380 value 65505.953444</span>
-<span class="co">## final  value 65499.424708 </span>
+<span class="co">## initial  value 270945.858519 </span>
+<span class="co">## iter  10 value 143762.558224</span>
+<span class="co">## iter  20 value 104863.562254</span>
+<span class="co">## iter  30 value 89013.059603</span>
+<span class="co">## iter  40 value 74906.447813</span>
+<span class="co">## iter  50 value 68086.088605</span>
+<span class="co">## iter  60 value 67277.369710</span>
+<span class="co">## iter  70 value 66930.706956</span>
+<span class="co">## iter  80 value 66765.480316</span>
+<span class="co">## iter  90 value 66647.021022</span>
+<span class="co">## iter 100 value 66541.910680</span>
+<span class="co">## iter 110 value 66530.423882</span>
+<span class="co">## iter 120 value 66497.129012</span>
+<span class="co">## iter 130 value 66441.291480</span>
+<span class="co">## iter 140 value 66424.495660</span>
+<span class="co">## iter 150 value 66416.443042</span>
+<span class="co">## iter 160 value 66380.751502</span>
+<span class="co">## iter 170 value 66336.729352</span>
+<span class="co">## iter 180 value 66257.774515</span>
+<span class="co">## iter 190 value 66150.016235</span>
+<span class="co">## iter 200 value 66057.258972</span>
+<span class="co">## iter 210 value 66056.907515</span>
+<span class="co">## iter 220 value 66054.907198</span>
+<span class="co">## iter 230 value 66039.411859</span>
+<span class="co">## iter 240 value 66016.000968</span>
+<span class="co">## iter 250 value 65981.294891</span>
+<span class="co">## iter 260 value 65968.877733</span>
+<span class="co">## iter 270 value 65950.944279</span>
+<span class="co">## iter 280 value 65916.533204</span>
+<span class="co">## iter 290 value 65890.240404</span>
+<span class="co">## iter 300 value 65850.689995</span>
+<span class="co">## iter 310 value 65847.472175</span>
+<span class="co">## iter 320 value 65843.491495</span>
+<span class="co">## iter 330 value 65827.548520</span>
+<span class="co">## iter 340 value 65806.894369</span>
+<span class="co">## iter 350 value 65802.923926</span>
+<span class="co">## iter 360 value 65800.215563</span>
+<span class="co">## iter 370 value 65791.400439</span>
+<span class="co">## iter 380 value 65780.001757</span>
+<span class="co">## final  value 65759.528834 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">newyork_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in New York City by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes&lt;br&gt;**"</span>, date_breaks <span class="op">=</span> <span class="st">"14 days"</span><span class="op">)</span>
@@ -259,7 +259,7 @@
 <code class="sourceCode R"><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYear</span> <span class="op">&gt;</span> <span class="st">"Oct 2021"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">daily_cases</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">daily_cases</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span>
 
@@ -276,20 +276,19 @@
 
 <span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  48 (33 variable)</span>
-<span class="co">## initial  value 127142.733643 </span>
-<span class="co">## iter  10 value 48427.808804</span>
-<span class="co">## iter  20 value 43537.966561</span>
-<span class="co">## iter  30 value 38009.407713</span>
-<span class="co">## iter  40 value 37127.799296</span>
-<span class="co">## iter  50 value 37031.135271</span>
-<span class="co">## iter  60 value 37005.720994</span>
-<span class="co">## iter  70 value 36995.279676</span>
-<span class="co">## iter  80 value 36992.766104</span>
-<span class="co">## iter  90 value 36974.011191</span>
-<span class="co">## iter 100 value 36971.205898</span>
-<span class="co">## iter 110 value 36970.819105</span>
-<span class="co">## iter 120 value 36970.638547</span>
-<span class="co">## final  value 36970.162303 </span>
+<span class="co">## initial  value 127676.988573 </span>
+<span class="co">## iter  10 value 50310.042046</span>
+<span class="co">## iter  20 value 43691.147271</span>
+<span class="co">## iter  30 value 38091.467066</span>
+<span class="co">## iter  40 value 37399.079450</span>
+<span class="co">## iter  50 value 37281.482186</span>
+<span class="co">## iter  60 value 37248.352281</span>
+<span class="co">## iter  70 value 37239.512099</span>
+<span class="co">## iter  80 value 37236.913089</span>
+<span class="co">## iter  90 value 37223.825436</span>
+<span class="co">## iter 100 value 37222.702335</span>
+<span class="co">## iter 110 value 37222.429968</span>
+<span class="co">## final  value 37222.404174 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in New York City by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes&lt;br&gt;**"</span><span class="op">)</span>
@@ -300,7 +299,7 @@
 <code class="sourceCode R"><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYear</span> <span class="op">&gt;=</span> <span class="st">"Jan 2022"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">daily_cases</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">daily_cases</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/covid19nytimes/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span>
 
@@ -317,14 +316,19 @@
 
 <span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  44 (30 variable)</span>
-<span class="co">## initial  value 89307.211540 </span>
-<span class="co">## iter  10 value 36977.946445</span>
-<span class="co">## iter  20 value 32668.941373</span>
-<span class="co">## iter  30 value 30308.925827</span>
-<span class="co">## iter  40 value 30181.176144</span>
-<span class="co">## iter  50 value 30173.789612</span>
-<span class="co">## iter  60 value 30172.178297</span>
-<span class="co">## final  value 30172.150207 </span>
+<span class="co">## initial  value 89822.759024 </span>
+<span class="co">## iter  10 value 37806.695164</span>
+<span class="co">## iter  20 value 32081.355834</span>
+<span class="co">## iter  30 value 30548.796591</span>
+<span class="co">## iter  40 value 30420.780415</span>
+<span class="co">## iter  50 value 30419.186951</span>
+<span class="co">## iter  60 value 30418.875401</span>
+<span class="co">## iter  70 value 30418.732886</span>
+<span class="co">## iter  80 value 30418.683109</span>
+<span class="co">## iter  90 value 30418.403742</span>
+<span class="co">## iter 100 value 30418.147368</span>
+<span class="co">## iter 110 value 30418.002961</span>
+<span class="co">## final  value 30417.934560 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in New York City by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes&lt;br&gt;**"</span><span class="op">)</span>

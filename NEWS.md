@@ -7,4 +7,5 @@
 - `FitMultinomStatewiseDaily` uses a second degree spline for fitting prevalence
 - Default to `angle=90` in barplots 
 - Add `colors` argument to `PlotVariantPrevalenceAnimated`
+- Added ability to fetch district level data in `GetIndiaConfirmedCasesMonthlyLong()` and  `GetIndiaConfirmedCasesMonthlyLong`
 
