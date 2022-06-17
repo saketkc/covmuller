@@ -129,7 +129,7 @@
 <h2 id="get-variants-data-for-india">Get variants data for India<a class="anchor" aria-label="anchor" href="#get-variants-data-for-india"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_11.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_16.qs"</span><span class="op">)</span>
 <span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span>
 
 <span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span>
@@ -192,25 +192,29 @@
 <span class="va">gisaid_india_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_india_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span>
 
 <span class="va">india_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_india_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  40 (27 variable)</span>
-<span class="co">## initial  value 400410.337331 </span>
-<span class="co">## iter  10 value 206328.596390</span>
-<span class="co">## iter  20 value 169761.653774</span>
-<span class="co">## iter  30 value 118923.925613</span>
-<span class="co">## iter  40 value 115876.421569</span>
-<span class="co">## iter  50 value 114513.060374</span>
-<span class="co">## iter  60 value 114251.184188</span>
-<span class="co">## iter  70 value 114101.992123</span>
-<span class="co">## iter  80 value 113842.931138</span>
-<span class="co">## iter  90 value 113674.764308</span>
-<span class="co">## iter 100 value 113582.735224</span>
-<span class="co">## iter 110 value 113333.532970</span>
-<span class="co">## iter 120 value 113329.336516</span>
-<span class="co">## iter 130 value 113325.717013</span>
-<span class="co">## iter 140 value 113304.552338</span>
-<span class="co">## iter 150 value 113280.083071</span>
-<span class="co">## iter 160 value 113217.512970</span>
-<span class="co">## final  value 113185.288079 </span>
+<pre><code><span class="co">## # weights:  44 (30 variable)</span>
+<span class="co">## initial  value 418339.207188 </span>
+<span class="co">## iter  10 value 212052.751395</span>
+<span class="co">## iter  20 value 167053.784009</span>
+<span class="co">## iter  30 value 121254.003242</span>
+<span class="co">## iter  40 value 116298.296413</span>
+<span class="co">## iter  50 value 115282.461791</span>
+<span class="co">## iter  60 value 114978.551401</span>
+<span class="co">## iter  70 value 114802.381038</span>
+<span class="co">## iter  80 value 114577.574338</span>
+<span class="co">## iter  90 value 114406.278721</span>
+<span class="co">## iter 100 value 114299.741872</span>
+<span class="co">## iter 110 value 114208.619436</span>
+<span class="co">## iter 120 value 114089.256155</span>
+<span class="co">## iter 130 value 114009.362227</span>
+<span class="co">## iter 140 value 114001.664563</span>
+<span class="co">## iter 150 value 113967.350525</span>
+<span class="co">## iter 160 value 113902.528773</span>
+<span class="co">## iter 170 value 113881.842815</span>
+<span class="co">## iter 180 value 113861.058654</span>
+<span class="co">## iter 190 value 113858.232757</span>
+<span class="co">## iter 200 value 113857.986778</span>
+<span class="co">## final  value 113857.983481 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">india_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org**"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span>
@@ -239,13 +243,13 @@
 <span class="va">gisaid_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span>
 
 <span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  28 (18 variable)</span>
-<span class="co">## initial  value 143758.004082 </span>
-<span class="co">## iter  10 value 79328.668469</span>
-<span class="co">## iter  20 value 73056.478663</span>
-<span class="co">## iter  30 value 72515.926444</span>
-<span class="co">## iter  40 value 72501.853846</span>
-<span class="co">## final  value 72501.851163 </span>
+<pre><code><span class="co">## # weights:  32 (21 variable)</span>
+<span class="co">## initial  value 154725.006792 </span>
+<span class="co">## iter  10 value 80676.810151</span>
+<span class="co">## iter  20 value 74144.426237</span>
+<span class="co">## iter  30 value 73268.437559</span>
+<span class="co">## iter  40 value 73187.995030</span>
+<span class="co">## final  value 73187.713911 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org&lt;br&gt;**"</span><span class="op">)</span>
@@ -275,22 +279,26 @@
 
 <span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  40 (27 variable)</span>
-<span class="co">## initial  value 11607.331454 </span>
-<span class="co">## iter  10 value 3264.995066</span>
-<span class="co">## iter  20 value 3098.907080</span>
-<span class="co">## iter  30 value 3088.019409</span>
-<span class="co">## iter  40 value 3087.640465</span>
-<span class="co">## iter  50 value 3087.152965</span>
-<span class="co">## iter  60 value 3085.426154</span>
-<span class="co">## iter  70 value 3085.417637</span>
-<span class="co">## final  value 3085.415398 </span>
+<span class="co">## initial  value 12362.579364 </span>
+<span class="co">## iter  10 value 3590.324587</span>
+<span class="co">## iter  20 value 3365.083468</span>
+<span class="co">## iter  30 value 3343.082676</span>
+<span class="co">## iter  40 value 3341.979290</span>
+<span class="co">## iter  50 value 3339.546202</span>
+<span class="co">## iter  60 value 3336.006892</span>
+<span class="co">## iter  70 value 3335.651634</span>
+<span class="co">## iter  80 value 3335.145589</span>
+<span class="co">## iter  90 value 3335.137279</span>
+<span class="co">## iter 100 value 3335.015498</span>
+<span class="co">## final  value 3334.884878 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org&lt;br&gt;**"</span><span class="op">)</span>
 <span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_2022.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></code></pre></div>
 <p><img src="IN_animated_2022.gif"></p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
