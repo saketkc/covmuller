@@ -19,7 +19,7 @@ theme_set(CovmullerTheme())
 # Get variants data for India
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_18.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_20.qs")
 gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
 
 vocs <- GetVOCs()
@@ -45,6 +45,8 @@ gisaid_india$City <- stringr::str_to_title(gisaid_india$City)
 
 gisaid_india$custom_city <- gisaid_india$City
 gisaid_india$custom_city[gisaid_india$custom_city==""] <- gisaid_india$District[gisaid_india$custom_city==""]
+gisaid_india$custom_city[gisaid_india$custom_city==""] <- "Unknown"
+
 
 gisaid_india$custom_city <- stringr::str_to_title(gisaid_india$custom_city)
 
@@ -65,7 +67,25 @@ city_counts <- as.data.frame(table(gisaid_india$custom_city)) %>% rename(City=Va
 DT::datatable(city_counts %>% arrange(desc(`Total sequences`)))
 ```
 
+
+# State of origin of BA/4/BA.5 sequences?
+
+```{r}
+gisaid_india %>% filter(pangolin_lineage %in% c("BA.4", "BA.5")) %>% pull(State) %>% table() %>% as.data.frame() %>% arrange(desc(Freq)) %>% DT::datatable()
+
+```
+
+# City of origin of BA.4/BA.5 sequences?
+
+
+```{r}
+gisaid_india %>% filter(pangolin_lineage %in% c("BA.4", "BA.5")) %>% pull(custom_city) %>% table() %>% as.data.frame() %>% arrange(desc(Freq)) %>% DT::datatable()
+```
+
+
+
 # Get monthly cases for Chennai
+
 ```{r}
 chennai_monthly_cases <- GetIndiaConfirmedCasesMonthlyLong(level = "district") %>% filter(District == "Chennai")
 head(chennai_monthly_cases)
@@ -73,7 +93,6 @@ head(chennai_monthly_cases)
 
 
 ## Plot monthly cases for Chennai
-
 
 ```{r, fig.width=8, fig.height=5, warning=FALSE}
 p1 <- BarPlot(chennai_monthly_cases, ylabel = "Cases per month", label_si = TRUE, title = "Total cases per month - Chennai (India)", caption = "**Source: covid19bharat.org<br>**")

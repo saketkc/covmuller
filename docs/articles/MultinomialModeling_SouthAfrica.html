@@ -126,7 +126,7 @@
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_18.qs"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_20.qs"</span><span class="op">)</span>
 <span class="va">gisaid_southafrica</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"South Africa"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
@@ -206,36 +206,36 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_southafrica_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_southafrica_shared_dateweek</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## # weights:  96 (77 variable)</span>
-<span class="co">## initial  value 33580.901457 </span>
-<span class="co">## iter  10 value 13833.484332</span>
-<span class="co">## iter  20 value 12298.396317</span>
-<span class="co">## iter  30 value 11405.472741</span>
-<span class="co">## iter  40 value 10790.111308</span>
-<span class="co">## iter  50 value 10554.599235</span>
-<span class="co">## iter  60 value 10459.269204</span>
-<span class="co">## iter  70 value 10432.518152</span>
-<span class="co">## iter  80 value 10397.516189</span>
-<span class="co">## iter  90 value 10367.796136</span>
-<span class="co">## iter 100 value 10352.201273</span>
-<span class="co">## iter 110 value 10350.805232</span>
-<span class="co">## final  value 10350.676387 </span>
+<span class="co">## initial  value 33755.574546 </span>
+<span class="co">## iter  10 value 13921.469229</span>
+<span class="co">## iter  20 value 12447.666847</span>
+<span class="co">## iter  30 value 11526.432143</span>
+<span class="co">## iter  40 value 10894.173045</span>
+<span class="co">## iter  50 value 10661.221598</span>
+<span class="co">## iter  60 value 10563.420830</span>
+<span class="co">## iter  70 value 10536.181895</span>
+<span class="co">## iter  80 value 10511.613186</span>
+<span class="co">## iter  90 value 10476.473443</span>
+<span class="co">## iter 100 value 10447.062415</span>
+<span class="co">## iter 110 value 10446.779126</span>
+<span class="co">## final  value 10445.981764 </span>
 <span class="co">## converged</span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_southafrica_multi_predsbystate</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric        State         prob           SE</span>
-<span class="co">## 1              BA.1                18932 Eastern Cape 1.254593e-01 3.869308e-02</span>
-<span class="co">## 2              BA.2                18932 Eastern Cape 1.768199e-05 6.712480e-06</span>
-<span class="co">## 3            BA.2.1                18932 Eastern Cape 1.294089e-09 1.552529e-09</span>
-<span class="co">## 4              BA.3                18932 Eastern Cape 4.117801e-04 3.435251e-04</span>
-<span class="co">## 5              BA.4                18932 Eastern Cape 1.715115e-15 4.551442e-15</span>
-<span class="co">## 6              BA.5                18932 Eastern Cape 3.120866e-21 1.729623e-20</span>
+<span class="co">## 1              BA.1                18932 Eastern Cape 1.291991e-01 3.956111e-02</span>
+<span class="co">## 2              BA.2                18932 Eastern Cape 1.895085e-05 7.140569e-06</span>
+<span class="co">## 3            BA.2.1                18932 Eastern Cape 1.328663e-09 1.569626e-09</span>
+<span class="co">## 4              BA.3                18932 Eastern Cape 4.202135e-04 3.500853e-04</span>
+<span class="co">## 5              BA.4                18932 Eastern Cape 8.354527e-16 2.197006e-15</span>
+<span class="co">## 6              BA.5                18932 Eastern Cape 5.208980e-21 2.790351e-20</span>
 <span class="co">##   df     asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 NA  4.962226e-02 2.012964e-01    2021-11-01</span>
-<span class="co">## 2 NA  4.525775e-06 3.083821e-05    2021-11-01</span>
-<span class="co">## 3 NA -1.748811e-09 4.336990e-09    2021-11-01</span>
-<span class="co">## 4 NA -2.615167e-04 1.085077e-03    2021-11-01</span>
-<span class="co">## 5 NA -7.205548e-15 1.063578e-14    2021-11-01</span>
-<span class="co">## 6 NA -3.077913e-20 3.702086e-20    2021-11-01</span></code></pre>
+<span class="co">## 1 NA  5.166074e-02 2.067374e-01    2021-11-01</span>
+<span class="co">## 2 NA  4.955591e-06 3.294611e-05    2021-11-01</span>
+<span class="co">## 3 NA -1.747747e-09 4.405073e-09    2021-11-01</span>
+<span class="co">## 4 NA -2.659411e-04 1.106368e-03    2021-11-01</span>
+<span class="co">## 5 NA -3.470599e-15 5.141505e-15    2021-11-01</span>
+<span class="co">## 6 NA -4.948089e-20 5.989885e-20    2021-11-01</span></code></pre>
 </div>
 </div>
 <div class="section level2">
