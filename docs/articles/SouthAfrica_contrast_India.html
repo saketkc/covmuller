@@ -120,239 +120,239 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/covmuller" class="external-link">covmuller</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/" class="external-link">magick</a></span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/covmuller" class="external-link">covmuller</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/" class="external-link">magick</a></span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="get-data">Get data<a class="anchor" aria-label="anchor" href="#get-data"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2022_06_23"</span>
-<span class="va">fpath.tar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".tar.xz"</span><span class="op">)</span>
-<span class="va">fpath.qs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".qs"</span><span class="op">)</span>
-<span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">fpath.qs</span><span class="op">)</span>
-<span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FormatGISAIDMetadata.html">FormatGISAIDMetadata</a></span><span class="op">(</span><span class="va">gisaid_metadata</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">"Unassigned"</span><span class="op">)</span>
-
-<span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span>
-<span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
-<span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron-others"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">omicron</span>
-
-
-<span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  `BA\\.1` <span class="op">=</span> <span class="st">"BA.1+"</span>,
-  `BA\\.1\\.*` <span class="op">=</span> <span class="st">"BA.1+"</span>,
-  `BA\\.2\\.10` <span class="op">=</span> <span class="st">"BA.2.10+"</span>,
-  `BA\\.2\\.10\\.*` <span class="op">=</span> <span class="st">"BA.2.10+"</span>,
-  `BA\\.2\\.12` <span class="op">=</span> <span class="st">"BA.2.12+"</span>,
-  `BA\\.2\\.12\\.*` <span class="op">=</span> <span class="st">"BA.2.12+"</span>,
-  `BA\\.2` <span class="op">=</span> <span class="st">"BA.2"</span>,
-  `BA\\.3` <span class="op">=</span> <span class="st">"BA.3"</span>,
-  `BA\\.4` <span class="op">=</span> <span class="st">"BA.4"</span>,
-  `BA\\.5` <span class="op">=</span> <span class="st">"BA.5"</span>
-<span class="op">)</span>
-
-<span class="va">month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
-  variant_df <span class="op">=</span> <span class="va">gisaid_metadata</span>,
-  vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>, summarize <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2022_06_25"</span></span>
+<span><span class="va">fpath.tar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".tar.xz"</span><span class="op">)</span></span>
+<span><span class="va">fpath.qs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".qs"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">fpath.qs</span><span class="op">)</span></span>
+<span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FormatGISAIDMetadata.html">FormatGISAIDMetadata</a></span><span class="op">(</span><span class="va">gisaid_metadata</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">"Unassigned"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron-others"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">omicron</span></span>
+<span></span>
+<span></span>
+<span><span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  `BA\\.1` <span class="op">=</span> <span class="st">"BA.1+"</span>,</span>
+<span>  `BA\\.1\\.*` <span class="op">=</span> <span class="st">"BA.1+"</span>,</span>
+<span>  `BA\\.2\\.10` <span class="op">=</span> <span class="st">"BA.2.10+"</span>,</span>
+<span>  `BA\\.2\\.10\\.*` <span class="op">=</span> <span class="st">"BA.2.10+"</span>,</span>
+<span>  `BA\\.2\\.12` <span class="op">=</span> <span class="st">"BA.2.12+"</span>,</span>
+<span>  `BA\\.2\\.12\\.*` <span class="op">=</span> <span class="st">"BA.2.12+"</span>,</span>
+<span>  `BA\\.2` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
+<span>  `BA\\.3` <span class="op">=</span> <span class="st">"BA.3"</span>,</span>
+<span>  `BA\\.4` <span class="op">=</span> <span class="st">"BA.4"</span>,</span>
+<span>  `BA\\.5` <span class="op">=</span> <span class="st">"BA.5"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
+<span>  variant_df <span class="op">=</span> <span class="va">gisaid_metadata</span>,</span>
+<span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
+<span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>, summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesWeeklyLong.html">GetIndiaConfirmedCasesWeeklyLong</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">confirmed_subset_dateweekwise_long_india</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"type"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
-
-
-<span class="va">confirmed.tmp</span> <span class="op">&lt;-</span> <span class="fu">COVID19</span><span class="fu">::</span><span class="fu"><a href="https://covid19datahub.io/reference/covid19.html" class="external-link">covid19</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"South Africa"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">administrative_area_level_2</span>, <span class="va">confirmed</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>State <span class="op">=</span> <span class="va">administrative_area_level_2</span><span class="op">)</span>
-
-<span class="va">confirmed</span> <span class="op">&lt;-</span> <span class="fu">COVID19</span><span class="fu">::</span><span class="fu"><a href="https://covid19datahub.io/reference/covid19.html" class="external-link">covid19</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"South Africa"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">confirmed</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">confirmed</span><span class="op">$</span><span class="va">daily_cases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">$</span><span class="va">confirmed</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">$</span><span class="va">confirmed</span><span class="op">)</span><span class="op">)</span>
-
-
-<span class="va">confirmed</span><span class="op">$</span><span class="va">WeekYear</span> <span class="op">&lt;-</span> <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-week.html" class="external-link">yearweek</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">$</span><span class="va">date</span><span class="op">)</span>
-
-<span class="va">confirmed_subset_dateweekwise_long_southafrica</span> <span class="op">&lt;-</span> <span class="va">confirmed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">daily_cases</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span>
-
-
-<span class="va">gisaid_metadata_2022</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Oct 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South Africa"</span>, <span class="st">"India"</span><span class="op">)</span><span class="op">)</span>
-
-
-<span class="va">gisaid_southafrica</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata_2022</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"South Africa"</span><span class="op">)</span>
-<span class="va">gisaid_southafrica</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"South Africa"</span>
-<span class="va">gisaid_southafrica</span><span class="op">$</span><span class="va">Country</span> <span class="op">&lt;-</span> <span class="st">"X"</span>
-
-
-<span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata_2022</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span>
-<span class="va">gisaid_india</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"India"</span>
-<span class="va">gisaid_india</span><span class="op">$</span><span class="va">Country</span> <span class="op">&lt;-</span> <span class="st">"X"</span>
-
-<span class="va">gisaid_sel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">gisaid_southafrica</span>, <span class="va">gisaid_india</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">State</span>, <span class="va">MonthYearCollected</span><span class="op">)</span>
-
-
-<span class="va">gisaid_sel_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
-  variant_df <span class="op">=</span> <span class="va">gisaid_sel</span>,
-  vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,
-  summarize <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-
-<span class="va">gisaid_southafrica_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
-  variant_df <span class="op">=</span> <span class="va">gisaid_southafrica</span>,
-  vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,
-  summarize <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="va">gisaid_india_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
-  variant_df <span class="op">=</span> <span class="va">gisaid_india</span>,
-  vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,
-  summarize <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="va">gisaid_sel_dateweek</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsDatewise.html">SummarizeVariantsDatewise</a></span><span class="op">(</span><span class="va">gisaid_sel_collapsed</span>, by_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_sel_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  50 (36 variable)</span>
-<span class="co">## initial  value 237688.951394 </span>
-<span class="co">## iter  10 value 76402.447143</span>
-<span class="co">## iter  20 value 71558.147334</span>
-<span class="co">## iter  30 value 60106.315599</span>
-<span class="co">## iter  40 value 53112.025772</span>
-<span class="co">## iter  50 value 52746.259092</span>
-<span class="co">## iter  60 value 52642.994605</span>
-<span class="co">## iter  70 value 52596.174228</span>
-<span class="co">## iter  80 value 52575.983625</span>
-<span class="co">## iter  90 value 52566.933703</span>
-<span class="co">## iter 100 value 52556.833338</span>
-<span class="co">## iter 110 value 52545.984448</span>
-<span class="co">## iter 120 value 52544.754824</span>
-<span class="co">## final  value 52544.546267 </span>
-<span class="co">## converged</span></code></pre>
+<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesWeeklyLong.html">GetIndiaConfirmedCasesWeeklyLong</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">confirmed_subset_dateweekwise_long_india</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"type"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span></span>
+<span></span>
+<span><span class="va">confirmed.tmp</span> <span class="op">&lt;-</span> <span class="fu">COVID19</span><span class="fu">::</span><span class="fu"><a href="https://covid19datahub.io/reference/covid19.html" class="external-link">covid19</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"South Africa"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">administrative_area_level_2</span>, <span class="va">confirmed</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>State <span class="op">=</span> <span class="va">administrative_area_level_2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">confirmed</span> <span class="op">&lt;-</span> <span class="fu">COVID19</span><span class="fu">::</span><span class="fu"><a href="https://covid19datahub.io/reference/covid19.html" class="external-link">covid19</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"South Africa"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">confirmed</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">confirmed</span><span class="op">$</span><span class="va">daily_cases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">$</span><span class="va">confirmed</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">$</span><span class="va">confirmed</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">confirmed</span><span class="op">$</span><span class="va">WeekYear</span> <span class="op">&lt;-</span> <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-week.html" class="external-link">yearweek</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">confirmed_subset_dateweekwise_long_southafrica</span> <span class="op">&lt;-</span> <span class="va">confirmed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">daily_cases</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">gisaid_metadata_2022</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Oct 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South Africa"</span>, <span class="st">"India"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">gisaid_southafrica</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata_2022</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"South Africa"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_southafrica</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"South Africa"</span></span>
+<span><span class="va">gisaid_southafrica</span><span class="op">$</span><span class="va">Country</span> <span class="op">&lt;-</span> <span class="st">"X"</span></span>
+<span></span>
+<span></span>
+<span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata_2022</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_india</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"India"</span></span>
+<span><span class="va">gisaid_india</span><span class="op">$</span><span class="va">Country</span> <span class="op">&lt;-</span> <span class="st">"X"</span></span>
+<span></span>
+<span><span class="va">gisaid_sel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">gisaid_southafrica</span>, <span class="va">gisaid_india</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">State</span>, <span class="va">MonthYearCollected</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">gisaid_sel_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
+<span>  variant_df <span class="op">=</span> <span class="va">gisaid_sel</span>,</span>
+<span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
+<span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,</span>
+<span>  summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">gisaid_southafrica_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
+<span>  variant_df <span class="op">=</span> <span class="va">gisaid_southafrica</span>,</span>
+<span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
+<span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,</span>
+<span>  summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gisaid_india_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
+<span>  variant_df <span class="op">=</span> <span class="va">gisaid_india</span>,</span>
+<span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
+<span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,</span>
+<span>  summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gisaid_sel_dateweek</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsDatewise.html">SummarizeVariantsDatewise</a></span><span class="op">(</span><span class="va">gisaid_sel_collapsed</span>, by_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_sel_dateweek</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # weights:  50 (36 variable)</span></span>
+<span><span class="co">## initial  value 238849.454281 </span></span>
+<span><span class="co">## iter  10 value 77023.591749</span></span>
+<span><span class="co">## iter  20 value 72602.520585</span></span>
+<span><span class="co">## iter  30 value 62856.104902</span></span>
+<span><span class="co">## iter  40 value 53593.548614</span></span>
+<span><span class="co">## iter  50 value 53082.185527</span></span>
+<span><span class="co">## iter  60 value 52972.890451</span></span>
+<span><span class="co">## iter  70 value 52921.201737</span></span>
+<span><span class="co">## iter  80 value 52908.922263</span></span>
+<span><span class="co">## iter  90 value 52904.261762</span></span>
+<span><span class="co">## iter 100 value 52890.432044</span></span>
+<span><span class="co">## iter 110 value 52882.320916</span></span>
+<span><span class="co">## iter 120 value 52881.989498</span></span>
+<span><span class="co">## final  value 52881.950787 </span></span>
+<span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric State         prob           SE df</span>
-<span class="co">## 1             Alpha                18901 India 1.067901e-04 1.056234e-04 NA</span>
-<span class="co">## 2             BA.1+                18901 India 1.882223e-06 3.108046e-07 NA</span>
-<span class="co">## 3              BA.2                18901 India 1.060575e-10 2.117504e-11 NA</span>
-<span class="co">## 4              BA.3                18901 India 6.616690e-09 4.090813e-09 NA</span>
-<span class="co">## 5              BA.4                18901 India 2.336427e-30 8.544824e-30 NA</span>
-<span class="co">## 6              BA.5                18901 India 3.519003e-32 2.115192e-31 NA</span>
-<span class="co">##       asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 -1.002280e-04 3.138082e-04    2021-10-01</span>
-<span class="co">## 2  1.273057e-06 2.491388e-06    2021-10-01</span>
-<span class="co">## 3  6.455523e-11 1.475599e-10    2021-10-01</span>
-<span class="co">## 4 -1.401157e-09 1.463454e-08    2021-10-01</span>
-<span class="co">## 5 -1.441112e-29 1.908397e-29    2021-10-01</span>
-<span class="co">## 6 -3.793800e-31 4.497601e-31    2021-10-01</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric State         prob           SE df</span></span>
+<span><span class="co">## 1             Alpha                18901 India 1.055655e-04 1.046090e-04 NA</span></span>
+<span><span class="co">## 2             BA.1+                18901 India 2.007964e-06 3.237835e-07 NA</span></span>
+<span><span class="co">## 3              BA.2                18901 India 1.239442e-10 2.408556e-11 NA</span></span>
+<span><span class="co">## 4              BA.3                18901 India 6.591168e-09 4.030686e-09 NA</span></span>
+<span><span class="co">## 5              BA.4                18901 India 3.494407e-30 1.210756e-29 NA</span></span>
+<span><span class="co">## 6              BA.5                18901 India 8.999347e-32 5.031133e-31 NA</span></span>
+<span><span class="co">##       asymp.LCL    asymp.UCL DateCollected</span></span>
+<span><span class="co">## 1 -9.946425e-05 3.105953e-04    2021-10-01</span></span>
+<span><span class="co">## 2  1.373360e-06 2.642568e-06    2021-10-01</span></span>
+<span><span class="co">## 3  7.673734e-11 1.711510e-10    2021-10-01</span></span>
+<span><span class="co">## 4 -1.308831e-09 1.449117e-08    2021-10-01</span></span>
+<span><span class="co">## 5 -2.023598e-29 2.722479e-29    2021-10-01</span></span>
+<span><span class="co">## 6 -8.960904e-31 1.076077e-30    2021-10-01</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">muller</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
-<span class="va">muller</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">muller</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+<span><span class="va">muller</span></span></code></pre></div>
 <p><img src="SouthAfrica_contrast_India_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_southafrica</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata_2022</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"South Africa"</span><span class="op">)</span>
-
-<span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata_2022</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span>
-
-<span class="va">gisaid_southafrica_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
-  variant_df <span class="op">=</span> <span class="va">gisaid_southafrica</span>,
-  vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,
-  summarize <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="va">gisaid_india_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
-  variant_df <span class="op">=</span> <span class="va">gisaid_india</span>,
-  vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,
-  summarize <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="va">collapsed_unique_variants</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">union</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">gisaid_india_collapsed</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">gisaid_southafrica_collapsed</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">colors_to_use</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#ebac23"</span>,<span class="st">"#b80058"</span>,<span class="st">"#008cf9"</span>,<span class="st">"#006e00"</span>,<span class="st">"#00bbad"</span>,<span class="st">"#d163e6"</span>,<span class="st">"#b24502"</span>,<span class="st">"#ff9287"</span>,<span class="st">"#5954d6"</span>,<span class="st">"#00c6f8"</span>,<span class="st">"#878500"</span>,<span class="st">"#00a76c"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">colors_to_use</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">collapsed_unique_variants</span>
-
-<span class="va">gisaid_southafrica_weekwise</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsWeekwise.html">SummarizeVariantsWeekwise</a></span><span class="op">(</span><span class="va">gisaid_southafrica_collapsed</span><span class="op">)</span>
-
-
-<span class="va">gisaid_india_weekwise</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsWeekwise.html">SummarizeVariantsWeekwise</a></span><span class="op">(</span><span class="va">gisaid_india_collapsed</span><span class="op">)</span>
-
-<span class="va">cases_southafrica</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long_southafrica</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">WeekYearCollected</span> <span class="op">&gt;=</span> <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-week.html" class="external-link">yearweek</a></span><span class="op">(</span><span class="st">"2021 W44"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">cases_india</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long_india</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">WeekYearCollected</span> <span class="op">&gt;=</span> <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-week.html" class="external-link">yearweek</a></span><span class="op">(</span><span class="st">"2021 W44"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gisaid_southafrica</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata_2022</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"South Africa"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata_2022</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gisaid_southafrica_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
+<span>  variant_df <span class="op">=</span> <span class="va">gisaid_southafrica</span>,</span>
+<span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
+<span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,</span>
+<span>  summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gisaid_india_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
+<span>  variant_df <span class="op">=</span> <span class="va">gisaid_india</span>,</span>
+<span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
+<span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,</span>
+<span>  summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">collapsed_unique_variants</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">union</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">gisaid_india_collapsed</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">gisaid_southafrica_collapsed</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">colors_to_use</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#ebac23"</span>,<span class="st">"#b80058"</span>,<span class="st">"#008cf9"</span>,<span class="st">"#006e00"</span>,<span class="st">"#00bbad"</span>,<span class="st">"#d163e6"</span>,<span class="st">"#b24502"</span>,<span class="st">"#ff9287"</span>,<span class="st">"#5954d6"</span>,<span class="st">"#00c6f8"</span>,<span class="st">"#878500"</span>,<span class="st">"#00a76c"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">colors_to_use</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">collapsed_unique_variants</span></span>
+<span></span>
+<span><span class="va">gisaid_southafrica_weekwise</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsWeekwise.html">SummarizeVariantsWeekwise</a></span><span class="op">(</span><span class="va">gisaid_southafrica_collapsed</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">gisaid_india_weekwise</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsWeekwise.html">SummarizeVariantsWeekwise</a></span><span class="op">(</span><span class="va">gisaid_india_collapsed</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cases_southafrica</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long_southafrica</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">WeekYearCollected</span> <span class="op">&gt;=</span> <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-week.html" class="external-link">yearweek</a></span><span class="op">(</span><span class="st">"2021 W44"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cases_india</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long_india</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">WeekYearCollected</span> <span class="op">&gt;=</span> <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-week.html" class="external-link">yearweek</a></span><span class="op">(</span><span class="st">"2021 W44"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">preds_southafrica</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_southafrica_weekwise</span>, <span class="va">cases_southafrica</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  36 (24 variable)</span>
-<span class="co">## initial  value 37383.578959 </span>
-<span class="co">## iter  10 value 13689.088433</span>
-<span class="co">## iter  20 value 10937.294976</span>
-<span class="co">## iter  30 value 10469.212237</span>
-<span class="co">## iter  40 value 10365.604245</span>
-<span class="co">## iter  50 value 10332.840688</span>
-<span class="co">## iter  60 value 10330.283550</span>
-<span class="co">## iter  70 value 10316.857026</span>
-<span class="co">## iter  80 value 10313.639828</span>
-<span class="co">## iter  90 value 10312.799993</span>
-<span class="co">## final  value 10312.663326 </span>
-<span class="co">## converged</span></code></pre>
+<code class="sourceCode R"><span><span class="va">preds_southafrica</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_southafrica_weekwise</span>, <span class="va">cases_southafrica</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # weights:  36 (24 variable)</span></span>
+<span><span class="co">## initial  value 37961.449023 </span></span>
+<span><span class="co">## iter  10 value 13558.813912</span></span>
+<span><span class="co">## iter  20 value 11065.013373</span></span>
+<span><span class="co">## iter  30 value 10685.405263</span></span>
+<span><span class="co">## iter  40 value 10599.430785</span></span>
+<span><span class="co">## iter  50 value 10572.875311</span></span>
+<span><span class="co">## iter  60 value 10569.431636</span></span>
+<span><span class="co">## iter  70 value 10554.274571</span></span>
+<span><span class="co">## iter  80 value 10551.115742</span></span>
+<span><span class="co">## iter  90 value 10550.507623</span></span>
+<span><span class="co">## final  value 10550.336525 </span></span>
+<span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">preds_india</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_india_weekwise</span>, <span class="va">cases_india</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  36 (24 variable)</span>
-<span class="co">## initial  value 189429.322486 </span>
-<span class="co">## iter  10 value 53201.790847</span>
-<span class="co">## iter  20 value 47007.131992</span>
-<span class="co">## iter  30 value 42517.823899</span>
-<span class="co">## iter  40 value 42394.803379</span>
-<span class="co">## iter  50 value 42370.005201</span>
-<span class="co">## iter  60 value 42360.698937</span>
-<span class="co">## iter  70 value 42353.748243</span>
-<span class="co">## iter  80 value 42350.616342</span>
-<span class="co">## iter  90 value 42343.217528</span>
-<span class="co">## final  value 42337.781396 </span>
-<span class="co">## converged</span></code></pre>
+<code class="sourceCode R"><span><span class="va">preds_india</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_india_weekwise</span>, <span class="va">cases_india</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # weights:  36 (24 variable)</span></span>
+<span><span class="co">## initial  value 189958.853609 </span></span>
+<span><span class="co">## iter  10 value 52753.931558</span></span>
+<span><span class="co">## iter  20 value 46779.813867</span></span>
+<span><span class="co">## iter  30 value 42577.829323</span></span>
+<span><span class="co">## iter  40 value 42495.312090</span></span>
+<span><span class="co">## iter  50 value 42467.475146</span></span>
+<span><span class="co">## iter  60 value 42460.445782</span></span>
+<span><span class="co">## iter  70 value 42449.730839</span></span>
+<span><span class="co">## iter  80 value 42445.777589</span></span>
+<span><span class="co">## iter  90 value 42436.436182</span></span>
+<span><span class="co">## final  value 42430.839818 </span></span>
+<span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sa_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">preds_southafrica</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in South Africa by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span>, colors <span class="op">=</span> <span class="va">colors_to_use</span><span class="op">)</span>
-<span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/SA_animated_compare.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">sa_anim</span><span class="op">)</span>
-
-
-<span class="va">india_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">preds_india</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org&lt;br&gt;**"</span>, colors <span class="op">=</span> <span class="va">colors_to_use</span><span class="op">)</span>
-<span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_compare.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">india_anim</span><span class="op">)</span>
-
-<span class="va">india_mgif</span> <span class="op">&lt;-</span> <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">image_read</a></span><span class="op">(</span><span class="va">india_anim</span><span class="op">)</span>
-<span class="va">southafrica_mgif</span> <span class="op">&lt;-</span> <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">image_read</a></span><span class="op">(</span><span class="va">sa_anim</span><span class="op">)</span>
-
-
-
-<span class="va">final_gif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/animation.html" class="external-link">image_append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">india_mgif</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">southafrica_mgif</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">india_mgif</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/animation.html" class="external-link">image_append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">india_mgif</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">southafrica_mgif</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">final_gif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">final_gif</span>, <span class="va">combined</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/SA_IN_animated.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">final_gif</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sa_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">preds_southafrica</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in South Africa by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span>, colors <span class="op">=</span> <span class="va">colors_to_use</span><span class="op">)</span></span>
+<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/SA_animated_compare.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">sa_anim</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">india_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">preds_india</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org&lt;br&gt;**"</span>, colors <span class="op">=</span> <span class="va">colors_to_use</span><span class="op">)</span></span>
+<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_compare.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">india_anim</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">india_mgif</span> <span class="op">&lt;-</span> <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">image_read</a></span><span class="op">(</span><span class="va">india_anim</span><span class="op">)</span></span>
+<span><span class="va">southafrica_mgif</span> <span class="op">&lt;-</span> <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">image_read</a></span><span class="op">(</span><span class="va">sa_anim</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="va">final_gif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/animation.html" class="external-link">image_append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">india_mgif</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">southafrica_mgif</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">india_mgif</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/animation.html" class="external-link">image_append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">india_mgif</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">southafrica_mgif</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">final_gif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">final_gif</span>, <span class="va">combined</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/SA_IN_animated.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">final_gif</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SA_IN_animated.gif"></p>
 <p><img src="SA_animated_compare.gif"></p>
 <p><img src="IN_animated_compare.gif"></p>
@@ -369,7 +369,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

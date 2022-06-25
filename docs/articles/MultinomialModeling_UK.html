@@ -120,124 +120,124 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/covmuller" class="external-link">covmuller</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/covmuller" class="external-link">covmuller</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_23.qs"</span><span class="op">)</span>
-<span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"United Kingdom"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
-<span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FormatGISAIDMetadata.html">FormatGISAIDMetadata</a></span><span class="op">(</span><span class="va">gisaid_uk</span><span class="op">)</span>
-<span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="va">gisaid_uk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">State</span>, <span class="va">MonthYearCollected</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_25.qs"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"United Kingdom"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FormatGISAIDMetadata.html">FormatGISAIDMetadata</a></span><span class="op">(</span><span class="va">gisaid_uk</span><span class="op">)</span></span>
+<span><span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="va">gisaid_uk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">State</span>, <span class="va">MonthYearCollected</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_uk</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">p0</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, xangle <span class="op">=</span> <span class="fl">90</span>, title <span class="op">=</span> <span class="st">"United Kingdom"</span><span class="op">)</span>
-<span class="va">p0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_uk</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, xangle <span class="op">=</span> <span class="fl">90</span>, title <span class="op">=</span> <span class="st">"United Kingdom"</span><span class="op">)</span></span>
+<span><span class="va">p0</span></span></code></pre></div>
 <p><img src="MultinomialModeling_UK_files/figure-html/unnamed-chunk-3-1.png" width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="get-vocs">Get VOCs<a class="anchor" aria-label="anchor" href="#get-vocs"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span>
-<span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
-<span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1.1"</span>,
-  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,
-  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,
-  `BA.2.1` <span class="op">=</span> <span class="st">"BA.2.1"</span>,
-  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.10"</span>,
-  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.10.1"</span>,
-  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.12"</span>,
-  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.12.1"</span>,
-  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,
-  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,
-  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1.1"</span>,</span>
+<span>  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,</span>
+<span>  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
+<span>  `BA.2.1` <span class="op">=</span> <span class="st">"BA.2.1"</span>,</span>
+<span>  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.10"</span>,</span>
+<span>  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.10.1"</span>,</span>
+<span>  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.12"</span>,</span>
+<span>  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.12.1"</span>,</span>
+<span>  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,</span>
+<span>  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,</span>
+<span>  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_uk_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
-  variant_df <span class="op">=</span> <span class="va">gisaid_uk</span>,
-  vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,
-  summarize <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="va">gisaid_uk_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_uk_collapsed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Nov 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op">!=</span> <span class="st">"Unassigned"</span><span class="op">)</span>
-
-<span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">gisaid_uk_collapsed_sel</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span>
-<span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="va">vocs_to_keep</span><span class="op">[</span><span class="va">vocs_to_keep</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">]</span>
-
-<span class="va">gisaid_uk_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_uk_collapsed_sel</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">vocs_to_keep</span><span class="op">)</span><span class="op">)</span>
-<span class="va">gisaid_uk_shared_dateweek</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsDatewise.html">SummarizeVariantsDatewise</a></span><span class="op">(</span><span class="va">gisaid_uk_collapsed_sel</span>, by_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gisaid_uk_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span>
-<span class="co">##   State   DateCollectedNumeric lineage_collapsed     n</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> England                <span style="text-decoration: underline;">18</span>932 Delta              <span style="text-decoration: underline;">5</span>535</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> England                <span style="text-decoration: underline;">18</span>932 Others                2</span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> England                <span style="text-decoration: underline;">18</span>933 BA.1                  1</span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> England                <span style="text-decoration: underline;">18</span>933 Delta              <span style="text-decoration: underline;">4</span>313</span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> England                <span style="text-decoration: underline;">18</span>933 Others                1</span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> England                <span style="text-decoration: underline;">18</span>934 BA.1                  1</span></code></pre>
+<code class="sourceCode R"><span><span class="va">gisaid_uk_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
+<span>  variant_df <span class="op">=</span> <span class="va">gisaid_uk</span>,</span>
+<span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
+<span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,</span>
+<span>  summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gisaid_uk_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_uk_collapsed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Nov 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op">!=</span> <span class="st">"Unassigned"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">gisaid_uk_collapsed_sel</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span></span>
+<span><span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="va">vocs_to_keep</span><span class="op">[</span><span class="va">vocs_to_keep</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">gisaid_uk_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_uk_collapsed_sel</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">vocs_to_keep</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gisaid_uk_shared_dateweek</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsDatewise.html">SummarizeVariantsDatewise</a></span><span class="op">(</span><span class="va">gisaid_uk_collapsed_sel</span>, by_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gisaid_uk_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">##   State   DateCollectedNumeric lineage_collapsed     n</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> England                <span style="text-decoration: underline;">18</span>932 Delta              <span style="text-decoration: underline;">5</span>535</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> England                <span style="text-decoration: underline;">18</span>932 Others                2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> England                <span style="text-decoration: underline;">18</span>933 BA.1                  1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> England                <span style="text-decoration: underline;">18</span>933 Delta              <span style="text-decoration: underline;">4</span>313</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> England                <span style="text-decoration: underline;">18</span>933 Others                1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> England                <span style="text-decoration: underline;">18</span>934 BA.1                  1</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit_uk_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_uk_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  77 (60 variable)</span>
-<span class="co">## initial  value 3617814.901254 </span>
-<span class="co">## iter  10 value 1437260.358390</span>
-<span class="co">## iter  20 value 1301983.549986</span>
-<span class="co">## iter  30 value 1279077.074570</span>
-<span class="co">## iter  40 value 815095.466108</span>
-<span class="co">## iter  50 value 779203.660358</span>
-<span class="co">## iter  60 value 705229.688237</span>
-<span class="co">## iter  70 value 654940.196199</span>
-<span class="co">## iter  80 value 641487.518488</span>
-<span class="co">## iter  90 value 640380.465529</span>
-<span class="co">## iter 100 value 639751.325262</span>
-<span class="co">## iter 110 value 639555.584378</span>
-<span class="co">## iter 120 value 639500.195203</span>
-<span class="co">## iter 130 value 639468.605175</span>
-<span class="co">## iter 140 value 639440.433934</span>
-<span class="co">## iter 150 value 639395.441791</span>
-<span class="co">## iter 160 value 639292.360192</span>
-<span class="co">## iter 170 value 639169.236504</span>
-<span class="co">## iter 180 value 639041.564955</span>
-<span class="co">## iter 190 value 639003.447441</span>
-<span class="co">## final  value 639001.401381 </span>
-<span class="co">## converged</span></code></pre>
+<code class="sourceCode R"><span><span class="va">fit_uk_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_uk_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # weights:  77 (60 variable)</span></span>
+<span><span class="co">## initial  value 3624267.637433 </span></span>
+<span><span class="co">## iter  10 value 1449719.605642</span></span>
+<span><span class="co">## iter  20 value 1339653.757671</span></span>
+<span><span class="co">## iter  30 value 1306485.370396</span></span>
+<span><span class="co">## iter  40 value 833627.149883</span></span>
+<span><span class="co">## iter  50 value 795130.490255</span></span>
+<span><span class="co">## iter  60 value 721030.230390</span></span>
+<span><span class="co">## iter  70 value 659051.232351</span></span>
+<span><span class="co">## iter  80 value 646321.788250</span></span>
+<span><span class="co">## iter  90 value 644202.439657</span></span>
+<span><span class="co">## iter 100 value 643693.968118</span></span>
+<span><span class="co">## iter 110 value 643522.829401</span></span>
+<span><span class="co">## iter 120 value 643456.243410</span></span>
+<span><span class="co">## iter 130 value 643419.674554</span></span>
+<span><span class="co">## iter 140 value 643376.531024</span></span>
+<span><span class="co">## iter 150 value 643318.795631</span></span>
+<span><span class="co">## iter 160 value 643208.872085</span></span>
+<span><span class="co">## iter 170 value 643072.735672</span></span>
+<span><span class="co">## iter 180 value 642954.033427</span></span>
+<span><span class="co">## iter 190 value 642864.442255</span></span>
+<span><span class="co">## final  value 642863.898723 </span></span>
+<span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_uk_multi_predsbystate</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span>
-<span class="co">## 1              BA.1                18932 England 1.857931e-05 5.550659e-07 NA</span>
-<span class="co">## 2              BA.2                18932 England 2.721308e-11 2.004644e-12 NA</span>
-<span class="co">## 3            BA.2.1                18932 England 6.177502e-12 9.372815e-13 NA</span>
-<span class="co">## 4           BA.2.10                18932 England 7.041416e-11 8.934314e-12 NA</span>
-<span class="co">## 5         BA.2.10.1                18932 England 3.593064e-12 1.667422e-12 NA</span>
-<span class="co">## 6           BA.2.12                18932 England 1.095066e-12 5.267808e-13 NA</span>
-<span class="co">##      asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 1.749140e-05 1.966722e-05    2021-11-01</span>
-<span class="co">## 2 2.328405e-11 3.114211e-11    2021-11-01</span>
-<span class="co">## 3 4.340464e-12 8.014540e-12    2021-11-01</span>
-<span class="co">## 4 5.290323e-11 8.792510e-11    2021-11-01</span>
-<span class="co">## 5 3.249773e-13 6.861151e-12    2021-11-01</span>
-<span class="co">## 6 6.259417e-14 2.127537e-12    2021-11-01</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_uk_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span></span>
+<span><span class="co">## 1              BA.1                18932 England 1.909520e-05 5.690281e-07 NA</span></span>
+<span><span class="co">## 2              BA.2                18932 England 2.943357e-11 2.155354e-12 NA</span></span>
+<span><span class="co">## 3            BA.2.1                18932 England 5.719181e-12 8.529850e-13 NA</span></span>
+<span><span class="co">## 4           BA.2.10                18932 England 7.436931e-11 9.334302e-12 NA</span></span>
+<span><span class="co">## 5         BA.2.10.1                18932 England 3.531845e-12 1.617981e-12 NA</span></span>
+<span><span class="co">## 6           BA.2.12                18932 England 1.118017e-12 5.212506e-13 NA</span></span>
+<span><span class="co">##      asymp.LCL    asymp.UCL DateCollected</span></span>
+<span><span class="co">## 1 1.797993e-05 2.021048e-05    2021-11-01</span></span>
+<span><span class="co">## 2 2.520915e-11 3.365798e-11    2021-11-01</span></span>
+<span><span class="co">## 3 4.047361e-12 7.391001e-12    2021-11-01</span></span>
+<span><span class="co">## 4 5.607441e-11 9.266420e-11    2021-11-01</span></span>
+<span><span class="co">## 5 3.606598e-13 6.703030e-12    2021-11-01</span></span>
+<span><span class="co">## 6 9.638477e-14 2.139649e-12    2021-11-01</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
 </h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">muller_ukbystate_mfit</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit_uk_multi_predsbystate</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">muller_ukbystate_mfit</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">muller_ukbystate_mfit</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit_uk_multi_predsbystate</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">muller_ukbystate_mfit</span></span></code></pre></div>
 <p><img src="MultinomialModeling_UK_files/figure-html/unnamed-chunk-7-1.png" width="1152"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -253,7 +253,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

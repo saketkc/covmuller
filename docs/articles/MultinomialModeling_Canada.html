@@ -120,124 +120,126 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/covmuller" class="external-link">covmuller</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/covmuller" class="external-link">covmuller</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_23.qs"</span><span class="op">)</span>
-<span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Canada"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
-<span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FormatGISAIDMetadata.html">FormatGISAIDMetadata</a></span><span class="op">(</span><span class="va">gisaid_canada</span><span class="op">)</span>
-<span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="va">gisaid_canada</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">State</span>, <span class="va">MonthYearCollected</span><span class="op">)</span>
-<span class="va">gisaid_canada</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CleanCanadaStates.html">CleanCanadaStates</a></span><span class="op">(</span><span class="va">gisaid_canada</span><span class="op">$</span><span class="va">State</span><span class="op">)</span>
-<span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="va">gisaid_canada</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">!=</span> <span class="st">"Unknown"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_25.qs"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Canada"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FormatGISAIDMetadata.html">FormatGISAIDMetadata</a></span><span class="op">(</span><span class="va">gisaid_canada</span><span class="op">)</span></span>
+<span><span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="va">gisaid_canada</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">State</span>, <span class="va">MonthYearCollected</span><span class="op">)</span></span>
+<span><span class="va">gisaid_canada</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CleanCanadaStates.html">CleanCanadaStates</a></span><span class="op">(</span><span class="va">gisaid_canada</span><span class="op">$</span><span class="va">State</span><span class="op">)</span></span>
+<span><span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="va">gisaid_canada</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">!=</span> <span class="st">"Unknown"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_canada</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">p0</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, xangle <span class="op">=</span> <span class="fl">90</span>, title <span class="op">=</span> <span class="st">"Canada"</span><span class="op">)</span>
-<span class="va">p0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_canada</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, xangle <span class="op">=</span> <span class="fl">90</span>, title <span class="op">=</span> <span class="st">"Canada"</span><span class="op">)</span></span>
+<span><span class="va">p0</span></span></code></pre></div>
 <p><img src="MultinomialModeling_Canada_files/figure-html/unnamed-chunk-3-1.png" width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="get-vocs">Get VOCs<a class="anchor" aria-label="anchor" href="#get-vocs"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span>
-<span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
-<span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1.1"</span>,
-  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,
-  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,
-  `BA.2.1` <span class="op">=</span> <span class="st">"BA.2.1"</span>,
-  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.10"</span>,
-  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.10.1"</span>,
-  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.12"</span>,
-  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.12.1"</span>,
-  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,
-  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,
-  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1.1"</span>,</span>
+<span>  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,</span>
+<span>  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
+<span>  `BA.2.1` <span class="op">=</span> <span class="st">"BA.2.1"</span>,</span>
+<span>  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.10"</span>,</span>
+<span>  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.10.1"</span>,</span>
+<span>  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.12"</span>,</span>
+<span>  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.12.1"</span>,</span>
+<span>  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,</span>
+<span>  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,</span>
+<span>  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_canada_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
-  variant_df <span class="op">=</span> <span class="va">gisaid_canada</span>,
-  vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,
-  summarize <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="va">gisaid_canada_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_canada_collapsed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Nov 2021"</span><span class="op">)</span>
-
-<span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">gisaid_canada_collapsed_sel</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span>
-<span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="va">vocs_to_keep</span><span class="op">[</span><span class="va">vocs_to_keep</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">]</span>
-
-<span class="va">gisaid_canada_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_canada_collapsed_sel</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">vocs_to_keep</span><span class="op">)</span><span class="op">)</span>
-<span class="va">gisaid_canada_shared_dateweek</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsDatewise.html">SummarizeVariantsDatewise</a></span><span class="op">(</span><span class="va">gisaid_canada_collapsed_sel</span>, by_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gisaid_canada_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span>
-<span class="co">##   State   DateCollectedNumeric lineage_collapsed     n</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> Alberta                <span style="text-decoration: underline;">18</span>932 Delta               134</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> Alberta                <span style="text-decoration: underline;">18</span>933 Delta                98</span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> Alberta                <span style="text-decoration: underline;">18</span>934 Delta                94</span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> Alberta                <span style="text-decoration: underline;">18</span>935 Delta                96</span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> Alberta                <span style="text-decoration: underline;">18</span>936 Delta                66</span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> Alberta                <span style="text-decoration: underline;">18</span>937 Delta                54</span></code></pre>
+<code class="sourceCode R"><span><span class="va">gisaid_canada_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
+<span>  variant_df <span class="op">=</span> <span class="va">gisaid_canada</span>,</span>
+<span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
+<span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,</span>
+<span>  summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gisaid_canada_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_canada_collapsed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Nov 2021"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">gisaid_canada_collapsed_sel</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span></span>
+<span><span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="va">vocs_to_keep</span><span class="op">[</span><span class="va">vocs_to_keep</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">gisaid_canada_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_canada_collapsed_sel</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">vocs_to_keep</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gisaid_canada_shared_dateweek</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsDatewise.html">SummarizeVariantsDatewise</a></span><span class="op">(</span><span class="va">gisaid_canada_collapsed_sel</span>, by_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gisaid_canada_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">##   State   DateCollectedNumeric lineage_collapsed     n</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Alberta                <span style="text-decoration: underline;">18</span>932 Delta               134</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Alberta                <span style="text-decoration: underline;">18</span>933 Delta                98</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Alberta                <span style="text-decoration: underline;">18</span>934 Delta                94</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Alberta                <span style="text-decoration: underline;">18</span>935 Delta                96</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Alberta                <span style="text-decoration: underline;">18</span>936 Delta                66</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Alberta                <span style="text-decoration: underline;">18</span>937 Delta                54</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit_canada_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_canada_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  120 (99 variable)</span>
-<span class="co">## initial  value 335670.854857 </span>
-<span class="co">## iter  10 value 108896.054596</span>
-<span class="co">## iter  20 value 98933.587195</span>
-<span class="co">## iter  30 value 90335.575590</span>
-<span class="co">## iter  40 value 82536.543995</span>
-<span class="co">## iter  50 value 78309.787560</span>
-<span class="co">## iter  60 value 75468.175718</span>
-<span class="co">## iter  70 value 73183.786850</span>
-<span class="co">## iter  80 value 71957.718679</span>
-<span class="co">## iter  90 value 71592.185860</span>
-<span class="co">## iter 100 value 71331.284970</span>
-<span class="co">## iter 110 value 71282.050087</span>
-<span class="co">## iter 120 value 71269.861209</span>
-<span class="co">## iter 130 value 71268.247064</span>
-<span class="co">## iter 140 value 71265.981105</span>
-<span class="co">## iter 150 value 71264.770715</span>
-<span class="co">## iter 160 value 71263.894794</span>
-<span class="co">## iter 170 value 71263.452663</span>
-<span class="co">## iter 180 value 71263.341923</span>
-<span class="co">## iter 190 value 71263.124123</span>
-<span class="co">## iter 200 value 71262.610938</span>
-<span class="co">## final  value 71262.600454 </span>
-<span class="co">## converged</span></code></pre>
+<code class="sourceCode R"><span><span class="va">fit_canada_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_canada_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # weights:  132 (110 variable)</span></span>
+<span><span class="co">## initial  value 355423.231020 </span></span>
+<span><span class="co">## iter  10 value 132647.509127</span></span>
+<span><span class="co">## iter  20 value 110325.850564</span></span>
+<span><span class="co">## iter  30 value 102705.552153</span></span>
+<span><span class="co">## iter  40 value 88251.601711</span></span>
+<span><span class="co">## iter  50 value 83646.626213</span></span>
+<span><span class="co">## iter  60 value 79819.701187</span></span>
+<span><span class="co">## iter  70 value 77402.020080</span></span>
+<span><span class="co">## iter  80 value 75806.491120</span></span>
+<span><span class="co">## iter  90 value 74838.238979</span></span>
+<span><span class="co">## iter 100 value 74515.486270</span></span>
+<span><span class="co">## iter 110 value 74427.406888</span></span>
+<span><span class="co">## iter 120 value 74420.513900</span></span>
+<span><span class="co">## iter 130 value 74416.853598</span></span>
+<span><span class="co">## iter 140 value 74414.383383</span></span>
+<span><span class="co">## iter 150 value 74412.862057</span></span>
+<span><span class="co">## iter 160 value 74411.788220</span></span>
+<span><span class="co">## iter 170 value 74411.205891</span></span>
+<span><span class="co">## iter 180 value 74410.625603</span></span>
+<span><span class="co">## iter 190 value 74410.193750</span></span>
+<span><span class="co">## iter 200 value 74409.679864</span></span>
+<span><span class="co">## iter 210 value 74408.744575</span></span>
+<span><span class="co">## iter 220 value 74407.334985</span></span>
+<span><span class="co">## final  value 74407.326598 </span></span>
+<span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_canada_multi_predsbystate</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span>
-<span class="co">## 1              BA.1                18932 Alberta 5.439109e-05 5.253568e-06 NA</span>
-<span class="co">## 2              BA.2                18932 Alberta 1.536282e-08 2.564111e-09 NA</span>
-<span class="co">## 3            BA.2.1                18932 Alberta 9.454262e-14 3.762736e-13 NA</span>
-<span class="co">## 4           BA.2.10                18932 Alberta 1.255759e-08 4.862701e-09 NA</span>
-<span class="co">## 5           BA.2.12                18932 Alberta 8.565407e-09 8.385239e-09 NA</span>
-<span class="co">## 6         BA.2.12.1                18932 Alberta 2.564982e-11 1.770939e-11 NA</span>
-<span class="co">##       asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1  4.409428e-05 6.468789e-05    2021-11-01</span>
-<span class="co">## 2  1.033726e-08 2.038839e-08    2021-11-01</span>
-<span class="co">## 3 -6.429401e-13 8.320253e-13    2021-11-01</span>
-<span class="co">## 4  3.026875e-09 2.208831e-08    2021-11-01</span>
-<span class="co">## 5 -7.869360e-09 2.500017e-08    2021-11-01</span>
-<span class="co">## 6 -9.059943e-12 6.035958e-11    2021-11-01</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_canada_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span></span>
+<span><span class="co">## 1              BA.1                18932 Alberta 5.639641e-05 5.425507e-06 NA</span></span>
+<span><span class="co">## 2              BA.2                18932 Alberta 1.593001e-08 2.625373e-09 NA</span></span>
+<span><span class="co">## 3            BA.2.1                18932 Alberta 3.853437e-13 1.312632e-12 NA</span></span>
+<span><span class="co">## 4           BA.2.10                18932 Alberta 1.396450e-08 5.284804e-09 NA</span></span>
+<span><span class="co">## 5         BA.2.10.1                18932 Alberta 4.190236e-14 9.520074e-14 NA</span></span>
+<span><span class="co">## 6           BA.2.12                18932 Alberta 3.186803e-09 3.402069e-09 NA</span></span>
+<span><span class="co">##       asymp.LCL    asymp.UCL DateCollected</span></span>
+<span><span class="co">## 1  4.576261e-05 6.703021e-05    2021-11-01</span></span>
+<span><span class="co">## 2  1.078438e-08 2.107565e-08    2021-11-01</span></span>
+<span><span class="co">## 3 -2.187368e-12 2.958055e-12    2021-11-01</span></span>
+<span><span class="co">## 4  3.606471e-09 2.432252e-08    2021-11-01</span></span>
+<span><span class="co">## 5 -1.446877e-13 2.284924e-13    2021-11-01</span></span>
+<span><span class="co">## 6 -3.481130e-09 9.854735e-09    2021-11-01</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
 </h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">muller_canadabystate_mfit</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit_canada_multi_predsbystate</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">muller_canadabystate_mfit</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">muller_canadabystate_mfit</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit_canada_multi_predsbystate</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">muller_canadabystate_mfit</span></span></code></pre></div>
 <p><img src="MultinomialModeling_Canada_files/figure-html/unnamed-chunk-7-1.png" width="1152"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -253,7 +255,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

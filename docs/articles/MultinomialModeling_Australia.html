@@ -120,127 +120,130 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/covmuller" class="external-link">covmuller</a></span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/covmuller" class="external-link">covmuller</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_23.qs"</span><span class="op">)</span>
-<span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Australia"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span>
-<span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FormatGISAIDMetadata.html">FormatGISAIDMetadata</a></span><span class="op">(</span><span class="va">gisaid_australia</span><span class="op">)</span>
-<span class="va">gisaid_australia</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"?"</span>, replacement <span class="op">=</span> <span class="st">""</span>, x <span class="op">=</span> <span class="va">gisaid_australia</span><span class="op">$</span><span class="va">State</span><span class="op">)</span>
-
-<span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="va">gisaid_australia</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">State</span>, <span class="va">MonthYearCollected</span><span class="op">)</span>
-<span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="va">gisaid_australia</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">!=</span> <span class="st">"Unknown"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_25.qs"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Australia"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FormatGISAIDMetadata.html">FormatGISAIDMetadata</a></span><span class="op">(</span><span class="va">gisaid_australia</span><span class="op">)</span></span>
+<span><span class="va">gisaid_australia</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"?"</span>, replacement <span class="op">=</span> <span class="st">""</span>, x <span class="op">=</span> <span class="va">gisaid_australia</span><span class="op">$</span><span class="va">State</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="va">gisaid_australia</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">State</span>, <span class="va">MonthYearCollected</span><span class="op">)</span></span>
+<span><span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="va">gisaid_australia</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">!=</span> <span class="st">"Unknown"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_australia</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">p0</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, xangle <span class="op">=</span> <span class="fl">90</span>, title <span class="op">=</span> <span class="st">"Australia"</span><span class="op">)</span>
-<span class="va">p0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_australia</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, xangle <span class="op">=</span> <span class="fl">90</span>, title <span class="op">=</span> <span class="st">"Australia"</span><span class="op">)</span></span>
+<span><span class="va">p0</span></span></code></pre></div>
 <p><img src="MultinomialModeling_Australia_files/figure-html/unnamed-chunk-3-1.png" width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="get-vocs">Get VOCs<a class="anchor" aria-label="anchor" href="#get-vocs"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span>
-<span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
-<span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1.1"</span>,
-  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,
-  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,
-  `BA.2.1` <span class="op">=</span> <span class="st">"BA.2.1"</span>,
-  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.10"</span>,
-  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.10.1"</span>,
-  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.12"</span>,
-  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.12.1"</span>,
-  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,
-  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,
-  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1.1"</span>,</span>
+<span>  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,</span>
+<span>  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
+<span>  `BA.2.1` <span class="op">=</span> <span class="st">"BA.2.1"</span>,</span>
+<span>  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.10"</span>,</span>
+<span>  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.10.1"</span>,</span>
+<span>  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.12"</span>,</span>
+<span>  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.12.1"</span>,</span>
+<span>  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,</span>
+<span>  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,</span>
+<span>  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gisaid_australia_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span>
-  variant_df <span class="op">=</span> <span class="va">gisaid_australia</span>,
-  vocs <span class="op">=</span> <span class="va">vocs</span>,
-  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,
-  summarize <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="va">gisaid_australia_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_australia_collapsed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Nov 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op">!=</span> <span class="st">"Unassigned"</span><span class="op">)</span>
-
-<span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">gisaid_australia_collapsed_sel</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span>
-<span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="va">vocs_to_keep</span><span class="op">[</span><span class="va">vocs_to_keep</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">]</span>
-
-<span class="va">gisaid_australia_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_australia_collapsed_sel</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">vocs_to_keep</span><span class="op">)</span><span class="op">)</span>
-<span class="va">gisaid_australia_shared_dateweek</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsDatewise.html">SummarizeVariantsDatewise</a></span><span class="op">(</span><span class="va">gisaid_australia_collapsed_sel</span>, by_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gisaid_australia_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span>
-<span class="co">##   State                        DateCollectedNumeric lineage_collapsed     n</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>932 Delta                 8</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>933 Delta                16</span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>934 Delta                 8</span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>935 Delta                 8</span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>936 Delta                15</span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>938 Delta                16</span></code></pre>
+<code class="sourceCode R"><span><span class="va">gisaid_australia_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
+<span>  variant_df <span class="op">=</span> <span class="va">gisaid_australia</span>,</span>
+<span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
+<span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,</span>
+<span>  summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gisaid_australia_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_australia_collapsed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;=</span> <span class="st">"Nov 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op">!=</span> <span class="st">"Unassigned"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">gisaid_australia_collapsed_sel</span><span class="op">$</span><span class="va">lineage_collapsed</span><span class="op">)</span></span>
+<span><span class="va">vocs_to_keep</span> <span class="op">&lt;-</span> <span class="va">vocs_to_keep</span><span class="op">[</span><span class="va">vocs_to_keep</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">gisaid_australia_collapsed_sel</span> <span class="op">&lt;-</span> <span class="va">gisaid_australia_collapsed_sel</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">vocs_to_keep</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gisaid_australia_shared_dateweek</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsDatewise.html">SummarizeVariantsDatewise</a></span><span class="op">(</span><span class="va">gisaid_australia_collapsed_sel</span>, by_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gisaid_australia_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">##   State                        DateCollectedNumeric lineage_collapsed     n</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>932 Delta                 8</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>933 Delta                16</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>934 Delta                 8</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>935 Delta                 8</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>936 Delta                15</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>938 Delta                16</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit_australia_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_australia_shared_dateweek</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## # weights:  110 (90 variable)</span>
-<span class="co">## initial  value 171296.212823 </span>
-<span class="co">## iter  10 value 69612.074581</span>
-<span class="co">## iter  20 value 58246.588942</span>
-<span class="co">## iter  30 value 53675.326700</span>
-<span class="co">## iter  40 value 48399.019752</span>
-<span class="co">## iter  50 value 46587.758520</span>
-<span class="co">## iter  60 value 45375.553900</span>
-<span class="co">## iter  70 value 44785.745289</span>
-<span class="co">## iter  80 value 44362.881852</span>
-<span class="co">## iter  90 value 44276.416690</span>
-<span class="co">## iter 100 value 44254.262629</span>
-<span class="co">## iter 110 value 44244.850124</span>
-<span class="co">## iter 120 value 44242.816234</span>
-<span class="co">## iter 130 value 44241.688609</span>
-<span class="co">## iter 140 value 44237.472484</span>
-<span class="co">## iter 150 value 44232.914660</span>
-<span class="co">## iter 160 value 44229.562649</span>
-<span class="co">## iter 170 value 44225.769224</span>
-<span class="co">## iter 180 value 44225.676394</span>
-<span class="co">## iter 190 value 44225.633136</span>
-<span class="co">## final  value 44225.627065 </span>
-<span class="co">## converged</span></code></pre>
+<code class="sourceCode R"><span><span class="va">fit_australia_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_australia_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # weights:  110 (90 variable)</span></span>
+<span><span class="co">## initial  value 172028.434883 </span></span>
+<span><span class="co">## iter  10 value 71085.136264</span></span>
+<span><span class="co">## iter  20 value 58994.568138</span></span>
+<span><span class="co">## iter  30 value 53852.482723</span></span>
+<span><span class="co">## iter  40 value 49631.139114</span></span>
+<span><span class="co">## iter  50 value 47345.362461</span></span>
+<span><span class="co">## iter  60 value 45878.054990</span></span>
+<span><span class="co">## iter  70 value 45269.032790</span></span>
+<span><span class="co">## iter  80 value 44793.677415</span></span>
+<span><span class="co">## iter  90 value 44685.896784</span></span>
+<span><span class="co">## iter 100 value 44667.780320</span></span>
+<span><span class="co">## iter 110 value 44660.549002</span></span>
+<span><span class="co">## iter 120 value 44655.270639</span></span>
+<span><span class="co">## iter 130 value 44654.214499</span></span>
+<span><span class="co">## iter 140 value 44653.118248</span></span>
+<span><span class="co">## iter 150 value 44648.848332</span></span>
+<span><span class="co">## iter 160 value 44646.536854</span></span>
+<span><span class="co">## iter 170 value 44642.322432</span></span>
+<span><span class="co">## iter 180 value 44642.130238</span></span>
+<span><span class="co">## iter 190 value 44641.796241</span></span>
+<span><span class="co">## iter 200 value 44641.748682</span></span>
+<span><span class="co">## iter 210 value 44641.714766</span></span>
+<span><span class="co">## iter 220 value 44641.692643</span></span>
+<span><span class="co">## final  value 44641.686041 </span></span>
+<span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_australia_multi_predsbystate</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##   lineage_collapsed DateCollectedNumeric                        State</span>
-<span class="co">## 1              BA.1                18932 Australian Capital Territory</span>
-<span class="co">## 2              BA.2                18932 Australian Capital Territory</span>
-<span class="co">## 3           BA.2.10                18932 Australian Capital Territory</span>
-<span class="co">## 4         BA.2.10.1                18932 Australian Capital Territory</span>
-<span class="co">## 5           BA.2.12                18932 Australian Capital Territory</span>
-<span class="co">## 6         BA.2.12.1                18932 Australian Capital Territory</span>
-<span class="co">##           prob           SE df     asymp.LCL    asymp.UCL DateCollected</span>
-<span class="co">## 1 2.941988e-04 4.791575e-05 NA  2.002857e-04 3.881120e-04    2021-11-01</span>
-<span class="co">## 2 3.917198e-09 1.277285e-09 NA  1.413764e-09 6.420631e-09    2021-11-01</span>
-<span class="co">## 3 1.017678e-08 4.355743e-09 NA  1.639683e-09 1.871388e-08    2021-11-01</span>
-<span class="co">## 4 8.256484e-13 7.264672e-13 NA -5.982012e-13 2.249498e-12    2021-11-01</span>
-<span class="co">## 5 5.073819e-11 5.620557e-11 NA -5.942271e-11 1.608991e-10    2021-11-01</span>
-<span class="co">## 6 2.888215e-21 2.444802e-20 NA -4.502903e-20 5.080546e-20    2021-11-01</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_australia_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric                        State</span></span>
+<span><span class="co">## 1              BA.1                18932 Australian Capital Territory</span></span>
+<span><span class="co">## 2              BA.2                18932 Australian Capital Territory</span></span>
+<span><span class="co">## 3           BA.2.10                18932 Australian Capital Territory</span></span>
+<span><span class="co">## 4         BA.2.10.1                18932 Australian Capital Territory</span></span>
+<span><span class="co">## 5           BA.2.12                18932 Australian Capital Territory</span></span>
+<span><span class="co">## 6         BA.2.12.1                18932 Australian Capital Territory</span></span>
+<span><span class="co">##           prob           SE df     asymp.LCL    asymp.UCL DateCollected</span></span>
+<span><span class="co">## 1 3.182791e-04 5.152489e-05 NA  2.172921e-04 4.192660e-04    2021-11-01</span></span>
+<span><span class="co">## 2 3.995813e-09 1.290671e-09 NA  1.466144e-09 6.525482e-09    2021-11-01</span></span>
+<span><span class="co">## 3 1.043601e-08 4.430929e-09 NA  1.751547e-09 1.912047e-08    2021-11-01</span></span>
+<span><span class="co">## 4 1.099218e-12 9.453462e-13 NA -7.536262e-13 2.952063e-12    2021-11-01</span></span>
+<span><span class="co">## 5 7.242141e-11 7.674533e-11 NA -7.799668e-11 2.228395e-10    2021-11-01</span></span>
+<span><span class="co">## 6 1.760172e-18 1.296495e-17 NA -2.365066e-17 2.717101e-17    2021-11-01</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
 </h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">muller_australiabystate_mfit</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit_australia_multi_predsbystate</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">muller_australiabystate_mfit</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">muller_australiabystate_mfit</span> <span class="op">&lt;-</span> <span class="fu">PlotMullerDailyPrevalence</span><span class="op">(</span><span class="va">fit_australia_multi_predsbystate</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">muller_australiabystate_mfit</span></span></code></pre></div>
 <p><img src="MultinomialModeling_Australia_files/figure-html/unnamed-chunk-7-1.png" width="1152"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -256,7 +259,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>
