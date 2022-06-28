@@ -126,7 +126,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_25.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_06_27.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_australia</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Australia"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -195,48 +195,44 @@
 <span><span class="co">## <span style="color: #BCBCBC;">6</span> Australian Capital Territory                <span style="text-decoration: underline;">18</span>938 Delta                16</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_australia_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_australia_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  110 (90 variable)</span></span>
-<span><span class="co">## initial  value 172028.434883 </span></span>
-<span><span class="co">## iter  10 value 71085.136264</span></span>
-<span><span class="co">## iter  20 value 58994.568138</span></span>
-<span><span class="co">## iter  30 value 53852.482723</span></span>
-<span><span class="co">## iter  40 value 49631.139114</span></span>
-<span><span class="co">## iter  50 value 47345.362461</span></span>
-<span><span class="co">## iter  60 value 45878.054990</span></span>
-<span><span class="co">## iter  70 value 45269.032790</span></span>
-<span><span class="co">## iter  80 value 44793.677415</span></span>
-<span><span class="co">## iter  90 value 44685.896784</span></span>
-<span><span class="co">## iter 100 value 44667.780320</span></span>
-<span><span class="co">## iter 110 value 44660.549002</span></span>
-<span><span class="co">## iter 120 value 44655.270639</span></span>
-<span><span class="co">## iter 130 value 44654.214499</span></span>
-<span><span class="co">## iter 140 value 44653.118248</span></span>
-<span><span class="co">## iter 150 value 44648.848332</span></span>
-<span><span class="co">## iter 160 value 44646.536854</span></span>
-<span><span class="co">## iter 170 value 44642.322432</span></span>
-<span><span class="co">## iter 180 value 44642.130238</span></span>
-<span><span class="co">## iter 190 value 44641.796241</span></span>
-<span><span class="co">## iter 200 value 44641.748682</span></span>
-<span><span class="co">## iter 210 value 44641.714766</span></span>
-<span><span class="co">## iter 220 value 44641.692643</span></span>
-<span><span class="co">## final  value 44641.686041 </span></span>
+<pre><code><span><span class="co">## # weights:  121 (100 variable)</span></span>
+<span><span class="co">## initial  value 184589.978100 </span></span>
+<span><span class="co">## iter  10 value 68499.417554</span></span>
+<span><span class="co">## iter  20 value 59126.734854</span></span>
+<span><span class="co">## iter  30 value 54553.140621</span></span>
+<span><span class="co">## iter  40 value 50614.675892</span></span>
+<span><span class="co">## iter  50 value 49003.061819</span></span>
+<span><span class="co">## iter  60 value 47992.399550</span></span>
+<span><span class="co">## iter  70 value 47600.638140</span></span>
+<span><span class="co">## iter  80 value 47417.217950</span></span>
+<span><span class="co">## iter  90 value 47323.856400</span></span>
+<span><span class="co">## iter 100 value 47257.005551</span></span>
+<span><span class="co">## iter 110 value 47236.063123</span></span>
+<span><span class="co">## iter 120 value 47226.249467</span></span>
+<span><span class="co">## iter 130 value 47218.420176</span></span>
+<span><span class="co">## iter 140 value 47214.864550</span></span>
+<span><span class="co">## iter 150 value 47214.507417</span></span>
+<span><span class="co">## iter 160 value 47213.534562</span></span>
+<span><span class="co">## iter 170 value 47209.389234</span></span>
+<span><span class="co">## iter 180 value 47207.404621</span></span>
+<span><span class="co">## final  value 47207.376811 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_australia_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric                        State</span></span>
 <span><span class="co">## 1              BA.1                18932 Australian Capital Territory</span></span>
 <span><span class="co">## 2              BA.2                18932 Australian Capital Territory</span></span>
-<span><span class="co">## 3           BA.2.10                18932 Australian Capital Territory</span></span>
-<span><span class="co">## 4         BA.2.10.1                18932 Australian Capital Territory</span></span>
-<span><span class="co">## 5           BA.2.12                18932 Australian Capital Territory</span></span>
-<span><span class="co">## 6         BA.2.12.1                18932 Australian Capital Territory</span></span>
+<span><span class="co">## 3            BA.2.1                18932 Australian Capital Territory</span></span>
+<span><span class="co">## 4           BA.2.10                18932 Australian Capital Territory</span></span>
+<span><span class="co">## 5         BA.2.10.1                18932 Australian Capital Territory</span></span>
+<span><span class="co">## 6           BA.2.12                18932 Australian Capital Territory</span></span>
 <span><span class="co">##           prob           SE df     asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1 3.182791e-04 5.152489e-05 NA  2.172921e-04 4.192660e-04    2021-11-01</span></span>
-<span><span class="co">## 2 3.995813e-09 1.290671e-09 NA  1.466144e-09 6.525482e-09    2021-11-01</span></span>
-<span><span class="co">## 3 1.043601e-08 4.430929e-09 NA  1.751547e-09 1.912047e-08    2021-11-01</span></span>
-<span><span class="co">## 4 1.099218e-12 9.453462e-13 NA -7.536262e-13 2.952063e-12    2021-11-01</span></span>
-<span><span class="co">## 5 7.242141e-11 7.674533e-11 NA -7.799668e-11 2.228395e-10    2021-11-01</span></span>
-<span><span class="co">## 6 1.760172e-18 1.296495e-17 NA -2.365066e-17 2.717101e-17    2021-11-01</span></span></code></pre>
+<span><span class="co">## 1 3.679852e-04 5.904091e-05 NA  2.522672e-04 4.837033e-04    2021-11-01</span></span>
+<span><span class="co">## 2 4.831100e-09 1.542084e-09 NA  1.808671e-09 7.853530e-09    2021-11-01</span></span>
+<span><span class="co">## 3 6.306032e-17 3.502025e-16 NA -6.233240e-16 7.494446e-16    2021-11-01</span></span>
+<span><span class="co">## 4 9.861777e-09 4.153790e-09 NA  1.720499e-09 1.800306e-08    2021-11-01</span></span>
+<span><span class="co">## 5 4.378308e-12 3.517980e-12 NA -2.516807e-12 1.127342e-11    2021-11-01</span></span>
+<span><span class="co">## 6 3.186244e-11 3.379129e-11 NA -3.436727e-11 9.809214e-11    2021-11-01</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
