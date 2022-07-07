@@ -1,0 +1,93 @@
+---
+title: "Multinomial modeling - India"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r}
+suppressPackageStartupMessages({
+  library(covmuller)
+  library(tidyverse)
+})
+theme_set(CovmullerTheme())
+```
+
+```{r, warning=FALSE, message=FALSE}
+gisaid_metadata <- qs::qread(file = "~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_07_07.qs")
+gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
+```
+
+## Plot total sequenced cases
+
+
+```{r, fig.width=8, fig.height=5, warning=FALSE}
+country_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_india, rename_country_as_state = TRUE)
+p0 <- BarPlot(country_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, xangle = 90, title = "India")
+p0
+```
+
+# Plot stateswise sequenced cases
+
+```{r, fig.width=8, fig.height=5, warning=FALSE}
+state_seq_stats <- TotalSequencesPerMonthStatewise(gisaid_india)
+state_seq_stats_summary <- state_seq_stats %>%
+  group_by(State) %>%
+  summarise(value = sum(value))
+state_seq_stats_summary$State[state_seq_stats_summary$State == "Dadra and Nagar Haveli and Daman and Diu"] <- "Dadra/N Haveli/Daman/Diu"
+p1 <- BarPlot(state_seq_stats_summary, xaxis = "State", ylabel = "Total sequences deposited", color = "slateblue1", label_si = TRUE, xangle = 90, title = "India")
+p1
+```
+
+## Get VOCs
+
+```{r}
+vocs <- GetVOCs()
+omicron <- vocs[["omicron"]]
+vocs[["omicron"]] <- NULL
+custom_voc_mapping <- list(
+  `BA.1.1` = "BA.1.1", `BA.1` = "BA.1",
+  `BA.2` = "BA.2",
+  `BA.2.1` = "BA.2.1",
+  `BA.2.10` = "BA.2.10",
+  `BA.2.10.1` = "BA.2.10.1",
+  `BA.2.12` = "BA.2.12",
+  `BA.2.12.1` = "BA.2.12.1",
+  `BA.3` = "BA.3",
+  `BA.4` = "BA.4",
+  `BA.5` = "BA.5"
+)
+```
+
+```{r}
+gisaid_india_collapsed <- CollapseLineageToVOCs(
+  variant_df = gisaid_india,
+  vocs = vocs,
+  custom_voc_mapping = custom_voc_mapping,
+  summarize = FALSE
+)
+
+gisaid_india_collapsed_sel <- gisaid_india_collapsed %>%
+  filter(MonthYearCollected >= "Nov 2021") %>%
+  filter(lineage_collapsed != "Unassigned")
+vocs_to_keep <- table(gisaid_india_collapsed_sel$lineage_collapsed)
+vocs_to_keep <- vocs_to_keep[vocs_to_keep > 100]
+
+gisaid_india_collapsed_sel <- gisaid_india_collapsed_sel %>% filter(lineage_collapsed %in% names(vocs_to_keep))
+
+gisaid_india_shared_dateweek <- SummarizeVariantsDatewise(gisaid_india_collapsed_sel, by_state = TRUE)
+head(gisaid_india_shared_dateweek)
+```
+
+```{r}
+fit_india_multi_predsbystate <- FitMultinomStatewiseDaily(gisaid_india_shared_dateweek)
+head(fit_india_multi_predsbystate)
+```
+
+# Plot Smooth Muller Plots
+
+```{r, fig.width=13, fig.height=13}
+muller_indiabystate_mfit <- PlotMullerDailyPrevalence(fit_india_multi_predsbystate)
+muller_indiabystate_mfit
+```
