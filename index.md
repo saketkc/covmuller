@@ -35,6 +35,7 @@ Covmuller currently supports the following features:
          - [Delhi (India)](articles/VariantAnimation-Delhi.html)
          - [Jaipur (India)](articles/VariantAnimation-Jaipur.html)
          - [Mumbai (India)](articles/VariantAnimation-Mumbai.html)
+         - [Maharashtra (India)](articles/VariantAnimation-Maharashtra.html)
          - [Pune (India)](articles/VariantAnimation-Pune.html)
          - [New York City (USA)](articles/VariantAnimation-NYC.html)
 
