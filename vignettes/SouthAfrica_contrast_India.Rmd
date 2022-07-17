@@ -17,7 +17,7 @@ theme_set(CovmullerTheme())
 # Get data
 
 ```{r}
-current_date <- "2022_07_14"
+current_date <- "2022_07_16"
 fpath.tar <- paste0("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_", current_date, ".tar.xz")
 fpath.qs <- paste0("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_", current_date, ".qs")
 gisaid_metadata <- qs::qread(file = fpath.qs)
@@ -179,12 +179,14 @@ gganimate::anim_save(filename = here::here("docs/articles/SA_animated_compare.gi
 india_anim <- PlotVariantPrevalenceAnimated(preds_india, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**", colors = colors_to_use)
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated_compare.gif"), animation = india_anim)
 
-india_mgif <- magick::image_read(india_anim)
-southafrica_mgif <- magick::image_read(sa_anim)
+india_mgif <- image_read(india_anim)
+southafrica_mgif <- image_read(sa_anim)
 
 
 
 final_gif <- image_append(c(india_mgif[1], southafrica_mgif[1]))
+rm(india_mgif)
+rm(southafrica_mgif)
 for (i in 2:length(india_mgif)) {
   combined <- image_append(c(india_mgif[i], southafrica_mgif[i]))
   final_gif <- c(final_gif, combined)

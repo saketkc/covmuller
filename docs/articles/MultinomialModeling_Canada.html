@@ -8,8 +8,8 @@
 <meta name="description" content="covmuller">
 <title>Multinomial modeling - Canada • covmuller</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Multinomial modeling - Canada">
 <meta property="og:description" content="covmuller">
@@ -126,7 +126,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_07_14.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_07_16.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Canada"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -192,49 +192,44 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_canada_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_canada_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  132 (110 variable)</span></span>
-<span><span class="co">## initial  value 391521.146457 </span></span>
-<span><span class="co">## iter  10 value 129405.053200</span></span>
-<span><span class="co">## iter  20 value 107027.401190</span></span>
-<span><span class="co">## iter  30 value 101695.406121</span></span>
-<span><span class="co">## iter  40 value 95812.100212</span></span>
-<span><span class="co">## iter  50 value 93585.510097</span></span>
-<span><span class="co">## iter  60 value 92127.988218</span></span>
-<span><span class="co">## iter  70 value 90652.861467</span></span>
-<span><span class="co">## iter  80 value 88441.406726</span></span>
-<span><span class="co">## iter  90 value 87502.309136</span></span>
-<span><span class="co">## iter 100 value 87126.668178</span></span>
-<span><span class="co">## iter 110 value 87012.927568</span></span>
-<span><span class="co">## iter 120 value 87006.613928</span></span>
-<span><span class="co">## iter 130 value 87004.091403</span></span>
-<span><span class="co">## iter 140 value 86999.800429</span></span>
-<span><span class="co">## iter 150 value 86997.573029</span></span>
-<span><span class="co">## iter 160 value 86992.444455</span></span>
-<span><span class="co">## iter 170 value 86987.308079</span></span>
-<span><span class="co">## iter 180 value 86981.902940</span></span>
-<span><span class="co">## iter 190 value 86979.415313</span></span>
-<span><span class="co">## iter 200 value 86978.631042</span></span>
-<span><span class="co">## iter 210 value 86977.426776</span></span>
-<span><span class="co">## iter 220 value 86975.772232</span></span>
-<span><span class="co">## iter 230 value 86975.197162</span></span>
-<span><span class="co">## iter 240 value 86975.152601</span></span>
-<span><span class="co">## final  value 86975.142244 </span></span>
+<span><span class="co">## initial  value 394278.726020 </span></span>
+<span><span class="co">## iter  10 value 142413.082140</span></span>
+<span><span class="co">## iter  20 value 117637.007846</span></span>
+<span><span class="co">## iter  30 value 110799.785267</span></span>
+<span><span class="co">## iter  40 value 102243.798870</span></span>
+<span><span class="co">## iter  50 value 97670.976419</span></span>
+<span><span class="co">## iter  60 value 95649.083248</span></span>
+<span><span class="co">## iter  70 value 93726.664404</span></span>
+<span><span class="co">## iter  80 value 91645.612181</span></span>
+<span><span class="co">## iter  90 value 89965.692976</span></span>
+<span><span class="co">## iter 100 value 89270.319315</span></span>
+<span><span class="co">## iter 110 value 89070.225711</span></span>
+<span><span class="co">## iter 120 value 89040.327618</span></span>
+<span><span class="co">## iter 130 value 89034.444905</span></span>
+<span><span class="co">## iter 140 value 89032.174199</span></span>
+<span><span class="co">## iter 150 value 89029.942523</span></span>
+<span><span class="co">## iter 160 value 89024.503806</span></span>
+<span><span class="co">## iter 170 value 89017.391712</span></span>
+<span><span class="co">## iter 180 value 88996.818008</span></span>
+<span><span class="co">## iter 190 value 88978.998953</span></span>
+<span><span class="co">## final  value 88978.806000 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_canada_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span></span>
-<span><span class="co">## 1              BA.1                18932 Alberta 6.907690e-05 6.263898e-06 NA</span></span>
-<span><span class="co">## 2              BA.2                18932 Alberta 1.339032e-08 2.132678e-09 NA</span></span>
-<span><span class="co">## 3            BA.2.1                18932 Alberta 6.087551e-12 1.268747e-11 NA</span></span>
-<span><span class="co">## 4           BA.2.10                18932 Alberta 1.469357e-08 5.321984e-09 NA</span></span>
-<span><span class="co">## 5         BA.2.10.1                18932 Alberta 5.158284e-12 7.387489e-12 NA</span></span>
-<span><span class="co">## 6           BA.2.12                18932 Alberta 3.724541e-10 3.752516e-10 NA</span></span>
+<span><span class="co">## 1              BA.1                18932 Alberta 6.939759e-05 6.278135e-06 NA</span></span>
+<span><span class="co">## 2              BA.2                18932 Alberta 1.198147e-08 1.909382e-09 NA</span></span>
+<span><span class="co">## 3            BA.2.1                18932 Alberta 8.252436e-12 1.606787e-11 NA</span></span>
+<span><span class="co">## 4           BA.2.10                18932 Alberta 1.422601e-08 5.141722e-09 NA</span></span>
+<span><span class="co">## 5         BA.2.10.1                18932 Alberta 4.170221e-12 6.019661e-12 NA</span></span>
+<span><span class="co">## 6           BA.2.12                18932 Alberta 2.762166e-10 2.825323e-10 NA</span></span>
 <span><span class="co">##       asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1  5.679988e-05 8.135391e-05    2021-11-01</span></span>
-<span><span class="co">## 2  9.210352e-09 1.757029e-08    2021-11-01</span></span>
-<span><span class="co">## 3 -1.877944e-11 3.095454e-11    2021-11-01</span></span>
-<span><span class="co">## 4  4.262673e-09 2.512447e-08    2021-11-01</span></span>
-<span><span class="co">## 5 -9.320929e-12 1.963750e-11    2021-11-01</span></span>
-<span><span class="co">## 6 -3.630254e-10 1.107934e-09    2021-11-01</span></span></code></pre>
+<span><span class="co">## 1  5.709267e-05 8.170250e-05    2021-11-01</span></span>
+<span><span class="co">## 2  8.239146e-09 1.572378e-08    2021-11-01</span></span>
+<span><span class="co">## 3 -2.324001e-11 3.974488e-11    2021-11-01</span></span>
+<span><span class="co">## 4  4.148415e-09 2.430360e-08    2021-11-01</span></span>
+<span><span class="co">## 5 -7.628098e-12 1.596854e-11    2021-11-01</span></span>
+<span><span class="co">## 6 -2.775365e-10 8.299698e-10    2021-11-01</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
@@ -257,7 +252,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
