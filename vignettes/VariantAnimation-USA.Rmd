@@ -31,7 +31,7 @@ theme_set(CovmullerTheme())
 # Get variants data for USA
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_07_18.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_07_23.qs")
 gisaid_usa <- gisaid_metadata %>%
   filter(Country == "USA") %>%
   filter(Host == "Human")
@@ -58,7 +58,8 @@ custom_voc_mapping <- list(
   `BA.2.10` = "BA.2.10",
   `BA.2.10.1` = "BA.2.10.1",
   `BA.2.12` = "BA.2.12",
-  `BA.2.12.1` = "BA.2.12.1"
+  `BA.2.12.1` = "BA.2.12.1",
+  `BA.2.75` = "BA.2.75"
 )
 gisaid_usa <- gisaid_usa %>% filter(pangolin_lineage != "None")
 
