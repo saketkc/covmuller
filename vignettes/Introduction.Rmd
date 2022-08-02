@@ -38,7 +38,7 @@ p1
 We utilize [GISAID](https://www.gisaid.org/) data to look at prevalence of variants. To access this data, GISAID requires registration.
 
 ```{r}
-current_date <- "2022_07_30"
+current_date <- "2022_08_01"
 fpath.tar <- paste0("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_", current_date, ".tar.xz")
 fpath.qs <- paste0("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_", current_date, ".qs")
 
@@ -95,7 +95,7 @@ india_sequencing_proportion <- CombineSequencedCases(
   cases_sequenced = seq_stats,
   confirmed_long = state_cases_long,
   month.min = "Feb 2020",
-  month.max = "June 2022",
+  month.max = "July 2022",
   max.percent = 5
 )
 
@@ -120,16 +120,19 @@ omicron <- vocs[["omicron"]]
 
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1+", `BA.1` = "BA.1+",
+  `BA.1.1` = "BA.1", 
+  `BA.1` = "BA.1",
   `BA.2` = "BA.2",
-  `BA.2.10` = "BA.2.10+",
-  `BA.2.10.1` = "BA.2.10+",
-  `BA.2.12` = "BA.2.12+",
-  `BA.2.12.1` = "BA.2.12+",
+  `BA.2.10` = "BA.2",
+  `BA.2.10.1` = "BA.2",
+  `BA.2.12` = "BA.2",
+  `BA.2.12.1` = "BA.2",
   `BA.3` = "BA.3",
   `BA.4` = "BA.4",
   `BA.5` = "BA.5",
-  `BA.2.75` = "BA.2.75"
+  `BA.2.74` = "BA.2.74",
+  `BA.2.75` = "BA.2.75",
+  `BA.2.76` = "BA.2.76"
 )
 india_month_prevalence <- CollapseLineageToVOCs(
   variant_df = india_month_prevalence,

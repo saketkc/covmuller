@@ -126,7 +126,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_07_30.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_08_01.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_southafrica</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"South Africa"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -162,18 +162,19 @@
 <span><span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1.1"</span>,</span>
+<span>  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1"</span>, </span>
 <span>  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,</span>
 <span>  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
-<span>  `BA.2.1` <span class="op">=</span> <span class="st">"BA.2.1"</span>,</span>
-<span>  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.10"</span>,</span>
-<span>  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.10.1"</span>,</span>
-<span>  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.12"</span>,</span>
-<span>  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.12.1"</span>,</span>
+<span>  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
+<span>  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
+<span>  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
+<span>  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
 <span>  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,</span>
 <span>  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,</span>
 <span>  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>,</span>
-<span>  `BA.2.75` <span class="op">=</span> <span class="st">"BA.2.75"</span></span>
+<span>  `BA.2.74` <span class="op">=</span> <span class="st">"BA.2.74"</span>,</span>
+<span>  `BA.2.75` <span class="op">=</span> <span class="st">"BA.2.75"</span>,</span>
+<span>  `BA.2.76` <span class="op">=</span> <span class="st">"BA.2.76"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gisaid_southafrica_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
@@ -206,38 +207,36 @@
 <span><span class="co">## <span style="color: #BCBCBC;">6</span> Cape Town                <span style="text-decoration: underline;">19</span>130 BA.4                  4</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_southafrica_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_southafrica_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  112 (91 variable)</span></span>
-<span><span class="co">## initial  value 37122.190402 </span></span>
-<span><span class="co">## iter  10 value 17873.573645</span></span>
-<span><span class="co">## iter  20 value 15581.447056</span></span>
-<span><span class="co">## iter  30 value 14182.440125</span></span>
-<span><span class="co">## iter  40 value 13500.422192</span></span>
-<span><span class="co">## iter  50 value 13300.466250</span></span>
-<span><span class="co">## iter  60 value 13171.527815</span></span>
-<span><span class="co">## iter  70 value 13092.280449</span></span>
-<span><span class="co">## iter  80 value 13056.605169</span></span>
-<span><span class="co">## iter  90 value 13020.582720</span></span>
-<span><span class="co">## iter 100 value 12992.046109</span></span>
-<span><span class="co">## iter 110 value 12987.947514</span></span>
-<span><span class="co">## iter 120 value 12987.546361</span></span>
-<span><span class="co">## final  value 12987.545939 </span></span>
+<pre><code><span><span class="co">## # weights:  98 (78 variable)</span></span>
+<span><span class="co">## initial  value 34909.628074 </span></span>
+<span><span class="co">## iter  10 value 17590.456423</span></span>
+<span><span class="co">## iter  20 value 14650.105559</span></span>
+<span><span class="co">## iter  30 value 13251.799790</span></span>
+<span><span class="co">## iter  40 value 12693.797118</span></span>
+<span><span class="co">## iter  50 value 12534.880726</span></span>
+<span><span class="co">## iter  60 value 12446.147229</span></span>
+<span><span class="co">## iter  70 value 12392.266632</span></span>
+<span><span class="co">## iter  80 value 12344.021490</span></span>
+<span><span class="co">## iter  90 value 12317.415190</span></span>
+<span><span class="co">## iter 100 value 12307.294704</span></span>
+<span><span class="co">## final  value 12307.264807 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_southafrica_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric     State         prob           SE df</span></span>
-<span><span class="co">## 1              BA.1                18932 Cape Town 4.756364e-01 1.812424e-01 NA</span></span>
-<span><span class="co">## 2              BA.2                18932 Cape Town 4.500064e-03 6.100248e-02 NA</span></span>
-<span><span class="co">## 3            BA.2.1                18932 Cape Town 1.230868e-07 2.375337e-06 NA</span></span>
-<span><span class="co">## 4              BA.3                18932 Cape Town 9.389245e-05 2.911454e-05 NA</span></span>
-<span><span class="co">## 5              BA.4                18932 Cape Town 8.424479e-14 1.147078e-12 NA</span></span>
-<span><span class="co">## 6              BA.5                18932 Cape Town 2.349442e-11 3.207882e-10 NA</span></span>
+<span><span class="co">## 1              BA.1                18932 Cape Town 4.735480e-01 1.499127e-01 NA</span></span>
+<span><span class="co">## 2              BA.2                18932 Cape Town 2.996994e-03 3.581398e-02 NA</span></span>
+<span><span class="co">## 3              BA.3                18932 Cape Town 4.644111e-05 1.499987e-05 NA</span></span>
+<span><span class="co">## 4              BA.4                18932 Cape Town 5.192452e-14 6.240164e-13 NA</span></span>
+<span><span class="co">## 5              BA.5                18932 Cape Town 1.690990e-11 2.039485e-10 NA</span></span>
+<span><span class="co">## 6             Delta                18932 Cape Town 5.114147e-01 3.252668e-01 NA</span></span>
 <span><span class="co">##       asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1  1.204079e-01 8.308649e-01    2021-11-01</span></span>
-<span><span class="co">## 2 -1.150626e-01 1.240627e-01    2021-11-01</span></span>
-<span><span class="co">## 3 -4.532487e-06 4.778661e-06    2021-11-01</span></span>
-<span><span class="co">## 4  3.682900e-05 1.509559e-04    2021-11-01</span></span>
-<span><span class="co">## 5 -2.163987e-12 2.332477e-12    2021-11-01</span></span>
-<span><span class="co">## 6 -6.052388e-10 6.522277e-10    2021-11-01</span></span></code></pre>
+<span><span class="co">## 1  1.797244e-01 7.673715e-01    2021-11-01</span></span>
+<span><span class="co">## 2 -6.719712e-02 7.319111e-02    2021-11-01</span></span>
+<span><span class="co">## 3  1.704191e-05 7.584031e-05    2021-11-01</span></span>
+<span><span class="co">## 4 -1.171125e-12 1.274974e-12    2021-11-01</span></span>
+<span><span class="co">## 5 -3.828219e-10 4.166417e-10    2021-11-01</span></span>
+<span><span class="co">## 6 -1.260966e-01 1.148926e+00    2021-11-01</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
