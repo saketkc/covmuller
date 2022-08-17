@@ -19,7 +19,7 @@ theme_set(CovmullerTheme())
 # Get variants data for India
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_08_13.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_08_15.qs")
 gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
 
 vocs <- GetVOCs()
@@ -85,7 +85,7 @@ voc_to_keep <- gisaid_india_weekwise %>%
 gisaid_india_weekwise <- gisaid_india_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 india_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_india_weekwise, confirmed_subset_dateweekwise_long_india)
-the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org**", date_breaks = "28 days")
+the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org**", date_breaks = "28 days")#, trans_y="log10")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated.gif"), animation = the_anim)
 ```
 ![](IN_animated.gif)
@@ -115,7 +115,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")#, trans_y="log10")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2021.gif"), animation = the_anim)
 ```
 ![](IN_animated_2021.gif)

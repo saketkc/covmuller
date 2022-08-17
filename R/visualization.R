@@ -183,7 +183,7 @@ PlotMullerDailyPrevalence <- function(df, ncol = 4) {
 #' @importFrom patchwork wrap_plots
 #' @export
 #'
-PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source: gisaid.org<br>**", colors = NULL, date_breaks = "14 days") {
+PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source: gisaid.org<br>**", colors = NULL, date_breaks = "14 days", trans_y = "identity") {
   if (!is.null(colors)) {
     color_values <- colors
   } else {
@@ -195,7 +195,7 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
   ) +
     geom_line() +
     scale_x_yearweek(date_breaks = date_breaks, date_labels = "%d %b %Y", guide = guide_axis(angle = 90)) +
-    scale_y_continuous(label = label_number(accuracy = 1, scale_cut = cut_short_scale())) +
+    scale_y_continuous(label = label_number(accuracy = 1, scale_cut = cut_short_scale()), trans = trans_y) +
     geom_label(hjust = 0, aes(label = variant), nudge_x = 10, show.legend = FALSE) +
     geom_point() +
     coord_cartesian(ylim = c(0, NA), clip = "off") +
