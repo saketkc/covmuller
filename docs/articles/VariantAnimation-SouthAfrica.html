@@ -130,7 +130,7 @@
 <h2 id="get-variants-data-for-south-africa">Get variants data for South Africa<a class="anchor" aria-label="anchor" href="#get-variants-data-for-south-africa"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_08_15.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_09_10.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_sa</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"South Africa"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -210,22 +210,22 @@
 <span></span>
 <span><span class="va">sa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_sa_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  36 (24 variable)</span></span>
-<span><span class="co">## initial  value 96869.039941 </span></span>
-<span><span class="co">## iter  10 value 57363.715395</span></span>
-<span><span class="co">## iter  20 value 39352.032972</span></span>
-<span><span class="co">## iter  30 value 27399.294196</span></span>
-<span><span class="co">## iter  40 value 26279.997723</span></span>
-<span><span class="co">## iter  50 value 26002.926681</span></span>
-<span><span class="co">## iter  60 value 25960.969749</span></span>
-<span><span class="co">## iter  70 value 25497.942367</span></span>
-<span><span class="co">## iter  80 value 24992.956331</span></span>
-<span><span class="co">## iter  90 value 24851.942980</span></span>
-<span><span class="co">## iter 100 value 24726.889855</span></span>
-<span><span class="co">## iter 110 value 24726.630403</span></span>
-<span><span class="co">## iter 120 value 24724.874844</span></span>
-<span><span class="co">## iter 130 value 24723.143147</span></span>
-<span><span class="co">## iter 140 value 24720.582573</span></span>
-<span><span class="co">## final  value 24720.123310 </span></span>
+<span><span class="co">## initial  value 98534.536171 </span></span>
+<span><span class="co">## iter  10 value 51196.611126</span></span>
+<span><span class="co">## iter  20 value 35085.087285</span></span>
+<span><span class="co">## iter  30 value 27456.311190</span></span>
+<span><span class="co">## iter  40 value 26581.761815</span></span>
+<span><span class="co">## iter  50 value 26343.099695</span></span>
+<span><span class="co">## iter  60 value 26296.562184</span></span>
+<span><span class="co">## iter  70 value 25997.033547</span></span>
+<span><span class="co">## iter  80 value 25654.899828</span></span>
+<span><span class="co">## iter  90 value 25575.902172</span></span>
+<span><span class="co">## iter 100 value 25538.001408</span></span>
+<span><span class="co">## iter 110 value 25537.959868</span></span>
+<span><span class="co">## iter 120 value 25533.366490</span></span>
+<span><span class="co">## iter 130 value 25530.875176</span></span>
+<span><span class="co">## iter 140 value 25530.016333</span></span>
+<span><span class="co">## final  value 25529.693896 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">sa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in South Africa by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span></span>
@@ -255,17 +255,22 @@
 <span></span>
 <span><span class="va">sa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_sa_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  28 (18 variable)</span></span>
-<span><span class="co">## initial  value 36012.959129 </span></span>
-<span><span class="co">## iter  10 value 15342.618212</span></span>
-<span><span class="co">## iter  20 value 13943.555190</span></span>
-<span><span class="co">## iter  30 value 13583.171745</span></span>
-<span><span class="co">## iter  40 value 13531.634422</span></span>
-<span><span class="co">## iter  50 value 13517.654016</span></span>
-<span><span class="co">## final  value 13515.472047 </span></span>
+<span><span class="co">## initial  value 37143.532925 </span></span>
+<span><span class="co">## iter  10 value 17200.244076</span></span>
+<span><span class="co">## iter  20 value 14670.004674</span></span>
+<span><span class="co">## iter  30 value 14364.052334</span></span>
+<span><span class="co">## iter  40 value 14300.509560</span></span>
+<span><span class="co">## iter  50 value 14299.838191</span></span>
+<span><span class="co">## final  value 14299.704049 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">sa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in South Africa by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span><span class="op">)</span></span>
-<span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/SA_animated_2021.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">sa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in South Africa by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## geom_path: Each group consists of only one observation. Do you need to adjust</span></span>
+<span><span class="co">## the group aesthetic?</span></span>
+<span><span class="co">## geom_path: Each group consists of only one observation. Do you need to adjust</span></span>
+<span><span class="co">## the group aesthetic?</span></span></code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/SA_animated_2021.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SA_animated_2021.gif"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
