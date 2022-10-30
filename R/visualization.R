@@ -139,6 +139,8 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
 #' @importFrom patchwork wrap_plots
 #' @export
 StackedBarPlotPrevalence <- function(prevalence_df, xangle = 90) {
+  color_values <- as.character(x = paletteer::paletteer_d("ggsci::default_igv"))
+
   p <- ggplot(
     data = prevalence_df,
     aes(
@@ -148,7 +150,9 @@ StackedBarPlotPrevalence <- function(prevalence_df, xangle = 90) {
     )
   ) +
     geom_bar(stat = "identity") +
-    scale_fill_brewer(type = "qual", palette = "Set3", name = "Pangolin lineage") +
+    #scale_fill_brewer(type = "qual", palette = "Set3", name = "Pangolin lineage") +
+      scale_color_manual(values = color_values, name = "Variant") +
+
     CovmullerTheme() +
     xlab("Date collected") +
     ylab("% composition of variant") +
