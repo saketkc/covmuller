@@ -27,7 +27,7 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1", 
+  `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.10` = "BA.2.X",
@@ -42,7 +42,9 @@ custom_voc_mapping <- list(
   `BA.2.76` = "BA.2.X",
   `XBB.*` = "XBB"
 )
-gisaid_india <- gisaid_india %>% filter(pangolin_lineage != "None") %>% filter(pangolin_lineage != "Unassigned")
+gisaid_india <- gisaid_india %>%
+  filter(pangolin_lineage != "None") %>%
+  filter(pangolin_lineage != "Unassigned")
 
 gisaid_india <- CollapseLineageToVOCs(
   variant_df = gisaid_india,
@@ -56,7 +58,7 @@ gisaid_india <- CollapseLineageToVOCs(
 # Top 10 cities with most number of sequenced samples
 
 ```{r}
-state_counts <- as.data.frame(table(gisaid_india$State)) %>% rename(State=Var1, `Total sequences` = Freq)
+state_counts <- as.data.frame(table(gisaid_india$State)) %>% rename(State = Var1, `Total sequences` = Freq)
 
 DT::datatable(state_counts %>% arrange(desc(`Total sequences`)))
 ```
@@ -94,12 +96,12 @@ While the absolute numbers are informative, a more useful metric is the proporti
 ```{r, fig.width=8, fig.height=5, warning=FALSE, message=FALSE}
 Maharashtra_monthly_cases_tmp <- Maharashtra_monthly_cases %>% select(MonthYear, value)
 Maharashtra_monthly_cases_tmp$State <- "India"
-Maharashtra_monthly_cases_tmp$type <- 'Confirmed'
+Maharashtra_monthly_cases_tmp$type <- "Confirmed"
 
-Maharashtra_monthly_cases_tmp <- Maharashtra_monthly_cases_tmp %>% select(MonthYear, State,   value,      type)
+Maharashtra_monthly_cases_tmp <- Maharashtra_monthly_cases_tmp %>% select(MonthYear, State, value, type)
 sequencing_proportion <- CombineSequencedCases(
   cases_sequenced = Maharashtra_seq_stats,
-  confirmed_long =  Maharashtra_monthly_cases_tmp
+  confirmed_long = Maharashtra_monthly_cases_tmp
 )
 p3 <- BarPlot(sequencing_proportion, yaxis = "percent_sequenced_collected", ylabel = "%  deposited to GISAID", color = "yellowgreen", title = "Proportion of cases deposited to GISAID from Maharashtra (India)", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
 p3
@@ -122,7 +124,7 @@ confirmed_subset_dateweekwise_long_dist <- confirmed_subset_dateweekwise_long %>
   filter(State %in% c("Maharashtra")) %>%
   rename(n = value) %>%
   rename(WeekYearCollected = WeekYear) %>%
-  dplyr::select(-contains("type")) %>% 
+  dplyr::select(-contains("type")) %>%
   filter(WeekYearCollected >= min(gisaid_dist_weekwise$WeekYearCollected))
 confirmed_subset_dateweekwise_long_dist$State <- NULL
 
@@ -148,13 +150,16 @@ confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
 
 confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   filter(WeekYear >= tsibble::yearweek("2021 W35")) %>%
-    filter(State %in% c("Maharashtra")) %>%
+  filter(State %in% c("Maharashtra")) %>%
   group_by(WeekYear) %>%
   summarise(n = sum(value)) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_dist <- gisaid_india %>% filter(MonthYearCollected > "Oct 2021")  %>% filter(State == "Maharashtra") %>% arrange(WeekYearCollected)
+gisaid_dist <- gisaid_india %>%
+  filter(MonthYearCollected > "Oct 2021") %>%
+  filter(State == "Maharashtra") %>%
+  arrange(WeekYearCollected)
 
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_dist)
 
@@ -180,14 +185,16 @@ confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
 
 confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   filter(WeekYear >= tsibble::yearweek("2022 W12")) %>%
-    filter(State %in% c("Maharashtra")) %>%
-
+  filter(State %in% c("Maharashtra")) %>%
   group_by(WeekYear) %>%
   summarise(n = sum(value)) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_dist <- gisaid_india %>% filter(MonthYearCollected > "Oct 2021")  %>% filter(State == "Maharashtra") %>% arrange(WeekYearCollected)
+gisaid_dist <- gisaid_india %>%
+  filter(MonthYearCollected > "Oct 2021") %>%
+  filter(State == "Maharashtra") %>%
+  arrange(WeekYearCollected)
 
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_dist)
 

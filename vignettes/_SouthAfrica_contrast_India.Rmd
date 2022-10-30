@@ -10,7 +10,6 @@ suppressPackageStartupMessages({
   library(magick)
 })
 theme_set(CovmullerTheme())
-
 ```
 
 
@@ -76,7 +75,7 @@ confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
 
 confirmed_subset_dateweekwise_long_southafrica <- confirmed %>%
   group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm=T))) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
@@ -153,7 +152,7 @@ gisaid_india_collapsed <- CollapseLineageToVOCs(
 
 collapsed_unique_variants <- union(unique(gisaid_india_collapsed$lineage_collapsed), unique(gisaid_southafrica_collapsed$lineage_collapsed))
 
-colors_to_use <- c("#ebac23","#b80058","#008cf9","#006e00","#00bbad","#d163e6","#b24502","#ff9287","#5954d6","#00c6f8","#878500","#00a76c")
+colors_to_use <- c("#ebac23", "#b80058", "#008cf9", "#006e00", "#00bbad", "#d163e6", "#b24502", "#ff9287", "#5954d6", "#00c6f8", "#878500", "#00a76c")
 names(colors_to_use) <- collapsed_unique_variants
 
 gisaid_southafrica_weekwise <- SummarizeVariantsWeekwise(gisaid_southafrica_collapsed)

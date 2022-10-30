@@ -45,7 +45,7 @@ vocs[["beta"]] <- NULL
 vocs[["gamma"]] <- NULL
 
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1", 
+  `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.10` = "BA.2.X",
@@ -73,23 +73,39 @@ gisaid_NYC <- CollapseLineageToVOCs(
 # Get weekly cases for New York
 
 ```{r, warning=FALSE, message=FALSE}
+if (FALSE) {
+  all_county_cases <- refresh_covid19nytimes_counties()
 
-all_county_cases <- refresh_covid19nytimes_counties()
+  confirmed <- all_county_cases %>%
+    filter(location == "New York City,New York") %>%
+    filter(data_type == "cases_total") %>%
+    arrange(date)
 
-confirmed <- all_county_cases %>%
-  filter(location == "New York City,New York") %>%
-  filter(data_type == "cases_total") %>%
-  arrange(date)
+  confirmed$daily_cases <- c(confirmed$value[1], diff(confirmed$value))
+  confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+  confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
-confirmed$daily_cases <- c(confirmed$value[1], diff(confirmed$value))
+  confirmed_subset_dateweekwise_long <- confirmed %>%
+    group_by(WeekYear) %>%
+    summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
+    arrange(WeekYear) %>%
+    rename(WeekYearCollected = WeekYear)
+}
+
+confirmed <- covid19(country = "USA", level = 3) %>%
+  filter(administrative_area_level_3 == "New York City") %>%
+  select(date, confirmed) %>%
+  filter(!is.na(confirmed))
+
+confirmed$daily_cases <- c(confirmed$confirmed[1], diff(confirmed$confirmed))
 confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
-confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
   group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm=T))) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
+
 
 gisaid_NYC_weekwise <- SummarizeVariantsWeekwise(gisaid_NYC)
 ```
@@ -119,7 +135,7 @@ Look at cases after October, 2021 only:
 confirmed_subset_dateweekwise_long <- confirmed %>%
   filter(MonthYear > "Oct 2021") %>%
   group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm=T))) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
@@ -146,7 +162,7 @@ Look at cases after Jan, 2022:
 confirmed_subset_dateweekwise_long <- confirmed %>%
   filter(MonthYear >= "Jan 2022") %>%
   group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm=T))) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 

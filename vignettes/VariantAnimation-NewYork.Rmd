@@ -36,7 +36,7 @@ vocs[["beta"]] <- NULL
 vocs[["gamma"]] <- NULL
 
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1", 
+  `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.10` = "BA.2.X",
@@ -77,7 +77,7 @@ confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
   group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm=T))) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 

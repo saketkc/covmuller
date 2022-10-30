@@ -34,7 +34,7 @@ vocs[["omicron"]] <- NULL
 
 
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1", 
+  `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.10` = "BA.2.X",
@@ -77,7 +77,7 @@ confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
   group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm=T))) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
@@ -113,7 +113,7 @@ confirmed$MonthYear <- GetMonthYear(confirmed$date)
 confirmed_subset_dateweekwise_long <- confirmed %>%
   filter(MonthYear > "Oct 2021") %>%
   group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm=T))) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 

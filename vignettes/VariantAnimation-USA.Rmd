@@ -49,7 +49,7 @@ vocs[["beta"]] <- NULL
 vocs[["gamma"]] <- NULL
 
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1", 
+  `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.10` = "BA.2.X",
@@ -77,24 +77,30 @@ gisaid_usa <- CollapseLineageToVOCs(
 # Get weekly cases for USA
 
 ```{r, warning=FALSE, message=FALSE}
+if (FALSE) {
+  all_state_cases <- refresh_covid19nytimes_states()
 
-all_state_cases <- refresh_covid19nytimes_states()
+  confirmed.tmp <- all_state_cases %>%
+    filter(data_type == "cases_total") %>%
+    arrange(date)
+  confirmed <- confirmed.tmp %>%
+    group_by(date) %>%
+    summarise(value = sum(value))
+}
+confirmed <- covid19(country = "USA", level = 3) %>%
+  filter(administrative_area_level_3 == "New York City") %>%
+  select(date, confirmed) %>%
+  filter(!is.na(confirmed))
 
-confirmed.tmp <- all_state_cases %>%
-  filter(data_type == "cases_total") %>%
-  arrange(date)
-confirmed <- confirmed.tmp %>%
-  group_by(date) %>%
-  summarise(value = sum(value))
-
-confirmed$daily_cases <- c(confirmed$value[1], diff(confirmed$value))
+confirmed$daily_cases <- c(confirmed$confirmed[1], diff(confirmed$confirmed))
 confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
   group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm=T))) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
+
 
 gisaid_usa_weekwise <- SummarizeVariantsWeekwise(gisaid_usa)
 ```
@@ -127,7 +133,7 @@ confirmed$MonthYear <- GetMonthYear(confirmed$date)
 confirmed_subset_dateweekwise_long <- confirmed %>%
   filter(MonthYear > "Oct 2021") %>%
   group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm=T))) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 

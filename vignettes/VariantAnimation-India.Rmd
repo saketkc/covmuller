@@ -26,7 +26,7 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1", 
+  `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.10` = "BA.2.X",
@@ -41,13 +41,15 @@ custom_voc_mapping <- list(
   `BA.2.76` = "BA.2.X",
   `XBB.*` = "XBB"
 )
-gisaid_india <- gisaid_india %>% filter(pangolin_lineage != "None") %>% filter(pangolin_lineage != "Unassigned")
+gisaid_india <- gisaid_india %>%
+  filter(pangolin_lineage != "None") %>%
+  filter(pangolin_lineage != "Unassigned")
 
 gisaid_india$District <- stringr::str_to_title(gisaid_india$District)
 gisaid_india$City <- stringr::str_to_title(gisaid_india$City)
 
 gisaid_india$custom_city <- gisaid_india$City
-gisaid_india$custom_city[gisaid_india$custom_city==""] <- gisaid_india$District[gisaid_india$custom_city==""]
+gisaid_india$custom_city[gisaid_india$custom_city == ""] <- gisaid_india$District[gisaid_india$custom_city == ""]
 
 gisaid_india$custom_city <- stringr::str_to_title(gisaid_india$custom_city)
 
@@ -86,7 +88,7 @@ voc_to_keep <- gisaid_india_weekwise %>%
 gisaid_india_weekwise <- gisaid_india_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 india_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_india_weekwise, confirmed_subset_dateweekwise_long_india)
-the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org**", date_breaks = "28 days")#, trans_y="log10")
+the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org**", date_breaks = "28 days") # , trans_y="log10")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated.gif"), animation = the_anim)
 ```
 ![](IN_animated.gif)
@@ -116,7 +118,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")#, trans_y="log10")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**") # , trans_y="log10")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2021.gif"), animation = the_anim)
 ```
 ![](IN_animated_2021.gif)

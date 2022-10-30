@@ -150,9 +150,8 @@ StackedBarPlotPrevalence <- function(prevalence_df, xangle = 90) {
     )
   ) +
     geom_bar(stat = "identity") +
-    #scale_fill_brewer(type = "qual", palette = "Set3", name = "Pangolin lineage") +
-      scale_color_manual(values = color_values, name = "Variant") +
-
+    # scale_fill_brewer(type = "qual", palette = "Set3", name = "Pangolin lineage") +
+    scale_color_manual(values = color_values, name = "Variant") +
     CovmullerTheme() +
     xlab("Date collected") +
     ylab("% composition of variant") +

@@ -26,7 +26,7 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1", 
+  `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.10` = "BA.2.X",
@@ -105,7 +105,9 @@ Bengaluru_monthly_cases_tmp <- Bengaluru_monthly_cases %>% select(MonthYear, val
 Bengaluru_monthly_cases_tmp$State <- "India"
 Bengaluru_monthly_cases_tmp$type <- "Confirmed"
 
-Bengaluru_monthly_cases_tmp <- Bengaluru_monthly_cases_tmp %>% group_by(MonthYear, State, type) %>% summarise(value = sum(value))
+Bengaluru_monthly_cases_tmp <- Bengaluru_monthly_cases_tmp %>%
+  group_by(MonthYear, State, type) %>%
+  summarise(value = sum(value))
 
 Bengaluru_monthly_cases_tmp <- Bengaluru_monthly_cases_tmp %>% select(MonthYear, State, value, type)
 sequencing_proportion <- CombineSequencedCases(

@@ -27,7 +27,7 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1", 
+  `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
   `BA.2` = "BA.2",
   `BA.2.10` = "BA.2.X",
@@ -42,13 +42,15 @@ custom_voc_mapping <- list(
   `BA.2.76` = "BA.2.X",
   `XBB.*` = "XBB"
 )
-gisaid_india <- gisaid_india %>% filter(pangolin_lineage != "None") %>% filter(pangolin_lineage != "Unassigned")
+gisaid_india <- gisaid_india %>%
+  filter(pangolin_lineage != "None") %>%
+  filter(pangolin_lineage != "Unassigned")
 
 gisaid_india$District <- stringr::str_to_title(gisaid_india$District)
 gisaid_india$City <- stringr::str_to_title(gisaid_india$City)
 
 gisaid_india$custom_city <- gisaid_india$City
-gisaid_india$custom_city[gisaid_india$custom_city==""] <- gisaid_india$District[gisaid_india$custom_city==""]
+gisaid_india$custom_city[gisaid_india$custom_city == ""] <- gisaid_india$District[gisaid_india$custom_city == ""]
 
 gisaid_india$custom_city <- stringr::str_to_title(gisaid_india$custom_city)
 
@@ -64,7 +66,7 @@ gisaid_india <- CollapseLineageToVOCs(
 # Top 10 cities with most number of sequenced samples
 
 ```{r}
-city_counts <- as.data.frame(table(gisaid_india$custom_city)) %>% rename(City=Var1, `Total sequences` = Freq)
+city_counts <- as.data.frame(table(gisaid_india$custom_city)) %>% rename(City = Var1, `Total sequences` = Freq)
 
 DT::datatable(city_counts %>% arrange(desc(`Total sequences`)))
 ```
@@ -102,12 +104,12 @@ While the absolute numbers are informative, a more useful metric is the proporti
 ```{r, fig.width=8, fig.height=5, warning=FALSE, message=FALSE}
 Mumbai_monthly_cases_tmp <- Mumbai_monthly_cases %>% select(MonthYear, value)
 Mumbai_monthly_cases_tmp$State <- "India"
-Mumbai_monthly_cases_tmp$type <- 'Confirmed'
+Mumbai_monthly_cases_tmp$type <- "Confirmed"
 
-Mumbai_monthly_cases_tmp <- Mumbai_monthly_cases_tmp %>% select(MonthYear, State,   value,      type)
+Mumbai_monthly_cases_tmp <- Mumbai_monthly_cases_tmp %>% select(MonthYear, State, value, type)
 sequencing_proportion <- CombineSequencedCases(
   cases_sequenced = Mumbai_seq_stats,
-  confirmed_long =  Mumbai_monthly_cases_tmp
+  confirmed_long = Mumbai_monthly_cases_tmp
 )
 p3 <- BarPlot(sequencing_proportion, yaxis = "percent_sequenced_collected", ylabel = "%  deposited to GISAID", color = "yellowgreen", title = "Proportion of cases deposited to GISAID from Mumbai (India)", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
 p3
@@ -130,7 +132,7 @@ confirmed_subset_dateweekwise_long_dist <- confirmed_subset_dateweekwise_long %>
   filter(District %in% c("Mumbai")) %>%
   rename(n = value) %>%
   rename(WeekYearCollected = WeekYear) %>%
-  dplyr::select(-contains("type")) %>% 
+  dplyr::select(-contains("type")) %>%
   filter(WeekYearCollected >= min(gisaid_dist_weekwise$WeekYearCollected))
 confirmed_subset_dateweekwise_long_dist$State <- NULL
 
@@ -156,13 +158,16 @@ confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong(level = "
 
 confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   filter(WeekYear >= tsibble::yearweek("2021 W35")) %>%
-    filter(District %in% c("Mumbai")) %>%
+  filter(District %in% c("Mumbai")) %>%
   group_by(WeekYear) %>%
   summarise(n = sum(value)) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_dist <- gisaid_india %>% filter(MonthYearCollected > "Oct 2021")  %>% filter(custom_city == "Mumbai") %>% arrange(WeekYearCollected)
+gisaid_dist <- gisaid_india %>%
+  filter(MonthYearCollected > "Oct 2021") %>%
+  filter(custom_city == "Mumbai") %>%
+  arrange(WeekYearCollected)
 
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_dist)
 
@@ -188,14 +193,16 @@ confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong(level = "
 
 confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   filter(WeekYear >= tsibble::yearweek("2022 W12")) %>%
-    filter(District %in% c("Mumbai")) %>%
-
+  filter(District %in% c("Mumbai")) %>%
   group_by(WeekYear) %>%
   summarise(n = sum(value)) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_dist <- gisaid_india %>% filter(MonthYearCollected > "Oct 2021")  %>% filter(custom_city == "Mumbai") %>% arrange(WeekYearCollected)
+gisaid_dist <- gisaid_india %>%
+  filter(MonthYearCollected > "Oct 2021") %>%
+  filter(custom_city == "Mumbai") %>%
+  arrange(WeekYearCollected)
 
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_dist)
 
