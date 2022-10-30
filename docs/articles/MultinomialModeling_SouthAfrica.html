@@ -165,16 +165,17 @@
 <span>  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1"</span>, </span>
 <span>  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,</span>
 <span>  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
-<span>  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
-<span>  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
-<span>  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
-<span>  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
+<span>  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
+<span>  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
+<span>  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
+<span>  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
 <span>  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,</span>
 <span>  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,</span>
 <span>  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>,</span>
-<span>  `BA.2.74` <span class="op">=</span> <span class="st">"BA.2.74"</span>,</span>
+<span>  `BA.2.74` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
 <span>  `BA.2.75` <span class="op">=</span> <span class="st">"BA.2.75"</span>,</span>
-<span>  `BA.2.76` <span class="op">=</span> <span class="st">"BA.2.76"</span></span>
+<span>  `BA.2.76` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
+<span>  `XBB.*` <span class="op">=</span> <span class="st">"XBB"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gisaid_southafrica_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
@@ -208,34 +209,34 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_southafrica_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_southafrica_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  98 (78 variable)</span></span>
-<span><span class="co">## initial  value 40400.986515 </span></span>
-<span><span class="co">## iter  10 value 20898.269470</span></span>
-<span><span class="co">## iter  20 value 17035.177507</span></span>
-<span><span class="co">## iter  30 value 15870.105304</span></span>
-<span><span class="co">## iter  40 value 15566.304213</span></span>
-<span><span class="co">## iter  50 value 15485.015101</span></span>
-<span><span class="co">## iter  60 value 15370.634379</span></span>
-<span><span class="co">## iter  70 value 15285.462133</span></span>
-<span><span class="co">## iter  80 value 15252.116016</span></span>
-<span><span class="co">## iter  90 value 15250.544600</span></span>
-<span><span class="co">## final  value 15250.524533 </span></span>
+<span><span class="co">## initial  value 40350.392851 </span></span>
+<span><span class="co">## iter  10 value 21149.636796</span></span>
+<span><span class="co">## iter  20 value 17484.409713</span></span>
+<span><span class="co">## iter  30 value 16041.416369</span></span>
+<span><span class="co">## iter  40 value 15542.588814</span></span>
+<span><span class="co">## iter  50 value 15443.366970</span></span>
+<span><span class="co">## iter  60 value 15343.992670</span></span>
+<span><span class="co">## iter  70 value 15241.525191</span></span>
+<span><span class="co">## iter  80 value 15199.683137</span></span>
+<span><span class="co">## iter  90 value 15197.807018</span></span>
+<span><span class="co">## final  value 15197.770148 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_southafrica_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric     State         prob           SE df</span></span>
-<span><span class="co">## 1              BA.1                18932 Cape Town 7.635126e-01 5.634154e-02 NA</span></span>
-<span><span class="co">## 2              BA.2                18932 Cape Town 6.720481e-03 6.535723e-02 NA</span></span>
-<span><span class="co">## 3              BA.3                18932 Cape Town 2.607607e-03 3.344325e-03 NA</span></span>
-<span><span class="co">## 4              BA.4                18932 Cape Town 2.006979e-09 1.950711e-08 NA</span></span>
-<span><span class="co">## 5              BA.5                18932 Cape Town 2.152070e-09 2.096472e-08 NA</span></span>
-<span><span class="co">## 6             Delta                18932 Cape Town 2.267927e-01 3.609735e-02 NA</span></span>
+<span><span class="co">## 1              BA.1                18932 Cape Town 7.633158e-01 5.702907e-02 NA</span></span>
+<span><span class="co">## 2              BA.2                18932 Cape Town 6.732783e-03 6.498044e-02 NA</span></span>
+<span><span class="co">## 3              BA.3                18932 Cape Town 1.961058e-03 1.876000e-03 NA</span></span>
+<span><span class="co">## 4              BA.4                18932 Cape Town 2.054824e-09 1.982098e-08 NA</span></span>
+<span><span class="co">## 5              BA.5                18932 Cape Town 2.225532e-09 2.151696e-08 NA</span></span>
+<span><span class="co">## 6             Delta                18932 Cape Town 2.276225e-01 3.632885e-02 NA</span></span>
 <span><span class="co">##       asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1  6.530853e-01 8.739400e-01    2021-11-01</span></span>
-<span><span class="co">## 2 -1.213773e-01 1.348183e-01    2021-11-01</span></span>
-<span><span class="co">## 3 -3.947150e-03 9.162363e-03    2021-11-01</span></span>
-<span><span class="co">## 4 -3.622625e-08 4.024020e-08    2021-11-01</span></span>
-<span><span class="co">## 5 -3.893803e-08 4.324217e-08    2021-11-01</span></span>
-<span><span class="co">## 6  1.560432e-01 2.975422e-01    2021-11-01</span></span></code></pre>
+<span><span class="co">## 1  6.515409e-01 8.750907e-01    2021-11-01</span></span>
+<span><span class="co">## 2 -1.206265e-01 1.340921e-01    2021-11-01</span></span>
+<span><span class="co">## 3 -1.715834e-03 5.637950e-03    2021-11-01</span></span>
+<span><span class="co">## 4 -3.679357e-08 4.090322e-08    2021-11-01</span></span>
+<span><span class="co">## 5 -3.994693e-08 4.439799e-08    2021-11-01</span></span>
+<span><span class="co">## 6  1.564193e-01 2.988258e-01    2021-11-01</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
