@@ -99,6 +99,7 @@ confirmed <- covid19(country = "USA", level = 3) %>%
 
 confirmed$daily_cases <- c(confirmed$confirmed[1], diff(confirmed$confirmed))
 confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
   group_by(WeekYear) %>%
