@@ -111,6 +111,43 @@ p3
 p1 / p2 / p3
 ```
 
+# Distribution of variants
+
+
+```{r, fig.width=8, fig.height=5}
+state_month_counts <- SummarizeVariantsMonthwise(gisaid_india %>% filter(State == "Maharashtra"))
+state_month_counts$State <- "Maharashtra"
+state_month_prevalence <- CountsToPrevalence(state_month_counts)
+vocs <- GetVOCs()
+omicron <- vocs[["omicron"]]
+
+vocs[["omicron"]] <- NULL
+custom_voc_mapping <- list(
+  `BA.1.1` = "BA.1",
+  `BA.1` = "BA.1",
+  `BA.2` = "BA.2",
+  `BA.2.10` = "BA.2.X",
+  `BA.2.10.1` = "BA.2.X",
+  `BA.2.12` = "BA.2.X",
+  `BA.2.12.1` = "BA.2.X",
+  `BA.3` = "BA.3",
+  `BA.4` = "BA.4",
+  `BA.5` = "BA.5",
+  `BA.2.74` = "BA.2.X",
+  `BA.2.75` = "BA.2.75",
+  `BA.2.76` = "BA.2.X",
+  `XBB.*` = "XBB"
+)
+state_month_prevalence <- CollapseLineageToVOCs(
+  variant_df = state_month_prevalence,
+  vocs = vocs,
+  custom_voc_mapping = custom_voc_mapping, summarize = FALSE
+)
+
+p5 <- StackedBarPlotPrevalence(state_month_prevalence)
+p5
+```
+
 # Project weekly cases to variant prevalence data from GISAID
 
 

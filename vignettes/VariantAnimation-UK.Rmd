@@ -62,25 +62,31 @@ gisaid_uk <- CollapseLineageToVOCs(
 
 # Get daily case data
 ```{r}
-cases.struct <- list(
-  date = "date",
-  areaName = "areaName",
-  newCasesByPublishDate = "newCasesByPublishDate"
-)
-all_nations <- c(
-  "areaType=nation"
-)
-cases_data <- get_data(
-  filters = all_nations,
-  structure = cases.struct
-) %>% rename(new_cases = newCasesByPublishDate)
+if (FALSE) {
+  cases.struct <- list(
+    date = "date",
+    areaName = "areaName",
+    newCasesByPublishDate = "newCasesByPublishDate"
+  )
+  all_nations <- c(
+    "areaType=nation"
+  )
+  cases_data <- get_data(
+    filters = all_nations,
+    structure = cases.struct
+  ) %>% rename(new_cases = newCasesByPublishDate)
 
 
-confirmed <- cases_data %>%
-  arrange(date) %>%
-  group_by(date) %>%
-  summarise(daily_cases = sum(new_cases))
+  confirmed <- cases_data %>%
+    arrange(date) %>%
+    group_by(date) %>%
+    summarise(daily_cases = sum(new_cases))
+}
+confirmed <- covid19(country = "United Kingdom", level = 1) %>%
+  select(date, confirmed) %>%
+  filter(!is.na(confirmed))
 
+confirmed$daily_cases <- c(confirmed$confirmed[1], diff(confirmed$confirmed))
 confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
@@ -92,6 +98,43 @@ confirmed_subset_dateweekwise_long <- confirmed %>%
 gisaid_uk_weekwise <- SummarizeVariantsWeekwise(gisaid_uk)
 ```
 
+# Distribution of variants
+
+
+
+```{r, fig.width=8, fig.height=5}
+state_month_counts <- SummarizeVariantsMonthwise(gisaid_uk)
+state_month_counts$State <- "UK"
+state_month_prevalence <- CountsToPrevalence(state_month_counts)
+vocs <- GetVOCs()
+omicron <- vocs[["omicron"]]
+
+vocs[["omicron"]] <- NULL
+custom_voc_mapping <- list(
+  `BA.1.1` = "BA.1",
+  `BA.1` = "BA.1",
+  `BA.2` = "BA.2",
+  `BA.2.10` = "BA.2.X",
+  `BA.2.10.1` = "BA.2.X",
+  `BA.2.12` = "BA.2.X",
+  `BA.2.12.1` = "BA.2.X",
+  `BA.3` = "BA.3",
+  `BA.4` = "BA.4",
+  `BA.5` = "BA.5",
+  `BA.2.74` = "BA.2.X",
+  `BA.2.75` = "BA.2.75",
+  `BA.2.76` = "BA.2.X",
+  `XBB.*` = "XBB"
+)
+state_month_prevalence <- CollapseLineageToVOCs(
+  variant_df = state_month_prevalence,
+  vocs = vocs,
+  custom_voc_mapping = custom_voc_mapping, summarize = FALSE
+)
+
+p5 <- StackedBarPlotPrevalence(state_month_prevalence)
+p5
+```
 
 # Project weekly cases to variant prevalence data from GISAID
 

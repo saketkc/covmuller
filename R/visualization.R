@@ -139,8 +139,8 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
 #' @importFrom patchwork wrap_plots
 #' @export
 StackedBarPlotPrevalence <- function(prevalence_df, xangle = 90) {
-  color_values <- as.character(x = paletteer::paletteer_d("ggsci::default_igv"))
-
+  # color_values <- as.character(x = paletteer::paletteer_d("ggsci::default_igv"))
+  color_values <- c(RColorBrewer::brewer.pal(11, "Set3"), RColorBrewer::brewer.pal(8, "Set2"))
   p <- ggplot(
     data = prevalence_df,
     aes(
