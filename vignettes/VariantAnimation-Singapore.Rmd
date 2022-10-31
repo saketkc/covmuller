@@ -1,0 +1,162 @@
+---
+title: "Animation of projected weekly cases - Singapore"
+---
+
+
+```{r}
+suppressPackageStartupMessages({
+  library(covmuller)
+  library(COVID19)
+  library(tidyverse)
+})
+theme_set(CovmullerTheme())
+```
+
+# Get variants data for Singapore
+
+```{r, warning=FALSE, message=FALSE}
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_10_29.qs")
+gisaid_singapore <- gisaid_metadata %>%
+  filter(Country == "Singapore") %>%
+  filter(Host == "Human")
+# format metadata
+gisaid_singapore <- FormatGISAIDMetadata(gisaid_singapore) %>%
+  filter(State != "") %>%
+  filter(pangolin_lineage != "Unassigned")
+
+gisaid_singapore <- gisaid_singapore %>%
+  arrange(State, MonthYearCollected) %>%
+  filter(pangolin_lineage != "Unknown") %>%
+  filter(State != "Unknown")
+
+vocs <- GetVOCs()
+omicron <- vocs[["omicron"]]
+vocs[["omicron"]] <- NULL
+custom_voc_mapping <- list(
+  `BA.1.1` = "BA.1",
+  `BA.1` = "BA.1",
+  `BA.2` = "BA.2",
+  `BA.2.10` = "BA.2.X",
+  `BA.2.10.1` = "BA.2.X",
+  `BA.2.12` = "BA.2.X",
+  `BA.2.12.1` = "BA.2.X",
+  `BA.3` = "BA.3",
+  `BA.4` = "BA.4",
+  `BA.5` = "BA.5",
+  `BA.2.74` = "BA.2.X",
+  `BA.2.75` = "BA.2.75",
+  `BA.2.76` = "BA.2.X",
+  `XBB.*` = "XBB",
+  `BQ.1` = "BQ.1+",
+  `BQ.1.*` = "BQ.1+"
+)
+gisaid_singapore <- gisaid_singapore %>%
+  filter(pangolin_lineage != "None") %>%
+  filter(!is.na(MonthYearCollected)) %>%
+  filter(pangolin_lineage != "Unassigned")
+
+gisaid_singapore <- CollapseLineageToVOCs(
+  variant_df = gisaid_singapore,
+  vocs = vocs,
+  custom_voc_mapping = custom_voc_mapping,
+  summarize = FALSE
+)
+```
+
+# Distribution of variants
+
+
+
+```{r, fig.width=8, fig.height=5}
+state_month_counts <- SummarizeVariantsMonthwise(gisaid_singapore)
+state_month_counts$State <- "Singapore"
+state_month_prevalence <- CountsToPrevalence(state_month_counts)
+vocs <- GetVOCs()
+omicron <- vocs[["omicron"]]
+
+vocs[["omicron"]] <- NULL
+state_month_prevalence <- CollapseLineageToVOCs(
+  variant_df = state_month_prevalence,
+  vocs = vocs,
+  custom_voc_mapping = custom_voc_mapping, summarize = FALSE
+)
+
+p5 <- StackedBarPlotPrevalence(state_month_prevalence)
+p5
+```
+
+# Get weekly cases for Singapore
+
+```{r, warning=FALSE, message=FALSE}
+
+confirmed.tmp <- COVID19::covid19(country = "Singapore", verbose = FALSE, level = 2) %>%
+  select(date, administrative_area_level_2, confirmed) %>%
+  rename(State = administrative_area_level_2)
+
+confirmed <- COVID19::covid19(country = "Singapore", verbose = FALSE) %>%
+  select(date, confirmed) %>%
+  filter(!is.na(confirmed))
+
+confirmed$daily_cases <- c(confirmed$confirmed[1], diff(confirmed$confirmed))
+
+
+confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+
+confirmed_subset_dateweekwise_long <- confirmed %>%
+  group_by(WeekYear) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
+  arrange(WeekYear) %>%
+  rename(WeekYearCollected = WeekYear)
+
+gisaid_singapore_weekwise <- SummarizeVariantsWeekwise(gisaid_singapore)
+```
+
+
+# Project weekly cases to variant prevalence data from GISAID
+
+```{r, warning=FALSE, message=FALSE}
+voc_to_keep <- gisaid_singapore_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_singapore_weekwise <- gisaid_singapore_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_singapore_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Singapore by variant", caption = "**Source: gisaid.org and covid19datahub.io<br>**", date_breaks = "28 days")
+gganimate::anim_save(filename = here::here("docs/articles/Germany_animated.gif"), animation = the_anim)
+```
+![](Germany_animated.gif)
+
+
+
+Look at cases after October,2021 only:
+
+```{r}
+
+confirmed$MonthYear <- GetMonthYear(confirmed$date)
+
+confirmed_subset_dateweekwise_long <- confirmed %>%
+  filter(MonthYear > "Dec 2021") %>%
+  group_by(WeekYear) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
+  arrange(WeekYear) %>%
+  rename(WeekYearCollected = WeekYear)
+
+gisaid_singapore_subset <- gisaid_singapore %>% filter(MonthYearCollected > "Dec 2021")
+gisaid_singapore_weekwise <- SummarizeVariantsWeekwise(gisaid_singapore_subset)
+
+voc_to_keep <- gisaid_singapore_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_singapore_weekwise <- gisaid_singapore_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_singapore_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Singapore by variant", caption = "**Source: gisaid.org and covid19datahub.io<br>**")
+gganimate::anim_save(filename = here::here("docs/articles/Germany_animated_2021.gif"), animation = the_anim)
+```
+![](Germany_animated_2021.gif)
