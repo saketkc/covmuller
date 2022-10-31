@@ -153,7 +153,9 @@
 <span>  `BA.2.74` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
 <span>  `BA.2.75` <span class="op">=</span> <span class="st">"BA.2.75"</span>,</span>
 <span>  `BA.2.76` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
-<span>  `XBB.*` <span class="op">=</span> <span class="st">"XBB"</span></span>
+<span>  `XBB.*` <span class="op">=</span> <span class="st">"XBB"</span>,</span>
+<span>  `BQ.1` <span class="op">=</span> <span class="st">"BQ.1+"</span>,</span>
+<span>  `BQ.1.*` <span class="op">=</span> <span class="st">"BQ.1+"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="va">gisaid_india</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">"None"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -173,8 +175,8 @@
 <code class="sourceCode R"><span><span class="va">state_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">gisaid_india</span><span class="op">$</span><span class="va">State</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>State <span class="op">=</span> <span class="va">Var1</span>, `Total sequences` <span class="op">=</span> <span class="va">Freq</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html" class="external-link">datatable</a></span><span class="op">(</span><span class="va">state_counts</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">`Total sequences`</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="htmlwidget-be7d81f29561a22941e4" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-be7d81f29561a22941e4">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36"],["Karnataka","Maharashtra","Telangana","Tamil Nadu","Delhi","West Bengal","Kerala","Rajasthan","Andhra Pradesh","Gujarat","Odisha","Mizoram","Haryana","Punjab","Manipur","Assam","Uttar Pradesh","Madhya Pradesh","Jammu and Kashmir","Chhattisgarh","Himachal Pradesh","Puducherry","Sikkim","Uttarakhand","Ladakh","Goa","Jharkhand","Chandigarh","Bihar","Tripura","Nagaland","Arunachal Pradesh","Meghalaya","Andaman &amp; Nicobar","Lakshadweep","Dadra and Nagar Haveli and Daman and Diu"],[46325,32447,19499,17867,17650,17119,14315,13392,11400,10818,6703,5245,4590,4303,4112,3877,3818,3563,2746,2653,2630,1810,1317,1247,964,963,900,816,774,614,537,445,281,127,122,72]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>State<\/th>\n      <th>Total sequences<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4f7f0015668b15406608" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4f7f0015668b15406608">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36"],["Karnataka","Maharashtra","Telangana","Tamil Nadu","Delhi","West Bengal","Kerala","Rajasthan","Andhra Pradesh","Gujarat","Odisha","Mizoram","Haryana","Punjab","Manipur","Assam","Uttar Pradesh","Madhya Pradesh","Jammu and Kashmir","Chhattisgarh","Himachal Pradesh","Puducherry","Sikkim","Uttarakhand","Ladakh","Goa","Jharkhand","Chandigarh","Bihar","Tripura","Nagaland","Arunachal Pradesh","Meghalaya","Andaman &amp; Nicobar","Lakshadweep","Dadra and Nagar Haveli and Daman and Diu"],[46325,32447,19499,17867,17650,17119,14315,13392,11400,10818,6703,5245,4590,4303,4112,3877,3818,3563,2746,2653,2630,1810,1317,1247,964,963,900,816,774,614,537,445,281,127,122,72]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>State<\/th>\n      <th>Total sequences<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
 <h2 id="get-monthly-cases-for-maharashtra">Get monthly cases for Maharashtra<a class="anchor" aria-label="anchor" href="#get-monthly-cases-for-maharashtra"></a>
@@ -244,22 +246,6 @@ been sequenced in India over the course of the pandemic:</p>
 <span><span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  `BA.1.1` <span class="op">=</span> <span class="st">"BA.1"</span>,</span>
-<span>  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,</span>
-<span>  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
-<span>  `BA.2.10` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
-<span>  `BA.2.10.1` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
-<span>  `BA.2.12` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
-<span>  `BA.2.12.1` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
-<span>  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,</span>
-<span>  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,</span>
-<span>  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>,</span>
-<span>  `BA.2.74` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
-<span>  `BA.2.75` <span class="op">=</span> <span class="st">"BA.2.75"</span>,</span>
-<span>  `BA.2.76` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
-<span>  `XBB.*` <span class="op">=</span> <span class="st">"XBB"</span></span>
-<span><span class="op">)</span></span>
 <span><span class="va">state_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
 <span>  variant_df <span class="op">=</span> <span class="va">state_month_prevalence</span>,</span>
 <span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
@@ -297,29 +283,43 @@ been sequenced in India over the course of the pandemic:</p>
 <span></span>
 <span><span class="va">india_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_dist_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_dist</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  52 (36 variable)</span></span>
-<span><span class="co">## initial  value 78800.374160 </span></span>
-<span><span class="co">## iter  10 value 36576.660580</span></span>
-<span><span class="co">## iter  20 value 29493.971403</span></span>
-<span><span class="co">## iter  30 value 24656.246549</span></span>
-<span><span class="co">## iter  40 value 23478.555794</span></span>
-<span><span class="co">## iter  50 value 23190.236533</span></span>
-<span><span class="co">## iter  60 value 22728.991446</span></span>
-<span><span class="co">## iter  70 value 22143.882716</span></span>
-<span><span class="co">## iter  80 value 21880.086685</span></span>
-<span><span class="co">## iter  90 value 21845.608699</span></span>
-<span><span class="co">## iter 100 value 21813.570753</span></span>
-<span><span class="co">## iter 110 value 21795.113627</span></span>
-<span><span class="co">## iter 120 value 21767.125409</span></span>
-<span><span class="co">## iter 130 value 21753.530024</span></span>
-<span><span class="co">## iter 140 value 21744.111431</span></span>
-<span><span class="co">## iter 150 value 21738.262008</span></span>
-<span><span class="co">## final  value 21738.261300 </span></span>
+<span><span class="co">## initial  value 78797.809211 </span></span>
+<span><span class="co">## iter  10 value 36566.708476</span></span>
+<span><span class="co">## iter  20 value 29462.730865</span></span>
+<span><span class="co">## iter  30 value 24466.339126</span></span>
+<span><span class="co">## iter  40 value 23470.410653</span></span>
+<span><span class="co">## iter  50 value 23218.967205</span></span>
+<span><span class="co">## iter  60 value 22795.319447</span></span>
+<span><span class="co">## iter  70 value 22346.660261</span></span>
+<span><span class="co">## iter  80 value 21934.550120</span></span>
+<span><span class="co">## iter  90 value 21887.163515</span></span>
+<span><span class="co">## iter 100 value 21844.731735</span></span>
+<span><span class="co">## iter 110 value 21818.170505</span></span>
+<span><span class="co">## iter 120 value 21784.644719</span></span>
+<span><span class="co">## iter 130 value 21761.315296</span></span>
+<span><span class="co">## iter 140 value 21753.266740</span></span>
+<span><span class="co">## iter 150 value 21737.320002</span></span>
+<span><span class="co">## iter 160 value 21737.259666</span></span>
+<span><span class="co">## iter 170 value 21735.891232</span></span>
+<span><span class="co">## iter 180 value 21732.954422</span></span>
+<span><span class="co">## iter 190 value 21730.227651</span></span>
+<span><span class="co">## iter 200 value 21727.122378</span></span>
+<span><span class="co">## iter 210 value 21725.986240</span></span>
+<span><span class="co">## iter 220 value 21724.115394</span></span>
+<span><span class="co">## iter 230 value 21724.083282</span></span>
+<span><span class="co">## iter 240 value 21723.834771</span></span>
+<span><span class="co">## iter 250 value 21723.329992</span></span>
+<span><span class="co">## iter 260 value 21723.256100</span></span>
+<span><span class="co">## iter 270 value 21722.995716</span></span>
+<span><span class="co">## iter 280 value 21722.359870</span></span>
+<span><span class="co">## iter 290 value 21721.885377</span></span>
+<span><span class="co">## final  value 21720.733813 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">india_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Maharashtra (India) by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org**"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/Maharashtra_animated.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Maharashtra_animated.gif"></p>
-<p>Look at cases after October, 2021 only:</p>
+<p>Look at cases after January, 2022 only:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesWeeklyLong.html">GetIndiaConfirmedCasesWeeklyLong</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -332,7 +332,7 @@ been sequenced in India over the course of the pandemic:</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gisaid_dist</span> <span class="op">&lt;-</span> <span class="va">gisaid_india</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;</span> <span class="st">"Oct 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;</span> <span class="st">"Dec 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"Maharashtra"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">WeekYearCollected</span><span class="op">)</span></span>
 <span></span>
@@ -348,21 +348,18 @@ been sequenced in India over the course of the pandemic:</p>
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  40 (27 variable)</span></span>
-<span><span class="co">## initial  value 37205.169933 </span></span>
-<span><span class="co">## iter  10 value 20857.665023</span></span>
-<span><span class="co">## iter  20 value 17880.221445</span></span>
-<span><span class="co">## iter  30 value 16555.279131</span></span>
-<span><span class="co">## iter  40 value 16508.321163</span></span>
-<span><span class="co">## iter  50 value 16504.966504</span></span>
-<span><span class="co">## iter  60 value 16504.827808</span></span>
-<span><span class="co">## iter  70 value 16504.430202</span></span>
-<span><span class="co">## iter  80 value 16503.236893</span></span>
-<span><span class="co">## iter  90 value 16503.067339</span></span>
-<span><span class="co">## iter 100 value 16503.003121</span></span>
-<span><span class="co">## iter 110 value 16502.926356</span></span>
-<span><span class="co">## iter 110 value 16502.926292</span></span>
-<span><span class="co">## iter 110 value 16502.926292</span></span>
-<span><span class="co">## final  value 16502.926292 </span></span>
+<span><span class="co">## initial  value 26712.289664 </span></span>
+<span><span class="co">## iter  10 value 16599.632333</span></span>
+<span><span class="co">## iter  20 value 14135.562556</span></span>
+<span><span class="co">## iter  30 value 13427.503906</span></span>
+<span><span class="co">## iter  40 value 13395.996024</span></span>
+<span><span class="co">## iter  50 value 13392.120129</span></span>
+<span><span class="co">## iter  60 value 13391.575840</span></span>
+<span><span class="co">## iter  70 value 13390.996544</span></span>
+<span><span class="co">## iter  80 value 13390.578236</span></span>
+<span><span class="co">## iter  90 value 13390.476361</span></span>
+<span><span class="co">## iter 100 value 13390.455090</span></span>
+<span><span class="co">## final  value 13390.454439 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Maharashtra (India) by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org&lt;br&gt;**"</span><span class="op">)</span></span></code></pre></div>
@@ -386,7 +383,7 @@ been sequenced in India over the course of the pandemic:</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>WeekYearCollected <span class="op">=</span> <span class="va">WeekYear</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gisaid_dist</span> <span class="op">&lt;-</span> <span class="va">gisaid_india</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;</span> <span class="st">"Oct 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYearCollected</span> <span class="op">&gt;</span> <span class="st">"Dec 2021"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"Maharashtra"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">WeekYearCollected</span><span class="op">)</span></span>
 <span></span>
@@ -402,21 +399,18 @@ been sequenced in India over the course of the pandemic:</p>
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  40 (27 variable)</span></span>
-<span><span class="co">## initial  value 37205.169933 </span></span>
-<span><span class="co">## iter  10 value 20857.665023</span></span>
-<span><span class="co">## iter  20 value 17880.221445</span></span>
-<span><span class="co">## iter  30 value 16555.279131</span></span>
-<span><span class="co">## iter  40 value 16508.321163</span></span>
-<span><span class="co">## iter  50 value 16504.966504</span></span>
-<span><span class="co">## iter  60 value 16504.827808</span></span>
-<span><span class="co">## iter  70 value 16504.430202</span></span>
-<span><span class="co">## iter  80 value 16503.236893</span></span>
-<span><span class="co">## iter  90 value 16503.067339</span></span>
-<span><span class="co">## iter 100 value 16503.003121</span></span>
-<span><span class="co">## iter 110 value 16502.926356</span></span>
-<span><span class="co">## iter 110 value 16502.926292</span></span>
-<span><span class="co">## iter 110 value 16502.926292</span></span>
-<span><span class="co">## final  value 16502.926292 </span></span>
+<span><span class="co">## initial  value 26712.289664 </span></span>
+<span><span class="co">## iter  10 value 16599.632333</span></span>
+<span><span class="co">## iter  20 value 14135.562556</span></span>
+<span><span class="co">## iter  30 value 13427.503906</span></span>
+<span><span class="co">## iter  40 value 13395.996024</span></span>
+<span><span class="co">## iter  50 value 13392.120129</span></span>
+<span><span class="co">## iter  60 value 13391.575840</span></span>
+<span><span class="co">## iter  70 value 13390.996544</span></span>
+<span><span class="co">## iter  80 value 13390.578236</span></span>
+<span><span class="co">## iter  90 value 13390.476361</span></span>
+<span><span class="co">## iter 100 value 13390.455090</span></span>
+<span><span class="co">## final  value 13390.454439 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Maharashtra (India) by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org&lt;br&gt;**"</span><span class="op">)</span></span></code></pre></div>

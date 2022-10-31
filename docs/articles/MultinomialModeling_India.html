@@ -171,7 +171,9 @@
 <span>  `BA.2.74` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
 <span>  `BA.2.75` <span class="op">=</span> <span class="st">"BA.2.75"</span>,</span>
 <span>  `BA.2.76` <span class="op">=</span> <span class="st">"BA.2.X"</span>,</span>
-<span>  `XBB.*` <span class="op">=</span> <span class="st">"XBB"</span></span>
+<span>  `XBB.*` <span class="op">=</span> <span class="st">"XBB"</span>,</span>
+<span>  `BQ.1` <span class="op">=</span> <span class="st">"BQ.1+"</span>,</span>
+<span>  `BQ.1.*` <span class="op">=</span> <span class="st">"BQ.1+"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gisaid_india_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
@@ -203,57 +205,55 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_india_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  390 (342 variable)</span></span>
-<span><span class="co">## initial  value 274408.275872 </span></span>
-<span><span class="co">## iter  10 value 147362.753583</span></span>
-<span><span class="co">## iter  20 value 140107.586117</span></span>
-<span><span class="co">## iter  30 value 138022.774090</span></span>
-<span><span class="co">## iter  40 value 134587.964232</span></span>
-<span><span class="co">## iter  50 value 131585.039014</span></span>
-<span><span class="co">## iter  60 value 130022.294527</span></span>
-<span><span class="co">## iter  70 value 127717.228167</span></span>
-<span><span class="co">## iter  80 value 125899.933589</span></span>
-<span><span class="co">## iter  90 value 124887.909568</span></span>
-<span><span class="co">## iter 100 value 124400.506301</span></span>
-<span><span class="co">## iter 110 value 123923.113632</span></span>
-<span><span class="co">## iter 120 value 123596.204183</span></span>
-<span><span class="co">## iter 130 value 123358.157045</span></span>
-<span><span class="co">## iter 140 value 123260.013466</span></span>
-<span><span class="co">## iter 150 value 123169.985457</span></span>
-<span><span class="co">## iter 160 value 123092.192739</span></span>
-<span><span class="co">## iter 170 value 123048.612009</span></span>
-<span><span class="co">## iter 180 value 123034.468409</span></span>
-<span><span class="co">## iter 190 value 123028.871933</span></span>
-<span><span class="co">## iter 200 value 123023.897818</span></span>
-<span><span class="co">## iter 210 value 123017.722305</span></span>
-<span><span class="co">## iter 220 value 123002.909455</span></span>
-<span><span class="co">## iter 230 value 122947.564751</span></span>
-<span><span class="co">## iter 240 value 122911.029330</span></span>
-<span><span class="co">## iter 250 value 122898.746209</span></span>
-<span><span class="co">## iter 260 value 122896.277411</span></span>
-<span><span class="co">## iter 270 value 122894.621071</span></span>
-<span><span class="co">## iter 280 value 122893.849068</span></span>
-<span><span class="co">## iter 290 value 122893.728055</span></span>
-<span><span class="co">## iter 300 value 122893.575150</span></span>
-<span><span class="co">## iter 310 value 122893.413368</span></span>
-<span><span class="co">## iter 320 value 122893.213014</span></span>
-<span><span class="co">## final  value 122893.183512 </span></span>
+<span><span class="co">## initial  value 274403.670702 </span></span>
+<span><span class="co">## iter  10 value 147362.672658</span></span>
+<span><span class="co">## iter  20 value 140103.544900</span></span>
+<span><span class="co">## iter  30 value 138022.824501</span></span>
+<span><span class="co">## iter  40 value 134587.632800</span></span>
+<span><span class="co">## iter  50 value 131587.866083</span></span>
+<span><span class="co">## iter  60 value 129991.879916</span></span>
+<span><span class="co">## iter  70 value 127713.370206</span></span>
+<span><span class="co">## iter  80 value 125992.944404</span></span>
+<span><span class="co">## iter  90 value 124896.094322</span></span>
+<span><span class="co">## iter 100 value 124405.498321</span></span>
+<span><span class="co">## iter 110 value 124028.220125</span></span>
+<span><span class="co">## iter 120 value 123662.373731</span></span>
+<span><span class="co">## iter 130 value 123383.492744</span></span>
+<span><span class="co">## iter 140 value 123276.735546</span></span>
+<span><span class="co">## iter 150 value 123181.283962</span></span>
+<span><span class="co">## iter 160 value 123106.849102</span></span>
+<span><span class="co">## iter 170 value 123052.848974</span></span>
+<span><span class="co">## iter 180 value 123033.113068</span></span>
+<span><span class="co">## iter 190 value 123026.046195</span></span>
+<span><span class="co">## iter 200 value 123021.327326</span></span>
+<span><span class="co">## iter 210 value 123015.265897</span></span>
+<span><span class="co">## iter 220 value 123000.297589</span></span>
+<span><span class="co">## iter 230 value 122947.796920</span></span>
+<span><span class="co">## iter 240 value 122908.499044</span></span>
+<span><span class="co">## iter 250 value 122895.281346</span></span>
+<span><span class="co">## iter 260 value 122893.359490</span></span>
+<span><span class="co">## iter 270 value 122892.555643</span></span>
+<span><span class="co">## iter 280 value 122891.987547</span></span>
+<span><span class="co">## iter 290 value 122891.804015</span></span>
+<span><span class="co">## iter 300 value 122891.611596</span></span>
+<span><span class="co">## final  value 122891.545259 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_india_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric             State         prob</span></span>
-<span><span class="co">## 1              BA.1                18932 Andaman &amp; Nicobar 1.289380e-03</span></span>
-<span><span class="co">## 2              BA.2                18932 Andaman &amp; Nicobar 4.781669e-06</span></span>
-<span><span class="co">## 3           BA.2.75                18932 Andaman &amp; Nicobar 7.229291e-11</span></span>
-<span><span class="co">## 4            BA.2.X                18932 Andaman &amp; Nicobar 6.041298e-05</span></span>
-<span><span class="co">## 5              BA.3                18932 Andaman &amp; Nicobar 1.050946e-10</span></span>
-<span><span class="co">## 6              BA.4                18932 Andaman &amp; Nicobar 2.830314e-17</span></span>
+<span><span class="co">## 1              BA.1                18932 Andaman &amp; Nicobar 1.272225e-03</span></span>
+<span><span class="co">## 2              BA.2                18932 Andaman &amp; Nicobar 4.848854e-06</span></span>
+<span><span class="co">## 3           BA.2.75                18932 Andaman &amp; Nicobar 7.954783e-11</span></span>
+<span><span class="co">## 4            BA.2.X                18932 Andaman &amp; Nicobar 6.114264e-05</span></span>
+<span><span class="co">## 5              BA.3                18932 Andaman &amp; Nicobar 2.035996e-10</span></span>
+<span><span class="co">## 6              BA.4                18932 Andaman &amp; Nicobar 4.628764e-17</span></span>
 <span><span class="co">##             SE df     asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1 6.474617e-04 NA  2.037856e-05 2.558382e-03    2021-11-01</span></span>
-<span><span class="co">## 2 2.546278e-06 NA -2.089432e-07 9.772282e-06    2021-11-01</span></span>
-<span><span class="co">## 3 8.454206e-11 NA -9.340648e-11 2.379923e-10    2021-11-01</span></span>
-<span><span class="co">## 4 2.816806e-05 NA  5.204604e-06 1.156214e-04    2021-11-01</span></span>
-<span><span class="co">## 5 1.316491e-10 NA -1.529328e-10 3.631220e-10    2021-11-01</span></span>
-<span><span class="co">## 6 9.791878e-17 NA -1.636141e-16 2.202204e-16    2021-11-01</span></span></code></pre>
+<span><span class="co">## 1 6.399302e-04 NA  1.798448e-05 2.526465e-03    2021-11-01</span></span>
+<span><span class="co">## 2 2.581771e-06 NA -2.113239e-07 9.909033e-06    2021-11-01</span></span>
+<span><span class="co">## 3 9.448982e-11 NA -1.056488e-10 2.647445e-10    2021-11-01</span></span>
+<span><span class="co">## 4 2.851520e-05 NA  5.253868e-06 1.170314e-04    2021-11-01</span></span>
+<span><span class="co">## 5 1.361313e-10 NA -6.321292e-11 4.704122e-10    2021-11-01</span></span>
+<span><span class="co">## 6 1.850444e-16 NA -3.163928e-16 4.089681e-16    2021-11-01</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">

@@ -58,7 +58,9 @@ custom_voc_mapping <- list(
   `BA.2.74` = "BA.2.X",
   `BA.2.75` = "BA.2.75",
   `BA.2.76` = "BA.2.X",
-  `XBB.*` = "XBB"
+  `XBB.*` = "XBB",
+  `BQ.1` = "BQ.1+",
+  `BQ.1.*` = "BQ.1+"
 )
 gisaid_NYC <- gisaid_NYC %>% filter(pangolin_lineage != "None")
 
@@ -136,7 +138,9 @@ custom_voc_mapping <- list(
   `BA.2.74` = "BA.2.X",
   `BA.2.75` = "BA.2.75",
   `BA.2.76` = "BA.2.X",
-  `XBB.*` = "XBB"
+  `XBB.*` = "XBB",
+  `BQ.1` = "BQ.1+",
+  `BQ.1.*` = "BQ.1+"
 )
 state_month_prevalence <- CollapseLineageToVOCs(
   variant_df = state_month_prevalence,
@@ -170,13 +174,13 @@ Look at cases after January, 2022 only:
 
 ```{r}
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Oct 2021") %>%
+  filter(MonthYear > "Dec 2021") %>%
   group_by(WeekYear) %>%
   summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_NYC_subset <- gisaid_NYC %>% filter(MonthYearCollected > "Oct 2021")
+gisaid_NYC_subset <- gisaid_NYC %>% filter(MonthYearCollected > "Dec 2021")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_NYC_subset)
 
 voc_to_keep <- gisaid_weekwise %>%

@@ -8,7 +8,7 @@ title: "Animation of projected weekly cases - New York State"
 ```{r}
 suppressPackageStartupMessages({
   library(covmuller)
-  library(covid19nytimes)
+  library(COVID19)
   library(tidyverse)
 })
 theme_set(CovmullerTheme())
@@ -49,7 +49,9 @@ custom_voc_mapping <- list(
   `BA.2.74` = "BA.2.X",
   `BA.2.75` = "BA.2.75",
   `BA.2.76` = "BA.2.X",
-  `XBB.*` = "XBB"
+  `XBB.*` = "XBB",
+  `BQ.1` = "BQ.1+",
+  `BQ.1.*` = "BQ.1+"
 )
 gisaid_NY <- gisaid_NY %>% filter(pangolin_lineage != "None")
 
@@ -65,15 +67,25 @@ gisaid_NY <- CollapseLineageToVOCs(
 
 ```{r, warning=FALSE, message=FALSE}
 
-all_state_cases <- refresh_covid19nytimes_states()
+if (FALSE) {
+  all_state_cases <- refresh_covid19nytimes_states()
 
-confirmed <- all_state_cases %>%
-  filter(location == "New York") %>%
-  filter(data_type == "cases_total") %>%
-  arrange(date)
+  confirmed <- all_state_cases %>%
+    filter(location == "New York") %>%
+    filter(data_type == "cases_total") %>%
+    arrange(date)
 
-confirmed$daily_cases <- c(confirmed$value[1], diff(confirmed$value))
+  confirmed$daily_cases <- c(confirmed$value[1], diff(confirmed$value))
+  confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+}
+confirmed <- covid19(country = "USA", level = 2) %>%
+  filter(administrative_area_level_2 == "New York") %>%
+  select(date, confirmed) %>%
+  filter(!is.na(confirmed))
+
+confirmed$daily_cases <- c(confirmed$confirmed[1], diff(confirmed$confirmed))
 confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
   group_by(WeekYear) %>%
@@ -83,6 +95,28 @@ confirmed_subset_dateweekwise_long <- confirmed %>%
 
 gisaid_NY_weekwise <- SummarizeVariantsWeekwise(gisaid_NY)
 ```
+
+# Distribution of variants
+
+
+```{r, fig.width=8, fig.height=5}
+state_month_counts <- SummarizeVariantsMonthwise(gisaid_NY)
+state_month_counts$State <- "New York"
+state_month_prevalence <- CountsToPrevalence(state_month_counts)
+vocs <- GetVOCs()
+omicron <- vocs[["omicron"]]
+
+vocs[["omicron"]] <- NULL
+state_month_prevalence <- CollapseLineageToVOCs(
+  variant_df = state_month_prevalence,
+  vocs = vocs,
+  custom_voc_mapping = custom_voc_mapping, summarize = FALSE
+)
+
+p5 <- StackedBarPlotPrevalence(state_month_prevalence)
+p5
+```
+
 
 
 # Project weekly cases to variant prevalence data from GISAID
@@ -103,20 +137,20 @@ gganimate::anim_save(filename = here::here("docs/articles/NY_animated.gif"), ani
 ![](NY_animated.gif)
 
 
-Look at cases after October,2021 only:
+Look at cases after December, 2021 only:
 
 ```{r}
 
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Oct 2021") %>%
+  filter(MonthYear > "Dec 2021") %>%
   group_by(WeekYear) %>%
   summarise(n = sum(daily_cases)) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_NY <- gisaid_NY %>% filter(MonthYearCollected > "Oct 2021")
+gisaid_NY <- gisaid_NY %>% filter(MonthYearCollected > "Dec 2021")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_NY)
 
 voc_to_keep <- gisaid_weekwise %>%

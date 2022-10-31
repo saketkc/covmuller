@@ -31,8 +31,6 @@ gisaid_sa <- gisaid_sa %>%
 vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
-
-
 custom_voc_mapping <- list(
   `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
@@ -47,7 +45,9 @@ custom_voc_mapping <- list(
   `BA.2.74` = "BA.2.X",
   `BA.2.75` = "BA.2.75",
   `BA.2.76` = "BA.2.X",
-  `XBB.*` = "XBB"
+  `XBB.*` = "XBB",
+  `BQ.1` = "BQ.1+",
+  `BQ.1.*` = "BQ.1+"
 )
 gisaid_sa <- gisaid_sa %>%
   filter(pangolin_lineage != "None") %>%
@@ -104,20 +104,20 @@ gganimate::anim_save(filename = here::here("docs/articles/SA_animated.gif"), ani
 
 
 
-Look at cases after October,2021 only:
+Look at cases after December, 2021 only:
 
 ```{r}
 
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Oct 2021") %>%
+  filter(MonthYear > "Dec 2021") %>%
   group_by(WeekYear) %>%
   summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_sa_subset <- gisaid_sa %>% filter(MonthYearCollected > "Oct 2021")
+gisaid_sa_subset <- gisaid_sa %>% filter(MonthYearCollected > "Dec 2021")
 gisaid_sa_weekwise <- SummarizeVariantsWeekwise(gisaid_sa_subset)
 
 voc_to_keep <- gisaid_sa_weekwise %>%

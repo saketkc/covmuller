@@ -40,7 +40,9 @@ custom_voc_mapping <- list(
   `BA.2.74` = "BA.2.X",
   `BA.2.75` = "BA.2.75",
   `BA.2.76` = "BA.2.X",
-  `XBB.*` = "XBB"
+  `XBB.*` = "XBB",
+  `BQ.1` = "BQ.1+",
+  `BQ.1.*` = "BQ.1+"
 )
 gisaid_india <- gisaid_india %>%
   filter(pangolin_lineage != "None") %>%
@@ -123,22 +125,6 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 
 vocs[["omicron"]] <- NULL
-custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1",
-  `BA.1` = "BA.1",
-  `BA.2` = "BA.2",
-  `BA.2.10` = "BA.2.X",
-  `BA.2.10.1` = "BA.2.X",
-  `BA.2.12` = "BA.2.X",
-  `BA.2.12.1` = "BA.2.X",
-  `BA.3` = "BA.3",
-  `BA.4` = "BA.4",
-  `BA.5` = "BA.5",
-  `BA.2.74` = "BA.2.X",
-  `BA.2.75` = "BA.2.75",
-  `BA.2.76` = "BA.2.X",
-  `XBB.*` = "XBB"
-)
 state_month_prevalence <- CollapseLineageToVOCs(
   variant_df = state_month_prevalence,
   vocs = vocs,
@@ -195,7 +181,7 @@ confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   rename(WeekYearCollected = WeekYear)
 
 gisaid_dist <- gisaid_india %>%
-  filter(MonthYearCollected > "Oct 2021") %>%
+  filter(MonthYearCollected > "Dec 2021") %>%
   filter(State == "Tamil Nadu") %>%
   arrange(WeekYearCollected)
 
@@ -230,7 +216,7 @@ confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   rename(WeekYearCollected = WeekYear)
 
 gisaid_dist <- gisaid_india %>%
-  filter(MonthYearCollected > "Oct 2021") %>%
+  filter(MonthYearCollected > "Dec 2021") %>%
   filter(State == "Tamil Nadu") %>%
   arrange(WeekYearCollected)
 
