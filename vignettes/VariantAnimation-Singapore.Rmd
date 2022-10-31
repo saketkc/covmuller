@@ -21,7 +21,6 @@ gisaid_singapore <- gisaid_metadata %>%
   filter(Host == "Human")
 # format metadata
 gisaid_singapore <- FormatGISAIDMetadata(gisaid_singapore) %>%
-  filter(State != "") %>%
   filter(pangolin_lineage != "Unassigned")
 
 gisaid_singapore <- gisaid_singapore %>%
@@ -125,9 +124,9 @@ gisaid_singapore_weekwise <- gisaid_singapore_weekwise %>% filter(lineage_collap
 
 sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_singapore_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Singapore by variant", caption = "**Source: gisaid.org and covid19datahub.io<br>**", date_breaks = "28 days")
-gganimate::anim_save(filename = here::here("docs/articles/Germany_animated.gif"), animation = the_anim)
+gganimate::anim_save(filename = here::here("docs/articles/Singapore_animated.gif"), animation = the_anim)
 ```
-![](Germany_animated.gif)
+![](Singapore_animated.gif)
 
 
 
@@ -157,6 +156,6 @@ gisaid_singapore_weekwise <- gisaid_singapore_weekwise %>% filter(lineage_collap
 
 sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_singapore_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Singapore by variant", caption = "**Source: gisaid.org and covid19datahub.io<br>**")
-gganimate::anim_save(filename = here::here("docs/articles/Germany_animated_2021.gif"), animation = the_anim)
+gganimate::anim_save(filename = here::here("docs/articles/Singapore_animated_2021.gif"), animation = the_anim)
 ```
-![](Germany_animated_2021.gif)
+![](Singapore_animated_2021.gif)
