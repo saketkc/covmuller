@@ -1,5 +1,5 @@
 ---
-title: "Animation of projected weekly cases - Tamilnadu (India)"
+title: "Animation of projected weekly cases - Tamil Nadu (India)"
 output:
   html_document:
     df_print: paged
@@ -175,13 +175,13 @@ voc_to_keep <- gisaid_dist_weekwise %>%
 gisaid_dist_weekwise <- gisaid_dist_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 india_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_dist_weekwise, confirmed_subset_dateweekwise_long_dist)
-the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Tamilnadu (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org**", date_breaks = "28 days")
+the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Tamil Nadu (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org**", date_breaks = "28 days")
 gganimate::anim_save(filename = here::here("docs/articles/Tamilnadu_animated.gif"), animation = the_anim)
 ```
 ![](Tamilnadu_animated.gif)
 
 
-Look at cases after October, 2021 only:
+Look at cases after January, 2022 only:
 
 ```{r}
 confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
@@ -210,7 +210,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Tamilnadu (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Tamil Nadu (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
 gganimate::anim_save(filename = here::here("docs/articles/Tamilnadu_animated_2021.gif"), animation = the_anim)
 ```
 ![](Tamilnadu_animated_2021.gif)
@@ -245,7 +245,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Tamilnadu (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Tamil Nadu (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
 gganimate::anim_save(filename = here::here("docs/articles/Tamilnadu_animated_2022.gif"), animation = the_anim)
 ```
 ![](Tamilnadu_animated_2022.gif)
