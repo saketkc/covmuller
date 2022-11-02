@@ -170,17 +170,17 @@ gganimate::anim_save(filename = here::here("docs/articles/NYC_animated.gif"), an
 ![](NYC_animated.gif)
 
 
-Look at cases after January, 2022 only:
+Look at cases after February, 2022 only:
 
 ```{r}
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Dec 2021") %>%
+  filter(MonthYear > "Feb 2022") %>%
   group_by(WeekYear) %>%
   summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_NYC_subset <- gisaid_NYC %>% filter(MonthYearCollected > "Dec 2021")
+gisaid_NYC_subset <- gisaid_NYC %>% filter(MonthYearCollected > "Feb 2022")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_NYC_subset)
 
 voc_to_keep <- gisaid_weekwise %>%
@@ -193,33 +193,7 @@ gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**")
-gganimate::anim_save(filename = here::here("docs/articles/NYC_animated_2021.gif"), animation = the_anim)
+gganimate::anim_save(filename = here::here("docs/articles/NYC_animated_feb2022.gif"), animation = the_anim)
 ```
-![](NYC_animated_2021.gif)
+![](NYC_animated_feb2022.gif)
 
-Look at cases after Jan, 2022:
-
-```{r}
-confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear >= "Jan 2022") %>%
-  group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
-  arrange(WeekYear) %>%
-  rename(WeekYearCollected = WeekYear)
-
-gisaid_NYC_subset <- gisaid_NYC %>% filter(MonthYearCollected >= "Jan 2022")
-gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_NYC_subset)
-
-voc_to_keep <- gisaid_weekwise %>%
-  group_by(lineage_collapsed) %>%
-  summarise(n_sum = sum(n)) %>%
-  filter(n_sum > 50) %>%
-  pull(lineage_collapsed) %>%
-  unique()
-gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
-
-cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**")
-gganimate::anim_save(filename = here::here("docs/articles/NYC_animated_2022.gif"), animation = the_anim)
-```
-![](NYC_animated_2022.gif)

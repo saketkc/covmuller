@@ -137,20 +137,20 @@ gganimate::anim_save(filename = here::here("docs/articles/NY_animated.gif"), ani
 ![](NY_animated.gif)
 
 
-Look at cases after December, 2021 only:
+Look at cases after february, 2022 only:
 
 ```{r}
 
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Dec 2021") %>%
+  filter(MonthYear > "Feb 2022") %>%
   group_by(WeekYear) %>%
   summarise(n = sum(daily_cases)) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_NY <- gisaid_NY %>% filter(MonthYearCollected > "Dec 2021")
+gisaid_NY <- gisaid_NY %>% filter(MonthYearCollected > "Feb 2022")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_NY)
 
 voc_to_keep <- gisaid_weekwise %>%
