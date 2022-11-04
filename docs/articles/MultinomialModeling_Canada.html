@@ -129,7 +129,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_10_31.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_11_03.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_canada</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Canada"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -200,43 +200,44 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_canada_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_canada_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  117 (96 variable)</span></span>
-<span><span class="co">## initial  value 478210.548685 </span></span>
-<span><span class="co">## iter  10 value 252422.394787</span></span>
-<span><span class="co">## iter  20 value 196424.539007</span></span>
-<span><span class="co">## iter  30 value 174978.646839</span></span>
-<span><span class="co">## iter  40 value 166115.208467</span></span>
-<span><span class="co">## iter  50 value 151677.446501</span></span>
-<span><span class="co">## iter  60 value 148671.429513</span></span>
-<span><span class="co">## iter  70 value 146742.578198</span></span>
-<span><span class="co">## iter  80 value 144993.008176</span></span>
-<span><span class="co">## iter  90 value 143764.713921</span></span>
-<span><span class="co">## iter 100 value 142857.539642</span></span>
-<span><span class="co">## iter 110 value 142476.886233</span></span>
-<span><span class="co">## iter 120 value 142221.340464</span></span>
-<span><span class="co">## iter 130 value 142073.694195</span></span>
-<span><span class="co">## iter 140 value 142044.090482</span></span>
-<span><span class="co">## iter 150 value 141991.582870</span></span>
-<span><span class="co">## iter 160 value 141970.773776</span></span>
-<span><span class="co">## iter 170 value 141964.834439</span></span>
-<span><span class="co">## iter 180 value 141963.999791</span></span>
-<span><span class="co">## final  value 141963.787945 </span></span>
+<span><span class="co">## initial  value 486188.671126 </span></span>
+<span><span class="co">## iter  10 value 248577.698358</span></span>
+<span><span class="co">## iter  20 value 224048.235715</span></span>
+<span><span class="co">## iter  30 value 212082.051423</span></span>
+<span><span class="co">## iter  40 value 183272.465137</span></span>
+<span><span class="co">## iter  50 value 172987.098582</span></span>
+<span><span class="co">## iter  60 value 162096.756352</span></span>
+<span><span class="co">## iter  70 value 155784.797276</span></span>
+<span><span class="co">## iter  80 value 151663.026863</span></span>
+<span><span class="co">## iter  90 value 148984.050242</span></span>
+<span><span class="co">## iter 100 value 147657.397839</span></span>
+<span><span class="co">## iter 110 value 146064.777276</span></span>
+<span><span class="co">## iter 120 value 145877.735343</span></span>
+<span><span class="co">## iter 130 value 145777.214008</span></span>
+<span><span class="co">## iter 140 value 145749.725922</span></span>
+<span><span class="co">## iter 150 value 145707.164236</span></span>
+<span><span class="co">## iter 160 value 145692.615446</span></span>
+<span><span class="co">## iter 170 value 145683.311501</span></span>
+<span><span class="co">## iter 180 value 145681.170985</span></span>
+<span><span class="co">## iter 190 value 145680.985762</span></span>
+<span><span class="co">## final  value 145680.819252 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_canada_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span></span>
-<span><span class="co">## 1              BA.1                18932 Alberta 1.149101e-04 9.836775e-06 NA</span></span>
-<span><span class="co">## 2              BA.2                18932 Alberta 1.794141e-08 2.596512e-09 NA</span></span>
-<span><span class="co">## 3           BA.2.75                18932 Alberta 3.448193e-21 2.341670e-20 NA</span></span>
-<span><span class="co">## 4            BA.2.X                18932 Alberta 2.824100e-10 6.708551e-11 NA</span></span>
-<span><span class="co">## 5              BA.4                18932 Alberta 3.632156e-12 2.778783e-12 NA</span></span>
-<span><span class="co">## 6              BA.5                18932 Alberta 1.410624e-17 1.157821e-17 NA</span></span>
+<span><span class="co">## 1              BA.1                18932 Alberta 1.154889e-04 9.895454e-06 NA</span></span>
+<span><span class="co">## 2              BA.2                18932 Alberta 1.655707e-08 2.396371e-09 NA</span></span>
+<span><span class="co">## 3           BA.2.75                18932 Alberta 8.050915e-15 3.318673e-14 NA</span></span>
+<span><span class="co">## 4            BA.2.X                18932 Alberta 1.806210e-10 4.337537e-11 NA</span></span>
+<span><span class="co">## 5              BA.4                18932 Alberta 1.052579e-12 7.954356e-13 NA</span></span>
+<span><span class="co">## 6              BA.5                18932 Alberta 1.016301e-17 7.991928e-18 NA</span></span>
 <span><span class="co">##       asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1  9.563042e-05 1.341899e-04    2021-11-01</span></span>
-<span><span class="co">## 2  1.285234e-08 2.303048e-08    2021-11-01</span></span>
-<span><span class="co">## 3 -4.244769e-20 4.934407e-20    2021-11-01</span></span>
-<span><span class="co">## 4  1.509249e-10 4.138952e-10    2021-11-01</span></span>
-<span><span class="co">## 5 -1.814159e-12 9.078470e-12    2021-11-01</span></span>
-<span><span class="co">## 6 -8.586628e-18 3.679911e-17    2021-11-01</span></span></code></pre>
+<span><span class="co">## 1  9.609420e-05 1.348837e-04    2021-11-01</span></span>
+<span><span class="co">## 2  1.186026e-08 2.125387e-08    2021-11-01</span></span>
+<span><span class="co">## 3 -5.699388e-14 7.309571e-14    2021-11-01</span></span>
+<span><span class="co">## 4  9.560683e-11 2.656351e-10    2021-11-01</span></span>
+<span><span class="co">## 5 -5.064461e-13 2.611604e-12    2021-11-01</span></span>
+<span><span class="co">## 6 -5.500881e-18 2.582690e-17    2021-11-01</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
