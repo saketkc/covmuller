@@ -130,7 +130,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_11_12.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2022_11_14.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_germany</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Germany"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -214,61 +214,56 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_germany_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_germany_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  200 (171 variable)</span></span>
-<span><span class="co">## initial  value 1290697.955782 </span></span>
-<span><span class="co">## iter  10 value 553798.951030</span></span>
-<span><span class="co">## iter  20 value 487142.801162</span></span>
-<span><span class="co">## iter  30 value 473016.123849</span></span>
-<span><span class="co">## iter  40 value 457037.625950</span></span>
-<span><span class="co">## iter  50 value 425051.190794</span></span>
-<span><span class="co">## iter  60 value 417277.221728</span></span>
-<span><span class="co">## iter  70 value 415485.386056</span></span>
-<span><span class="co">## iter  80 value 412429.200406</span></span>
-<span><span class="co">## iter  90 value 410092.934741</span></span>
-<span><span class="co">## iter 100 value 406658.272616</span></span>
-<span><span class="co">## iter 110 value 404556.367811</span></span>
-<span><span class="co">## iter 120 value 401577.530705</span></span>
-<span><span class="co">## iter 130 value 398083.985913</span></span>
-<span><span class="co">## iter 140 value 393724.984367</span></span>
-<span><span class="co">## iter 150 value 391206.261288</span></span>
-<span><span class="co">## iter 160 value 389936.054585</span></span>
-<span><span class="co">## iter 170 value 388682.942317</span></span>
-<span><span class="co">## iter 180 value 386244.748679</span></span>
-<span><span class="co">## iter 190 value 385821.909788</span></span>
-<span><span class="co">## iter 200 value 385546.271518</span></span>
-<span><span class="co">## iter 210 value 385518.401061</span></span>
-<span><span class="co">## iter 220 value 385512.224792</span></span>
-<span><span class="co">## iter 230 value 385505.380320</span></span>
-<span><span class="co">## iter 240 value 385457.873902</span></span>
-<span><span class="co">## iter 250 value 385349.140074</span></span>
-<span><span class="co">## iter 260 value 385291.094805</span></span>
-<span><span class="co">## iter 270 value 385277.893057</span></span>
-<span><span class="co">## iter 280 value 385276.686879</span></span>
-<span><span class="co">## iter 290 value 385275.700089</span></span>
-<span><span class="co">## iter 300 value 385273.949469</span></span>
-<span><span class="co">## iter 310 value 385273.345664</span></span>
-<span><span class="co">## iter 320 value 385272.237057</span></span>
-<span><span class="co">## iter 330 value 385261.359290</span></span>
-<span><span class="co">## iter 340 value 385259.720477</span></span>
-<span><span class="co">## iter 340 value 385259.716957</span></span>
-<span><span class="co">## iter 340 value 385259.716898</span></span>
-<span><span class="co">## final  value 385259.716898 </span></span>
+<span><span class="co">## initial  value 1295224.838075 </span></span>
+<span><span class="co">## iter  10 value 554130.224222</span></span>
+<span><span class="co">## iter  20 value 480428.050246</span></span>
+<span><span class="co">## iter  30 value 462062.073732</span></span>
+<span><span class="co">## iter  40 value 447412.111991</span></span>
+<span><span class="co">## iter  50 value 426445.347020</span></span>
+<span><span class="co">## iter  60 value 420814.136833</span></span>
+<span><span class="co">## iter  70 value 419424.247763</span></span>
+<span><span class="co">## iter  80 value 416942.926940</span></span>
+<span><span class="co">## iter  90 value 414903.110345</span></span>
+<span><span class="co">## iter 100 value 411803.192954</span></span>
+<span><span class="co">## iter 110 value 409607.662759</span></span>
+<span><span class="co">## iter 120 value 405792.474092</span></span>
+<span><span class="co">## iter 130 value 401240.733074</span></span>
+<span><span class="co">## iter 140 value 397763.421759</span></span>
+<span><span class="co">## iter 150 value 395722.638825</span></span>
+<span><span class="co">## iter 160 value 394414.613282</span></span>
+<span><span class="co">## iter 170 value 392515.497046</span></span>
+<span><span class="co">## iter 180 value 390938.910380</span></span>
+<span><span class="co">## iter 190 value 390355.630921</span></span>
+<span><span class="co">## iter 200 value 390124.746109</span></span>
+<span><span class="co">## iter 210 value 390097.246394</span></span>
+<span><span class="co">## iter 220 value 390091.689090</span></span>
+<span><span class="co">## iter 230 value 390068.234045</span></span>
+<span><span class="co">## iter 240 value 390007.654506</span></span>
+<span><span class="co">## iter 250 value 389918.318719</span></span>
+<span><span class="co">## iter 260 value 389915.984832</span></span>
+<span><span class="co">## iter 270 value 389915.769728</span></span>
+<span><span class="co">## iter 280 value 389913.349806</span></span>
+<span><span class="co">## iter 290 value 389910.722389</span></span>
+<span><span class="co">## iter 290 value 389910.720677</span></span>
+<span><span class="co">## iter 290 value 389910.720651</span></span>
+<span><span class="co">## final  value 389910.720651 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_germany_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric             State         prob</span></span>
-<span><span class="co">## 1              BA.1                18932 Baden-Wurttemberg 7.184682e-04</span></span>
-<span><span class="co">## 2              BA.2                18932 Baden-Wurttemberg 2.060038e-05</span></span>
-<span><span class="co">## 3           BA.2.75                18932 Baden-Wurttemberg 2.589832e-17</span></span>
-<span><span class="co">## 4            BA.2.X                18932 Baden-Wurttemberg 5.046993e-06</span></span>
-<span><span class="co">## 5              BA.3                18932 Baden-Wurttemberg 1.649766e-07</span></span>
-<span><span class="co">## 6              BA.4                18932 Baden-Wurttemberg 4.593100e-12</span></span>
+<span><span class="co">## 1              BA.1                18932 Baden-Wurttemberg 7.433914e-04</span></span>
+<span><span class="co">## 2              BA.2                18932 Baden-Wurttemberg 2.590298e-05</span></span>
+<span><span class="co">## 3           BA.2.75                18932 Baden-Wurttemberg 5.182414e-17</span></span>
+<span><span class="co">## 4            BA.2.X                18932 Baden-Wurttemberg 4.396084e-06</span></span>
+<span><span class="co">## 5              BA.3                18932 Baden-Wurttemberg 1.705275e-07</span></span>
+<span><span class="co">## 6              BA.4                18932 Baden-Wurttemberg 1.587452e-12</span></span>
 <span><span class="co">##             SE df     asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1 4.349451e-05 NA  6.332206e-04 8.037159e-04    2021-11-01</span></span>
-<span><span class="co">## 2 1.650664e-06 NA  1.736514e-05 2.383563e-05    2021-11-01</span></span>
-<span><span class="co">## 3 1.815551e-16 NA -3.299431e-16 3.817397e-16    2021-11-01</span></span>
-<span><span class="co">## 4 6.112612e-07 NA  3.848943e-06 6.245043e-06    2021-11-01</span></span>
-<span><span class="co">## 5 1.491942e-07 NA -1.274387e-07 4.573919e-07    2021-11-01</span></span>
-<span><span class="co">## 6 2.046836e-12 NA  5.813742e-13 8.604825e-12    2021-11-01</span></span></code></pre>
+<span><span class="co">## 1 4.499703e-05 NA  6.551989e-04 8.315840e-04    2021-11-01</span></span>
+<span><span class="co">## 2 2.072956e-06 NA  2.184006e-05 2.996590e-05    2021-11-01</span></span>
+<span><span class="co">## 3 3.152342e-16 NA -5.660236e-16 6.696719e-16    2021-11-01</span></span>
+<span><span class="co">## 4 5.343870e-07 NA  3.348705e-06 5.443463e-06    2021-11-01</span></span>
+<span><span class="co">## 5 1.547726e-07 NA -1.328213e-07 4.738763e-07    2021-11-01</span></span>
+<span><span class="co">## 6 6.994073e-13 NA  2.166387e-13 2.958265e-12    2021-11-01</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
