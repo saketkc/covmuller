@@ -26,24 +26,23 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1.1` = "BA.1",
   `BA.1` = "BA.1",
+  `BA.1.*` = "BA.1",
   `BA.2` = "BA.2",
-  `BA.2.10` = "BA.2.X",
-  `BA.2.10.1` = "BA.2.X",
-  `BA.2.12` = "BA.2.X",
-  `BA.2.12.1` = "BA.2.X",
+  `BA.2.*` = "BA.2",
   `BA.3` = "BA.3",
+  `BA.3.*` = "BA.3",
   `BA.4` = "BA.4",
+  `BA.4.*` = "BA.4",
   `BA.5` = "BA.5",
-  `BA.2.74` = "BA.2.X",
-  `BA.2.75` = "BA.2.75",
-  `BA.2.76` = "BA.2.X",
-  `XBB.*` = "XBB",
-  `BQ.1` = "BQ.1+",
-  `BQ.1.*` = "BQ.1+"
+  `BA.5.*` = "BA.5",
+  `XBB` = "XBB",
+  `XBB.1` = "XBB.1+",
+  `XBB.1.*` = "XBB.1+",
+  `XBB.1.5` = "XBB.1.5",
+  `BQ.1` = "BQ.1",
+  `BQ.1.*` = "BQ.1"
 )
-# BA2.75 is marked as BA.2.73 https://github.com/cov-lineages/pango-designation/issues/830#issuecomment-1178920091
 gisaid_india <- gisaid_india %>%
   filter(pangolin_lineage != "None") %>%
   filter(pangolin_lineage != "Unassigned")
