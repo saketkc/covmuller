@@ -177,3 +177,33 @@ gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2021.gif"
 ```
 
 ![](USA_animated_2021.gif)
+Look at cases in the past few weeks
+
+```{r}
+
+confirmed$MonthYear <- GetMonthYear(confirmed$date)
+
+confirmed_subset_dateweekwise_long <- confirmed %>%
+  filter(MonthYear > "September 2022") %>%
+  group_by(WeekYear) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
+  arrange(WeekYear) %>%
+  rename(WeekYearCollected = WeekYear)
+
+gisaid_usa_subset <- gisaid_usa %>% filter(MonthYearCollected > "Dec 2021")
+gisaid_usa_weekwise <- SummarizeVariantsWeekwise(gisaid_usa_subset)
+
+voc_to_keep <- gisaid_usa_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_usa_weekwise <- gisaid_usa_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+usa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_usa_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the USA by variant", caption = "**Source: gisaid.org and covid19nytimes<br>**")
+gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2022_2.gif"), animation = the_anim)
+```
+
+![](USA_animated_2022_2.gif)
