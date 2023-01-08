@@ -134,7 +134,7 @@
 <h2 id="get-variants-data-for-singapore">Get variants data for Singapore<a class="anchor" aria-label="anchor" href="#get-variants-data-for-singapore"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_01_05.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_01_07.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_singapore</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Singapore"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -240,32 +240,26 @@
 <span></span>
 <span><span class="va">sa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_singapore_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  44 (30 variable)</span></span>
-<span><span class="co">## initial  value 68272.874207 </span></span>
-<span><span class="co">## iter  10 value 36892.344038</span></span>
-<span><span class="co">## iter  20 value 29266.717138</span></span>
-<span><span class="co">## iter  30 value 23933.736702</span></span>
-<span><span class="co">## iter  40 value 21893.561879</span></span>
-<span><span class="co">## iter  50 value 21354.287203</span></span>
-<span><span class="co">## iter  60 value 21027.959358</span></span>
-<span><span class="co">## iter  70 value 21021.569627</span></span>
-<span><span class="co">## iter  80 value 21006.183117</span></span>
-<span><span class="co">## iter  90 value 20848.239876</span></span>
-<span><span class="co">## iter 100 value 20776.317234</span></span>
-<span><span class="co">## iter 110 value 20671.375435</span></span>
-<span><span class="co">## iter 120 value 20531.282299</span></span>
-<span><span class="co">## iter 130 value 20508.330617</span></span>
-<span><span class="co">## iter 140 value 20497.560023</span></span>
-<span><span class="co">## iter 150 value 20483.121030</span></span>
-<span><span class="co">## iter 160 value 20478.668898</span></span>
-<span><span class="co">## iter 170 value 20468.076065</span></span>
-<span><span class="co">## iter 180 value 20447.565132</span></span>
-<span><span class="co">## iter 190 value 20429.368729</span></span>
-<span><span class="co">## iter 200 value 20428.667289</span></span>
-<span><span class="co">## iter 210 value 20417.365082</span></span>
-<span><span class="co">## iter 220 value 20416.007941</span></span>
-<span><span class="co">## iter 230 value 20391.275308</span></span>
-<span><span class="co">## iter 240 value 20385.776943</span></span>
-<span><span class="co">## final  value 20378.654617 </span></span>
+<span><span class="co">## initial  value 68728.474309 </span></span>
+<span><span class="co">## iter  10 value 35867.131772</span></span>
+<span><span class="co">## iter  20 value 29035.784650</span></span>
+<span><span class="co">## iter  30 value 23226.961932</span></span>
+<span><span class="co">## iter  40 value 21865.172033</span></span>
+<span><span class="co">## iter  50 value 21115.128955</span></span>
+<span><span class="co">## iter  60 value 20903.525404</span></span>
+<span><span class="co">## iter  70 value 20879.622265</span></span>
+<span><span class="co">## iter  80 value 20842.194957</span></span>
+<span><span class="co">## iter  90 value 20710.059845</span></span>
+<span><span class="co">## iter 100 value 20524.243855</span></span>
+<span><span class="co">## iter 110 value 20426.707455</span></span>
+<span><span class="co">## iter 120 value 20265.529289</span></span>
+<span><span class="co">## iter 130 value 20176.992414</span></span>
+<span><span class="co">## iter 140 value 20169.987380</span></span>
+<span><span class="co">## iter 150 value 20146.417493</span></span>
+<span><span class="co">## iter 160 value 20137.134336</span></span>
+<span><span class="co">## iter 170 value 20126.140740</span></span>
+<span><span class="co">## iter 180 value 20088.194498</span></span>
+<span><span class="co">## final  value 20081.496837 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">sa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Singapore by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span></span>
@@ -295,22 +289,22 @@
 <span></span>
 <span><span class="va">sa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_singapore_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  36 (24 variable)</span></span>
-<span><span class="co">## initial  value 37262.731607 </span></span>
-<span><span class="co">## iter  10 value 22144.380937</span></span>
-<span><span class="co">## iter  20 value 19356.292930</span></span>
-<span><span class="co">## iter  30 value 18184.128727</span></span>
-<span><span class="co">## iter  40 value 17743.162888</span></span>
-<span><span class="co">## iter  50 value 17651.552803</span></span>
-<span><span class="co">## iter  60 value 17641.558314</span></span>
-<span><span class="co">## iter  70 value 17611.379821</span></span>
-<span><span class="co">## iter  80 value 17553.540997</span></span>
-<span><span class="co">## iter  90 value 17530.725782</span></span>
-<span><span class="co">## iter 100 value 17524.817989</span></span>
-<span><span class="co">## iter 110 value 17524.547579</span></span>
-<span><span class="co">## iter 120 value 17523.378564</span></span>
-<span><span class="co">## iter 130 value 17522.284533</span></span>
-<span><span class="co">## iter 140 value 17521.008237</span></span>
-<span><span class="co">## final  value 17520.175425 </span></span>
+<span><span class="co">## initial  value 37680.204277 </span></span>
+<span><span class="co">## iter  10 value 22129.869716</span></span>
+<span><span class="co">## iter  20 value 19204.295545</span></span>
+<span><span class="co">## iter  30 value 18118.175790</span></span>
+<span><span class="co">## iter  40 value 17524.036982</span></span>
+<span><span class="co">## iter  50 value 17424.168773</span></span>
+<span><span class="co">## iter  60 value 17421.509938</span></span>
+<span><span class="co">## iter  70 value 17378.091086</span></span>
+<span><span class="co">## iter  80 value 17334.576801</span></span>
+<span><span class="co">## iter  90 value 17318.999783</span></span>
+<span><span class="co">## iter 100 value 17314.932130</span></span>
+<span><span class="co">## iter 110 value 17314.893489</span></span>
+<span><span class="co">## iter 120 value 17314.822968</span></span>
+<span><span class="co">## iter 130 value 17314.415232</span></span>
+<span><span class="co">## iter 140 value 17313.686598</span></span>
+<span><span class="co">## final  value 17313.279282 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">sa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Singapore by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19datahub.io&lt;br&gt;**"</span><span class="op">)</span></span></code></pre></div>
