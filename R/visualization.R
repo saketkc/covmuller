@@ -19,6 +19,53 @@ CovmullerTheme <- function() {
   return(themex)
 }
 
+
+#' Plot heatmap of total cases/sequences
+#' @param cases_and_shared A dataframe containing counts of confirmed cases or sequenced cases (any column
+#' named 'value')
+#' @returns A heatmap of total cases/sequences
+#' @importFrom dplyr %>%
+#' @importFrom ggplot2 ggplot geom_tile geom_text scale_color_identity
+#' scale_fill_gradient2 labs guides theme ylab xlab element_text element_blank
+#' scale_x_discrete
+#' @importFrom hrbrthemes theme_ipsum
+#' @importFrom ggtext element_markdown
+#' @importFrom patchwork wrap_plots
+#' @export
+PlotTotalHeatmap <- function(df, color_legend = "Total cases") {
+  df_india <- df %>% filter(State == "India")
+  total_median <- df %>% filter(State!="India") %>% pull(value) %>% median(na.rm=TRUE)
+  print(total_median)
+  p <- ggplot(df%>% filter(State!="India") , aes(MonthYear,
+                      State,
+                      fill = value
+  )) +
+    geom_tile(color = "black") +
+    geom_text(aes(
+      label = value,
+      color = "black"
+        #ifelse(value > total_median,
+      #               "white", "black"
+      #)
+    )) +
+    scale_color_identity() +
+    scale_fill_gradient2(
+      low = "red",
+      mid = "white",
+      high = "#1c9099",
+      midpoint = total_median,
+      space = "Lab",
+      na.value = "grey50",
+      name = color_legend
+    ) +
+    scale_x_discrete(guide = guide_axis(angle = 45)) +
+    xlab("Month collected") +
+    ylab("") +
+    CovmullerTheme()
+
+  return(wrap_plots(p))
+}
+
 #' Plot heatmap of cases sequenced
 #' @param cases_and_shared A dataframe containing counts of confirmed cases and sequenced cases
 #' @returns A heatmap of total percentage of cases sequenced
