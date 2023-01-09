@@ -34,19 +34,22 @@ CovmullerTheme <- function() {
 #' @export
 PlotTotalHeatmap <- function(df, color_legend = "Total cases") {
   df_india <- df %>% filter(State == "India")
-  total_median <- df %>% filter(State!="India") %>% pull(value) %>% median(na.rm=TRUE)
+  total_median <- df %>%
+    filter(State != "India") %>%
+    pull(value) %>%
+    median(na.rm = TRUE)
   print(total_median)
-  p <- ggplot(df%>% filter(State!="India") , aes(MonthYear,
-                      State,
-                      fill = value
+  p <- ggplot(df %>% filter(State != "India"), aes(MonthYear,
+    State,
+    fill = value
   )) +
     geom_tile(color = "black") +
     geom_text(aes(
       label = value,
       color = "black"
-        #ifelse(value > total_median,
+      # ifelse(value > total_median,
       #               "white", "black"
-      #)
+      # )
     )) +
     scale_color_identity() +
     scale_fill_gradient2(

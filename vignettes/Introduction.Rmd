@@ -109,8 +109,9 @@ p4
 
 In terms of absolute numbers sequenced:
 
-```{r}
+```{r, fig.width=11, fig.height=11, warning=FALSE, message=FALSE}
 seq_stats2 <- seq_stats
+# seq_stats2 <- seq_stats2 %>% filter(MonthYear >= "July 2022")
 seq_stats2$MonthYear <- factor(seq_stats$MonthYear)
 seq_stats2$State <- factor(
   x = seq_stats2$State,
@@ -118,6 +119,7 @@ seq_stats2$State <- factor(
 )
 
 p4.total <- PlotTotalHeatmap(df = seq_stats2)
+p4.total
 ```
 
 # Plot Prevalence
