@@ -179,7 +179,7 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
     CovmullerTheme() +
     coord_cartesian(clip = "off") +
     ggtitle(title) +
-    labs(caption = caption)
+    labs(caption = paste0(caption, Sys.Date()))
   return(wrap_plots(p))
 }
 
@@ -188,7 +188,7 @@ BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblu
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
-StackedBarPlotPrevalence <- function(prevalence_df, xangle = 90) {
+StackedBarPlotPrevalence <- function(prevalence_df, xangle = 90, caption = "**Source:** gisaid.org<br>") {
   # color_values <- as.character(x = paletteer::paletteer_d("ggsci::default_igv"))
   color_values <- c(RColorBrewer::brewer.pal(11, "Set3"), RColorBrewer::brewer.pal(8, "Set2"))
   p <- ggplot(
@@ -205,7 +205,7 @@ StackedBarPlotPrevalence <- function(prevalence_df, xangle = 90) {
     CovmullerTheme() +
     xlab("Date collected") +
     ylab("% composition of variant") +
-    labs(caption = "**Source:** gisaid.org<br>") +
+    labs(caption = paste0(caption, Sys.Date())) +
     scale_x_discrete(guide = guide_axis(angle = xangle))
   return(wrap_plots(p))
 }
@@ -259,7 +259,7 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
     ggtitle(title) +
     labs(
       subtitle = "Estimation based on a multinomial fit to weekly genomic surveillance data deposited to GISAID",
-      caption = caption
+      caption = paste0(caption, Sys.Date())
     ) +
     theme(legend.position = "bottom", axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
   anim <- the_anim + transition_reveal(Date) + view_follow(fixed_y = c(0, NA), fixed_x = T)
