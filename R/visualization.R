@@ -236,7 +236,7 @@ PlotMullerDailyPrevalence <- function(df, ncol = 4) {
 #' @importFrom patchwork wrap_plots
 #' @export
 #'
-PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source: gisaid.org<br>**", colors = NULL, date_breaks = "14 days", trans_y = "identity") {
+PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source: gisaid.org** <br>", colors = NULL, date_breaks = "14 days", trans_y = "identity") {
   if (!is.null(colors)) {
     color_values <- colors
   } else {
