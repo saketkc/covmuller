@@ -130,7 +130,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_01_16.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_01_19.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"United Kingdom"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -202,29 +202,29 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_uk_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_uk_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  42 (30 variable)</span></span>
-<span><span class="co">## initial  value 117508.961270 </span></span>
-<span><span class="co">## iter  10 value 81224.202081</span></span>
-<span><span class="co">## iter  20 value 77829.934219</span></span>
-<span><span class="co">## iter  30 value 76628.299132</span></span>
-<span><span class="co">## iter  40 value 76171.911920</span></span>
-<span><span class="co">## final  value 76171.099567 </span></span>
+<span><span class="co">## initial  value 121793.058161 </span></span>
+<span><span class="co">## iter  10 value 84064.906006</span></span>
+<span><span class="co">## iter  20 value 80796.036056</span></span>
+<span><span class="co">## iter  30 value 79127.220694</span></span>
+<span><span class="co">## iter  40 value 78681.066281</span></span>
+<span><span class="co">## final  value 78680.970554 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_uk_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric   State        prob           SE df</span></span>
-<span><span class="co">## 1           BA.2.75                19266 England 0.022399020 0.0017215939 NA</span></span>
-<span><span class="co">## 2              BA.4                19266 England 0.056698215 0.0026505320 NA</span></span>
-<span><span class="co">## 3              BA.5                19266 England 0.569551326 0.0053160106 NA</span></span>
-<span><span class="co">## 4             BQ.1+                19266 England 0.097653404 0.0024074001 NA</span></span>
-<span><span class="co">## 5            Others                19266 England 0.251080948 0.0043449779 NA</span></span>
-<span><span class="co">## 6               XBB                19266 England 0.002617087 0.0003202916 NA</span></span>
+<span><span class="co">## 1           BA.2.75                19266 England 0.022389497 0.0017109949 NA</span></span>
+<span><span class="co">## 2              BA.4                19266 England 0.056801050 0.0026383347 NA</span></span>
+<span><span class="co">## 3              BA.5                19266 England 0.569733706 0.0052789072 NA</span></span>
+<span><span class="co">## 4             BQ.1+                19266 England 0.097064716 0.0023714377 NA</span></span>
+<span><span class="co">## 5            Others                19266 England 0.251402201 0.0043115728 NA</span></span>
+<span><span class="co">## 6               XBB                19266 England 0.002608829 0.0003148099 NA</span></span>
 <span><span class="co">##     asymp.LCL   asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1 0.019024758 0.025773282    2022-10-01</span></span>
-<span><span class="co">## 2 0.051503268 0.061893163    2022-10-01</span></span>
-<span><span class="co">## 3 0.559132137 0.579970516    2022-10-01</span></span>
-<span><span class="co">## 4 0.092934986 0.102371821    2022-10-01</span></span>
-<span><span class="co">## 5 0.242564947 0.259596948    2022-10-01</span></span>
-<span><span class="co">## 6 0.001989326 0.003244847    2022-10-01</span></span></code></pre>
+<span><span class="co">## 1 0.019036009 0.025742985    2022-10-01</span></span>
+<span><span class="co">## 2 0.051630009 0.061972091    2022-10-01</span></span>
+<span><span class="co">## 3 0.559387238 0.580080174    2022-10-01</span></span>
+<span><span class="co">## 4 0.092416783 0.101712648    2022-10-01</span></span>
+<span><span class="co">## 5 0.242951674 0.259852729    2022-10-01</span></span>
+<span><span class="co">## 6 0.001991813 0.003225845    2022-10-01</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
