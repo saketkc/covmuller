@@ -81,7 +81,7 @@ head(chennai_monthly_cases)
 
 
 ```{r, fig.width=8, fig.height=5, warning=FALSE}
-p1 <- BarPlot(chennai_monthly_cases, ylabel = "Cases per month", label_si = TRUE, title = "Total cases per month - Aizawl (India)", caption = "**Source: covid19bharat.org<br>**")
+p1 <- BarPlot(chennai_monthly_cases, ylabel = "Cases per month", label_si = TRUE, title = "Total cases per month - Aizawl (India)", caption = "**Source: covid19bharat.org**<br>")
 p1
 ```
 
@@ -91,7 +91,7 @@ p1
 chennai_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_india %>% filter(custom_city == "Aizawl"), rename_country_as_state = TRUE)
 
 
-p2 <- BarPlot(chennai_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, title = "Total sequences deposited to GISAID from Aizawl (India)", caption = "**Source: gisaid.org <br>**")
+p2 <- BarPlot(chennai_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, title = "Total sequences deposited to GISAID from Aizawl (India)", caption = "**Source: gisaid.org **<br>")
 p2
 ```
 
@@ -110,7 +110,7 @@ sequencing_proportion <- CombineSequencedCases(
   cases_sequenced = chennai_seq_stats,
   confirmed_long = chennai_monthly_cases_tmp
 )
-p3 <- BarPlot(sequencing_proportion, yaxis = "percent_sequenced_collected", ylabel = "%  deposited to GISAID", color = "yellowgreen", title = "Proportion of cases deposited to GISAID from Aizawl (India)", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
+p3 <- BarPlot(sequencing_proportion, yaxis = "percent_sequenced_collected", ylabel = "%  deposited to GISAID", color = "yellowgreen", title = "Proportion of cases deposited to GISAID from Aizawl (India)", caption = "**Source: gisaid.org and covid19bharat.org**<br>")
 p3
 ```
 
@@ -179,7 +179,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Aizawl (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Aizawl (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org**<br>")
 gganimate::anim_save(filename = here::here("docs/articles/Aizawl_animated_2021.gif"), animation = the_anim)
 ```
 ![](Aizawl_animated_2021.gif)
@@ -214,7 +214,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Aizawl (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org<br>**")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Aizawl (India) by variant", caption = "**Source: gisaid.org and covid19bharat.org**<br>")
 gganimate::anim_save(filename = here::here("docs/articles/Aizawl_animated_2022.gif"), animation = the_anim)
 ```
 ![](Aizawl_animated_2022.gif)

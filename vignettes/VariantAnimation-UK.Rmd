@@ -133,7 +133,7 @@ voc_to_keep <- gisaid_uk_weekwise %>%
 gisaid_uk_weekwise <- gisaid_uk_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 uk_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_uk_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(uk_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York state by variant", caption = "**Source: gisaid.org and gov.uk<br>**", date_breaks = "28 days")
+the_anim <- PlotVariantPrevalenceAnimated(uk_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York state by variant", caption = "**Source: gisaid.org and gov.uk**<br>", date_breaks = "28 days")
 gganimate::anim_save(filename = here::here("docs/articles/UK_animated.gif"), animation = the_anim)
 ```
 ![](UK_animated.gif)
@@ -163,7 +163,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the USA by variant", caption = "**Source: gisaid.org and gov.uk<br>**")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the USA by variant", caption = "**Source: gisaid.org and gov.uk**<br>")
 gganimate::anim_save(filename = here::here("docs/articles/UK_animated_2021.gif"), animation = the_anim)
 ```
 ![](UK_animated_2021.gif)
