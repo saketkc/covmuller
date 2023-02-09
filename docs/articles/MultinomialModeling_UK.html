@@ -130,7 +130,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_02_04.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_02_06.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"United Kingdom"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -193,38 +193,39 @@
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">##   State   DateCollectedNumeric lineage_collapsed     n</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> England                <span style="text-decoration: underline;">19</span>266 BA.2.75              14</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> England                <span style="text-decoration: underline;">19</span>266 BA.4                 16</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> England                <span style="text-decoration: underline;">19</span>266 BA.5                239</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> England                <span style="text-decoration: underline;">19</span>266 BQ.1+                44</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> England                <span style="text-decoration: underline;">19</span>266 Others              108</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> England                <span style="text-decoration: underline;">19</span>266 XBB                   1</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> England                <span style="text-decoration: underline;">19</span>266 BA.2.75              13</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> England                <span style="text-decoration: underline;">19</span>266 BA.2.X                1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> England                <span style="text-decoration: underline;">19</span>266 BA.4                 16</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> England                <span style="text-decoration: underline;">19</span>266 BA.5                240</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> England                <span style="text-decoration: underline;">19</span>266 BQ.1+                44</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> England                <span style="text-decoration: underline;">19</span>266 Others              108</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_uk_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_uk_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  42 (30 variable)</span></span>
-<span><span class="co">## initial  value 138603.345502 </span></span>
-<span><span class="co">## iter  10 value 92463.302749</span></span>
-<span><span class="co">## iter  20 value 90799.592857</span></span>
-<span><span class="co">## iter  30 value 89065.616873</span></span>
-<span><span class="co">## iter  40 value 88661.160484</span></span>
-<span><span class="co">## final  value 88660.464606 </span></span>
+<pre><code><span><span class="co">## # weights:  49 (36 variable)</span></span>
+<span><span class="co">## initial  value 151921.097157 </span></span>
+<span><span class="co">## iter  10 value 96000.559612</span></span>
+<span><span class="co">## iter  20 value 94089.187415</span></span>
+<span><span class="co">## iter  30 value 91431.981388</span></span>
+<span><span class="co">## iter  40 value 90517.558903</span></span>
+<span><span class="co">## iter  50 value 90478.163113</span></span>
+<span><span class="co">## final  value 90478.137503 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_uk_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric   State        prob           SE df</span></span>
-<span><span class="co">## 1           BA.2.75                19266 England 0.022692527 0.0016696865 NA</span></span>
-<span><span class="co">## 2              BA.4                19266 England 0.057700003 0.0025717891 NA</span></span>
-<span><span class="co">## 3              BA.5                19266 England 0.568530748 0.0050825972 NA</span></span>
-<span><span class="co">## 4             BQ.1+                19266 England 0.101225261 0.0022950845 NA</span></span>
-<span><span class="co">## 5            Others                19266 England 0.246543622 0.0040492642 NA</span></span>
-<span><span class="co">## 6               XBB                19266 England 0.003307838 0.0003428561 NA</span></span>
-<span><span class="co">##     asymp.LCL   asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1 0.019420002 0.025965053    2022-10-01</span></span>
-<span><span class="co">## 2 0.052659389 0.062740617    2022-10-01</span></span>
-<span><span class="co">## 3 0.558569041 0.578492456    2022-10-01</span></span>
-<span><span class="co">## 4 0.096726978 0.105723544    2022-10-01</span></span>
-<span><span class="co">## 5 0.238607210 0.254480034    2022-10-01</span></span>
-<span><span class="co">## 6 0.002635853 0.003979824    2022-10-01</span></span></code></pre>
+<pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric   State         prob           SE df</span></span>
+<span><span class="co">## 1           BA.2.75                19266 England 0.0199028595 1.551942e-03 NA</span></span>
+<span><span class="co">## 2            BA.2.X                19266 England 0.0002501759 9.086076e-05 NA</span></span>
+<span><span class="co">## 3              BA.4                19266 England 0.0578965399 2.565184e-03 NA</span></span>
+<span><span class="co">## 4              BA.5                19266 England 0.5710912164 5.048533e-03 NA</span></span>
+<span><span class="co">## 5             BQ.1+                19266 England 0.1027589451 2.304936e-03 NA</span></span>
+<span><span class="co">## 6            Others                19266 England 0.2445053591 4.000811e-03 NA</span></span>
+<span><span class="co">##      asymp.LCL    asymp.UCL DateCollected</span></span>
+<span><span class="co">## 1 1.686111e-02 0.0229446105    2022-10-01</span></span>
+<span><span class="co">## 2 7.209209e-05 0.0004282597    2022-10-01</span></span>
+<span><span class="co">## 3 5.286887e-02 0.0629242080    2022-10-01</span></span>
+<span><span class="co">## 4 5.611963e-01 0.5809861591    2022-10-01</span></span>
+<span><span class="co">## 5 9.824135e-02 0.1072765372    2022-10-01</span></span>
+<span><span class="co">## 6 2.366639e-01 0.2523468054    2022-10-01</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="plot-smooth-muller-plots">Plot Smooth Muller Plots<a class="anchor" aria-label="anchor" href="#plot-smooth-muller-plots"></a>
