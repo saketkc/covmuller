@@ -18,7 +18,7 @@ theme_set(CovmullerTheme())
 # Get variants data for UK
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_03_16.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_03_25.qs")
 gisaid_uk <- gisaid_metadata %>%
   filter(Country == "United Kingdom") %>%
   filter(Host == "Human")
@@ -141,7 +141,6 @@ gganimate::anim_save(filename = here::here("docs/articles/UK_animated.gif"), ani
 Look at cases after October,2021 only:
 
 ```{r}
-
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%

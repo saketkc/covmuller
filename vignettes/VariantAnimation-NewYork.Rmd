@@ -17,7 +17,7 @@ theme_set(CovmullerTheme())
 # Get variants data for NY state
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_03_16.qs")
+gisaid_metadata <- qs::qread("~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_03_25.qs")
 gisaid_usa <- gisaid_metadata %>%
   filter(Country == "USA") %>%
   filter(Host == "Human")
@@ -66,7 +66,6 @@ gisaid_NY <- CollapseLineageToVOCs(
 # Get weekly cases for New York
 
 ```{r, warning=FALSE, message=FALSE}
-
 if (FALSE) {
   all_state_cases <- refresh_covid19nytimes_states()
 
@@ -140,7 +139,6 @@ gganimate::anim_save(filename = here::here("docs/articles/NY_animated.gif"), ani
 Look at cases after february, 2022 only:
 
 ```{r}
-
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
