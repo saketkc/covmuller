@@ -130,7 +130,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_04_08.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_04_15.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
@@ -207,35 +207,35 @@
 <span><span class="co">## <span style="color: #BCBCBC;">6</span> Assam                            <span style="text-decoration: underline;">19</span>313 XBB                   2</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_india_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  168 (135 variable)</span></span>
-<span><span class="co">## initial  value 9765.089107 </span></span>
-<span><span class="co">## iter  10 value 6714.715037</span></span>
-<span><span class="co">## iter  20 value 5954.790321</span></span>
-<span><span class="co">## iter  30 value 5677.588296</span></span>
-<span><span class="co">## iter  40 value 5643.769361</span></span>
-<span><span class="co">## iter  50 value 5632.090159</span></span>
-<span><span class="co">## iter  60 value 5629.700530</span></span>
-<span><span class="co">## iter  70 value 5629.412752</span></span>
-<span><span class="co">## iter  80 value 5629.009230</span></span>
-<span><span class="co">## iter  90 value 5628.987095</span></span>
-<span><span class="co">## final  value 5628.986731 </span></span>
+<pre><code><span><span class="co">## # weights:  174 (140 variable)</span></span>
+<span><span class="co">## initial  value 12950.837444 </span></span>
+<span><span class="co">## iter  10 value 7098.569041</span></span>
+<span><span class="co">## iter  20 value 6476.950537</span></span>
+<span><span class="co">## iter  30 value 6274.561706</span></span>
+<span><span class="co">## iter  40 value 6242.729602</span></span>
+<span><span class="co">## iter  50 value 6230.269416</span></span>
+<span><span class="co">## iter  60 value 6228.197684</span></span>
+<span><span class="co">## iter  70 value 6227.733495</span></span>
+<span><span class="co">## iter  80 value 6227.338434</span></span>
+<span><span class="co">## iter  90 value 6227.271837</span></span>
+<span><span class="co">## final  value 6227.271012 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_india_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric             State         prob</span></span>
-<span><span class="co">## 1              BA.2                19266 Arunachal Pradesh 1.618776e-06</span></span>
-<span><span class="co">## 2           BA.2.75                19266 Arunachal Pradesh 1.157290e-06</span></span>
-<span><span class="co">## 3            BA.2.X                19266 Arunachal Pradesh 5.278694e-06</span></span>
-<span><span class="co">## 4             BQ.1+                19266 Arunachal Pradesh 7.480829e-11</span></span>
-<span><span class="co">## 5            Others                19266 Arunachal Pradesh 5.127632e-05</span></span>
-<span><span class="co">## 6               XBB                19266 Arunachal Pradesh 9.999407e-01</span></span>
-<span><span class="co">##             SE df    asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1 4.045273e-07 NA 8.259171e-07 2.411635e-06    2022-10-01</span></span>
-<span><span class="co">## 2 2.324705e-07 NA 7.016565e-07 1.612924e-06    2022-10-01</span></span>
-<span><span class="co">## 3 9.014226e-07 NA 3.511938e-06 7.045450e-06    2022-10-01</span></span>
-<span><span class="co">## 4 3.227053e-11 NA 1.155921e-11 1.380574e-10    2022-10-01</span></span>
-<span><span class="co">## 5 6.135033e-06 NA 3.925188e-05 6.330077e-05    2022-10-01</span></span>
-<span><span class="co">## 6 6.562800e-06 NA 9.999278e-01 9.999535e-01    2022-10-01</span></span></code></pre>
+<span><span class="co">## 1              BA.2                19266 Arunachal Pradesh 2.373333e-07</span></span>
+<span><span class="co">## 2           BA.2.75                19266 Arunachal Pradesh 2.672948e-07</span></span>
+<span><span class="co">## 3            BA.2.X                19266 Arunachal Pradesh 2.397330e-06</span></span>
+<span><span class="co">## 4             BQ.1+                19266 Arunachal Pradesh 9.664225e-12</span></span>
+<span><span class="co">## 5            Others                19266 Arunachal Pradesh 7.187923e-06</span></span>
+<span><span class="co">## 6               XBB                19266 Arunachal Pradesh 9.999899e-01</span></span>
+<span><span class="co">##             SE df     asymp.LCL    asymp.UCL DateCollected</span></span>
+<span><span class="co">## 1 1.070919e-06 NA -1.861630e-06 2.336296e-06    2022-10-01</span></span>
+<span><span class="co">## 2 2.074922e-06 NA -3.799478e-06 4.334067e-06    2022-10-01</span></span>
+<span><span class="co">## 3 1.028310e-05 NA -1.775718e-05 2.255184e-05    2022-10-01</span></span>
+<span><span class="co">## 4 4.251038e-11 NA -7.365458e-11 9.298303e-11    2022-10-01</span></span>
+<span><span class="co">## 5 5.057673e-05 NA -9.194064e-05 1.063165e-04    2022-10-01</span></span>
+<span><span class="co">## 6 6.399751e-05 NA  9.998645e-01 1.000115e+00    2022-10-01</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
