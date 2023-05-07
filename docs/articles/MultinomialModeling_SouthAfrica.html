@@ -130,7 +130,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_04_29.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/github/2021_Covid19_surveillance/data/all_metadata/metadata_tsv_2023_05_06.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_southafrica</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"South Africa"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -206,44 +206,41 @@
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">##   State        DateCollectedNumeric lineage_collapsed     n</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> Eastern Cape                <span style="text-decoration: underline;">19</span>276 BA.2                  1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> Eastern Cape                <span style="text-decoration: underline;">19</span>277 BA.2                  1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> Eastern Cape                <span style="text-decoration: underline;">19</span>299 Others                1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> Eastern Cape                <span style="text-decoration: underline;">19</span>300 Others                1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> Eastern Cape                <span style="text-decoration: underline;">19</span>317 BA.5                  1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> Eastern Cape                <span style="text-decoration: underline;">19</span>355 BQ.1+                 1</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Eastern Cape                <span style="text-decoration: underline;">19</span>299 Others                1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Eastern Cape                <span style="text-decoration: underline;">19</span>300 Others                1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Eastern Cape                <span style="text-decoration: underline;">19</span>317 BA.5                  1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Eastern Cape                <span style="text-decoration: underline;">19</span>355 BQ.1+                 1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Eastern Cape                <span style="text-decoration: underline;">19</span>363 XBB                   1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Eastern Cape                <span style="text-decoration: underline;">19</span>365 BA.5                  1</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_southafrica_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_southafrica_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  72 (55 variable)</span></span>
-<span><span class="co">## initial  value 8856.667056 </span></span>
-<span><span class="co">## iter  10 value 5493.630368</span></span>
-<span><span class="co">## iter  20 value 4924.097561</span></span>
-<span><span class="co">## iter  30 value 4839.512305</span></span>
-<span><span class="co">## iter  40 value 4817.765973</span></span>
-<span><span class="co">## iter  50 value 4815.358340</span></span>
-<span><span class="co">## iter  60 value 4814.967791</span></span>
-<span><span class="co">## iter  70 value 4814.819810</span></span>
-<span><span class="co">## iter  80 value 4814.815671</span></span>
-<span><span class="co">## iter  80 value 4814.815625</span></span>
-<span><span class="co">## iter  80 value 4814.815625</span></span>
-<span><span class="co">## final  value 4814.815625 </span></span>
+<pre><code><span><span class="co">## # weights:  60 (44 variable)</span></span>
+<span><span class="co">## initial  value 7929.700595 </span></span>
+<span><span class="co">## iter  10 value 5238.300790</span></span>
+<span><span class="co">## iter  20 value 4545.507279</span></span>
+<span><span class="co">## iter  30 value 4481.352624</span></span>
+<span><span class="co">## iter  40 value 4465.611901</span></span>
+<span><span class="co">## iter  50 value 4464.210614</span></span>
+<span><span class="co">## iter  60 value 4463.931752</span></span>
+<span><span class="co">## iter  70 value 4463.911124</span></span>
+<span><span class="co">## final  value 4463.911040 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_southafrica_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric        State         prob           SE</span></span>
-<span><span class="co">## 1              BA.2                19266 Eastern Cape 2.301060e-01 1.033824e-01</span></span>
-<span><span class="co">## 2              BA.4                19266 Eastern Cape 4.873937e-06 2.278006e-06</span></span>
-<span><span class="co">## 3              BA.5                19266 Eastern Cape 2.059943e-01 6.433876e-02</span></span>
-<span><span class="co">## 4             BQ.1+                19266 Eastern Cape 6.450510e-03 1.944203e-03</span></span>
-<span><span class="co">## 5            Others                19266 Eastern Cape 5.571906e-01 8.912620e-02</span></span>
-<span><span class="co">## 6               XBB                19266 Eastern Cape 2.537489e-04 1.490144e-04</span></span>
+<span><span class="co">## 1              BA.4                19266 Eastern Cape 7.812836e-06 2.436496e-06</span></span>
+<span><span class="co">## 2              BA.5                19266 Eastern Cape 2.782517e-01 7.436108e-02</span></span>
+<span><span class="co">## 3             BQ.1+                19266 Eastern Cape 8.603561e-03 2.419944e-03</span></span>
+<span><span class="co">## 4            Others                19266 Eastern Cape 7.124252e-01 7.390347e-02</span></span>
+<span><span class="co">## 5               XBB                19266 Eastern Cape 7.117044e-04 3.732569e-04</span></span>
+<span><span class="co">## 6              BA.4                19273 Eastern Cape 6.163289e-06 1.741114e-06</span></span>
 <span><span class="co">##   df     asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1 NA  2.748034e-02 4.327317e-01    2022-10-01</span></span>
-<span><span class="co">## 2 NA  4.091269e-07 9.338748e-06    2022-10-01</span></span>
-<span><span class="co">## 3 NA  7.989260e-02 3.320959e-01    2022-10-01</span></span>
-<span><span class="co">## 4 NA  2.639942e-03 1.026108e-02    2022-10-01</span></span>
-<span><span class="co">## 5 NA  3.825064e-01 7.318747e-01    2022-10-01</span></span>
-<span><span class="co">## 6 NA -3.831393e-05 5.458117e-04    2022-10-01</span></span></code></pre>
+<span><span class="co">## 1 NA  3.037392e-06 1.258828e-05    2022-10-01</span></span>
+<span><span class="co">## 2 NA  1.325067e-01 4.239967e-01    2022-10-01</span></span>
+<span><span class="co">## 3 NA  3.860557e-03 1.334656e-02    2022-10-01</span></span>
+<span><span class="co">## 4 NA  5.675771e-01 8.572734e-01    2022-10-01</span></span>
+<span><span class="co">## 5 NA -1.986564e-05 1.443275e-03    2022-10-01</span></span>
+<span><span class="co">## 6 NA  2.750769e-06 9.575809e-06    2022-10-08</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
