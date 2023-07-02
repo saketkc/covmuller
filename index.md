@@ -2,7 +2,6 @@
 
 Covmuller is an R-package designed for analysis of sequencing metadata deposited on [GISAID](https://www.gisaid.org/). 
 
-![](https://saket-choudhary.me/covmuller/articles/SouthAfrica_contrast_India_files/figure-html/unnamed-chunk-3-1.png))
 
 ![](https://saket-choudhary.me/covmuller/articles/IN_animated.gif)
 
@@ -40,12 +39,6 @@ Covmuller currently supports the following features:
          - [New York City (USA)](articles/VariantAnimation-NYC.html)
 
     
-    
-    
-    
-    
-* Compare prevalence between countries: [India and South Africa](articles/SouthAfrica_contrast_India.html)
-
 
 
 
