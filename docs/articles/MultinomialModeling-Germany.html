@@ -130,7 +130,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/data/epicov/metadata_tsv_2023_07_15.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/data/epicov/metadata_tsv_2023_08_19.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_germany</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Germany"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -205,47 +205,46 @@
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">##   State             DateCollectedNumeric lineage_collapsed     n</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>266 BA.4                 10</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>266 BA.5                153</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>266 BA.4                  6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>266 BA.5                 92</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">3</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>266 BQ.1+                 2</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>266 Others               48</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>266 Others               31</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">5</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>267 BA.4                  2</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>267 BA.5                 91</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Baden-Wurttemberg                <span style="text-decoration: underline;">19</span>267 BA.5                 58</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_germany_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_germany_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  147 (120 variable)</span></span>
-<span><span class="co">## initial  value 204361.429764 </span></span>
-<span><span class="co">## iter  10 value 125994.958692</span></span>
-<span><span class="co">## iter  20 value 124706.157989</span></span>
-<span><span class="co">## iter  30 value 119500.238811</span></span>
-<span><span class="co">## iter  40 value 118605.027074</span></span>
-<span><span class="co">## iter  50 value 117980.419511</span></span>
-<span><span class="co">## iter  60 value 117061.034072</span></span>
-<span><span class="co">## iter  70 value 116580.632420</span></span>
-<span><span class="co">## iter  80 value 116189.205705</span></span>
-<span><span class="co">## iter  90 value 115958.522677</span></span>
-<span><span class="co">## iter 100 value 115903.038194</span></span>
-<span><span class="co">## iter 110 value 115899.988785</span></span>
-<span><span class="co">## iter 120 value 115899.807707</span></span>
-<span><span class="co">## iter 130 value 115899.745540</span></span>
-<span><span class="co">## final  value 115899.739449 </span></span>
+<span><span class="co">## initial  value 180300.250771 </span></span>
+<span><span class="co">## iter  10 value 114586.177827</span></span>
+<span><span class="co">## iter  20 value 113487.794820</span></span>
+<span><span class="co">## iter  30 value 108688.999243</span></span>
+<span><span class="co">## iter  40 value 107506.649358</span></span>
+<span><span class="co">## iter  50 value 105320.255561</span></span>
+<span><span class="co">## iter  60 value 104399.592778</span></span>
+<span><span class="co">## iter  70 value 103873.176350</span></span>
+<span><span class="co">## iter  80 value 103513.750978</span></span>
+<span><span class="co">## iter  90 value 103415.825572</span></span>
+<span><span class="co">## iter 100 value 103381.076039</span></span>
+<span><span class="co">## iter 110 value 103374.452057</span></span>
+<span><span class="co">## iter 120 value 103374.189071</span></span>
+<span><span class="co">## final  value 103374.162677 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_germany_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric             State        prob</span></span>
-<span><span class="co">## 1              BA.2                19266 Baden-Wurttemberg 0.002632664</span></span>
-<span><span class="co">## 2           BA.2.75                19266 Baden-Wurttemberg 0.004912068</span></span>
-<span><span class="co">## 3              BA.4                19266 Baden-Wurttemberg 0.020419836</span></span>
-<span><span class="co">## 4              BA.5                19266 Baden-Wurttemberg 0.633277926</span></span>
-<span><span class="co">## 5             BQ.1+                19266 Baden-Wurttemberg 0.040087445</span></span>
-<span><span class="co">## 6            Others                19266 Baden-Wurttemberg 0.298554219</span></span>
+<span><span class="co">## 1              BA.2                19266 Baden-Wurttemberg 0.002399684</span></span>
+<span><span class="co">## 2           BA.2.75                19266 Baden-Wurttemberg 0.004928446</span></span>
+<span><span class="co">## 3              BA.4                19266 Baden-Wurttemberg 0.018337200</span></span>
+<span><span class="co">## 4              BA.5                19266 Baden-Wurttemberg 0.636694694</span></span>
+<span><span class="co">## 5             BQ.1+                19266 Baden-Wurttemberg 0.043572957</span></span>
+<span><span class="co">## 6            Others                19266 Baden-Wurttemberg 0.293987804</span></span>
 <span><span class="co">##             SE df   asymp.LCL   asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1 0.0004162839 NA 0.001816762 0.003448565    2022-10-01</span></span>
-<span><span class="co">## 2 0.0007375739 NA 0.003466450 0.006357687    2022-10-01</span></span>
-<span><span class="co">## 3 0.0017477977 NA 0.016994215 0.023845456    2022-10-01</span></span>
-<span><span class="co">## 4 0.0052475166 NA 0.622992982 0.643562869    2022-10-01</span></span>
-<span><span class="co">## 5 0.0012582198 NA 0.037621380 0.042553511    2022-10-01</span></span>
-<span><span class="co">## 6 0.0047201419 NA 0.289302911 0.307805527    2022-10-01</span></span></code></pre>
+<span><span class="co">## 1 0.0004464387 NA 0.001524680 0.003274688    2022-10-01</span></span>
+<span><span class="co">## 2 0.0008623285 NA 0.003238313 0.006618578    2022-10-01</span></span>
+<span><span class="co">## 3 0.0019240157 NA 0.014566199 0.022108202    2022-10-01</span></span>
+<span><span class="co">## 4 0.0061768992 NA 0.624588194 0.648801194    2022-10-01</span></span>
+<span><span class="co">## 5 0.0015371960 NA 0.040560109 0.046585806    2022-10-01</span></span>
+<span><span class="co">## 6 0.0055167817 NA 0.283175111 0.304800498    2022-10-01</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
