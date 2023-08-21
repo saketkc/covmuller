@@ -143,7 +143,7 @@
 <span><span class="co"># Staten Island is Richmond County (ANSI / FIPS 36085)</span></span>
 <span><span class="va">fips.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">36005</span>, <span class="fl">36047</span>, <span class="fl">36061</span>, <span class="fl">36081</span>, <span class="fl">36085</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2023_07_15.qs"</span><span class="op">)</span></span>
+<span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2023_08_19.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_usa</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"USA"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -301,25 +301,25 @@
 <span></span>
 <span><span class="va">newyork_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_NYC_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  60 (42 variable)</span></span>
-<span><span class="co">## initial  value 407799.863684 </span></span>
-<span><span class="co">## iter  10 value 244385.899210</span></span>
-<span><span class="co">## iter  20 value 165889.042596</span></span>
-<span><span class="co">## iter  30 value 142476.846911</span></span>
-<span><span class="co">## iter  40 value 116665.566792</span></span>
-<span><span class="co">## iter  50 value 108779.811078</span></span>
-<span><span class="co">## iter  60 value 106020.123911</span></span>
-<span><span class="co">## iter  70 value 104150.371522</span></span>
-<span><span class="co">## iter  80 value 103872.451668</span></span>
-<span><span class="co">## iter  90 value 103761.057320</span></span>
-<span><span class="co">## iter 100 value 103752.760591</span></span>
-<span><span class="co">## iter 110 value 103471.426537</span></span>
-<span><span class="co">## iter 120 value 102539.358647</span></span>
-<span><span class="co">## iter 130 value 102201.505123</span></span>
-<span><span class="co">## iter 140 value 101796.066523</span></span>
-<span><span class="co">## iter 150 value 101597.443130</span></span>
-<span><span class="co">## iter 160 value 101529.124422</span></span>
-<span><span class="co">## iter 170 value 101485.597043</span></span>
-<span><span class="co">## final  value 101485.487469 </span></span>
+<span><span class="co">## initial  value 245563.284186 </span></span>
+<span><span class="co">## iter  10 value 128839.357313</span></span>
+<span><span class="co">## iter  20 value 103282.305737</span></span>
+<span><span class="co">## iter  30 value 83586.998492</span></span>
+<span><span class="co">## iter  40 value 62536.787114</span></span>
+<span><span class="co">## iter  50 value 57890.693937</span></span>
+<span><span class="co">## iter  60 value 57190.416081</span></span>
+<span><span class="co">## iter  70 value 56715.033808</span></span>
+<span><span class="co">## iter  80 value 56323.696073</span></span>
+<span><span class="co">## iter  90 value 56264.218283</span></span>
+<span><span class="co">## iter 100 value 56256.704878</span></span>
+<span><span class="co">## iter 110 value 56099.243825</span></span>
+<span><span class="co">## iter 120 value 55732.880204</span></span>
+<span><span class="co">## iter 130 value 55648.213805</span></span>
+<span><span class="co">## iter 140 value 55479.801076</span></span>
+<span><span class="co">## iter 150 value 55408.046529</span></span>
+<span><span class="co">## iter 160 value 55393.480796</span></span>
+<span><span class="co">## iter 170 value 55387.713616</span></span>
+<span><span class="co">## final  value 55387.620572 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">newyork_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in New York City by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"14 days"</span><span class="op">)</span></span>
@@ -347,16 +347,15 @@
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  36 (24 variable)</span></span>
-<span><span class="co">## initial  value 170223.382455 </span></span>
-<span><span class="co">## iter  10 value 86124.937488</span></span>
-<span><span class="co">## iter  20 value 74851.590862</span></span>
-<span><span class="co">## iter  30 value 67846.572897</span></span>
-<span><span class="co">## iter  40 value 65446.475873</span></span>
-<span><span class="co">## iter  50 value 64841.421141</span></span>
-<span><span class="co">## iter  60 value 64814.057000</span></span>
-<span><span class="co">## iter  70 value 64646.887806</span></span>
-<span><span class="co">## iter  80 value 64624.970258</span></span>
-<span><span class="co">## final  value 64624.870510 </span></span>
+<span><span class="co">## initial  value 72829.205840 </span></span>
+<span><span class="co">## iter  10 value 41449.110952</span></span>
+<span><span class="co">## iter  20 value 31165.813553</span></span>
+<span><span class="co">## iter  30 value 27238.285470</span></span>
+<span><span class="co">## iter  40 value 26629.629960</span></span>
+<span><span class="co">## iter  50 value 26464.568889</span></span>
+<span><span class="co">## iter  60 value 26459.074925</span></span>
+<span><span class="co">## iter  70 value 26447.958506</span></span>
+<span><span class="co">## final  value 26447.846192 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in New York City by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes**&lt;br&gt;"</span><span class="op">)</span></span></code></pre></div>
