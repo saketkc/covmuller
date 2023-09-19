@@ -29,29 +29,21 @@ gisaid_usa <- gisaid_usa %>%
 gisaid_NY <- gisaid_usa %>% filter(State == "New York")
 
 vocs <- GetVOCs()
-omicron <- vocs[["omicron"]]
-vocs[["omicron"]] <- NULL
-vocs[["lambda"]] <- NULL
-vocs[["beta"]] <- NULL
-vocs[["gamma"]] <- NULL
-
 custom_voc_mapping <- list(
-  `BA.1` = "BA.1",
-  `BA.1.*` = "BA.1",
-  `BA.2` = "BA.2",
-  `BA.2.*` = "BA.2",
-  `BA.3` = "BA.3",
-  `BA.3.*` = "BA.3",
-  `BA.4` = "BA.4",
-  `BA.4.*` = "BA.4",
-  `BA.5` = "BA.5",
-  `BA.5.*` = "BA.5",
-  `XBB` = "XBB",
-  `XBB.1` = "XBB.1+",
-  `XBB.1.*` = "XBB.1+",
-  `XBB.1.5` = "XBB.1.5",
+  `XBB` = "XBB.*",
+  `XBB.*` = "XBB.*",
   `BQ.1` = "BQ.1",
-  `BQ.1.*` = "BQ.1"
+  `BQ.1.*` = "BQ.1",
+  `XBB.1` = "XBB.1.*",
+  `XBB.1.*` = "XBB.1.*",
+  `XBB.1.5` = "XBB.1.5",
+  `XBB.1.16` = "XBB.1.16",
+  `XBB.1.16.*` = "XBB.1.16",
+  `EG.5.*` = "EG.5",
+  `FL.1.*` = "FL.1.*",
+  #`FL.1.5.*` = "FL.1.5",
+  #`FL.1.6.*` = "FL.1.6",
+  `GJ.1.2` = "GJ.1.2"
 )
 gisaid_NY <- gisaid_NY %>% filter(pangolin_lineage != "None")
 
@@ -66,17 +58,6 @@ gisaid_NY <- CollapseLineageToVOCs(
 # Get weekly cases for New York
 
 ```{r, warning=FALSE, message=FALSE}
-if (FALSE) {
-  all_state_cases <- refresh_covid19nytimes_states()
-
-  confirmed <- all_state_cases %>%
-    filter(location == "New York") %>%
-    filter(data_type == "cases_total") %>%
-    arrange(date)
-
-  confirmed$daily_cases <- c(confirmed$value[1], diff(confirmed$value))
-  confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
-}
 confirmed <- covid19(country = "USA", level = 2) %>%
   filter(administrative_area_level_2 == "New York") %>%
   select(date, confirmed) %>%
@@ -102,10 +83,6 @@ gisaid_NY_weekwise <- SummarizeVariantsWeekwise(gisaid_NY)
 state_month_counts <- SummarizeVariantsMonthwise(gisaid_NY)
 state_month_counts$State <- "New York"
 state_month_prevalence <- CountsToPrevalence(state_month_counts)
-vocs <- GetVOCs()
-omicron <- vocs[["omicron"]]
-
-vocs[["omicron"]] <- NULL
 state_month_prevalence <- CollapseLineageToVOCs(
   variant_df = state_month_prevalence,
   vocs = vocs,

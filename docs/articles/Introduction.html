@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covmuller</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,7 +162,7 @@ level.</p>
 at prevalence of variants. To access this data, GISAID requires
 registration.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2023_08_19"</span></span>
+<code class="sourceCode R"><span><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2023_09_18"</span></span>
 <span><span class="va">fpath.tar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".tar.xz"</span><span class="op">)</span></span>
 <span><span class="va">fpath.qs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".qs"</span><span class="op">)</span></span>
 <span></span>
@@ -172,10 +172,6 @@ registration.</p>
 <span>  <span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadGISAIDMetada.html">ReadGISAIDMetada</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">fpath.tar</span><span class="op">)</span></span>
 <span>  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html" class="external-link">qsave</a></span><span class="op">(</span><span class="va">gisaid_metadata</span>, <span class="va">fpath.qs</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in untar(path, files = fname, exdir = td): '/usr/bin/tar -xf</span></span>
-<span><span class="co">## '/Users/saket/data/epicov/metadata_tsv_2023_08_19.tar.xz' -C</span></span>
-<span><span class="co">## '/var/folders/kk/9v81lhhn79gc5qlqrzlp0p_80000gn/T//RtmpFsdtbR' 'metadata.tsv''</span></span>
-<span><span class="co">## returned error code 1</span></span></code></pre>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
 </h3>
@@ -183,7 +179,7 @@ registration.</p>
 from a country by filtering out information from the metadata made
 available by GISAID (which includes all countries). Here, we visualize
 the total sequenced cases coming from India:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span></span>
 <span><span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, title <span class="op">=</span> <span class="st">"Total sequences deposited to GISAID from India"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org **&lt;br&gt;"</span><span class="op">)</span></span>
@@ -197,7 +193,7 @@ the total sequenced cases coming from India:</p>
 the proportion of cases (cases sequenced over total cases) that are
 getting sequenced. Here we look at the proportion of cases that have
 been sequenced in India over the course of the pandemic:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">india_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span></span>
 <span><span class="va">india_sequencing_proportion</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CombineSequencedCases.html">CombineSequencedCases</a></span><span class="op">(</span></span>
 <span>  cases_sequenced <span class="op">=</span> <span class="va">country_seq_stats</span>,</span>
@@ -207,7 +203,7 @@ been sequenced in India over the course of the pandemic:</p>
 <span><span class="va">p3</span></span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
 <p>For more context, we can combine all the three plots at once:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span></span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
 </div>
@@ -216,7 +212,7 @@ been sequenced in India over the course of the pandemic:</p>
 </h3>
 <p>We can further break down the proportion of sequenced cases at the
 state level:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">state_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthStatewise.html">TotalSequencesPerMonthStatewise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, drop_country <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">country_seq_stats</span>, <span class="va">state_seq_stats</span><span class="op">)</span></span>
 <span><span class="va">state_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -235,7 +231,7 @@ state level:</p>
 <span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PlotSequencedPropHeatmap.html">PlotSequencedPropHeatmap</a></span><span class="op">(</span><span class="va">india_sequencing_proportion</span><span class="op">)</span></span>
 <span><span class="co"># p4</span></span></code></pre></div>
 <p>In terms of absolute numbers sequenced:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seq_stats2</span> <span class="op">&lt;-</span> <span class="va">seq_stats</span></span>
 <span><span class="co"># seq_stats2 &lt;- seq_stats2 %&gt;% filter(MonthYear &gt;= "July 2022")</span></span>
 <span><span class="va">seq_stats2</span><span class="op">$</span><span class="va">MonthYear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seq_stats</span><span class="op">$</span><span class="va">MonthYear</span><span class="op">)</span></span>
@@ -245,8 +241,8 @@ state level:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p4.total</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PlotTotalHeatmap.html">PlotTotalHeatmap</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">seq_stats2</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 41</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] 47.5</span></span></code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p4.total</span></span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-9-1.png" width="1056"></p>
 </div>
@@ -256,7 +252,7 @@ state level:</p>
 </h2>
 <p>Finally, we look at the prevalence of variants and variants of
 concern (VOCs):</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">india_month_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsMonthwise.html">SummarizeVariantsMonthwise</a></span><span class="op">(</span><span class="va">gisaid_india</span><span class="op">)</span></span>
 <span><span class="va">india_month_counts</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"India"</span></span>
 <span><span class="va">india_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CountsToPrevalence.html">CountsToPrevalence</a></span><span class="op">(</span><span class="va">india_month_counts</span><span class="op">)</span></span>

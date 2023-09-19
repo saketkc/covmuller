@@ -16,13 +16,6 @@ theme_set(CovmullerTheme())
 ```{r, warning=FALSE, message=FALSE}
 counties <- c("New York", "New York City", "New York County", "Queens County", "Bronx County", "Bronx", "Brooklyn", "Manhattan", "Queens", "Richmond County")
 
-# The Bronx is Bronx County (ANSI / FIPS 36005)
-# Brooklyn is Kings County (ANSI / FIPS 36047)
-# Manhattan is New York County (ANSI / FIPS 36061)
-# Queens is Queens County (ANSI / FIPS 36081)
-# Staten Island is Richmond County (ANSI / FIPS 36085)
-fips.list <- c(36005, 36047, 36061, 36081, 36085)
-
 gisaid_metadata <- qs::qread("~/data/epicov/metadata_tsv_2023_09_18.qs")
 gisaid_usa <- gisaid_metadata %>%
   filter(Country == "USA") %>%
@@ -38,30 +31,29 @@ gisaid_NY <- gisaid_usa %>% filter(State == "New York")
 gisaid_NYC <- gisaid_NY %>% filter(District %in% counties)
 
 vocs <- GetVOCs()
-omicron <- vocs[["omicron"]]
-vocs[["omicron"]] <- NULL
-vocs[["lambda"]] <- NULL
-vocs[["beta"]] <- NULL
-vocs[["gamma"]] <- NULL
+#omicron <- vocs[["omicron"]]
+#vocs[["omicron"]] <- NULL
+#vocs[["lambda"]] <- NULL
+#vocs[["beta"]] <- NULL
+#vocs[["gamma"]] <- NULL
 
 custom_voc_mapping <- list(
-  `BA.1` = "BA.1",
-  `BA.1.*` = "BA.1",
-  `BA.2` = "BA.2",
-  `BA.2.*` = "BA.2",
-  `BA.3` = "BA.3",
-  `BA.3.*` = "BA.3",
-  `BA.4` = "BA.4",
-  `BA.4.*` = "BA.4",
-  `BA.5` = "BA.5",
-  `BA.5.*` = "BA.5",
-  `XBB` = "XBB",
-  `XBB.1` = "XBB.1+",
-  `XBB.1.*` = "XBB.1+",
-  `XBB.1.5` = "XBB.1.5",
+  `XBB` = "XBB.*",
+  `XBB.*` = "XBB.*",
   `BQ.1` = "BQ.1",
-  `BQ.1.*` = "BQ.1"
+  `BQ.1.*` = "BQ.1",
+  `XBB.1` = "XBB.1.*",
+  `XBB.1.*` = "XBB.1.*",
+  `XBB.1.5` = "XBB.1.5",
+  `XBB.1.16` = "XBB.1.16",
+  `XBB.1.16.*` = "XBB.1.16",
+  `EG.5.*` = "EG.5",
+  `FL.1.*` = "FL.1.*",
+  #`FL.1.5.*` = "FL.1.5",
+  #`FL.1.6.*` = "FL.1.6",
+  `GJ.1.2` = "GJ.1.2"
 )
+
 gisaid_NYC <- gisaid_NYC %>% filter(pangolin_lineage != "None")
 
 gisaid_NYC <- CollapseLineageToVOCs(
@@ -75,31 +67,8 @@ gisaid_NYC <- CollapseLineageToVOCs(
 # Get weekly cases for New York
 
 ```{r, warning=FALSE, message=FALSE}
-if (FALSE) {
-  all_county_cases <- refresh_covid19nytimes_counties()
-
-  confirmed <- all_county_cases %>%
-    filter(location == "New York City,New York") %>%
-    filter(data_type == "cases_total") %>%
-    arrange(date)
-
-  confirmed$daily_cases <- c(confirmed$value[1], diff(confirmed$value))
-  confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
-  confirmed$MonthYear <- GetMonthYear(confirmed$date)
-
-  confirmed_subset_dateweekwise_long <- confirmed %>%
-    group_by(WeekYear) %>%
-    summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
-    arrange(WeekYear) %>%
-    rename(WeekYearCollected = WeekYear)
-}
-
-confirmed <- covid19(country = "USA", level = 3) %>%
-  filter(administrative_area_level_3 == "New York City") %>%
-  select(date, confirmed) %>%
-  filter(!is.na(confirmed))
-
-confirmed$daily_cases <- c(confirmed$confirmed[1], diff(confirmed$confirmed))
+confirmed <- read_csv("https://raw.githubusercontent.com/nychealth/coronavirus-data/master/trends/data-by-day.csv") %>% select(date_of_interest, CASE_COUNT)
+colnames(confirmed) <- c("date", "daily_cases")
 confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
@@ -120,28 +89,8 @@ gisaid_NYC_weekwise <- SummarizeVariantsWeekwise(gisaid_NYC)
 state_month_counts <- SummarizeVariantsMonthwise(gisaid_NYC)
 state_month_counts$State <- "NYC"
 state_month_prevalence <- CountsToPrevalence(state_month_counts)
-vocs <- GetVOCs()
-omicron <- vocs[["omicron"]]
 
-vocs[["omicron"]] <- NULL
-custom_voc_mapping <- list(
-  `BA.1` = "BA.1",
-  `BA.1.*` = "BA.1",
-  `BA.2` = "BA.2",
-  `BA.2.*` = "BA.2",
-  `BA.3` = "BA.3",
-  `BA.3.*` = "BA.3",
-  `BA.4` = "BA.4",
-  `BA.4.*` = "BA.4",
-  `BA.5` = "BA.5",
-  `BA.5.*` = "BA.5",
-  `XBB` = "XBB",
-  `XBB.1` = "XBB.1+",
-  `XBB.1.*` = "XBB.1+",
-  `XBB.1.5` = "XBB.1.5",
-  `BQ.1` = "BQ.1",
-  `BQ.1.*` = "BQ.1"
-)
+
 state_month_prevalence <- CollapseLineageToVOCs(
   variant_df = state_month_prevalence,
   vocs = vocs,
@@ -170,11 +119,11 @@ gganimate::anim_save(filename = here::here("docs/articles/NYC_animated.gif"), an
 ![](NYC_animated.gif)
 
 
-Look at cases after February, 2022 only:
+Look at cases from 2023:
 
 ```{r}
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Feb 2022") %>%
+  filter(MonthYear > "Dec 2022") %>%
   group_by(WeekYear) %>%
   summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
@@ -192,8 +141,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and covid19nytimes**<br>")
-gganimate::anim_save(filename = here::here("docs/articles/NYC_animated_feb2022.gif"), animation = the_anim)
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and NYC Health**<br>")
+gganimate::anim_save(filename = here::here("docs/articles/NYC_animated_2023.gif"), animation = the_anim)
 ```
 ![](NYC_animated_feb2022.gif)
-
