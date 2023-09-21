@@ -31,12 +31,6 @@ gisaid_NY <- gisaid_usa %>% filter(State == "New York")
 gisaid_NYC <- gisaid_NY %>% filter(District %in% counties)
 
 vocs <- GetVOCs()
-#omicron <- vocs[["omicron"]]
-#vocs[["omicron"]] <- NULL
-#vocs[["lambda"]] <- NULL
-#vocs[["beta"]] <- NULL
-#vocs[["gamma"]] <- NULL
-
 custom_voc_mapping <- list(
   `XBB` = "XBB.*",
   `XBB.*` = "XBB.*",
@@ -70,7 +64,7 @@ gisaid_NYC <- CollapseLineageToVOCs(
 confirmed <- read_csv("https://raw.githubusercontent.com/nychealth/coronavirus-data/master/trends/data-by-day.csv") %>% select(date_of_interest, CASE_COUNT)
 colnames(confirmed) <- c("date", "daily_cases")
 confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
-confirmed$MonthYear <- GetMonthYear(confirmed$date)
+confirmed$MonthYear <- GetMonthYear(confirmed$date, datefmt = "%m/%d/%Y")
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
   group_by(WeekYear) %>%
@@ -113,7 +107,7 @@ voc_to_keep <- gisaid_NYC_weekwise %>%
 gisaid_NYC_weekwise <- gisaid_NYC_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 newyork_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_NYC_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(newyork_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and covid19nytimes**<br>", date_breaks = "14 days")
+the_anim <- PlotVariantPrevalenceAnimated(newyork_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and NYC Health**<br>", date_breaks = "14 days")
 gganimate::anim_save(filename = here::here("docs/articles/NYC_animated.gif"), animation = the_anim)
 ```
 ![](NYC_animated.gif)
@@ -123,7 +117,7 @@ Look at cases from 2023:
 
 ```{r}
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Dec 2022") %>%
+  filter(MonthYear > "April 2023") %>%
   group_by(WeekYear) %>%
   summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
@@ -135,7 +129,7 @@ gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_NYC_subset)
 voc_to_keep <- gisaid_weekwise %>%
   group_by(lineage_collapsed) %>%
   summarise(n_sum = sum(n)) %>%
-  filter(n_sum > 50) %>%
+  filter(n_sum > 20) %>%
   pull(lineage_collapsed) %>%
   unique()
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)

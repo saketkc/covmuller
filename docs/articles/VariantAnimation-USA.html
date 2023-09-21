@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covmuller</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,7 +134,7 @@
 <h2 id="get-variants-data-for-usa">Get variants data for USA<a class="anchor" aria-label="anchor" href="#get-variants-data-for-usa"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2023_08_19.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2023_09_18.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_usa</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"USA"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -145,28 +145,21 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">"Unknown"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"lambda"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"beta"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"gamma"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  `BA.1` <span class="op">=</span> <span class="st">"BA.1"</span>,</span>
-<span>  `BA.1.*` <span class="op">=</span> <span class="st">"BA.1"</span>,</span>
-<span>  `BA.2` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
-<span>  `BA.2.*` <span class="op">=</span> <span class="st">"BA.2"</span>,</span>
-<span>  `BA.3` <span class="op">=</span> <span class="st">"BA.3"</span>,</span>
-<span>  `BA.3.*` <span class="op">=</span> <span class="st">"BA.3"</span>,</span>
-<span>  `BA.4` <span class="op">=</span> <span class="st">"BA.4"</span>,</span>
-<span>  `BA.4.*` <span class="op">=</span> <span class="st">"BA.4"</span>,</span>
-<span>  `BA.5` <span class="op">=</span> <span class="st">"BA.5"</span>,</span>
-<span>  `BA.5.*` <span class="op">=</span> <span class="st">"BA.5"</span>,</span>
-<span>  `XBB` <span class="op">=</span> <span class="st">"XBB"</span>,</span>
-<span>  `XBB.1` <span class="op">=</span> <span class="st">"XBB.1+"</span>,</span>
-<span>  `XBB.1.*` <span class="op">=</span> <span class="st">"XBB.1+"</span>,</span>
-<span>  `XBB.1.5` <span class="op">=</span> <span class="st">"XBB.1.5"</span>,</span>
+<span>  `XBB` <span class="op">=</span> <span class="st">"XBB.*"</span>,</span>
+<span>  `XBB.*` <span class="op">=</span> <span class="st">"XBB.*"</span>,</span>
 <span>  `BQ.1` <span class="op">=</span> <span class="st">"BQ.1"</span>,</span>
-<span>  `BQ.1.*` <span class="op">=</span> <span class="st">"BQ.1"</span></span>
+<span>  `BQ.1.*` <span class="op">=</span> <span class="st">"BQ.1"</span>,</span>
+<span>  `XBB.1` <span class="op">=</span> <span class="st">"XBB.1.*"</span>,</span>
+<span>  `XBB.1.*` <span class="op">=</span> <span class="st">"XBB.1.*"</span>,</span>
+<span>  `XBB.1.5` <span class="op">=</span> <span class="st">"XBB.1.5"</span>,</span>
+<span>  `XBB.1.16` <span class="op">=</span> <span class="st">"XBB.1.16"</span>,</span>
+<span>  `XBB.1.16.*` <span class="op">=</span> <span class="st">"XBB.1.16"</span>,</span>
+<span>  `EG.5.*` <span class="op">=</span> <span class="st">"EG.5"</span>,</span>
+<span>  `FL.1.*` <span class="op">=</span> <span class="st">"FL.1.*"</span>,</span>
+<span>  <span class="co">#`FL.1.5.*` = "FL.1.5",</span></span>
+<span>  <span class="co">#`FL.1.6.*` = "FL.1.6",</span></span>
+<span>  `GJ.1.2` <span class="op">=</span> <span class="st">"GJ.1.2"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">gisaid_usa</span> <span class="op">&lt;-</span> <span class="va">gisaid_usa</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">"None"</span><span class="op">)</span></span>
 <span></span>
@@ -181,17 +174,7 @@
 <h2 id="get-weekly-cases-for-usa">Get weekly cases for USA<a class="anchor" aria-label="anchor" href="#get-weekly-cases-for-usa"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">all_state_cases</span> <span class="op">&lt;-</span> <span class="fu">refresh_covid19nytimes_states</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">confirmed.tmp</span> <span class="op">&lt;-</span> <span class="va">all_state_cases</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">data_type</span> <span class="op">==</span> <span class="st">"cases_total"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span></span>
-<span>  <span class="va">confirmed</span> <span class="op">&lt;-</span> <span class="va">confirmed.tmp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="va">confirmed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://covid19datahub.io/reference/covid19.html" class="external-link">covid19</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"USA"</span>, level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">confirmed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://covid19datahub.io/reference/covid19.html" class="external-link">covid19</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"USA"</span>, level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">confirmed</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; We have invested a lot of time and effort in creating COVID-19 Data</span></span>
@@ -231,9 +214,7 @@
 <span><span class="va">state_month_counts</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"USA"</span></span>
 <span><span class="va">state_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CountsToPrevalence.html">CountsToPrevalence</a></span><span class="op">(</span><span class="va">state_month_counts</span><span class="op">)</span></span>
 <span><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">omicron</span> <span class="op">&lt;-</span> <span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
-<span><span class="va">vocs</span><span class="op">[[</span><span class="st">"omicron"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="va">state_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CollapseLineageToVOCs.html">CollapseLineageToVOCs</a></span><span class="op">(</span></span>
 <span>  variant_df <span class="op">=</span> <span class="va">state_month_prevalence</span>,</span>
 <span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
@@ -257,27 +238,30 @@
 <span><span class="va">gisaid_usa_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_usa_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">usa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_usa_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # weights:  64 (45 variable)</span></span>
-<span><span class="co">#&gt; initial  value 9866140.519364 </span></span>
-<span><span class="co">#&gt; iter  10 value 5822240.488534</span></span>
-<span><span class="co">#&gt; iter  20 value 4329739.482962</span></span>
-<span><span class="co">#&gt; iter  30 value 4022775.114504</span></span>
-<span><span class="co">#&gt; iter  40 value 3374828.039971</span></span>
-<span><span class="co">#&gt; iter  50 value 2691241.801085</span></span>
-<span><span class="co">#&gt; iter  60 value 2104948.715527</span></span>
-<span><span class="co">#&gt; iter  70 value 1942219.122551</span></span>
-<span><span class="co">#&gt; iter  80 value 1921123.950479</span></span>
-<span><span class="co">#&gt; iter  90 value 1918611.991183</span></span>
-<span><span class="co">#&gt; iter 100 value 1918044.405950</span></span>
-<span><span class="co">#&gt; iter 110 value 1916911.129804</span></span>
-<span><span class="co">#&gt; iter 120 value 1892553.852501</span></span>
-<span><span class="co">#&gt; iter 130 value 1846744.329251</span></span>
-<span><span class="co">#&gt; iter 140 value 1842500.131888</span></span>
-<span><span class="co">#&gt; iter 150 value 1842076.313936</span></span>
-<span><span class="co">#&gt; iter 160 value 1841971.460926</span></span>
-<span><span class="co">#&gt; iter 170 value 1841888.763076</span></span>
-<span><span class="co">#&gt; iter 180 value 1841875.906326</span></span>
-<span><span class="co">#&gt; final  value 1841868.930473 </span></span>
+<span><span class="co">#&gt; # weights:  76 (54 variable)</span></span>
+<span><span class="co">#&gt; initial  value 14256941.148295 </span></span>
+<span><span class="co">#&gt; iter  10 value 6460174.023523</span></span>
+<span><span class="co">#&gt; iter  20 value 5447718.176535</span></span>
+<span><span class="co">#&gt; iter  30 value 5231582.688619</span></span>
+<span><span class="co">#&gt; iter  40 value 4927006.469721</span></span>
+<span><span class="co">#&gt; iter  50 value 4342694.525473</span></span>
+<span><span class="co">#&gt; iter  60 value 3442934.394137</span></span>
+<span><span class="co">#&gt; iter  70 value 2636078.393059</span></span>
+<span><span class="co">#&gt; iter  80 value 2472969.214553</span></span>
+<span><span class="co">#&gt; iter  90 value 2437670.331877</span></span>
+<span><span class="co">#&gt; iter 100 value 2396460.640516</span></span>
+<span><span class="co">#&gt; iter 110 value 2374530.367290</span></span>
+<span><span class="co">#&gt; iter 120 value 2372354.563665</span></span>
+<span><span class="co">#&gt; iter 130 value 2370147.055464</span></span>
+<span><span class="co">#&gt; iter 140 value 2355747.853256</span></span>
+<span><span class="co">#&gt; iter 150 value 2337565.438273</span></span>
+<span><span class="co">#&gt; iter 160 value 2331370.708592</span></span>
+<span><span class="co">#&gt; iter 170 value 2329876.350947</span></span>
+<span><span class="co">#&gt; iter 180 value 2328662.438718</span></span>
+<span><span class="co">#&gt; iter 190 value 2328257.007835</span></span>
+<span><span class="co">#&gt; iter 200 value 2328180.283303</span></span>
+<span><span class="co">#&gt; iter 210 value 2328065.715149</span></span>
+<span><span class="co">#&gt; final  value 2328034.266977 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">usa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in the USA by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/USA_animated.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
@@ -306,18 +290,19 @@
 <span></span>
 <span><span class="va">usa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_usa_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # weights:  44 (30 variable)</span></span>
-<span><span class="co">#&gt; initial  value 3656473.768842 </span></span>
-<span><span class="co">#&gt; iter  10 value 1872935.615031</span></span>
-<span><span class="co">#&gt; iter  20 value 1647127.954239</span></span>
-<span><span class="co">#&gt; iter  30 value 1412034.001587</span></span>
-<span><span class="co">#&gt; iter  40 value 1080079.075276</span></span>
-<span><span class="co">#&gt; iter  50 value 1060984.262361</span></span>
-<span><span class="co">#&gt; iter  60 value 1039913.033265</span></span>
-<span><span class="co">#&gt; iter  70 value 1039068.587229</span></span>
-<span><span class="co">#&gt; iter  80 value 1032107.766760</span></span>
-<span><span class="co">#&gt; iter  90 value 1021289.479346</span></span>
-<span><span class="co">#&gt; iter 100 value 1021022.464589</span></span>
-<span><span class="co">#&gt; final  value 1021022.215286 </span></span>
+<span><span class="co">#&gt; initial  value 5497798.365661 </span></span>
+<span><span class="co">#&gt; iter  10 value 1919929.050142</span></span>
+<span><span class="co">#&gt; iter  20 value 1847179.402458</span></span>
+<span><span class="co">#&gt; iter  30 value 1587995.795607</span></span>
+<span><span class="co">#&gt; iter  40 value 1250599.861190</span></span>
+<span><span class="co">#&gt; iter  50 value 1228602.293796</span></span>
+<span><span class="co">#&gt; iter  60 value 1221449.310342</span></span>
+<span><span class="co">#&gt; iter  70 value 1219359.294311</span></span>
+<span><span class="co">#&gt; iter  80 value 1215753.585962</span></span>
+<span><span class="co">#&gt; iter  90 value 1210376.747032</span></span>
+<span><span class="co">#&gt; iter 100 value 1209809.435820</span></span>
+<span><span class="co">#&gt; iter 110 value 1209770.975339</span></span>
+<span><span class="co">#&gt; final  value 1209741.472740 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">usa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in the USA by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes**&lt;br&gt;"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
@@ -331,7 +316,7 @@ weeks</p>
 <code class="sourceCode R"><span><span class="va">confirmed</span><span class="op">$</span><span class="va">MonthYear</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetMonthYear.html">GetMonthYear</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYear</span> <span class="op">&gt;</span> <span class="st">"September 2022"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MonthYear</span> <span class="op">&gt;</span> <span class="st">"December 2022"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">daily_cases</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -350,18 +335,19 @@ weeks</p>
 <span></span>
 <span><span class="va">usa_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_usa_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # weights:  44 (30 variable)</span></span>
-<span><span class="co">#&gt; initial  value 3656473.768842 </span></span>
-<span><span class="co">#&gt; iter  10 value 1872935.615031</span></span>
-<span><span class="co">#&gt; iter  20 value 1647127.954239</span></span>
-<span><span class="co">#&gt; iter  30 value 1412034.001587</span></span>
-<span><span class="co">#&gt; iter  40 value 1080079.075276</span></span>
-<span><span class="co">#&gt; iter  50 value 1060984.262361</span></span>
-<span><span class="co">#&gt; iter  60 value 1039913.033265</span></span>
-<span><span class="co">#&gt; iter  70 value 1039068.587229</span></span>
-<span><span class="co">#&gt; iter  80 value 1032107.766760</span></span>
-<span><span class="co">#&gt; iter  90 value 1021289.479346</span></span>
-<span><span class="co">#&gt; iter 100 value 1021022.464589</span></span>
-<span><span class="co">#&gt; final  value 1021022.215286 </span></span>
+<span><span class="co">#&gt; initial  value 5497798.365661 </span></span>
+<span><span class="co">#&gt; iter  10 value 1919929.050142</span></span>
+<span><span class="co">#&gt; iter  20 value 1847179.402458</span></span>
+<span><span class="co">#&gt; iter  30 value 1587995.795607</span></span>
+<span><span class="co">#&gt; iter  40 value 1250599.861190</span></span>
+<span><span class="co">#&gt; iter  50 value 1228602.293796</span></span>
+<span><span class="co">#&gt; iter  60 value 1221449.310342</span></span>
+<span><span class="co">#&gt; iter  70 value 1219359.294311</span></span>
+<span><span class="co">#&gt; iter  80 value 1215753.585962</span></span>
+<span><span class="co">#&gt; iter  90 value 1210376.747032</span></span>
+<span><span class="co">#&gt; iter 100 value 1209809.435820</span></span>
+<span><span class="co">#&gt; iter 110 value 1209770.975339</span></span>
+<span><span class="co">#&gt; final  value 1209741.472740 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">usa_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in the USA by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19nytimes**&lt;br&gt;"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `geom_line()`: Each group consists of only one observation.</span></span>
