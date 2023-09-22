@@ -129,7 +129,7 @@ gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_NYC_subset)
 voc_to_keep <- gisaid_weekwise %>%
   group_by(lineage_collapsed) %>%
   summarise(n_sum = sum(n)) %>%
-  filter(n_sum > 20) %>%
+  filter(n_sum > 1) %>%
   pull(lineage_collapsed) %>%
   unique()
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
