@@ -177,7 +177,6 @@ gganimate::anim_save(filename = here::here("docs/articles/NewDelhi_animated.gif"
 Look at cases after January, 2022 only:
 
 ```{r}
-confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong(level = "district")
 
 confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   filter(WeekYear >= tsibble::yearweek("2021 W35")) %>%
@@ -212,8 +211,6 @@ gganimate::anim_save(filename = here::here("docs/articles/NewDelhi_animated_2021
 Look at cases in the last few weeks:
 
 ```{r}
-confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong(level = "district")
-
 confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
   filter(WeekYear >= tsibble::yearweek("2022 W12")) %>%
   filter(District %in% c("Delhi")) %>%

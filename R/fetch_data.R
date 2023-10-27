@@ -36,11 +36,11 @@ GetIndianStates <- function() {
 #' The 'Status' column is one of 'Confirmed', 'Deceased' or 'Recovered'
 #'
 #' @param url URL to fetch data from
-#'
+#' @importFrom readr read_csv
 #' @returns A data frame containing daily cases for each state
 #' @export
 GetIndiaDailyData <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv") {
-  statewise_cases <- read.csv(file = url, header = T)
+  statewise_cases <- read_csv(file = url)
   state_names <- GetIndianStates()
   other_cols <- list(DD = "DD", UN = "UN", Date = "Date", Date_YMD = "Date_YMD", Status = "Status")
   new_cols <- c(state_names, other_cols)
@@ -119,9 +119,10 @@ GetIndiaHospitalization <- function(url = "") {
 
 #' @importFrom magrittr %>%
 #' @importFrom dplyr arrange group_by summarise_all rename
+#' @importFrom readr read_csv
 #' @importFrom reshape2 melt
 #' @export
-GetIndiaConfirmedCasesMonthlyLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv", level = "State") {
+GetIndiaConfirmedCasesMonthlyLong <- function(url = "http://data.covid19bharat.org/csv/latest/state_wise_daily.csv", level = "State") {
   if (level == "State") {
     statewise_cases <- GetIndiaDailyData(url = url)
     confirmed <- statewise_cases[statewise_cases$Status == "Confirmed", ]
@@ -138,7 +139,7 @@ GetIndiaConfirmedCasesMonthlyLong <- function(url = "https://data.covid19bharat.
     confirmed_subset_monthwise_long$type <- "Confirmed"
     return(confirmed_subset_monthwise_long)
   } else if (level == "district") {
-    district_cases_cumulative <- read.csv("https://data.covid19bharat.org/csv/latest/districts.csv") %>% arrange(Date)
+    district_cases_cumulative <- read_csv("https://data.covid19bharat.org/csv/latest/districts.csv") %>% arrange(Date)
     district_cases_cumulative$Date <- as.Date(district_cases_cumulative$Date, format = "%Y-%m-%d")
     district_cases_cumulative <- district_cases_cumulative %>%
       select(Date, State, District, Confirmed) %>%
@@ -171,6 +172,7 @@ GetIndiaConfirmedCasesMonthlyLong <- function(url = "https://data.covid19bharat.
 #' @importFrom magrittr %>%
 #' @importFrom dplyr arrange group_by summarise_all rename
 #' @importFrom reshape2 melt
+#' @importFrom readr read_csv
 #' @importFrom tsibble yearweek
 #' @export
 GetIndiaConfirmedCasesWeeklyLong <- function(url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv", level = "State") {
@@ -192,7 +194,7 @@ GetIndiaConfirmedCasesWeeklyLong <- function(url = "https://data.covid19bharat.o
     confirmed_subset_weekwise_long$State <- as.character(confirmed_subset_weekwise_long$State)
     confirmed_subset_weekwise_long$value <- ceiling(confirmed_subset_weekwise_long$value)
   } else if (level == "district") {
-    district_cases_cumulative <- read.csv("https://data.covid19bharat.org/csv/latest/districts.csv") %>% arrange(Date)
+    district_cases_cumulative <- read_csv("https://data.covid19bharat.org/csv/latest/districts.csv") %>% arrange(Date)
     district_cases_cumulative$Date <- as.Date(district_cases_cumulative$Date, format = "%Y-%m-%d")
     district_cases_cumulative <- district_cases_cumulative %>%
       select(Date, State, District, Confirmed) %>%
