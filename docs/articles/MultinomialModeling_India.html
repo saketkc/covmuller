@@ -130,7 +130,7 @@
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/data/epicov/metadata_tsv_2023_10_23.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/data/epicov/metadata_tsv_2023_10_28.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
@@ -197,46 +197,40 @@
 <span><span class="va">gisaid_india_shared_dateweek</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsDatewise.html">SummarizeVariantsDatewise</a></span><span class="op">(</span><span class="va">gisaid_india_collapsed_sel</span>, by_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
-<span><span class="co">##   State             DateCollectedNumeric lineage_collapsed     n</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> Andhra Pradesh                   <span style="text-decoration: underline;">19</span>448 XBB                   1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> Andhra Pradesh                   <span style="text-decoration: underline;">19</span>506 XBB                   1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> Arunachal Pradesh                <span style="text-decoration: underline;">19</span>361 XBB                   1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> Arunachal Pradesh                <span style="text-decoration: underline;">19</span>459 XBB                   1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> Arunachal Pradesh                <span style="text-decoration: underline;">19</span>556 XBB                   1</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> Arunachal Pradesh                <span style="text-decoration: underline;">19</span>611 Others                1</span></span></code></pre>
+<span><span class="co">##   State        DateCollectedNumeric lineage_collapsed     n</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Assam                       <span style="text-decoration: underline;">19</span>274 XBB                   1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Assam                       <span style="text-decoration: underline;">19</span>276 XBB                   1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Assam                       <span style="text-decoration: underline;">19</span>277 XBB                   1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Chhattisgarh                <span style="text-decoration: underline;">19</span>266 XBB                   1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Chhattisgarh                <span style="text-decoration: underline;">19</span>268 Others                1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Chhattisgarh                <span style="text-decoration: underline;">19</span>268 XBB                   1</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit_india_multi_predsbystate</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomStatewiseDaily</span><span class="op">(</span><span class="va">gisaid_india_shared_dateweek</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  204 (165 variable)</span></span>
-<span><span class="co">## initial  value 31717.726124 </span></span>
-<span><span class="co">## iter  10 value 10707.640523</span></span>
-<span><span class="co">## iter  20 value 9690.049175</span></span>
-<span><span class="co">## iter  30 value 9373.545761</span></span>
-<span><span class="co">## iter  40 value 9303.412009</span></span>
-<span><span class="co">## iter  50 value 9267.006774</span></span>
-<span><span class="co">## iter  60 value 9252.924281</span></span>
-<span><span class="co">## iter  70 value 9243.263554</span></span>
-<span><span class="co">## iter  80 value 9241.235177</span></span>
-<span><span class="co">## iter  90 value 9240.988919</span></span>
-<span><span class="co">## iter 100 value 9240.912015</span></span>
-<span><span class="co">## final  value 9240.908981 </span></span>
+<pre><code><span><span class="co">## # weights:  36 (22 variable)</span></span>
+<span><span class="co">## initial  value 1431.491812 </span></span>
+<span><span class="co">## iter  10 value 1158.049290</span></span>
+<span><span class="co">## iter  20 value 1130.931724</span></span>
+<span><span class="co">## iter  30 value 1130.108561</span></span>
+<span><span class="co">## iter  40 value 1130.052500</span></span>
+<span><span class="co">## final  value 1130.052034 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fit_india_multi_predsbystate</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric          State         prob</span></span>
-<span><span class="co">## 1              BA.2                19266 Andhra Pradesh 3.785825e-06</span></span>
-<span><span class="co">## 2           BA.2.75                19266 Andhra Pradesh 4.163072e-07</span></span>
-<span><span class="co">## 3            BA.2.X                19266 Andhra Pradesh 1.878382e-11</span></span>
-<span><span class="co">## 4             BQ.1+                19266 Andhra Pradesh 2.179550e-10</span></span>
-<span><span class="co">## 5            Others                19266 Andhra Pradesh 5.287804e-05</span></span>
-<span><span class="co">## 6               XBB                19266 Andhra Pradesh 9.999429e-01</span></span>
-<span><span class="co">##             SE df     asymp.LCL    asymp.UCL DateCollected</span></span>
-<span><span class="co">## 1 2.366858e-06 NA -8.531319e-07 8.424783e-06    2022-10-01</span></span>
-<span><span class="co">## 2 2.535722e-07 NA -8.068511e-08 9.132996e-07    2022-10-01</span></span>
-<span><span class="co">## 3 1.259527e-11 NA -5.902458e-12 4.347010e-11    2022-10-01</span></span>
-<span><span class="co">## 4 1.490338e-10 NA -7.414594e-11 5.100560e-10    2022-10-01</span></span>
-<span><span class="co">## 5 6.170060e-05 NA -6.805293e-05 1.738090e-04    2022-10-01</span></span>
-<span><span class="co">## 6 6.415499e-05 NA  9.998172e-01 1.000069e+00    2022-10-01</span></span></code></pre>
+<pre><code><span><span class="co">##   lineage_collapsed DateCollectedNumeric State         prob           SE df</span></span>
+<span><span class="co">## 1           BA.2.75                19266 Assam 6.189636e-06 1.222713e-06 NA</span></span>
+<span><span class="co">## 2            Others                19266 Assam 2.368222e-07 4.708330e-08 NA</span></span>
+<span><span class="co">## 3               XBB                19266 Assam 9.999936e-01 1.245595e-06 NA</span></span>
+<span><span class="co">## 4           BA.2.75                19273 Assam 3.011729e-06 4.915630e-07 NA</span></span>
+<span><span class="co">## 5            Others                19273 Assam 1.890629e-07 3.478304e-08 NA</span></span>
+<span><span class="co">## 6               XBB                19273 Assam 9.999968e-01 5.109791e-07 NA</span></span>
+<span><span class="co">##      asymp.LCL    asymp.UCL DateCollected</span></span>
+<span><span class="co">## 1 3.793162e-06 8.586109e-06    2022-10-01</span></span>
+<span><span class="co">## 2 1.445406e-07 3.291037e-07    2022-10-01</span></span>
+<span><span class="co">## 3 9.999911e-01 9.999960e-01    2022-10-01</span></span>
+<span><span class="co">## 4 2.048284e-06 3.975175e-06    2022-10-08</span></span>
+<span><span class="co">## 5 1.208894e-07 2.572364e-07    2022-10-08</span></span>
+<span><span class="co">## 6 9.999958e-01 9.999978e-01    2022-10-08</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">

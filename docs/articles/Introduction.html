@@ -135,8 +135,18 @@
 get a tally of daily confirmed cases and then summarize it to monthly
 level.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">indian_state_cases</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">india_cases</span> <span class="op">&lt;-</span> <span class="va">indian_state_cases</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">indian_state_cases</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">3183</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">42</span></span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
+<span><span class="co">## <span style="color: #BB0000;">chr</span>   (2): Date, Status</span></span>
+<span><span class="co">## <span style="color: #00BB00;">dbl</span>  (39): TT, AN, AP, AR, AS, BR, CH, CT, DN, DD, DL, GA, GJ, HR, HP, JK, J...</span></span>
+<span><span class="co">## <span style="color: #0000BB;">date</span>  (1): Date_YMD</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">india_cases</span> <span class="op">&lt;-</span> <span class="va">indian_state_cases</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">india_cases</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   MonthYear State   value      type</span></span>
 <span><span class="co">## 1  Mar 2020 India    1635 Confirmed</span></span>
@@ -149,7 +159,7 @@ level.</p>
 <h3 id="plot-cases-for-india">Plot cases for India<a class="anchor" aria-label="anchor" href="#plot-cases-for-india"></a>
 </h3>
 <p>It is easy to visualize the monthly case counts on a bar plot:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">india_cases</span>, ylabel <span class="op">=</span> <span class="st">"Cases per month"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, title <span class="op">=</span> <span class="st">"Total cases per month - India"</span>, caption <span class="op">=</span> <span class="st">"**Source: covid19bharat.org**&lt;br&gt;"</span><span class="op">)</span></span>
 <span><span class="va">p1</span></span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-3-1.png" width="768"></p>
@@ -161,8 +171,8 @@ level.</p>
 <p>We utilize <a href="https://www.gisaid.org/" class="external-link">GISAID</a> data to look
 at prevalence of variants. To access this data, GISAID requires
 registration.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2023_10_23"</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2023_10_28"</span></span>
 <span><span class="va">fpath.tar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".tar.xz"</span><span class="op">)</span></span>
 <span><span class="va">fpath.qs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".qs"</span><span class="op">)</span></span>
 <span></span>
@@ -172,6 +182,16 @@ registration.</p>
 <span>  <span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadGISAIDMetada.html">ReadGISAIDMetada</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">fpath.tar</span><span class="op">)</span></span>
 <span>  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html" class="external-link">qsave</a></span><span class="op">(</span><span class="va">gisaid_metadata</span>, <span class="va">fpath.qs</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in untar(path, files = fname, exdir = td): '/bin/tar -xf</span></span>
+<span><span class="co">## '/home/saket/data/epicov/metadata_tsv_2023_10_28.tar.xz' -C '/tmp/Rtmp08TFfy'</span></span>
+<span><span class="co">## 'metadata.tsv'' returned error code 2</span></span></code></pre>
+<pre><code><span><span class="co">## Avoidable 1.641 seconds. This file is very unusual: it ends abruptly without a final newline, and also its size is a multiple of 4096 bytes. Please properly end the last row with a newline using for example 'echo &gt;&gt; file' to avoid this  time to copy.</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in fread(input = path, showProgress = showProgress, ...): Discarded</span></span>
+<span><span class="co">## single-line footer: &lt;&lt;hCoV-19/USA/CO-CDPHE-2102632823/2022 Original</span></span>
+<span><span class="co">## betacoronavirus EPI_ISL_8949005 2022-01-08 North America / USA / Colorado 29706</span></span>
+<span><span class="co">## Human unknown unknown GRA BA.1.15 consensus call Former VOC Omicron GRA</span></span>
+<span><span class="co">## (B.1.1.529+BA.*) first detected in Botswana/Hong Kong/South Africa</span></span>
+<span><span class="co">## (NSP5_P132H,Spike_H69del,Spike_T95I,Spike_A67V,Spike_S373P,Spike_N969K,Spike_H655Y,Spike_N856K,N_R203K,Spike_G142D,NSP3_A1892T,Spike_Q954H,NS3_L106F,N_P13L,NSP3_L1266I,N_R32del,NSP3_S769L,M_Q19E,NSP4_T492I,NSP6_L105del,Spike_N679K,Sp&gt;&gt;</span></span></code></pre>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
 </h3>
@@ -179,7 +199,7 @@ registration.</p>
 from a country by filtering out information from the metadata made
 available by GISAID (which includes all countries). Here, we visualize
 the total sequenced cases coming from India:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span></span>
 <span><span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, title <span class="op">=</span> <span class="st">"Total sequences deposited to GISAID from India"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org **&lt;br&gt;"</span><span class="op">)</span></span>
@@ -193,9 +213,19 @@ the total sequenced cases coming from India:</p>
 the proportion of cases (cases sequenced over total cases) that are
 getting sequenced. Here we look at the proportion of cases that have
 been sequenced in India over the course of the pandemic:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">india_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span></span>
-<span><span class="va">india_sequencing_proportion</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CombineSequencedCases.html">CombineSequencedCases</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">india_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">State</span> <span class="op">==</span> <span class="st">"India"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">3183</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">42</span></span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
+<span><span class="co">## <span style="color: #BB0000;">chr</span>   (2): Date, Status</span></span>
+<span><span class="co">## <span style="color: #00BB00;">dbl</span>  (39): TT, AN, AP, AR, AS, BR, CH, CT, DN, DD, DL, GA, GJ, HR, HP, JK, J...</span></span>
+<span><span class="co">## <span style="color: #0000BB;">date</span>  (1): Date_YMD</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">india_sequencing_proportion</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CombineSequencedCases.html">CombineSequencedCases</a></span><span class="op">(</span></span>
 <span>  cases_sequenced <span class="op">=</span> <span class="va">country_seq_stats</span>,</span>
 <span>  confirmed_long <span class="op">=</span> <span class="va">india_cases_long</span></span>
 <span><span class="op">)</span></span>
@@ -203,7 +233,7 @@ been sequenced in India over the course of the pandemic:</p>
 <span><span class="va">p3</span></span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
 <p>For more context, we can combine all the three plots at once:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span></span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
 </div>
@@ -212,7 +242,7 @@ been sequenced in India over the course of the pandemic:</p>
 </h3>
 <p>We can further break down the proportion of sequenced cases at the
 state level:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">state_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthStatewise.html">TotalSequencesPerMonthStatewise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, drop_country <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">country_seq_stats</span>, <span class="va">state_seq_stats</span><span class="op">)</span></span>
 <span><span class="va">state_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -231,7 +261,7 @@ state level:</p>
 <span><span class="va">p4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PlotSequencedPropHeatmap.html">PlotSequencedPropHeatmap</a></span><span class="op">(</span><span class="va">india_sequencing_proportion</span><span class="op">)</span></span>
 <span><span class="co"># p4</span></span></code></pre></div>
 <p>In terms of absolute numbers sequenced:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">seq_stats2</span> <span class="op">&lt;-</span> <span class="va">seq_stats</span></span>
 <span><span class="co"># seq_stats2 &lt;- seq_stats2 %&gt;% filter(MonthYear &gt;= "July 2022")</span></span>
 <span><span class="va">seq_stats2</span><span class="op">$</span><span class="va">MonthYear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seq_stats</span><span class="op">$</span><span class="va">MonthYear</span><span class="op">)</span></span>
@@ -241,8 +271,8 @@ state level:</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p4.total</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PlotTotalHeatmap.html">PlotTotalHeatmap</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">seq_stats2</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 46.5</span></span></code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## [1] 18</span></span></code></pre>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p4.total</span></span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-9-1.png" width="1056"></p>
 </div>
@@ -252,7 +282,7 @@ state level:</p>
 </h2>
 <p>Finally, we look at the prevalence of variants and variants of
 concern (VOCs):</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">india_month_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsMonthwise.html">SummarizeVariantsMonthwise</a></span><span class="op">(</span><span class="va">gisaid_india</span><span class="op">)</span></span>
 <span><span class="va">india_month_counts</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"India"</span></span>
 <span><span class="va">india_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CountsToPrevalence.html">CountsToPrevalence</a></span><span class="op">(</span><span class="va">india_month_counts</span><span class="op">)</span></span>

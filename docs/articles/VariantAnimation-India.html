@@ -133,7 +133,7 @@
 <h2 id="get-variants-data-for-india">Get variants data for India<a class="anchor" aria-label="anchor" href="#get-variants-data-for-india"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2023_09_21.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2023_10_28.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -224,32 +224,25 @@
 <span><span class="va">gisaid_india_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_india_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">india_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_india_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  56 (39 variable)</span></span>
-<span><span class="co">## initial  value 639667.910839 </span></span>
-<span><span class="co">## iter  10 value 286660.285774</span></span>
-<span><span class="co">## iter  20 value 254963.374271</span></span>
-<span><span class="co">## iter  30 value 207745.370158</span></span>
-<span><span class="co">## iter  40 value 154607.916528</span></span>
-<span><span class="co">## iter  50 value 143284.786563</span></span>
-<span><span class="co">## iter  60 value 142420.970463</span></span>
-<span><span class="co">## iter  70 value 141459.745758</span></span>
-<span><span class="co">## iter  80 value 140882.622941</span></span>
-<span><span class="co">## iter  90 value 140865.461391</span></span>
-<span><span class="co">## iter 100 value 140817.960279</span></span>
-<span><span class="co">## iter 110 value 140192.259198</span></span>
-<span><span class="co">## iter 120 value 140007.570251</span></span>
-<span><span class="co">## iter 130 value 139861.265891</span></span>
-<span><span class="co">## iter 140 value 139505.932767</span></span>
-<span><span class="co">## iter 150 value 139467.829251</span></span>
-<span><span class="co">## iter 160 value 139423.000853</span></span>
-<span><span class="co">## iter 170 value 139421.979824</span></span>
-<span><span class="co">## iter 180 value 139411.743165</span></span>
-<span><span class="co">## iter 190 value 139400.592047</span></span>
-<span><span class="co">## iter 200 value 139398.193397</span></span>
-<span><span class="co">## iter 210 value 139393.385323</span></span>
-<span><span class="co">## iter 220 value 139383.518022</span></span>
-<span><span class="co">## iter 230 value 139380.280617</span></span>
-<span><span class="co">## final  value 139373.032104 </span></span>
+<pre><code><span><span class="co">## # weights:  40 (27 variable)</span></span>
+<span><span class="co">## initial  value 229468.722613 </span></span>
+<span><span class="co">## iter  10 value 96552.924912</span></span>
+<span><span class="co">## iter  20 value 72075.396412</span></span>
+<span><span class="co">## iter  30 value 55997.701188</span></span>
+<span><span class="co">## iter  40 value 55079.785754</span></span>
+<span><span class="co">## iter  50 value 54645.212748</span></span>
+<span><span class="co">## iter  60 value 54572.708839</span></span>
+<span><span class="co">## iter  70 value 54531.048657</span></span>
+<span><span class="co">## iter  80 value 54500.719869</span></span>
+<span><span class="co">## iter  90 value 54426.589877</span></span>
+<span><span class="co">## iter 100 value 54422.180869</span></span>
+<span><span class="co">## iter 110 value 54413.179656</span></span>
+<span><span class="co">## iter 120 value 54407.694529</span></span>
+<span><span class="co">## iter 130 value 54405.835801</span></span>
+<span><span class="co">## iter 140 value 54393.631897</span></span>
+<span><span class="co">## iter 150 value 54390.595057</span></span>
+<span><span class="co">## iter 160 value 54384.344505</span></span>
+<span><span class="co">## final  value 54370.520111 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">india_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org**"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span> <span class="co"># , trans_y="log10")</span></span>
@@ -257,9 +250,18 @@
 <p><img src="IN_animated.gif"></p>
 <p>Look at cases after January, 2022 only:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesWeeklyLong.html">GetIndiaConfirmedCasesWeeklyLong</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesWeeklyLong.html">GetIndiaConfirmedCasesWeeklyLong</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">3183</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">42</span></span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
+<span><span class="co">## <span style="color: #BB0000;">chr</span>   (2): Date, Status</span></span>
+<span><span class="co">## <span style="color: #00BB00;">dbl</span>  (39): TT, AN, AP, AR, AS, BR, CH, CT, DN, DD, DL, GA, GJ, HR, HP, JK, J...</span></span>
+<span><span class="co">## <span style="color: #0000BB;">date</span>  (1): Date_YMD</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">WeekYear</span> <span class="op">&gt;=</span> <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-week.html" class="external-link">yearweek</a></span><span class="op">(</span><span class="st">"2021 W35"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -278,34 +280,42 @@
 <span><span class="va">gisaid_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  44 (30 variable)</span></span>
-<span><span class="co">## initial  value 258747.287307 </span></span>
-<span><span class="co">## iter  10 value 93637.324026</span></span>
-<span><span class="co">## iter  20 value 83549.833781</span></span>
-<span><span class="co">## iter  30 value 78400.108191</span></span>
-<span><span class="co">## iter  40 value 76547.952676</span></span>
-<span><span class="co">## iter  50 value 75754.963373</span></span>
-<span><span class="co">## iter  60 value 75460.459768</span></span>
-<span><span class="co">## iter  70 value 75434.922124</span></span>
-<span><span class="co">## iter  80 value 75369.250103</span></span>
-<span><span class="co">## iter  90 value 75216.719762</span></span>
-<span><span class="co">## iter 100 value 75205.233655</span></span>
-<span><span class="co">## final  value 75205.062989 </span></span>
+<pre><code><span><span class="co">## # weights:  36 (24 variable)</span></span>
+<span><span class="co">## initial  value 135527.009155 </span></span>
+<span><span class="co">## iter  10 value 47796.952641</span></span>
+<span><span class="co">## iter  20 value 39236.820254</span></span>
+<span><span class="co">## iter  30 value 36814.256970</span></span>
+<span><span class="co">## iter  40 value 36706.498510</span></span>
+<span><span class="co">## iter  50 value 36688.607656</span></span>
+<span><span class="co">## iter  60 value 36684.368840</span></span>
+<span><span class="co">## iter  70 value 36582.659506</span></span>
+<span><span class="co">## iter  80 value 36560.915530</span></span>
+<span><span class="co">## iter  90 value 36559.769621</span></span>
+<span><span class="co">## final  value 36559.690993 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org**&lt;br&gt;"</span><span class="op">)</span> <span class="co"># , trans_y="log10")</span></span></code></pre></div>
 <pre><code><span><span class="co">## `geom_line()`: Each group consists of only one observation.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
 <span><span class="co">## `geom_line()`: Each group consists of only one observation.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span></code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_2021.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="IN_animated_2021.gif"></p>
 <p>Look at cases in the last few months:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesWeeklyLong.html">GetIndiaConfirmedCasesWeeklyLong</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesWeeklyLong.html">GetIndiaConfirmedCasesWeeklyLong</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">3183</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">42</span></span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
+<span><span class="co">## <span style="color: #BB0000;">chr</span>   (2): Date, Status</span></span>
+<span><span class="co">## <span style="color: #00BB00;">dbl</span>  (39): TT, AN, AP, AR, AS, BR, CH, CT, DN, DD, DL, GA, GJ, HR, HP, JK, J...</span></span>
+<span><span class="co">## <span style="color: #0000BB;">date</span>  (1): Date_YMD</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">WeekYear</span> <span class="op">&gt;=</span> <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-week.html" class="external-link">yearweek</a></span><span class="op">(</span><span class="st">"2022 W12"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -324,34 +334,38 @@
 <span><span class="va">gisaid_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  44 (30 variable)</span></span>
-<span><span class="co">## initial  value 141559.747430 </span></span>
-<span><span class="co">## iter  10 value 63586.767899</span></span>
-<span><span class="co">## iter  20 value 54886.834211</span></span>
-<span><span class="co">## iter  30 value 51613.072516</span></span>
-<span><span class="co">## iter  40 value 49409.875929</span></span>
-<span><span class="co">## iter  50 value 49203.005451</span></span>
-<span><span class="co">## iter  60 value 49134.558093</span></span>
-<span><span class="co">## iter  70 value 49129.637871</span></span>
-<span><span class="co">## iter  80 value 49120.633370</span></span>
-<span><span class="co">## iter  90 value 49100.932445</span></span>
-<span><span class="co">## iter 100 value 49099.794259</span></span>
-<span><span class="co">## final  value 49099.792381 </span></span>
+<pre><code><span><span class="co">## # weights:  36 (24 variable)</span></span>
+<span><span class="co">## initial  value 50483.431889 </span></span>
+<span><span class="co">## iter  10 value 19802.493508</span></span>
+<span><span class="co">## iter  20 value 17781.974314</span></span>
+<span><span class="co">## iter  30 value 17571.014887</span></span>
+<span><span class="co">## iter  40 value 17548.399555</span></span>
+<span><span class="co">## iter  50 value 17546.018456</span></span>
+<span><span class="co">## final  value 17546.017899 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org**&lt;br&gt;"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## `geom_line()`: Each group consists of only one observation.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
 <span><span class="co">## `geom_line()`: Each group consists of only one observation.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span></code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_2022.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="IN_animated_2022.gif"></p>
 <p>Look at cases in the last few months:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesWeeklyLong.html">GetIndiaConfirmedCasesWeeklyLong</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesWeeklyLong.html">GetIndiaConfirmedCasesWeeklyLong</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">3183</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">42</span></span></span>
+<span><span class="co">## <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">## <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
+<span><span class="co">## <span style="color: #BB0000;">chr</span>   (2): Date, Status</span></span>
+<span><span class="co">## <span style="color: #00BB00;">dbl</span>  (39): TT, AN, AP, AR, AS, BR, CH, CT, DN, DD, DL, GA, GJ, HR, HP, JK, J...</span></span>
+<span><span class="co">## <span style="color: #0000BB;">date</span>  (1): Date_YMD</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">confirmed_subset_dateweekwise_long</span> <span class="op">&lt;-</span> <span class="va">confirmed_subset_dateweekwise_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">WeekYear</span> <span class="op">&gt;=</span> <span class="fu">tsibble</span><span class="fu">::</span><span class="fu"><a href="https://tsibble.tidyverts.org/reference/year-week.html" class="external-link">yearweek</a></span><span class="op">(</span><span class="st">"2022 W39"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">WeekYear</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -370,27 +384,22 @@
 <span><span class="va">gisaid_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # weights:  44 (30 variable)</span></span>
-<span><span class="co">## initial  value 141559.747430 </span></span>
-<span><span class="co">## iter  10 value 63586.767899</span></span>
-<span><span class="co">## iter  20 value 54886.834211</span></span>
-<span><span class="co">## iter  30 value 51613.072516</span></span>
-<span><span class="co">## iter  40 value 49409.875929</span></span>
-<span><span class="co">## iter  50 value 49203.005451</span></span>
-<span><span class="co">## iter  60 value 49134.558093</span></span>
-<span><span class="co">## iter  70 value 49129.637871</span></span>
-<span><span class="co">## iter  80 value 49120.633370</span></span>
-<span><span class="co">## iter  90 value 49100.932445</span></span>
-<span><span class="co">## iter 100 value 49099.794259</span></span>
-<span><span class="co">## final  value 49099.792381 </span></span>
+<pre><code><span><span class="co">## # weights:  36 (24 variable)</span></span>
+<span><span class="co">## initial  value 50483.431889 </span></span>
+<span><span class="co">## iter  10 value 19802.493508</span></span>
+<span><span class="co">## iter  20 value 17781.974314</span></span>
+<span><span class="co">## iter  30 value 17571.014887</span></span>
+<span><span class="co">## iter  40 value 17548.399555</span></span>
+<span><span class="co">## iter  50 value 17546.018456</span></span>
+<span><span class="co">## final  value 17546.017899 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and covid19bharat.org**&lt;br&gt;"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## `geom_line()`: Each group consists of only one observation.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span>
 <span><span class="co">## `geom_line()`: Each group consists of only one observation.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span></span></code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_latest.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="IN_animated_latest.gif"></p>
 </div>
