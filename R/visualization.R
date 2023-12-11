@@ -116,9 +116,15 @@ PlotSequencedPropHeatmap <- function(df) {
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
-BarPlot <- function(df, xaxis = "MonthYear", yaxis = "value", color = "dodgerblue2",
-                    ylabel = NULL, label_si = FALSE,
-                    label_as_percent = TRUE, xangle = 90, title = NULL, caption = NULL) {
+BarPlot <- function(df, xaxis = "MonthYear",
+                    yaxis = "value",
+                    color = "dodgerblue2",
+                    ylabel = NULL,
+                    label_si = FALSE,
+                    label_as_percent = TRUE,
+                    xangle = 90,
+                    title = NULL,
+                    caption = NULL) {
   df <- as.data.frame(df)
   df$MonthYearFactor <- as.factor(df[, xaxis])
   values <- df %>% pull(!!yaxis)
