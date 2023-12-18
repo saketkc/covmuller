@@ -5,7 +5,7 @@
 \title{Get India monthwose cases long}
 \usage{
 GetIndiaConfirmedCasesMonthlyLong(
-  url = "http://data.covid19bharat.org/csv/latest/state_wise_daily.csv",
+  url = "http://saketkc.github.io/covid19bharat_data//csv/latest/state_wise_daily.csv",
   level = "State"
 )
 }

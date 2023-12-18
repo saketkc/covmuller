@@ -5,7 +5,7 @@
 \title{Get daily cases for India for a given status type}
 \usage{
 GetIndiaDailyCasesCumulative(
-  url = "https://data.covid19bharat.org/csv/latest/state_wise_daily.csv",
+  url = "https://saketkc.github.io/covid19bharat_data//csv/latest/state_wise_daily.csv",
   status = "Confirmed"
 )
 }
