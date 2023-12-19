@@ -32,22 +32,31 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1` = "BA.1",
-  `BA.1.*` = "BA.1",
-  `BA.2` = "BA.2",
-  `BA.2.*` = "BA.2",
-  `BA.3` = "BA.3",
-  `BA.3.*` = "BA.3",
-  `BA.4` = "BA.4",
-  `BA.4.*` = "BA.4",
-  `BA.5` = "BA.5",
-  `BA.5.*` = "BA.5",
   `XBB` = "XBB",
-  `XBB.1` = "XBB.1+",
-  `XBB.1.*` = "XBB.1+",
-  `XBB.1.5` = "XBB.1.5",
+  `XBB.1.5` = "XBB",
+  `XBB.1` = "XBB",
+  `XBB.1.*` = "XBB",
+  `XBB.*` = "XBB",
+  `XBB.*.*` = "XBB",
+  `XBB.*.*.*` = "XBB",
   `BQ.1` = "BQ.1",
-  `BQ.1.*` = "BQ.1"
+  `BQ.1.*` = "BQ.1",
+  `EG.5` = "EG.5",
+  `EG.5.1` = "EG.5",
+  `EG.5.1.1` = "EG.5",
+  `EG.5.*` = "EG.5",
+  `EG.5.1` = "EG.5",
+  #`EG.6.*` = "EG.6",
+  #`EG.6.1` = "EG.6",
+  `FL.1.*` = "FL.1",
+  `FU.1` = "FU.1",
+  `FU.1.*` = "FU.1",
+  `GJ.1.2` = "GJ.1",
+  `GJ.1.*` = "GJ.1",
+  `JN.1` = "JN.1",
+  `JN.1.*` = "JN.1",
+  `HV.1` = "HV.1",
+  `HV.1.*` = "HV.1"
 )
 gisaid_singapore <- gisaid_singapore %>%
   filter(pangolin_lineage != "None") %>%
@@ -135,13 +144,13 @@ Look at cases after October,2021 only:
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Dec 2021") %>%
+  filter(MonthYear > "April 2023") %>%
   group_by(WeekYear) %>%
   summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_singapore_subset <- gisaid_singapore %>% filter(MonthYearCollected > "Dec 2021")
+gisaid_singapore_subset <- gisaid_singapore %>% filter(MonthYearCollected > "April 2023")
 gisaid_singapore_weekwise <- SummarizeVariantsWeekwise(gisaid_singapore_subset)
 
 voc_to_keep <- gisaid_singapore_weekwise %>%
@@ -154,6 +163,6 @@ gisaid_singapore_weekwise <- gisaid_singapore_weekwise %>% filter(lineage_collap
 
 sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_singapore_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Singapore by variant", caption = "**Source: gisaid.org and covid19datahub.io**<br>")
-gganimate::anim_save(filename = here::here("docs/articles/Singapore_animated_2021.gif"), animation = the_anim)
+gganimate::anim_save(filename = here::here("docs/articles/Singapore_animated_2023.gif"), animation = the_anim)
 ```
-![](Singapore_animated_2021.gif)
+![](Singapore_animated_2023.gif)

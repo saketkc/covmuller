@@ -43,20 +43,31 @@ gisaid_usa <- gisaid_usa %>%
 
 vocs <- GetVOCs()
 custom_voc_mapping <- list(
-  `XBB` = "XBB.*",
-  `XBB.*` = "XBB.*",
+  `XBB` = "XBB",
+  `XBB.1.5` = "XBB",
+  `XBB.1` = "XBB",
+  `XBB.1.*` = "XBB",
+  `XBB.*` = "XBB",
+  `XBB.*.*` = "XBB",
+  `XBB.*.*.*` = "XBB",
   `BQ.1` = "BQ.1",
   `BQ.1.*` = "BQ.1",
-  `XBB.1` = "XBB.1.*",
-  `XBB.1.*` = "XBB.1.*",
-  `XBB.1.5` = "XBB.1.5",
-  `XBB.1.16` = "XBB.1.16",
-  `XBB.1.16.*` = "XBB.1.16",
+  `EG.5` = "EG.5",
+  `EG.5.1` = "EG.5",
+  `EG.5.1.1` = "EG.5",
   `EG.5.*` = "EG.5",
-  `FL.1.*` = "FL.1.*",
-  # `FL.1.5.*` = "FL.1.5",
-  # `FL.1.6.*` = "FL.1.6",
-  `GJ.1.2` = "GJ.1.2"
+  `EG.5.1` = "EG.5",
+  #`EG.6.*` = "EG.6",
+  #`EG.6.1` = "EG.6",
+  `FL.1.*` = "FL.1",
+  `FU.1` = "FU.1",
+  `FU.1.*` = "FU.1",
+  `GJ.1.2` = "GJ.1",
+  `GJ.1.*` = "GJ.1",
+  `JN.1` = "JN.1",
+  `JN.1.*` = "JN.1",
+  `HV.1` = "HV.1",
+  `HV.1.*` = "HV.1"
 )
 gisaid_usa <- gisaid_usa %>% filter(pangolin_lineage != "None")
 
@@ -169,7 +180,7 @@ confirmed_subset_dateweekwise_long <- confirmed %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_usa_subset <- gisaid_usa %>% filter(MonthYearCollected > "Dec 2021")
+gisaid_usa_subset <- gisaid_usa %>% filter(MonthYearCollected > "December 2022")
 gisaid_usa_weekwise <- SummarizeVariantsWeekwise(gisaid_usa_subset)
 
 voc_to_keep <- gisaid_usa_weekwise %>%
@@ -182,7 +193,7 @@ gisaid_usa_weekwise <- gisaid_usa_weekwise %>% filter(lineage_collapsed %in% voc
 
 usa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_usa_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the USA by variant", caption = "**Source: gisaid.org and covid19nytimes**<br>")
-gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2022_2.gif"), animation = the_anim)
+gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2023.gif"), animation = the_anim)
 ```
 
-![](USA_animated_2022_2.gif)
+![](USA_animated_2023.gif)

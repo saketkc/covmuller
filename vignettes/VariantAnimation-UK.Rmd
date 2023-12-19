@@ -36,22 +36,31 @@ vocs <- GetVOCs()
 omicron <- vocs[["omicron"]]
 vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
-  `BA.1` = "BA.1",
-  `BA.1.*` = "BA.1",
-  `BA.2` = "BA.2",
-  `BA.2.*` = "BA.2",
-  `BA.3` = "BA.3",
-  `BA.3.*` = "BA.3",
-  `BA.4` = "BA.4",
-  `BA.4.*` = "BA.4",
-  `BA.5` = "BA.5",
-  `BA.5.*` = "BA.5",
   `XBB` = "XBB",
-  `XBB.1` = "XBB.1+",
-  `XBB.1.*` = "XBB.1+",
-  `XBB.1.5` = "XBB.1.5",
+  `XBB.1.5` = "XBB",
+  `XBB.1` = "XBB",
+  `XBB.1.*` = "XBB",
+  `XBB.*` = "XBB",
+  `XBB.*.*` = "XBB",
+  `XBB.*.*.*` = "XBB",
   `BQ.1` = "BQ.1",
-  `BQ.1.*` = "BQ.1"
+  `BQ.1.*` = "BQ.1",
+  `EG.5` = "EG.5",
+  `EG.5.1` = "EG.5",
+  `EG.5.1.1` = "EG.5",
+  `EG.5.*` = "EG.5",
+  `EG.5.1` = "EG.5",
+  #`EG.6.*` = "EG.6",
+  #`EG.6.1` = "EG.6",
+  `FL.1.*` = "FL.1",
+  `FU.1` = "FU.1",
+  `FU.1.*` = "FU.1",
+  `GJ.1.2` = "GJ.1",
+  `GJ.1.*` = "GJ.1",
+  `JN.1` = "JN.1",
+  `JN.1.*` = "JN.1",
+  `HV.1` = "HV.1",
+  `HV.1.*` = "HV.1"
 )
 gisaid_uk <- CollapseLineageToVOCs(
   variant_df = gisaid_uk,
@@ -144,13 +153,13 @@ Look at cases after October,2021 only:
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Dec 2021") %>%
+  filter(MonthYear > "April 2023") %>%
   group_by(WeekYear) %>%
   summarise(n = ceiling(mean(daily_cases))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_uk <- gisaid_uk %>% filter(MonthYearCollected > "Dec 2021")
+gisaid_uk <- gisaid_uk %>% filter(MonthYearCollected > "April 2023")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_uk)
 
 voc_to_keep <- gisaid_weekwise %>%
@@ -162,7 +171,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the USA by variant", caption = "**Source: gisaid.org and gov.uk**<br>")
-gganimate::anim_save(filename = here::here("docs/articles/UK_animated_2021.gif"), animation = the_anim)
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the UK by variant", caption = "**Source: gisaid.org and gov.uk**<br>")
+gganimate::anim_save(filename = here::here("docs/articles/UK_animated_2023.gif"), animation = the_anim)
 ```
-![](UK_animated_2021.gif)
+![](UK_animated_2023.gif)

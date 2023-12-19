@@ -30,20 +30,31 @@ gisaid_NY <- gisaid_usa %>% filter(State == "New York")
 
 vocs <- GetVOCs()
 custom_voc_mapping <- list(
-  `XBB` = "XBB.*",
-  `XBB.*` = "XBB.*",
+  `XBB` = "XBB",
+  `XBB.1.5` = "XBB",
+  `XBB.1` = "XBB",
+  `XBB.1.*` = "XBB",
+  `XBB.*` = "XBB",
+  `XBB.*.*` = "XBB",
+  `XBB.*.*.*` = "XBB",
   `BQ.1` = "BQ.1",
   `BQ.1.*` = "BQ.1",
-  `XBB.1` = "XBB.1.*",
-  `XBB.1.*` = "XBB.1.*",
-  `XBB.1.5` = "XBB.1.5",
-  `XBB.1.16` = "XBB.1.16",
-  `XBB.1.16.*` = "XBB.1.16",
+  `EG.5` = "EG.5",
+  `EG.5.1` = "EG.5",
+  `EG.5.1.1` = "EG.5",
   `EG.5.*` = "EG.5",
-  `FL.1.*` = "FL.1.*",
-  # `FL.1.5.*` = "FL.1.5",
-  # `FL.1.6.*` = "FL.1.6",
-  `GJ.1.2` = "GJ.1.2"
+  `EG.5.1` = "EG.5",
+  #`EG.6.*` = "EG.6",
+  #`EG.6.1` = "EG.6",
+  `FL.1.*` = "FL.1",
+  `FU.1` = "FU.1",
+  `FU.1.*` = "FU.1",
+  `GJ.1.2` = "GJ.1",
+  `GJ.1.*` = "GJ.1",
+  `JN.1` = "JN.1",
+  `JN.1.*` = "JN.1",
+  `HV.1` = "HV.1",
+  `HV.1.*` = "HV.1"
 )
 gisaid_NY <- gisaid_NY %>% filter(pangolin_lineage != "None")
 
@@ -119,13 +130,13 @@ Look at cases after february, 2022 only:
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Feb 2022") %>%
+  filter(MonthYear > "December 2022") %>%
   group_by(WeekYear) %>%
   summarise(n = sum(daily_cases)) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_NY <- gisaid_NY %>% filter(MonthYearCollected > "Feb 2022")
+gisaid_NY <- gisaid_NY %>% filter(MonthYearCollected > "December 2022")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_NY)
 
 voc_to_keep <- gisaid_weekwise %>%
@@ -138,6 +149,6 @@ gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York state by variant", caption = "**Source: gisaid.org and covid19nytimes**<br>")
-gganimate::anim_save(filename = here::here("docs/articles/NY_animated_2021.gif"), animation = the_anim)
+gganimate::anim_save(filename = here::here("docs/articles/NY_animated_2023.gif"), animation = the_anim)
 ```
-![](NY_animated_2021.gif)
+![](NY_animated_2023.gif)
