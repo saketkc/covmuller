@@ -153,13 +153,13 @@ Look at cases after October,2021 only:
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "April 2023") %>%
+  filter(MonthYear > "December 2022") %>%
   group_by(WeekYear) %>%
   summarise(n = ceiling(mean(daily_cases))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_uk <- gisaid_uk %>% filter(MonthYearCollected > "April 2023")
+gisaid_uk <- gisaid_uk %>% filter(MonthYearCollected > "December 2022")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_uk)
 
 voc_to_keep <- gisaid_weekwise %>%

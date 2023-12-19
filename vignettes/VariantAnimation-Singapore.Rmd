@@ -144,13 +144,13 @@ Look at cases after October,2021 only:
 confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
 confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "April 2023") %>%
+  filter(MonthYear > "December 2021") %>%
   group_by(WeekYear) %>%
   summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
   arrange(WeekYear) %>%
   rename(WeekYearCollected = WeekYear)
 
-gisaid_singapore_subset <- gisaid_singapore %>% filter(MonthYearCollected > "April 2023")
+gisaid_singapore_subset <- gisaid_singapore %>% filter(MonthYearCollected > "December 2021")
 gisaid_singapore_weekwise <- SummarizeVariantsWeekwise(gisaid_singapore_subset)
 
 voc_to_keep <- gisaid_singapore_weekwise %>%
@@ -163,6 +163,6 @@ gisaid_singapore_weekwise <- gisaid_singapore_weekwise %>% filter(lineage_collap
 
 sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_singapore_weekwise, confirmed_subset_dateweekwise_long)
 the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Singapore by variant", caption = "**Source: gisaid.org and covid19datahub.io**<br>")
-gganimate::anim_save(filename = here::here("docs/articles/Singapore_animated_2023.gif"), animation = the_anim)
+gganimate::anim_save(filename = here::here("docs/articles/Singapore_animated_2022.gif"), animation = the_anim)
 ```
-![](Singapore_animated_2023.gif)
+![](Singapore_animated_2022.gif)
