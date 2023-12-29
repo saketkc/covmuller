@@ -134,7 +134,7 @@
 <h2 id="get-variants-data-for-uk">Get variants data for UK<a class="anchor" aria-label="anchor" href="#get-variants-data-for-uk"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2023_12_25.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2023_12_28.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_uk</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"United Kingdom"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -275,43 +275,33 @@
 <span></span>
 <span><span class="va">uk_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_uk_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  60 (42 variable)</span></span>
-<span><span class="co">## initial  value 8157933.529565 </span></span>
-<span><span class="co">## iter  10 value 2662550.766098</span></span>
-<span><span class="co">## iter  20 value 2402516.319682</span></span>
-<span><span class="co">## iter  30 value 2205373.211883</span></span>
-<span><span class="co">## iter  40 value 1921721.587931</span></span>
-<span><span class="co">## iter  50 value 863289.046522</span></span>
-<span><span class="co">## iter  60 value 513640.517968</span></span>
-<span><span class="co">## iter  70 value 496095.148564</span></span>
-<span><span class="co">## iter  80 value 485152.745731</span></span>
-<span><span class="co">## iter  90 value 482756.926042</span></span>
-<span><span class="co">## iter 100 value 481305.785655</span></span>
-<span><span class="co">## iter 110 value 471837.924111</span></span>
-<span><span class="co">## iter 120 value 462737.968068</span></span>
-<span><span class="co">## iter 130 value 457332.800971</span></span>
-<span><span class="co">## iter 140 value 456320.172415</span></span>
-<span><span class="co">## iter 150 value 455638.878477</span></span>
-<span><span class="co">## iter 160 value 455446.388838</span></span>
-<span><span class="co">## iter 170 value 455282.609430</span></span>
-<span><span class="co">## iter 180 value 455269.502340</span></span>
-<span><span class="co">## iter 190 value 455268.683315</span></span>
-<span><span class="co">## iter 200 value 455268.319594</span></span>
-<span><span class="co">## iter 210 value 455254.886246</span></span>
-<span><span class="co">## iter 220 value 455187.350126</span></span>
-<span><span class="co">## iter 230 value 455135.832844</span></span>
-<span><span class="co">## iter 240 value 455116.908398</span></span>
-<span><span class="co">## iter 250 value 455106.629809</span></span>
-<span><span class="co">## iter 260 value 455039.892373</span></span>
-<span><span class="co">## iter 270 value 454967.422544</span></span>
-<span><span class="co">## iter 280 value 454966.935359</span></span>
-<span><span class="co">## iter 290 value 454965.787576</span></span>
-<span><span class="co">## iter 300 value 454954.878865</span></span>
-<span><span class="co">## iter 310 value 454949.999519</span></span>
-<span><span class="co">## iter 320 value 454941.215728</span></span>
-<span><span class="co">## iter 330 value 454935.131829</span></span>
-<span><span class="co">## iter 340 value 454930.671722</span></span>
-<span><span class="co">## iter 350 value 454926.131308</span></span>
-<span><span class="co">## final  value 454925.413925 </span></span>
+<span><span class="co">## initial  value 8165302.134163 </span></span>
+<span><span class="co">## iter  10 value 2666702.659390</span></span>
+<span><span class="co">## iter  20 value 2512680.877654</span></span>
+<span><span class="co">## iter  30 value 2185382.287657</span></span>
+<span><span class="co">## iter  40 value 1683404.485314</span></span>
+<span><span class="co">## iter  50 value 813563.372374</span></span>
+<span><span class="co">## iter  60 value 542913.499023</span></span>
+<span><span class="co">## iter  70 value 511855.970207</span></span>
+<span><span class="co">## iter  80 value 500707.457402</span></span>
+<span><span class="co">## iter  90 value 494172.132737</span></span>
+<span><span class="co">## iter 100 value 492404.935715</span></span>
+<span><span class="co">## iter 110 value 477739.808827</span></span>
+<span><span class="co">## iter 120 value 466845.828271</span></span>
+<span><span class="co">## iter 130 value 460693.314229</span></span>
+<span><span class="co">## iter 140 value 458983.870737</span></span>
+<span><span class="co">## iter 150 value 458510.269091</span></span>
+<span><span class="co">## iter 160 value 458180.622536</span></span>
+<span><span class="co">## iter 170 value 458095.592616</span></span>
+<span><span class="co">## iter 180 value 458091.700021</span></span>
+<span><span class="co">## iter 190 value 458090.557863</span></span>
+<span><span class="co">## iter 200 value 458053.398986</span></span>
+<span><span class="co">## iter 210 value 458021.640015</span></span>
+<span><span class="co">## iter 220 value 457994.470176</span></span>
+<span><span class="co">## iter 230 value 457973.970799</span></span>
+<span><span class="co">## iter 240 value 457923.168551</span></span>
+<span><span class="co">## iter 250 value 457893.453197</span></span>
+<span><span class="co">## final  value 457804.398330 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">uk_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in New York state by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and gov.uk**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span></span>
@@ -341,17 +331,17 @@
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # weights:  36 (24 variable)</span></span>
-<span><span class="co">## initial  value 205534.978638 </span></span>
-<span><span class="co">## iter  10 value 115668.044240</span></span>
-<span><span class="co">## iter  20 value 110887.675635</span></span>
-<span><span class="co">## iter  30 value 99938.056360</span></span>
-<span><span class="co">## iter  40 value 99377.665809</span></span>
-<span><span class="co">## iter  50 value 99359.328906</span></span>
-<span><span class="co">## iter  60 value 99358.879197</span></span>
-<span><span class="co">## iter  70 value 99342.472311</span></span>
-<span><span class="co">## iter  80 value 99320.482175</span></span>
-<span><span class="co">## iter  90 value 99319.758743</span></span>
-<span><span class="co">## final  value 99316.667930 </span></span>
+<span><span class="co">## initial  value 210377.661606 </span></span>
+<span><span class="co">## iter  10 value 120679.175098</span></span>
+<span><span class="co">## iter  20 value 115721.657637</span></span>
+<span><span class="co">## iter  30 value 103061.932795</span></span>
+<span><span class="co">## iter  40 value 102073.033544</span></span>
+<span><span class="co">## iter  50 value 102064.576385</span></span>
+<span><span class="co">## iter  60 value 102064.106035</span></span>
+<span><span class="co">## iter  70 value 102043.371215</span></span>
+<span><span class="co">## iter  80 value 102025.938683</span></span>
+<span><span class="co">## iter  90 value 102019.867287</span></span>
+<span><span class="co">## final  value 102019.285975 </span></span>
 <span><span class="co">## converged</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in the UK by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and gov.uk**&lt;br&gt;"</span><span class="op">)</span></span></code></pre></div>
