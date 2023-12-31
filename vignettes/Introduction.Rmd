@@ -40,7 +40,7 @@ p1
 We utilize [GISAID](https://www.gisaid.org/) data to look at prevalence of variants. To access this data, GISAID requires registration.
 
 ```{r}
-current_date <- "2023_12_28"
+current_date <- "2023_12_30"
 fpath.tar <- paste0("~/data/epicov/metadata_tsv_", current_date, ".tar.xz")
 fpath.qs <- paste0("~/data/epicov/metadata_tsv_", current_date, ".qs")
 
@@ -70,12 +70,27 @@ p2
 While the absolute numbers are informative, a more useful metric is the proportion of cases (cases sequenced over total cases) that are getting sequenced. Here we look at the proportion of cases that have been sequenced in India over the course of the pandemic:
 
 ```{r, fig.width=8, fig.height=5, warning=FALSE}
-india_cases_long <- GetIndiaConfirmedCasesMonthlyLong() %>% filter(State == "India")
+#india_cases_long <- GetIndiaConfirmedCasesMonthlyLong() %>% filter(State == "India")
+GetIndiaCases <- function(){
+    data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
+    confirmed <- data %>% select(date, India)
+colnames(confirmed)[2] <- c("cases")
+confirmed$MonthYear <- GetMonthYear(confirmed$date)
+
+confirmed_subset_weekwise <- confirmed %>%
+      group_by(MonthYear) %>%
+      summarise(value = sum(cases, na.rm=T)) %>%
+      arrange(MonthYear)
+}
+india_cases_long <- GetIndiaCases()
+india_cases_long$State <- "India"
+india_cases_long$type <- "Confirmed"
+
 india_sequencing_proportion <- CombineSequencedCases(
   cases_sequenced = country_seq_stats,
   confirmed_long = india_cases_long
 )
-p3 <- BarPlot(india_sequencing_proportion, yaxis = "percent_sequenced_collected", ylabel = "%  deposited to GISAID", color = "yellowgreen", title = "Proportion of cases deposited to GISAID from India", caption = "**Source: gisaid.org and covid19bharat.org**<br>")
+p3 <- BarPlot(india_sequencing_proportion, yaxis = "percent_sequenced_collected", ylabel = "%  deposited to GISAID", color = "yellowgreen", title = "Proportion of cases deposited to GISAID from India", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
 p3
 ```
 
@@ -109,9 +124,10 @@ p4 <- PlotSequencedPropHeatmap(india_sequencing_proportion)
 # p4
 ```
 
-In terms of absolute numbers sequenced:
 
-```{r, fig.width=11, fig.height=11, warning=FALSE, message=FALSE}
+```{r, fig.width=11, fig.height=11, warning=FALSE, message=FALSE, echo=FALSE, eval=FALSE}
+#In terms of absolute numbers sequenced:
+
 seq_stats2 <- seq_stats
 # seq_stats2 <- seq_stats2 %>% filter(MonthYear >= "July 2022")
 seq_stats2$MonthYear <- factor(seq_stats$MonthYear)
@@ -133,8 +149,6 @@ india_month_counts <- SummarizeVariantsMonthwise(gisaid_india)
 india_month_counts$State <- "India"
 india_month_prevalence <- CountsToPrevalence(india_month_counts)
 vocs <- GetVOCs()
-omicron <- vocs[["omicron"]]
-vocs[["omicron"]] <- NULL
 custom_voc_mapping <- list(
   `XBB` = "XBB",
   `XBB.1.5` = "XBB",
