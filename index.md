@@ -3,7 +3,7 @@
 Covmuller is an R-package designed for analysis of sequencing metadata deposited on [GISAID](https://www.gisaid.org/). 
 
 
-![](https://saket-choudhary.me/covmuller/articles/IN_animated_2023.gif)
+![](https://saket-choudhary.me/covmuller/articles/NYC_animated_2023.gif)
 
 
 ## Features
