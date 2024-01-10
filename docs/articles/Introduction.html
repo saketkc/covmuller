@@ -174,7 +174,7 @@ level.</p>
 at prevalence of variants. To access this data, GISAID requires
 registration.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2024_01_06"</span></span>
+<code class="sourceCode R"><span><span class="va">current_date</span> <span class="op">&lt;-</span> <span class="st">"2024_01_08"</span></span>
 <span><span class="va">fpath.tar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".tar.xz"</span><span class="op">)</span></span>
 <span><span class="va">fpath.qs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_"</span>, <span class="va">current_date</span>, <span class="st">".qs"</span><span class="op">)</span></span>
 <span></span>
@@ -184,6 +184,16 @@ registration.</p>
 <span>  <span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadGISAIDMetada.html">ReadGISAIDMetada</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">fpath.tar</span><span class="op">)</span></span>
 <span>  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html" class="external-link">qsave</a></span><span class="op">(</span><span class="va">gisaid_metadata</span>, <span class="va">fpath.qs</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in untar(path, files = fname, exdir = td): '/bin/tar -xf</span></span>
+<span><span class="co">## '/home/saket/data/epicov/metadata_tsv_2024_01_08.tar.xz' -C '/tmp/RtmpxJPxAN'</span></span>
+<span><span class="co">## 'metadata.tsv'' returned error code 2</span></span></code></pre>
+<pre><code><span><span class="co">## Avoidable 2.776 seconds. This file is very unusual: it ends abruptly without a final newline, and also its size is a multiple of 4096 bytes. Please properly end the last row with a newline using for example 'echo &gt;&gt; file' to avoid this  time to copy.</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in fread(input = path, showProgress = showProgress, ...): Discarded</span></span>
+<span><span class="co">## single-line footer: &lt;&lt;hCoV-19/Japan/PG-91819/2021 Original betacoronavirus</span></span>
+<span><span class="co">## EPI_ISL_4654985 2021-08-12 Asia / Japan / Shimane 29762 Human unknown unknown</span></span>
+<span><span class="co">## GRY B.1.1.7 consensus call Former VOC Alpha GRY (B.1.1.7+Q.*) first detected in</span></span>
+<span><span class="co">## the UK</span></span>
+<span><span class="co">## (Spike_H69del,NS8_Q27stop,NSP3_T183I,Spike_T716I,NSP6_S106del,N_R203K,Spike_A570D,Spike_V1268A,Spike_N501Y,NSP2_A31V,NSP3_I1412&gt;&gt;</span></span></code></pre>
 <div class="section level3">
 <h3 id="plot-total-sequenced-cases">Plot total sequenced cases<a class="anchor" aria-label="anchor" href="#plot-total-sequenced-cases"></a>
 </h3>
@@ -191,7 +201,7 @@ registration.</p>
 from a country by filtering out information from the metadata made
 available by GISAID (which includes all countries). Here, we visualize
 the total sequenced cases coming from India:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span></span>
 <span><span class="va">country_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthCountrywise.html">TotalSequencesPerMonthCountrywise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, rename_country_as_state <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu">BarPlot</span><span class="op">(</span><span class="va">country_seq_stats</span>, ylabel <span class="op">=</span> <span class="st">"Sequenced per month"</span>, color <span class="op">=</span> <span class="st">"slateblue1"</span>, label_si <span class="op">=</span> <span class="cn">TRUE</span>, title <span class="op">=</span> <span class="st">"Total sequences deposited to GISAID from India"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org **&lt;br&gt;"</span><span class="op">)</span></span>
@@ -205,7 +215,7 @@ the total sequenced cases coming from India:</p>
 the proportion of cases (cases sequenced over total cases) that are
 getting sequenced. Here we look at the proportion of cases that have
 been sequenced in India over the course of the pandemic:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#india_cases_long &lt;- GetIndiaConfirmedCasesMonthlyLong() %&gt;% filter(State == "India")</span></span>
 <span><span class="va">GetIndiaCases</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span></span>
 <span>    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv"</span><span class="op">)</span></span>
@@ -230,7 +240,7 @@ been sequenced in India over the course of the pandemic:</p>
 <span><span class="va">p3</span></span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
 <p>For more context, we can combine all the three plots at once:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p1</span> <span class="op">/</span> <span class="va">p2</span> <span class="op">/</span> <span class="va">p3</span></span></code></pre></div>
 <p><img src="Introduction_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
 </div>
@@ -239,7 +249,7 @@ been sequenced in India over the course of the pandemic:</p>
 </h3>
 <p>We can further break down the proportion of sequenced cases at the
 state level:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">state_seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/TotalSequencesPerMonthStatewise.html">TotalSequencesPerMonthStatewise</a></span><span class="op">(</span><span class="va">gisaid_india</span>, drop_country <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">seq_stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">country_seq_stats</span>, <span class="va">state_seq_stats</span><span class="op">)</span></span>
 <span><span class="va">state_cases_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetIndiaConfirmedCasesMonthlyLong.html">GetIndiaConfirmedCasesMonthlyLong</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -264,7 +274,7 @@ state level:</p>
 </h2>
 <p>Finally, we look at the prevalence of variants and variants of
 concern (VOCs):</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">india_month_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SummarizeVariantsMonthwise.html">SummarizeVariantsMonthwise</a></span><span class="op">(</span><span class="va">gisaid_india</span><span class="op">)</span></span>
 <span><span class="va">india_month_counts</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="st">"India"</span></span>
 <span><span class="va">india_month_prevalence</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CountsToPrevalence.html">CountsToPrevalence</a></span><span class="op">(</span><span class="va">india_month_counts</span><span class="op">)</span></span>
