@@ -31,6 +31,7 @@ CovmullerTheme <- function() {
 #' @importFrom hrbrthemes theme_ipsum
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
+#' @importFrom stats median
 #' @export
 PlotTotalHeatmap <- function(df, color_legend = "Total cases") {
   df_india <- df %>% filter(State == "India")
@@ -111,7 +112,7 @@ PlotSequencedPropHeatmap <- function(df) {
 
 #' @importFrom magrittr %>%
 #' @importFrom tibble deframe
-#' @importFrom ggplot2 aes_string coord_cartesian ggplot geom_bar geom_text labs scale_y_continuous scale_x_discrete xlab ylab guide_axis
+#' @importFrom ggplot2 aes_string coord_cartesian ggplot geom_bar geom_text labs scale_y_continuous scale_x_discrete xlab ylab guide_axis position_dodge
 #' @importFrom scales comma label_percent label_number cut_short_scale
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
@@ -189,7 +190,7 @@ BarPlot <- function(df, xaxis = "MonthYear",
   return(wrap_plots(p))
 }
 
-#' @importFrom ggplot2 ggplot geom_bar labs scale_fill_brewer scale_x_discrete xlab ylab guide_axis
+#' @importFrom ggplot2 ggplot geom_bar labs scale_fill_brewer scale_x_discrete xlab ylab guide_axis scale_color_manual
 #' @importFrom scales label_number cut_short_scale
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
@@ -234,7 +235,7 @@ PlotMullerDailyPrevalence <- function(df, ncol = 4) {
   wrap_plots(p)
 }
 
-#' @importFrom ggplot2 ggplot geom_line geom_label scale_fill_brewer scale_y_continuous xlab ylab labs ggtitle guide_axis theme element_text
+#' @importFrom ggplot2 ggplot geom_line geom_label scale_fill_brewer scale_y_continuous xlab ylab labs ggtitle guide_axis theme element_text scale_color_manual
 #' @importFrom scales label_number cut_short_scale
 #' @importFrom gganimate transition_reveal view_follow animate gifski_renderer
 #' @importFrom tsibble scale_x_yearweek
@@ -254,7 +255,7 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
   ) +
     geom_line() +
     scale_x_yearweek(date_breaks = date_breaks, date_labels = "%d %b %Y", guide = guide_axis(angle = 90)) +
-    scale_y_continuous(label = label_number(accuracy = 1, scale_cut = cut_short_scale())) + # , trans = trans_y) +
+    scale_y_continuous(labels = label_number(accuracy = 1, scale_cut = cut_short_scale())) + # , trans = trans_y) +
     geom_label(hjust = 0, aes(label = variant), nudge_x = 10, show.legend = FALSE) +
     geom_point() +
     coord_cartesian(ylim = c(0, NA), clip = "off") +

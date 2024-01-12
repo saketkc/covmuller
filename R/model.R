@@ -1,3 +1,4 @@
+#' @importFrom stats as.formula
 #' @importFrom magrittr %>%
 #' @importFrom tibble deframe
 #' @importFrom nnet multinom
@@ -14,6 +15,7 @@ FitMultinom <- function(data,
   return(fit)
 }
 
+#' @importFrom stats predict
 #' @importFrom magrittr %>%
 #' @importFrom tibble deframe
 #' @importFrom nnet multinom

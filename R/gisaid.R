@@ -8,6 +8,7 @@
 #' @importFrom stringr str_split_fixed str_trim
 #' @importFrom tools file_ext
 #' @importFrom data.table fread
+#' @importFrom utils untar
 #' @export
 ReadGISAIDMetada <- function(path, showProgress = FALSE, ...) {
   file.ext <- file_ext(path)
@@ -85,6 +86,7 @@ FormatGISAIDMetadata <- function(df, collection_col = "Collection date", submiss
 #' @returns A dataframe with all the instrument related metadata
 #' @importFrom stringi stri_split_fixed
 #' @importFrom dplyr bind_rows distinct
+#' @importFrom utils read.csv
 #' @export
 ReadAuspiceInstrument <- function(path) {
   metadata <- list()
@@ -94,7 +96,7 @@ ReadAuspiceInstrument <- function(path) {
   )) {
     date_path <- unlist(stri_split_fixed(str = file, pattern = "/"))
     date_path <- date_path[length(date_path) - 1]
-    metadata[[date_path]] <- read.csv(file, sep = "\t")
+    metadata[[date_path]] <- read.csv(file = file, sep = "\t")
   }
   seq_metadata <- bind_rows(metadata) %>% distinct()
 

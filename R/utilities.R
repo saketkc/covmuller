@@ -5,8 +5,15 @@
 #' @returns A vector with dates converted to MonthYear format (zoo::as.yearmon)
 #' @importFrom  dplyr pull
 #' @importFrom zoo as.yearmon
+#' @importFrom stringr str_count
 #' @export
 GetMonthYear <- function(datecol, datefmt = "%Y-%m-%d") {
+  number_dashes <- str_count(string = datecol, pattern = "-")
+  if (datefmt == "%Y-%m-%d"){
+      datecol[number_dashes == 1] <- paste0(datecol[number_dashes == 1], "-01")
+  } else if (datefmt == "%d-%m-%Y"){
+    datecol[number_dashes == 1] <- paste0("01-", datecol[number_dashes == 1])
+  }
   Date <- as.Date(datecol, format = datefmt)
   Month <- strftime(Date, "%m")
   Year <- strftime(Date, "%Y")

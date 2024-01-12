@@ -118,7 +118,7 @@ GetIndiaHospitalization <- function(url = "") {
 #' @returns A data frame containing monthly cases for each state in long form
 
 #' @importFrom magrittr %>%
-#' @importFrom dplyr arrange group_by summarise_all rename
+#' @importFrom dplyr arrange group_by select summarise_all rename
 #' @importFrom readr read_csv
 #' @importFrom reshape2 melt
 #' @export
