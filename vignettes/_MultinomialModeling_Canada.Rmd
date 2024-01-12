@@ -1,0 +1,92 @@
+---
+title: "Multinomial modeling - Canada"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r}
+suppressPackageStartupMessages({
+  library(covmuller)
+  library(tidyverse)
+})
+theme_set(CovmullerTheme())
+```
+
+```{r, warning=FALSE, message=FALSE}
+gisaid_metadata <- qs::qread(file = "~/data/epicov/metadata_tsv_2024_01_11.qs")
+gisaid_canada <- gisaid_metadata %>%
+  filter(Country == "Canada") %>%
+  filter(Host == "Human")
+gisaid_canada <- FormatGISAIDMetadata(gisaid_canada)
+gisaid_canada <- gisaid_canada %>%
+  arrange(State, MonthYearCollected)
+gisaid_canada$State <- CleanCanadaStates(gisaid_canada$State)
+gisaid_canada <- gisaid_canada %>% filter(State != "Unknown")
+```
+## Plot total sequenced cases
+
+
+```{r, fig.width=8, fig.height=5, warning=FALSE}
+country_seq_stats <- TotalSequencesPerMonthCountrywise(gisaid_canada, rename_country_as_state = TRUE)
+p0 <- BarPlot(country_seq_stats, ylabel = "Sequenced per month", color = "slateblue1", label_si = TRUE, xangle = 90, title = "Canada")
+p0
+```
+
+## Get VOCs
+
+```{r}
+vocs <- GetVOCs()
+omicron <- vocs[["omicron"]]
+vocs[["omicron"]] <- NULL
+custom_voc_mapping <- list(
+  `BA.1.1` = "BA.1",
+  `BA.1` = "BA.1",
+  `BA.2` = "BA.2",
+  `BA.2.10` = "BA.2.X",
+  `BA.2.10.1` = "BA.2.X",
+  `BA.2.12` = "BA.2.X",
+  `BA.2.12.1` = "BA.2.X",
+  `BA.3` = "BA.3",
+  `BA.4` = "BA.4",
+  `BA.5` = "BA.5",
+  `BA.2.74` = "BA.2.X",
+  `BA.2.75` = "BA.2.75",
+  `BA.2.76` = "BA.2.X",
+  `XBB.*` = "XBB",
+  `BQ.1` = "BQ.1+",
+  `BQ.1.*` = "BQ.1+"
+)
+```
+
+
+```{r}
+gisaid_canada_collapsed <- CollapseLineageToVOCs(
+  variant_df = gisaid_canada,
+  vocs = vocs,
+  custom_voc_mapping = custom_voc_mapping,
+  summarize = FALSE
+)
+
+gisaid_canada_collapsed_sel <- gisaid_canada_collapsed %>% filter(MonthYearCollected >= "Oct 2022")
+
+vocs_to_keep <- table(gisaid_canada_collapsed_sel$lineage_collapsed)
+vocs_to_keep <- vocs_to_keep[vocs_to_keep > 100]
+
+gisaid_canada_collapsed_sel <- gisaid_canada_collapsed_sel %>% filter(lineage_collapsed %in% names(vocs_to_keep))
+gisaid_canada_shared_dateweek <- SummarizeVariantsDatewise(gisaid_canada_collapsed_sel, by_state = TRUE)
+head(gisaid_canada_shared_dateweek)
+```
+
+```{r}
+fit_canada_multi_predsbystate <- FitMultinomStatewiseDaily(gisaid_canada_shared_dateweek)
+head(fit_canada_multi_predsbystate)
+```
+
+# Plot Smooth Muller Plots
+
+```{r, fig.width=12, fig.height=9}
+muller_canadabystate_mfit <- PlotMullerDailyPrevalence(fit_canada_multi_predsbystate, ncol = 3)
+muller_canadabystate_mfit
+```
