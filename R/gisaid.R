@@ -53,6 +53,7 @@ ReadGISAIDMetada <- function(path, showProgress = FALSE, ...) {
 #' @export
 FormatGISAIDMetadata <- function(df, collection_col = "Collection date", submission_col = "Submission date") {
   datecol_sel <- pull(df, as.name(collection_col))
+  datecol_sel <- FixDate(datecol = datecol_sel)
   Date <- as.Date(datecol_sel, format = "%Y-%m-%d")
   df$DateCollected <- Date
   df$YearCollected <- year(df$DateCollected)
@@ -67,6 +68,7 @@ FormatGISAIDMetadata <- function(df, collection_col = "Collection date", submiss
   df$MonthYearCollectedNumeric <- as.numeric(df$MonthYearCollected)
 
   datecol_sel <- pull(df, as.name(submission_col))
+  datecol_sel <- FixDate(datecol = datecol_sel)
   Date <- as.Date(datecol_sel, format = "%Y-%m-%d")
   df$DateSubmitted <- Date
   df$MonthYearSubmitted <- GetMonthYear(datecol = datecol_sel, datefmt = "%Y-%m-%d")

@@ -5,8 +5,17 @@ output:
     df_print: paged
 ---
 
-
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  gganimate = list(
+    nframes = 0
+  ),
+  out.width = "100%"
+)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
 
 ```{r}
 suppressPackageStartupMessages({
@@ -74,7 +83,7 @@ gisaid_india <- CollapseLineageToVOCs(
 
 # Distribution of variants
 
-```{r, fig.width=8, fig.height=5}
+```{r, fig.width=12, fig.height=5}
 state_month_counts <- SummarizeVariantsMonthwise(gisaid_india)
 state_month_counts$State <- "India"
 state_month_prevalence <- CountsToPrevalence(state_month_counts)
@@ -91,19 +100,19 @@ p5
 # Get weekly cases for India
 
 ```{r, warning=FALSE, message=FALSE}
-GetIndiaCases <- function(){
-    data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
-    confirmed <- data %>% select(date, India)
-colnames(confirmed)[2] <- c("cases")
-confirmed$MonthYear <- GetMonthYear(confirmed$date)
-confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
-confirmed_subset_weekwise <- confirmed %>%
-      group_by(WeekYear) %>%
-      summarise(cases = mean(cases, na.rm=T)) %>%
-      arrange(WeekYear)
-confirmed_subset_weekwise$cases <- ceiling(confirmed_subset_weekwise$cases)  
-confirmed_subset_dateweekwise_long_india <- confirmed_subset_weekwise %>%
-  rename(n = cases) %>%
+GetIndiaCases <- function() {
+  data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
+  confirmed <- data %>% select(date, India)
+  colnames(confirmed)[2] <- c("cases")
+  confirmed$MonthYear <- GetMonthYear(confirmed$date)
+  confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+  confirmed_subset_weekwise <- confirmed %>%
+    group_by(WeekYear) %>%
+    summarise(cases = mean(cases, na.rm = T)) %>%
+    arrange(WeekYear)
+  confirmed_subset_weekwise$cases <- ceiling(confirmed_subset_weekwise$cases)
+  confirmed_subset_dateweekwise_long_india <- confirmed_subset_weekwise %>%
+    rename(n = cases) %>%
     rename(WeekYearCollected = WeekYear)
 }
 
@@ -115,7 +124,7 @@ gisaid_india_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
 
 # Project weekly cases to variant prevalence data from GISAID
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, fig.width=12, fig.height=5}
 voc_to_keep <- gisaid_india_weekwise %>%
   group_by(lineage_collapsed) %>%
   summarise(n_sum = sum(n)) %>%
@@ -134,7 +143,7 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated.gif"), ani
 Look at cases after January, 2022 only:
 
 ```{r}
-##confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
+## confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
 # confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
 #   filter(WeekYear >= tsibble::yearweek("2021 W35")) %>%
 #   group_by(WeekYear) %>%
@@ -142,8 +151,8 @@ Look at cases after January, 2022 only:
 #   arrange(WeekYear) %>%
 #   rename(WeekYearCollected = WeekYear)
 
-confirmed_subset_dateweekwise_long_india <- GetIndiaCases()  %>%
-    filter(WeekYearCollected >= tsibble::yearweek("2021 W35"))
+confirmed_subset_dateweekwise_long_india <- GetIndiaCases() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2021 W35"))
 
 gisaid_india <- gisaid_india %>% filter(MonthYearCollected > "Dec 2021")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
@@ -165,7 +174,7 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2021.gif")
 
 Look at cases in the last few months:
 
-```{r}
+```{r, fig.width=12, fig.height=5}
 # confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
 # confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
 #   filter(WeekYear >= tsibble::yearweek("2022 W12")) %>%
@@ -174,8 +183,8 @@ Look at cases in the last few months:
 #   arrange(WeekYear) %>%
 #   rename(WeekYearCollected = WeekYear)
 
-confirmed_subset_dateweekwise_long_india <- GetIndiaCases()  %>%
-    filter(WeekYearCollected >= tsibble::yearweek("2022 W12"))
+confirmed_subset_dateweekwise_long_india <- GetIndiaCases() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2022 W12"))
 
 gisaid_india <- gisaid_india %>% filter(MonthYearCollected >= "Mar 2022")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
@@ -197,8 +206,8 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2022.gif")
 
 Look at cases in the last few months:
 
-```{r}
-#confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
+```{r, fig.width=12, fig.height=5}
+# confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
 
 # confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
 #   filter(WeekYear >= tsibble::yearweek("2022 W39")) %>%
@@ -206,8 +215,8 @@ Look at cases in the last few months:
 #   summarise(n = sum(value)) %>%
 #   arrange(WeekYear) %>%
 #   rename(WeekYearCollected = WeekYear)
-confirmed_subset_dateweekwise_long_india <- GetIndiaCases()  %>%
-    filter(WeekYearCollected >= tsibble::yearweek("2022 W39"))
+confirmed_subset_dateweekwise_long_india <- GetIndiaCases() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2022 W39"))
 
 gisaid_india <- gisaid_india %>% filter(MonthYearCollected >= "Mar 2022")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
@@ -228,8 +237,8 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated_latest.gif
 
 
 
-```{r}
-#confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
+```{r, fig.width=12, fig.height=5}
+# confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
 
 # confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
 #   filter(WeekYear >= tsibble::yearweek("2022 W39")) %>%
@@ -237,8 +246,8 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated_latest.gif
 #   summarise(n = sum(value)) %>%
 #   arrange(WeekYear) %>%
 #   rename(WeekYearCollected = WeekYear)
-confirmed_subset_dateweekwise_long_india <- GetIndiaCases()  %>%
-    filter(WeekYearCollected >= tsibble::yearweek("2023 W23"))
+confirmed_subset_dateweekwise_long_india <- GetIndiaCases() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2023 W23"))
 
 gisaid_india <- gisaid_india %>% filter(MonthYearCollected >= "June 2023")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_india)

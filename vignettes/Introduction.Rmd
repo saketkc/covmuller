@@ -70,17 +70,17 @@ p2
 While the absolute numbers are informative, a more useful metric is the proportion of cases (cases sequenced over total cases) that are getting sequenced. Here we look at the proportion of cases that have been sequenced in India over the course of the pandemic:
 
 ```{r, fig.width=8, fig.height=5, warning=FALSE}
-#india_cases_long <- GetIndiaConfirmedCasesMonthlyLong() %>% filter(State == "India")
-GetIndiaCases <- function(){
-    data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
-    confirmed <- data %>% select(date, India)
-colnames(confirmed)[2] <- c("cases")
-confirmed$MonthYear <- GetMonthYear(confirmed$date)
+# india_cases_long <- GetIndiaConfirmedCasesMonthlyLong() %>% filter(State == "India")
+GetIndiaCases <- function() {
+  data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
+  confirmed <- data %>% select(date, India)
+  colnames(confirmed)[2] <- c("cases")
+  confirmed$MonthYear <- GetMonthYear(confirmed$date)
 
-confirmed_subset_weekwise <- confirmed %>%
-      group_by(MonthYear) %>%
-      summarise(value = sum(cases, na.rm=T)) %>%
-      arrange(MonthYear)
+  confirmed_subset_weekwise <- confirmed %>%
+    group_by(MonthYear) %>%
+    summarise(value = sum(cases, na.rm = T)) %>%
+    arrange(MonthYear)
 }
 india_cases_long <- GetIndiaCases()
 india_cases_long$State <- "India"
@@ -126,7 +126,7 @@ p4 <- PlotSequencedPropHeatmap(india_sequencing_proportion)
 
 
 ```{r, fig.width=11, fig.height=11, warning=FALSE, message=FALSE, echo=FALSE, eval=FALSE}
-#In terms of absolute numbers sequenced:
+# In terms of absolute numbers sequenced:
 
 seq_stats2 <- seq_stats
 # seq_stats2 <- seq_stats2 %>% filter(MonthYear >= "July 2022")

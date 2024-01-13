@@ -2,6 +2,18 @@
 title: "Animation of projected weekly cases - South Africa"
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  gganimate = list(
+    nframes = 0
+  ),
+  out.width = "100%"
+)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.dim = c(12, 5))
+```
+
 
 ```{r}
 suppressPackageStartupMessages({
@@ -74,20 +86,35 @@ gisaid_sa <- CollapseLineageToVOCs(
 # Get weekly cases for South Africa
 
 ```{r, warning=FALSE, message=FALSE}
-confirmed <- COVID19::covid19(country = "South Africa", verbose = FALSE) %>%
-  select(date, confirmed) %>%
-  filter(!is.na(confirmed))
+GetCases <- function() {
+  data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
+  confirmed <- data %>% select(date, South.Africa)
+  colnames(confirmed)[2] <- c("cases")
+  confirmed$MonthYear <- GetMonthYear(confirmed$date)
+  confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+  return(confirmed)
+}
 
-confirmed$daily_cases <- c(confirmed$confirmed[1], diff(confirmed$confirmed))
+
+GetCasesLong <- function() {
+  data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
+  confirmed <- data %>% select(date, South.Africa)
+  colnames(confirmed)[2] <- c("cases")
+  confirmed$MonthYear <- GetMonthYear(confirmed$date)
+  confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+  confirmed_subset_weekwise <- confirmed %>%
+    group_by(WeekYear) %>%
+    summarise(cases = mean(cases, na.rm = T)) %>%
+    arrange(WeekYear)
+  confirmed_subset_weekwise$cases <- ceiling(confirmed_subset_weekwise$cases)
+  confirmed_subset_dateweekwise_long_india <- confirmed_subset_weekwise %>%
+    rename(n = cases) %>%
+    rename(WeekYearCollected = WeekYear)
+}
 
 
-confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
-
-confirmed_subset_dateweekwise_long <- confirmed %>%
-  group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
-  arrange(WeekYear) %>%
-  rename(WeekYearCollected = WeekYear)
+confirmed <- GetCases()
+confirmed_subset_dateweekwise_long <- GetCasesLong()
 
 gisaid_sa_weekwise <- SummarizeVariantsWeekwise(gisaid_sa)
 ```
@@ -105,7 +132,7 @@ voc_to_keep <- gisaid_sa_weekwise %>%
 gisaid_sa_weekwise <- gisaid_sa_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_sa_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in South Africa by variant", caption = "**Source: gisaid.org and covid19datahub.io**<br>", date_breaks = "28 days")
+the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in South Africa by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "28 days")
 gganimate::anim_save(filename = here::here("docs/articles/SA_animated.gif"), animation = the_anim)
 ```
 ![](SA_animated.gif)
@@ -136,7 +163,40 @@ voc_to_keep <- gisaid_sa_weekwise %>%
 gisaid_sa_weekwise <- gisaid_sa_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_sa_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in South Africa by variant", caption = "**Source: gisaid.org and covid19datahub.io**<br>")
+the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in South Africa by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
 gganimate::anim_save(filename = here::here("docs/articles/SA_animated_2022.gif"), animation = the_anim)
 ```
 ![](SA_animated_2022.gif)
+
+
+
+
+
+Look at cases in the past few weeks
+
+```{r}
+confirmed$MonthYear <- GetMonthYear(confirmed$date)
+
+confirmed_subset_dateweekwise_long <- confirmed %>%
+  filter(MonthYear > "April 2023") %>%
+  group_by(WeekYear) %>%
+  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
+  arrange(WeekYear) %>%
+  rename(WeekYearCollected = WeekYear)
+
+gisaid_sa_subset <- gisaid_sa %>% filter(MonthYearCollected > "December 2022")
+gisaid_sa_weekwise <- SummarizeVariantsWeekwise(gisaid_sa_subset)
+
+voc_to_keep <- gisaid_sa_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_sa_weekwise <- gisaid_sa_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+sa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_sa_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(sa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the SA by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
+gganimate::anim_save(filename = here::here("docs/articles/SA_animated_2024.gif"), animation = the_anim)
+```
+![](SA_animated_2024.gif)
