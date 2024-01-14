@@ -118,6 +118,7 @@
 <span></span>
 <span><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">custom_voc_mapping</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  `B.1` <span class="op">=</span> <span class="st">"B.1"</span>,</span>
 <span>  `JN.1` <span class="op">=</span> <span class="st">"JN.1"</span>,</span>
 <span>  `JN.1.*` <span class="op">=</span> <span class="st">"JN.1"</span>,</span>
 <span>  `HV.1` <span class="op">=</span> <span class="st">"HV.1"</span>,</span>
@@ -199,15 +200,18 @@
 <span><span class="va">gisaid_germany_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_germany_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">germany_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_germany_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # weights:  24 (15 variable)</span></span>
-<span><span class="co">#&gt; initial  value 1691637.741847 </span></span>
-<span><span class="co">#&gt; iter  10 value 570765.488578</span></span>
-<span><span class="co">#&gt; iter  20 value 358421.836309</span></span>
-<span><span class="co">#&gt; iter  30 value 336331.334427</span></span>
-<span><span class="co">#&gt; iter  40 value 335021.300503</span></span>
-<span><span class="co">#&gt; iter  50 value 334445.582898</span></span>
-<span><span class="co">#&gt; iter  60 value 334438.288338</span></span>
-<span><span class="co">#&gt; final  value 334437.830119 </span></span>
+<span><span class="co">#&gt; # weights:  36 (24 variable)</span></span>
+<span><span class="co">#&gt; initial  value 2074445.865179 </span></span>
+<span><span class="co">#&gt; iter  10 value 1063939.935748</span></span>
+<span><span class="co">#&gt; iter  20 value 867530.835780</span></span>
+<span><span class="co">#&gt; iter  30 value 478554.650417</span></span>
+<span><span class="co">#&gt; iter  40 value 396066.387593</span></span>
+<span><span class="co">#&gt; iter  50 value 381217.890151</span></span>
+<span><span class="co">#&gt; iter  60 value 380394.091673</span></span>
+<span><span class="co">#&gt; iter  70 value 378533.555259</span></span>
+<span><span class="co">#&gt; iter  80 value 378391.902892</span></span>
+<span><span class="co">#&gt; iter  90 value 378390.016817</span></span>
+<span><span class="co">#&gt; final  value 378389.677651 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">germany_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Germany by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"100 days"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/Germany_animated.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
@@ -229,14 +233,16 @@
 <span><span class="va">gisaid_germany_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_germany_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">germany_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_germany_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # weights:  20 (12 variable)</span></span>
-<span><span class="co">#&gt; initial  value 1096014.342864 </span></span>
-<span><span class="co">#&gt; iter  10 value 220828.608976</span></span>
-<span><span class="co">#&gt; iter  20 value 175829.659929</span></span>
-<span><span class="co">#&gt; iter  30 value 175663.722535</span></span>
-<span><span class="co">#&gt; iter  40 value 175607.599433</span></span>
-<span><span class="co">#&gt; iter  50 value 175599.865736</span></span>
-<span><span class="co">#&gt; final  value 175596.709160 </span></span>
+<span><span class="co">#&gt; # weights:  28 (18 variable)</span></span>
+<span><span class="co">#&gt; initial  value 1325133.676944 </span></span>
+<span><span class="co">#&gt; iter  10 value 337084.466635</span></span>
+<span><span class="co">#&gt; iter  20 value 241897.671222</span></span>
+<span><span class="co">#&gt; iter  30 value 218966.887574</span></span>
+<span><span class="co">#&gt; iter  40 value 217770.622258</span></span>
+<span><span class="co">#&gt; iter  50 value 217394.147386</span></span>
+<span><span class="co">#&gt; iter  60 value 217257.750656</span></span>
+<span><span class="co">#&gt; iter  70 value 217253.122840</span></span>
+<span><span class="co">#&gt; final  value 217246.820859 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">germany_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Germany by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"100 days"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/Germany_animated_2021.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
@@ -257,14 +263,15 @@
 <span><span class="va">gisaid_germany_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_germany_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">germany_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_germany_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # weights:  20 (12 variable)</span></span>
-<span><span class="co">#&gt; initial  value 139995.347375 </span></span>
-<span><span class="co">#&gt; iter  10 value 36401.635622</span></span>
-<span><span class="co">#&gt; iter  20 value 31581.847812</span></span>
-<span><span class="co">#&gt; iter  30 value 31347.374123</span></span>
-<span><span class="co">#&gt; iter  40 value 31328.203051</span></span>
-<span><span class="co">#&gt; iter  50 value 31320.291537</span></span>
-<span><span class="co">#&gt; final  value 31320.289271 </span></span>
+<span><span class="co">#&gt; # weights:  24 (15 variable)</span></span>
+<span><span class="co">#&gt; initial  value 155847.238633 </span></span>
+<span><span class="co">#&gt; iter  10 value 56793.412935</span></span>
+<span><span class="co">#&gt; iter  20 value 52114.661952</span></span>
+<span><span class="co">#&gt; iter  30 value 51877.456813</span></span>
+<span><span class="co">#&gt; iter  40 value 51873.049641</span></span>
+<span><span class="co">#&gt; iter  50 value 51862.141065</span></span>
+<span><span class="co">#&gt; iter  60 value 51853.315798</span></span>
+<span><span class="co">#&gt; final  value 51852.132729 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">germany_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Germany by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/Germany_animated_2023.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
@@ -288,10 +295,10 @@
 <span><span class="va">germany_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_germany_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # weights:  16 (9 variable)</span></span>
 <span><span class="co">#&gt; initial  value 7300.226106 </span></span>
-<span><span class="co">#&gt; iter  10 value 3881.371736</span></span>
-<span><span class="co">#&gt; iter  20 value 3706.527485</span></span>
-<span><span class="co">#&gt; iter  30 value 3706.061160</span></span>
-<span><span class="co">#&gt; final  value 3705.818922 </span></span>
+<span><span class="co">#&gt; iter  10 value 5030.140143</span></span>
+<span><span class="co">#&gt; iter  20 value 5016.816763</span></span>
+<span><span class="co">#&gt; iter  30 value 5016.741640</span></span>
+<span><span class="co">#&gt; final  value 5016.642195 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">germany_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Germany by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/Germany_animated_2024.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
