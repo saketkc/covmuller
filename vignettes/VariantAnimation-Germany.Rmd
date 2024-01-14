@@ -1,0 +1,208 @@
+---
+title: "Animation of projected weekly cases - Germany"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  gganimate = list(
+    nframes = 0
+  ),
+  out.width = "100%"
+)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.dim = c(12, 5))
+```
+
+
+
+```{r}
+suppressPackageStartupMessages({
+  library(covmuller)
+  library(COVID19)
+  library(tidyverse)
+})
+theme_set(CovmullerTheme())
+```
+
+# Get variants data for Germany
+
+```{r, warning=FALSE, message=FALSE}
+gisaid_metadata <- qs::qread("~/data/epicov/metadata_tsv_2024_01_11.qs")
+gisaid_germany <- gisaid_metadata %>%
+  filter(Country == "Germany") %>%
+  filter(Host == "Human")
+# format metadata
+gisaid_germany <- FormatGISAIDMetadata(gisaid_germany)
+gisaid_germany <- gisaid_germany %>%
+  arrange(State, MonthYearCollected) %>%
+  filter(pangolin_lineage != "Unknown")
+
+vocs <- GetVOCs()
+custom_voc_mapping <- list(
+  `B.1` = "B.1",
+  `JN.1` = "JN.1",
+  `JN.1.*` = "JN.1",
+  `HV.1` = "HV.1",
+  `HV.1.*` = "HV.1"
+)
+gisaid_germany <- gisaid_germany %>% filter(pangolin_lineage != "None")
+
+gisaid_germany <- CollapseLineageToVOCs(
+  variant_df = gisaid_germany,
+  vocs = vocs,
+  custom_voc_mapping = custom_voc_mapping,
+  summarize = FALSE
+)
+```
+
+# Get weekly cases for Germany
+
+```{r, warning=FALSE, message=FALSE}
+GetCases <- function() {
+  data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
+  confirmed <- data %>% select(date, Germany)
+  colnames(confirmed)[2] <- c("cases")
+  confirmed$MonthYear <- GetMonthYear(confirmed$date)
+  confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+  return(confirmed)
+}
+
+
+GetCasesLong <- function() {
+  data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
+  confirmed <- data %>% select(date, Germany)
+  colnames(confirmed)[2] <- c("cases")
+  confirmed$MonthYear <- GetMonthYear(confirmed$date)
+  confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
+  confirmed_subset_weekwise <- confirmed %>%
+    group_by(WeekYear) %>%
+    summarise(cases = mean(cases, na.rm = T)) %>%
+    arrange(WeekYear)
+  confirmed_subset_weekwise$cases <- ceiling(confirmed_subset_weekwise$cases)
+  confirmed_subset_dateweekwise_long_india <- confirmed_subset_weekwise %>%
+    rename(n = cases) %>%
+    rename(WeekYearCollected = WeekYear)
+}
+
+
+confirmed <- GetCases()
+confirmed_subset_dateweekwise_long <- GetCasesLong()
+gisaid_germany_weekwise <- SummarizeVariantsWeekwise(gisaid_germany)
+```
+
+
+# Distribution of variants
+
+
+
+```{r, fig.width=12, fig.height=5}
+state_month_counts <- SummarizeVariantsMonthwise(gisaid_germany)
+state_month_counts$State <- "Germany"
+state_month_prevalence <- CountsToPrevalence(state_month_counts)
+vocs <- GetVOCs()
+
+state_month_prevalence <- CollapseLineageToVOCs(
+  variant_df = state_month_prevalence,
+  vocs = vocs,
+  custom_voc_mapping = custom_voc_mapping, summarize = FALSE
+)
+
+p5 <- StackedBarPlotPrevalence(state_month_prevalence)
+p5
+```
+
+
+# Project weekly cases to variant prevalence data from GISAID
+
+```{r, warning=FALSE, message=FALSE}
+voc_to_keep <- gisaid_germany_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_germany_weekwise <- gisaid_germany_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+germany_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_germany_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(germany_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Germany by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "100 days")
+gganimate::anim_save(filename = here::here("docs/articles/Germany_animated.gif"), animation = the_anim)
+```
+
+![](Germany_animated.gif)
+
+Look at cases from 2022,
+
+```{r}
+confirmed_subset_dateweekwise_long <- GetCasesLong() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2021 W35"))
+
+gisaid_germany_subset <- gisaid_germany %>% filter(MonthYearCollected > "Oct 2021")
+gisaid_germany_weekwise <- SummarizeVariantsWeekwise(gisaid_germany_subset)
+
+voc_to_keep <- gisaid_germany_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_germany_weekwise <- gisaid_germany_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+germany_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_germany_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(germany_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Germany by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "100 days")
+gganimate::anim_save(filename = here::here("docs/articles/Germany_animated_2021.gif"), animation = the_anim)
+```
+
+![](Germany_animated_2021.gif)
+Look at cases from 2023
+
+```{r}
+confirmed_subset_dateweekwise_long <- GetCasesLong() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2022 W35"))
+
+gisaid_germany_subset <- gisaid_germany %>% filter(MonthYearCollected > "October 2022")
+gisaid_germany_weekwise <- SummarizeVariantsWeekwise(gisaid_germany_subset)
+
+voc_to_keep <- gisaid_germany_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_germany_weekwise <- gisaid_germany_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+germany_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_germany_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(germany_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Germany by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
+gganimate::anim_save(filename = here::here("docs/articles/Germany_animated_2023.gif"), animation = the_anim)
+```
+
+![](Germany_animated_2023.gif)
+
+
+
+Look at cases in the past few weeks
+
+```{r}
+confirmed_subset_dateweekwise_long <- GetCasesLong() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2023 W23"))
+
+gisaid_germany_subset <- gisaid_germany %>% filter(MonthYearCollected > "June 2023")
+gisaid_germany_weekwise <- SummarizeVariantsWeekwise(gisaid_germany_subset)
+
+voc_to_keep <- gisaid_germany_weekwise %>%
+  group_by(lineage_collapsed) %>%
+  summarise(n_sum = sum(n)) %>%
+  filter(n_sum > 50) %>%
+  pull(lineage_collapsed) %>%
+  unique()
+gisaid_germany_weekwise <- gisaid_germany_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
+
+germany_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_germany_weekwise, confirmed_subset_dateweekwise_long)
+the_anim <- PlotVariantPrevalenceAnimated(germany_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Germany by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
+gganimate::anim_save(filename = here::here("docs/articles/Germany_animated_2024.gif"), animation = the_anim)
+```
+![](Germany_animated_2024.gif)

@@ -1,7 +1,23 @@
 ---
 title: "Introduction to covmuller"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
 ---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  gganimate = list(
+    nframes = 0
+  ),
+  out.width = "100%"
+)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.dim = c(12, 5))
+```
 
 ```{r}
 suppressPackageStartupMessages({
@@ -94,11 +110,7 @@ p3 <- BarPlot(india_sequencing_proportion, yaxis = "percent_sequenced_collected"
 p3
 ```
 
-For more context, we can combine all the three plots at once:
 
-```{r, fig.width=8, fig.height=15, warning=FALSE}
-p1 / p2 / p3
-```
 
 ## Plot proportion of cases that been deposited from each state
 
@@ -150,27 +162,7 @@ india_month_counts$State <- "India"
 india_month_prevalence <- CountsToPrevalence(india_month_counts)
 vocs <- GetVOCs()
 custom_voc_mapping <- list(
-  `XBB` = "XBB",
-  `XBB.1.5` = "XBB",
-  `XBB.1` = "XBB",
-  `XBB.1.*` = "XBB",
-  `XBB.*` = "XBB",
-  `XBB.*.*` = "XBB",
-  `XBB.*.*.*` = "XBB",
-  `BQ.1` = "BQ.1",
-  `BQ.1.*` = "BQ.1",
-  `EG.5` = "EG.5",
-  `EG.5.1` = "EG.5",
-  `EG.5.1.1` = "EG.5",
-  `EG.5.*` = "EG.5",
-  `EG.5.1` = "EG.5",
-  # `EG.6.*` = "EG.6",
-  # `EG.6.1` = "EG.6",
-  `FL.1.*` = "FL.1",
-  `FU.1` = "FU.1",
-  `FU.1.*` = "FU.1",
-  `GE.1` = "GE.1",
-  `GE.1.*` = "GE.1",
+  `B.1` = "B.1",
   `JN.1` = "JN.1",
   `JN.1.*` = "JN.1",
   `HV.1` = "HV.1",

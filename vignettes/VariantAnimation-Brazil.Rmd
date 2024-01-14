@@ -1,9 +1,9 @@
 ---
 title: "Animation of projected weekly cases - Brazil"
-vignette: >
-  %\VignetteIndexEntry{Getting Started}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
 ---
 
 ```{r, include = FALSE}
@@ -44,6 +44,7 @@ gisaid_brazil <- gisaid_brazil %>%
 
 vocs <- GetVOCs()
 custom_voc_mapping <- list(
+  `B.1` = "B.1",
   `JN.1` = "JN.1",
   `JN.1.*` = "JN.1",
   `HV.1` = "HV.1",
@@ -64,7 +65,7 @@ gisaid_brazil <- CollapseLineageToVOCs(
 ```{r, warning=FALSE, message=FALSE}
 GetCases <- function() {
   data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
-  confirmed <- data %>% select(date, Brazils)
+  confirmed <- data %>% select(date, Brazil)
   colnames(confirmed)[2] <- c("cases")
   confirmed$MonthYear <- GetMonthYear(confirmed$date)
   confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
@@ -74,7 +75,7 @@ GetCases <- function() {
 
 GetCasesLong <- function() {
   data <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/cases_deaths/new_cases.csv")
-  confirmed <- data %>% select(date, Brazils)
+  confirmed <- data %>% select(date, Brazil)
   colnames(confirmed)[2] <- c("cases")
   confirmed$MonthYear <- GetMonthYear(confirmed$date)
   confirmed$WeekYear <- tsibble::yearweek(confirmed$date)
@@ -128,25 +129,19 @@ voc_to_keep <- gisaid_brazil_weekwise %>%
 gisaid_brazil_weekwise <- gisaid_brazil_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 brazil_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_brazil_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(brazil_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the Brazil by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "100 days")
-gganimate::anim_save(filename = here::here("docs/articles/USA_animated.gif"), animation = the_anim)
+the_anim <- PlotVariantPrevalenceAnimated(brazil_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Brazil by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "100 days")
+gganimate::anim_save(filename = here::here("docs/articles/Brazil_animated.gif"), animation = the_anim)
 ```
 
-![](USA_animated.gif)
+![](Brazil_animated.gif)
 
-Look at cases after October,2021 only:
+Look at cases from 2022,
 
 ```{r}
-confirmed$MonthYear <- GetMonthYear(confirmed$date)
+confirmed_subset_dateweekwise_long <- GetCasesLong() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2021 W35"))
 
-confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "Dec 2021") %>%
-  group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
-  arrange(WeekYear) %>%
-  rename(WeekYearCollected = WeekYear)
-
-gisaid_brazil_subset <- gisaid_brazil %>% filter(MonthYearCollected > "Dec 2021")
+gisaid_brazil_subset <- gisaid_brazil %>% filter(MonthYearCollected > "Oct 2021")
 gisaid_brazil_weekwise <- SummarizeVariantsWeekwise(gisaid_brazil_subset)
 
 voc_to_keep <- gisaid_brazil_weekwise %>%
@@ -158,24 +153,18 @@ voc_to_keep <- gisaid_brazil_weekwise %>%
 gisaid_brazil_weekwise <- gisaid_brazil_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 brazil_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_brazil_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(brazil_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the Brazil by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "100 days")
-gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2021.gif"), animation = the_anim)
+the_anim <- PlotVariantPrevalenceAnimated(brazil_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Brazil by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "100 days")
+gganimate::anim_save(filename = here::here("docs/articles/Brazil_animated_2021.gif"), animation = the_anim)
 ```
 
-![](USA_animated_2021.gif)
+![](Brazil_animated_2021.gif)
 Look at cases from 2023
 
 ```{r}
-confirmed$MonthYear <- GetMonthYear(confirmed$date)
+confirmed_subset_dateweekwise_long <- GetCasesLong() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2022 W35"))
 
-confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "December 2022") %>%
-  group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
-  arrange(WeekYear) %>%
-  rename(WeekYearCollected = WeekYear)
-
-gisaid_brazil_subset <- gisaid_brazil %>% filter(MonthYearCollected > "December 2022")
+gisaid_brazil_subset <- gisaid_brazil %>% filter(MonthYearCollected > "October 2022")
 gisaid_brazil_weekwise <- SummarizeVariantsWeekwise(gisaid_brazil_subset)
 
 voc_to_keep <- gisaid_brazil_weekwise %>%
@@ -187,27 +176,21 @@ voc_to_keep <- gisaid_brazil_weekwise %>%
 gisaid_brazil_weekwise <- gisaid_brazil_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 brazil_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_brazil_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(brazil_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the Brazil by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
-gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2023.gif"), animation = the_anim)
+the_anim <- PlotVariantPrevalenceAnimated(brazil_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Brazil by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
+gganimate::anim_save(filename = here::here("docs/articles/Brazil_animated_2023.gif"), animation = the_anim)
 ```
 
-![](USA_animated_2023.gif)
+![](Brazil_animated_2023.gif)
 
 
 
 Look at cases in the past few weeks
 
 ```{r}
-confirmed$MonthYear <- GetMonthYear(confirmed$date)
+confirmed_subset_dateweekwise_long <- GetCasesLong() %>%
+  filter(WeekYearCollected >= tsibble::yearweek("2023 W23"))
 
-confirmed_subset_dateweekwise_long <- confirmed %>%
-  filter(MonthYear > "April 2023") %>%
-  group_by(WeekYear) %>%
-  summarise(n = ceiling(mean(daily_cases, na.rm = T))) %>%
-  arrange(WeekYear) %>%
-  rename(WeekYearCollected = WeekYear)
-
-gisaid_brazil_subset <- gisaid_brazil %>% filter(MonthYearCollected > "December 2022")
+gisaid_brazil_subset <- gisaid_brazil %>% filter(MonthYearCollected > "June 2023")
 gisaid_brazil_weekwise <- SummarizeVariantsWeekwise(gisaid_brazil_subset)
 
 voc_to_keep <- gisaid_brazil_weekwise %>%
@@ -219,7 +202,7 @@ voc_to_keep <- gisaid_brazil_weekwise %>%
 gisaid_brazil_weekwise <- gisaid_brazil_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 brazil_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_brazil_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(brazil_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in the Brazil by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
-gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2024.gif"), animation = the_anim)
+the_anim <- PlotVariantPrevalenceAnimated(brazil_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in Brazil by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
+gganimate::anim_save(filename = here::here("docs/articles/Brazil_animated_2024.gif"), animation = the_anim)
 ```
-![](USA_animated_2024.gif)
+![](Brazil_animated_2024.gif)

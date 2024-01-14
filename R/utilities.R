@@ -106,8 +106,8 @@ GetVOCs <- function() {
     beta = beta_voc,
     gamma = gamma_voc,
     delta = delta_voc,
-    omicron = omicron_voc,
-    B.1 = c("B.1")
+    omicron = omicron_voc
+    # B.1 = c("B.1")
     # lambda = lambda_voc,
     # mu = mu_voc,
     # epsilon = epsilon_voc,
@@ -330,16 +330,23 @@ CollapseLineageToVOCs <- function(variant_df, vocs = GetVOCs(), custom_voc_mappi
   for (name in names(vocs)) {
     variant_df <- variant_df %>% mutate(lineage_collapsed = case_when(
       # pangolin_lineage %in% vocs[[!!name]] ~ str_to_title(!!name),
-      grepl(pattern = vocs[[!!name]], x = pangolin_lineage) ~ str_to_title(!!name),
+      grepl(pattern = paste(vocs[[!!name]], collapse = "|"), x = pangolin_lineage) ~ str_to_title(!!name),
       TRUE ~ lineage_collapsed
     ))
   }
   if (!is.null(custom_voc_mapping)) {
     for (name in names(custom_voc_mapping)) {
-      variant_df <- variant_df %>% mutate(lineage_collapsed = case_when(
-        grepl(pattern = !!name, x = pangolin_lineage) ~ custom_voc_mapping[[!!name]],
-        TRUE ~ lineage_collapsed
-      ))
+      if (grepl(pattern = "\\*", x = name)) {
+        variant_df <- variant_df %>% mutate(lineage_collapsed = case_when(
+          grepl(pattern = !!name, x = pangolin_lineage) ~ custom_voc_mapping[[!!name]],
+          TRUE ~ lineage_collapsed
+        ))
+      } else {
+        variant_df <- variant_df %>% mutate(lineage_collapsed = case_when(
+          pangolin_lineage %in% c(name) ~ custom_voc_mapping[[!!name]],
+          TRUE ~ lineage_collapsed
+        ))
+      }
     }
   }
   if (summarize) {

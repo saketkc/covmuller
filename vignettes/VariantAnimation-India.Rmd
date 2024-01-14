@@ -3,6 +3,7 @@ title: "Animation of projected weekly cases - India"
 output:
   html_document:
     df_print: paged
+    code_folding: hide
 ---
 
 ```{r, include = FALSE}
@@ -33,27 +34,6 @@ gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
 
 vocs <- GetVOCs()
 custom_voc_mapping <- list(
-  `XBB` = "XBB",
-  `XBB.1.5` = "XBB",
-  `XBB.1` = "XBB",
-  `XBB.1.*` = "XBB",
-  `XBB.*` = "XBB",
-  `XBB.*.*` = "XBB",
-  `XBB.*.*.*` = "XBB",
-  `BQ.1` = "BQ.1",
-  `BQ.1.*` = "BQ.1",
-  `EG.5` = "EG.5",
-  `EG.5.1` = "EG.5",
-  `EG.5.1.1` = "EG.5",
-  `EG.5.*` = "EG.5",
-  `EG.5.1` = "EG.5",
-  # `EG.6.*` = "EG.6",
-  # `EG.6.1` = "EG.6",
-  `FL.1.*` = "FL.1",
-  `FU.1` = "FU.1",
-  `FU.1.*` = "FU.1",
-  `GE.1` = "GE.1",
-  `GE.1.*` = "GE.1",
   `JN.1` = "JN.1",
   `JN.1.*` = "JN.1",
   `HV.1` = "HV.1",
@@ -143,14 +123,6 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated.gif"), ani
 Look at cases after January, 2022 only:
 
 ```{r}
-## confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
-# confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
-#   filter(WeekYear >= tsibble::yearweek("2021 W35")) %>%
-#   group_by(WeekYear) %>%
-#   summarise(n = sum(value)) %>%
-#   arrange(WeekYear) %>%
-#   rename(WeekYearCollected = WeekYear)
-
 confirmed_subset_dateweekwise_long_india <- GetIndiaCases() %>%
   filter(WeekYearCollected >= tsibble::yearweek("2021 W35"))
 
@@ -175,14 +147,6 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2021.gif")
 Look at cases in the last few months:
 
 ```{r, fig.width=12, fig.height=5}
-# confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
-# confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
-#   filter(WeekYear >= tsibble::yearweek("2022 W12")) %>%
-#   group_by(WeekYear) %>%
-#   summarise(n = sum(value)) %>%
-#   arrange(WeekYear) %>%
-#   rename(WeekYearCollected = WeekYear)
-
 confirmed_subset_dateweekwise_long_india <- GetIndiaCases() %>%
   filter(WeekYearCollected >= tsibble::yearweek("2022 W12"))
 
@@ -207,18 +171,10 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2022.gif")
 Look at cases in the last few months:
 
 ```{r, fig.width=12, fig.height=5}
-# confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
-
-# confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
-#   filter(WeekYear >= tsibble::yearweek("2022 W39")) %>%
-#   group_by(WeekYear) %>%
-#   summarise(n = sum(value)) %>%
-#   arrange(WeekYear) %>%
-#   rename(WeekYearCollected = WeekYear)
 confirmed_subset_dateweekwise_long_india <- GetIndiaCases() %>%
-  filter(WeekYearCollected >= tsibble::yearweek("2022 W39"))
+  filter(WeekYearCollected >= tsibble::yearweek("2022 W35"))
 
-gisaid_india <- gisaid_india %>% filter(MonthYearCollected >= "Mar 2022")
+gisaid_india <- gisaid_india %>% filter(MonthYearCollected >= "Dec 2022")
 gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
 
 voc_to_keep <- gisaid_weekwise %>%
@@ -238,14 +194,6 @@ gganimate::anim_save(filename = here::here("docs/articles/IN_animated_latest.gif
 
 
 ```{r, fig.width=12, fig.height=5}
-# confirmed_subset_dateweekwise_long <- GetIndiaConfirmedCasesWeeklyLong()
-
-# confirmed_subset_dateweekwise_long <- confirmed_subset_dateweekwise_long %>%
-#   filter(WeekYear >= tsibble::yearweek("2022 W39")) %>%
-#   group_by(WeekYear) %>%
-#   summarise(n = sum(value)) %>%
-#   arrange(WeekYear) %>%
-#   rename(WeekYearCollected = WeekYear)
 confirmed_subset_dateweekwise_long_india <- GetIndiaCases() %>%
   filter(WeekYearCollected >= tsibble::yearweek("2023 W23"))
 
