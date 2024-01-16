@@ -22,6 +22,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 suppressPackageStartupMessages({
   library(covmuller)
   library(tidyverse)
+  library(ggfittext)
 })
 theme_set(CovmullerTheme())
 ```
@@ -29,7 +30,7 @@ theme_set(CovmullerTheme())
 # Get variants data for India
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/data/epicov/metadata_tsv_2024_01_11.qs")
+gisaid_metadata <- qs::qread("~/data/epicov/metadata_tsv_2024_01_15.qs")
 gisaid_india <- FilterGISAIDIndia(gisaid_metadata_all = gisaid_metadata)
 
 vocs <- GetVOCs()
@@ -42,6 +43,7 @@ custom_voc_mapping <- list(
 gisaid_india <- gisaid_india %>%
   filter(pangolin_lineage != "None") %>%
   filter(pangolin_lineage != "Unassigned")
+
 
 gisaid_india$District <- stringr::str_to_title(gisaid_india$District)
 gisaid_india$City <- stringr::str_to_title(gisaid_india$City)
@@ -57,6 +59,7 @@ gisaid_india <- CollapseLineageToVOCs(
   custom_voc_mapping = custom_voc_mapping,
   summarize = FALSE
 )
+gisaid_india_all <- gisaid_india
 ```
 
 
@@ -114,7 +117,7 @@ voc_to_keep <- gisaid_india_weekwise %>%
 gisaid_india_weekwise <- gisaid_india_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 india_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_india_weekwise, confirmed_subset_dateweekwise_long_india)
-the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**", date_breaks = "28 days") # , trans_y="log10")
+the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**", date_breaks = "120 days") # , trans_y="log10")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated.gif"), animation = the_anim)
 ```
 ![](IN_animated.gif)
@@ -138,7 +141,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long_india)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>") # , trans_y="log10")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "90 days") # , trans_y="log10")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2021.gif"), animation = the_anim)
 ```
 ![](IN_animated_2021.gif)
@@ -162,7 +165,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long_india)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "90 days")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2022.gif"), animation = the_anim)
 ```
 ![](IN_animated_2022.gif)
@@ -186,7 +189,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long_india)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "30 days")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated_latest.gif"), animation = the_anim)
 ```
 ![](IN_animated_latest.gif)
@@ -209,7 +212,33 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long_india)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "30 days")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated_2023.gif"), animation = the_anim)
 ```
 ![](IN_animated_2023.gif)
+
+
+## JN.1 variant
+
+How many cases of JN.1 variant have been deposited to GISAID across the states?
+
+```{r, fig.width=8, fig.height=5}
+jn.1 <- gisaid_india_all %>% filter(lineage_collapsed %in% c("JN.1"))
+jn.1.grouped <- jn.1 %>%
+  group_by(State) %>%
+  tally()
+jn.1.grouped <- jn.1.grouped %>%
+  filter(!State %in% c("Unknown", "Unassigned")) %>%
+  arrange(desc(n))
+jn.1.grouped$State <- factor(jn.1.grouped$State, levels = jn.1.grouped$State)
+ggplot(jn.1.grouped, aes(State, n, label = n)) + # , color= "#4682b4"
+  geom_col(position = "identity", fill = "#4682b4") +
+  geom_bar_text(stat = "identity") +
+  xlab("") +
+  ylab("Number of JN.1 samples deposited") +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  labs(
+    title = "Number of JN.1 samples deposited to GISAID from India",
+    caption = paste0("**Source: gisaid.org** <br>", Sys.Date())
+  )
+```

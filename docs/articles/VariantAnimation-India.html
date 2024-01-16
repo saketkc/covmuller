@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">covmuller</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2.0005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,13 +99,14 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://saketkc.github.io/covmuller" class="external-link">covmuller</a></span><span class="op">)</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkox.org/ggfittext/" class="external-link">ggfittext</a></span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="../reference/CovmullerTheme.html">CovmullerTheme</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="get-variants-data-for-india">Get variants data for India<a class="anchor" aria-label="anchor" href="#get-variants-data-for-india"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2024_01_11.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2024_01_15.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FilterGISAIDIndia.html">FilterGISAIDIndia</a></span><span class="op">(</span>gisaid_metadata_all <span class="op">=</span> <span class="va">gisaid_metadata</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">vocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetVOCs.html">GetVOCs</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -118,6 +119,7 @@
 <span><span class="va">gisaid_india</span> <span class="op">&lt;-</span> <span class="va">gisaid_india</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">"None"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">pangolin_lineage</span> <span class="op">!=</span> <span class="st">"Unassigned"</span><span class="op">)</span></span>
+<span></span>
 <span></span>
 <span><span class="va">gisaid_india</span><span class="op">$</span><span class="va">District</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="va">gisaid_india</span><span class="op">$</span><span class="va">District</span><span class="op">)</span></span>
 <span><span class="va">gisaid_india</span><span class="op">$</span><span class="va">City</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="va">gisaid_india</span><span class="op">$</span><span class="va">City</span><span class="op">)</span></span>
@@ -132,7 +134,8 @@
 <span>  vocs <span class="op">=</span> <span class="va">vocs</span>,</span>
 <span>  custom_voc_mapping <span class="op">=</span> <span class="va">custom_voc_mapping</span>,</span>
 <span>  summarize <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="va">gisaid_india_all</span> <span class="op">&lt;-</span> <span class="va">gisaid_india</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="distribution-of-variants">Distribution of variants<a class="anchor" aria-label="anchor" href="#distribution-of-variants"></a>
@@ -189,16 +192,16 @@
 <span></span>
 <span><span class="va">india_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_india_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # weights:  24 (15 variable)</span></span>
-<span><span class="co">#&gt; initial  value 435917.161268 </span></span>
-<span><span class="co">#&gt; iter  10 value 203376.238329</span></span>
-<span><span class="co">#&gt; iter  20 value 132627.668437</span></span>
-<span><span class="co">#&gt; iter  30 value 110387.638012</span></span>
-<span><span class="co">#&gt; iter  40 value 98997.091816</span></span>
-<span><span class="co">#&gt; iter  50 value 91613.245843</span></span>
-<span><span class="co">#&gt; iter  60 value 91567.517092</span></span>
-<span><span class="co">#&gt; final  value 91567.125908 </span></span>
+<span><span class="co">#&gt; initial  value 478758.130178 </span></span>
+<span><span class="co">#&gt; iter  10 value 191049.975401</span></span>
+<span><span class="co">#&gt; iter  20 value 132367.082779</span></span>
+<span><span class="co">#&gt; iter  30 value 108807.370884</span></span>
+<span><span class="co">#&gt; iter  40 value 106371.479362</span></span>
+<span><span class="co">#&gt; iter  50 value 104473.977635</span></span>
+<span><span class="co">#&gt; iter  60 value 104409.358340</span></span>
+<span><span class="co">#&gt; final  value 104409.203141 </span></span>
 <span><span class="co">#&gt; converged</span></span>
-<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">india_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**"</span>, date_breaks <span class="op">=</span> <span class="st">"28 days"</span><span class="op">)</span> <span class="co"># , trans_y="log10")</span></span>
+<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">india_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**"</span>, date_breaks <span class="op">=</span> <span class="st">"120 days"</span><span class="op">)</span> <span class="co"># , trans_y="log10")</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="IN_animated.gif"></p>
 <p>Look at cases after January, 2022 only:</p>
@@ -219,13 +222,14 @@
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # weights:  16 (9 variable)</span></span>
-<span><span class="co">#&gt; initial  value 150823.281312 </span></span>
-<span><span class="co">#&gt; iter  10 value 28488.446992</span></span>
-<span><span class="co">#&gt; iter  20 value 28078.367254</span></span>
-<span><span class="co">#&gt; iter  30 value 28037.626623</span></span>
-<span><span class="co">#&gt; final  value 28036.775627 </span></span>
+<span><span class="co">#&gt; initial  value 172425.906342 </span></span>
+<span><span class="co">#&gt; iter  10 value 32476.957103</span></span>
+<span><span class="co">#&gt; iter  20 value 31892.643209</span></span>
+<span><span class="co">#&gt; iter  30 value 31879.523335</span></span>
+<span><span class="co">#&gt; iter  40 value 31878.591222</span></span>
+<span><span class="co">#&gt; final  value 31878.585111 </span></span>
 <span><span class="co">#&gt; converged</span></span>
-<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span><span class="op">)</span> <span class="co"># , trans_y="log10")</span></span>
+<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"90 days"</span><span class="op">)</span> <span class="co"># , trans_y="log10")</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_2021.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="IN_animated_2021.gif"></p>
 <p>Look at cases in the last few months:</p>
@@ -246,13 +250,19 @@
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # weights:  16 (9 variable)</span></span>
-<span><span class="co">#&gt; initial  value 83022.396699 </span></span>
-<span><span class="co">#&gt; iter  10 value 21662.171867</span></span>
-<span><span class="co">#&gt; iter  20 value 20663.788332</span></span>
-<span><span class="co">#&gt; iter  30 value 20634.583647</span></span>
-<span><span class="co">#&gt; final  value 20634.418904 </span></span>
+<span><span class="co">#&gt; initial  value 95020.774394 </span></span>
+<span><span class="co">#&gt; iter  10 value 24864.826680</span></span>
+<span><span class="co">#&gt; iter  20 value 23695.414929</span></span>
+<span><span class="co">#&gt; iter  30 value 23671.967165</span></span>
+<span><span class="co">#&gt; iter  40 value 23670.605588</span></span>
+<span><span class="co">#&gt; iter  50 value 23670.580651</span></span>
+<span><span class="co">#&gt; iter  60 value 23669.431835</span></span>
+<span><span class="co">#&gt; iter  70 value 23668.609817</span></span>
+<span><span class="co">#&gt; iter  80 value 23668.162803</span></span>
+<span><span class="co">#&gt; iter  90 value 23667.869689</span></span>
+<span><span class="co">#&gt; final  value 23667.735909 </span></span>
 <span><span class="co">#&gt; converged</span></span>
-<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span><span class="op">)</span></span>
+<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"90 days"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_2022.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="IN_animated_2022.gif"></p>
 <p>Look at cases in the last few months:</p>
@@ -273,13 +283,15 @@
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # weights:  16 (9 variable)</span></span>
-<span><span class="co">#&gt; initial  value 21322.593568 </span></span>
-<span><span class="co">#&gt; iter  10 value 4544.090139</span></span>
-<span><span class="co">#&gt; iter  20 value 4357.909949</span></span>
-<span><span class="co">#&gt; iter  30 value 4353.022910</span></span>
-<span><span class="co">#&gt; final  value 4352.362691 </span></span>
+<span><span class="co">#&gt; initial  value 22934.853910 </span></span>
+<span><span class="co">#&gt; iter  10 value 4904.038042</span></span>
+<span><span class="co">#&gt; iter  20 value 4676.206025</span></span>
+<span><span class="co">#&gt; iter  30 value 4672.141812</span></span>
+<span><span class="co">#&gt; iter  40 value 4647.061846</span></span>
+<span><span class="co">#&gt; iter  50 value 4643.391242</span></span>
+<span><span class="co">#&gt; final  value 4642.244180 </span></span>
 <span><span class="co">#&gt; converged</span></span>
-<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span><span class="op">)</span></span>
+<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"30 days"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_latest.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="IN_animated_latest.gif"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -299,32 +311,55 @@
 <span></span>
 <span><span class="va">cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long_india</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # weights:  12 (6 variable)</span></span>
-<span><span class="co">#&gt; initial  value 874.495382 </span></span>
-<span><span class="co">#&gt; iter  10 value 389.775945</span></span>
-<span><span class="co">#&gt; iter  20 value 387.804553</span></span>
-<span><span class="co">#&gt; iter  30 value 386.553643</span></span>
-<span><span class="co">#&gt; iter  40 value 386.441513</span></span>
-<span><span class="co">#&gt; iter  50 value 386.382953</span></span>
-<span><span class="co">#&gt; iter  60 value 386.365254</span></span>
-<span><span class="co">#&gt; iter  70 value 386.298318</span></span>
-<span><span class="co">#&gt; iter  80 value 386.272505</span></span>
-<span><span class="co">#&gt; iter  90 value 386.255368</span></span>
-<span><span class="co">#&gt; iter 100 value 386.222906</span></span>
-<span><span class="co">#&gt; iter 110 value 386.201252</span></span>
-<span><span class="co">#&gt; iter 120 value 386.162814</span></span>
-<span><span class="co">#&gt; iter 130 value 386.124863</span></span>
-<span><span class="co">#&gt; iter 140 value 386.054155</span></span>
-<span><span class="co">#&gt; iter 150 value 386.023411</span></span>
-<span><span class="co">#&gt; iter 160 value 386.018070</span></span>
-<span><span class="co">#&gt; iter 170 value 385.965945</span></span>
-<span><span class="co">#&gt; iter 180 value 385.930468</span></span>
-<span><span class="co">#&gt; iter 190 value 385.928281</span></span>
-<span><span class="co">#&gt; iter 200 value 385.836327</span></span>
-<span><span class="co">#&gt; final  value 385.828110 </span></span>
+<span><span class="co">#&gt; initial  value 1361.180626 </span></span>
+<span><span class="co">#&gt; iter  10 value 545.837986</span></span>
+<span><span class="co">#&gt; iter  20 value 523.268164</span></span>
+<span><span class="co">#&gt; iter  30 value 491.727430</span></span>
+<span><span class="co">#&gt; iter  40 value 490.126833</span></span>
+<span><span class="co">#&gt; iter  50 value 489.562579</span></span>
+<span><span class="co">#&gt; iter  60 value 489.421772</span></span>
+<span><span class="co">#&gt; iter  70 value 488.967512</span></span>
+<span><span class="co">#&gt; iter  80 value 488.799629</span></span>
+<span><span class="co">#&gt; iter  90 value 488.720076</span></span>
+<span><span class="co">#&gt; iter 100 value 488.706989</span></span>
+<span><span class="co">#&gt; iter 110 value 488.660294</span></span>
+<span><span class="co">#&gt; iter 120 value 488.640079</span></span>
+<span><span class="co">#&gt; iter 130 value 488.631597</span></span>
+<span><span class="co">#&gt; iter 140 value 488.629071</span></span>
+<span><span class="co">#&gt; iter 150 value 488.624949</span></span>
+<span><span class="co">#&gt; iter 150 value 488.624945</span></span>
+<span><span class="co">#&gt; iter 150 value 488.624942</span></span>
+<span><span class="co">#&gt; final  value 488.624942 </span></span>
 <span><span class="co">#&gt; converged</span></span>
-<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span><span class="op">)</span></span>
+<span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in India by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"30 days"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/IN_animated_2023.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
 <p><img src="IN_animated_2023.gif"></p>
+<div class="section level3">
+<h3 id="jn-1-variant">JN.1 variant<a class="anchor" aria-label="anchor" href="#jn-1-variant"></a>
+</h3>
+<p>How many cases of JN.1 variant have been deposited to GISAID across
+the states?</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">jn.1</span> <span class="op">&lt;-</span> <span class="va">gisaid_india_all</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"JN.1"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">jn.1.grouped</span> <span class="op">&lt;-</span> <span class="va">jn.1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">State</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">tally</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">jn.1.grouped</span> <span class="op">&lt;-</span> <span class="va">jn.1.grouped</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">State</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Unknown"</span>, <span class="st">"Unassigned"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">jn.1.grouped</span><span class="op">$</span><span class="va">State</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">jn.1.grouped</span><span class="op">$</span><span class="va">State</span>, levels <span class="op">=</span> <span class="va">jn.1.grouped</span><span class="op">$</span><span class="va">State</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">jn.1.grouped</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">State</span>, <span class="va">n</span>, label <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># , color= "#4682b4"</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="st">"#4682b4"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkox.org/ggfittext/reference/geom_fit_text.html" class="external-link">geom_bar_text</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Number of JN.1 samples deposited"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_axis.html" class="external-link">guide_axis</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Number of JN.1 samples deposited to GISAID from India"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"**Source: gisaid.org** &lt;br&gt;"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="VariantAnimation-India_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

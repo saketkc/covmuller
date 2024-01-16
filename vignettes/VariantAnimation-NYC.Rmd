@@ -20,7 +20,7 @@ theme_set(CovmullerTheme())
 ```{r, warning=FALSE, message=FALSE}
 counties <- c("New York", "New York City", "New York County", "Queens County", "Bronx County", "Bronx", "Brooklyn", "Manhattan", "Queens", "Richmond County")
 
-gisaid_metadata <- qs::qread("~/data/epicov/metadata_tsv_2024_01_11.qs")
+gisaid_metadata <- qs::qread("~/data/epicov/metadata_tsv_2024_01_15.qs")
 gisaid_usa <- gisaid_metadata %>%
   filter(Country == "USA") %>%
   filter(Host == "Human")
@@ -101,7 +101,7 @@ voc_to_keep <- gisaid_NYC_weekwise %>%
 gisaid_NYC_weekwise <- gisaid_NYC_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 newyork_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_NYC_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(newyork_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and NYC Health**<br>", date_breaks = "14 days")
+the_anim <- PlotVariantPrevalenceAnimated(newyork_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and NYC Health**<br>", date_breaks = "120 days")
 gganimate::anim_save(filename = here::here("docs/articles/NYC_animated.gif"), animation = the_anim)
 ```
 ![](NYC_animated.gif)
@@ -129,7 +129,7 @@ voc_to_keep <- gisaid_weekwise %>%
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and NYC Health**<br>")
+the_anim <- PlotVariantPrevalenceAnimated(cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in New York City by variant", caption = "**Source: gisaid.org and NYC Health**<br>", date_breaks = "30 days")
 gganimate::anim_save(filename = here::here("docs/articles/NYC_animated_2023.gif"), animation = the_anim)
 ```
 ![](NYC_animated_2023.gif)

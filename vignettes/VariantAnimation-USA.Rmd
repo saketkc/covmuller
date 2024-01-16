@@ -32,7 +32,7 @@ theme_set(CovmullerTheme())
 # Get variants data for USA
 
 ```{r, warning=FALSE, message=FALSE}
-gisaid_metadata <- qs::qread("~/data/epicov/metadata_tsv_2024_01_11.qs")
+gisaid_metadata <- qs::qread("~/data/epicov/metadata_tsv_2024_01_15.qs")
 gisaid_usa <- gisaid_metadata %>%
   filter(Country == "USA") %>%
   filter(Host == "Human")
@@ -129,7 +129,7 @@ voc_to_keep <- gisaid_usa_weekwise %>%
 gisaid_usa_weekwise <- gisaid_usa_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 usa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_usa_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in USA by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "100 days")
+the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in USA by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "120 days")
 gganimate::anim_save(filename = here::here("docs/articles/USA_animated.gif"), animation = the_anim)
 ```
 
@@ -153,7 +153,7 @@ voc_to_keep <- gisaid_usa_weekwise %>%
 gisaid_usa_weekwise <- gisaid_usa_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 usa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_usa_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in USA by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "100 days")
+the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in USA by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "120 days")
 gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2021.gif"), animation = the_anim)
 ```
 
@@ -176,7 +176,7 @@ voc_to_keep <- gisaid_usa_weekwise %>%
 gisaid_usa_weekwise <- gisaid_usa_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 usa_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_usa_weekwise, confirmed_subset_dateweekwise_long)
-the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in USA by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>")
+the_anim <- PlotVariantPrevalenceAnimated(usa_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in USA by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**<br>", date_breaks = "90 days")
 gganimate::anim_save(filename = here::here("docs/articles/USA_animated_2023.gif"), animation = the_anim)
 ```
 

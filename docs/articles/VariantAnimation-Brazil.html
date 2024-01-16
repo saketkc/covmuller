@@ -106,7 +106,7 @@
 <h2 id="get-variants-data-for-brazil">Get variants data for Brazil<a class="anchor" aria-label="anchor" href="#get-variants-data-for-brazil"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2024_01_11.qs"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">gisaid_metadata</span> <span class="op">&lt;-</span> <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="st">"~/data/epicov/metadata_tsv_2024_01_15.qs"</span><span class="op">)</span></span>
 <span><span class="va">gisaid_brazil</span> <span class="op">&lt;-</span> <span class="va">gisaid_metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Country</span> <span class="op">==</span> <span class="st">"Brazil"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Host</span> <span class="op">==</span> <span class="st">"Human"</span><span class="op">)</span></span>
@@ -200,16 +200,17 @@
 <span><span class="va">gisaid_brazil_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_brazil_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">brazil_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_brazil_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # weights:  28 (18 variable)</span></span>
-<span><span class="co">#&gt; initial  value 477631.429726 </span></span>
-<span><span class="co">#&gt; iter  10 value 252774.699692</span></span>
-<span><span class="co">#&gt; iter  20 value 152863.433099</span></span>
-<span><span class="co">#&gt; iter  30 value 112374.590589</span></span>
-<span><span class="co">#&gt; iter  40 value 97530.709125</span></span>
-<span><span class="co">#&gt; iter  50 value 89047.637849</span></span>
-<span><span class="co">#&gt; iter  60 value 87375.304507</span></span>
-<span><span class="co">#&gt; iter  70 value 87327.814941</span></span>
-<span><span class="co">#&gt; final  value 87327.549989 </span></span>
+<span><span class="co">#&gt; # weights:  32 (21 variable)</span></span>
+<span><span class="co">#&gt; initial  value 510939.581206 </span></span>
+<span><span class="co">#&gt; iter  10 value 234159.329175</span></span>
+<span><span class="co">#&gt; iter  20 value 167421.025151</span></span>
+<span><span class="co">#&gt; iter  30 value 121849.180681</span></span>
+<span><span class="co">#&gt; iter  40 value 96580.609866</span></span>
+<span><span class="co">#&gt; iter  50 value 89540.064306</span></span>
+<span><span class="co">#&gt; iter  60 value 88172.441881</span></span>
+<span><span class="co">#&gt; iter  70 value 87801.377783</span></span>
+<span><span class="co">#&gt; iter  80 value 87781.965288</span></span>
+<span><span class="co">#&gt; final  value 87781.645553 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">brazil_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Brazil by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"100 days"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/Brazil_animated.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
@@ -231,14 +232,19 @@
 <span><span class="va">gisaid_brazil_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_brazil_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">brazil_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_brazil_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # weights:  20 (12 variable)</span></span>
-<span><span class="co">#&gt; initial  value 217901.798964 </span></span>
-<span><span class="co">#&gt; iter  10 value 68117.519899</span></span>
-<span><span class="co">#&gt; iter  20 value 38972.173600</span></span>
-<span><span class="co">#&gt; iter  30 value 38224.146018</span></span>
-<span><span class="co">#&gt; iter  40 value 37696.212812</span></span>
-<span><span class="co">#&gt; iter  50 value 37684.646795</span></span>
-<span><span class="co">#&gt; final  value 37684.553986 </span></span>
+<span><span class="co">#&gt; # weights:  24 (15 variable)</span></span>
+<span><span class="co">#&gt; initial  value 243039.629685 </span></span>
+<span><span class="co">#&gt; iter  10 value 64029.751788</span></span>
+<span><span class="co">#&gt; iter  20 value 42155.920995</span></span>
+<span><span class="co">#&gt; iter  30 value 38584.201193</span></span>
+<span><span class="co">#&gt; iter  40 value 38387.046268</span></span>
+<span><span class="co">#&gt; iter  50 value 38158.853795</span></span>
+<span><span class="co">#&gt; iter  60 value 38157.711830</span></span>
+<span><span class="co">#&gt; iter  70 value 38156.432271</span></span>
+<span><span class="co">#&gt; iter  80 value 38156.266483</span></span>
+<span><span class="co">#&gt; iter  90 value 38152.405882</span></span>
+<span><span class="co">#&gt; iter 100 value 38133.319249</span></span>
+<span><span class="co">#&gt; final  value 38131.586705 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">brazil_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Brazil by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span>, date_breaks <span class="op">=</span> <span class="st">"100 days"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/Brazil_animated_2021.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
@@ -259,14 +265,21 @@
 <span><span class="va">gisaid_brazil_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_brazil_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">brazil_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_brazil_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # weights:  12 (6 variable)</span></span>
-<span><span class="co">#&gt; initial  value 33904.273841 </span></span>
-<span><span class="co">#&gt; iter  10 value 19641.239613</span></span>
-<span><span class="co">#&gt; iter  20 value 18993.304042</span></span>
-<span><span class="co">#&gt; iter  30 value 18989.592419</span></span>
-<span><span class="co">#&gt; iter  40 value 18989.385555</span></span>
-<span><span class="co">#&gt; iter  40 value 18989.385495</span></span>
-<span><span class="co">#&gt; final  value 18989.385495 </span></span>
+<span><span class="co">#&gt; # weights:  16 (9 variable)</span></span>
+<span><span class="co">#&gt; initial  value 43133.162752 </span></span>
+<span><span class="co">#&gt; iter  10 value 20374.824379</span></span>
+<span><span class="co">#&gt; iter  20 value 19477.305821</span></span>
+<span><span class="co">#&gt; iter  30 value 19453.755576</span></span>
+<span><span class="co">#&gt; iter  40 value 19439.210892</span></span>
+<span><span class="co">#&gt; iter  50 value 19438.897712</span></span>
+<span><span class="co">#&gt; iter  60 value 19433.997843</span></span>
+<span><span class="co">#&gt; iter  70 value 19430.415310</span></span>
+<span><span class="co">#&gt; iter  80 value 19428.740063</span></span>
+<span><span class="co">#&gt; iter  90 value 19427.732245</span></span>
+<span><span class="co">#&gt; iter 100 value 19425.797350</span></span>
+<span><span class="co">#&gt; iter 110 value 19424.562085</span></span>
+<span><span class="co">#&gt; iter 120 value 19422.493999</span></span>
+<span><span class="co">#&gt; final  value 19421.847047 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">brazil_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Brazil by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/Brazil_animated_2023.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
@@ -288,17 +301,23 @@
 <span><span class="va">gisaid_brazil_weekwise</span> <span class="op">&lt;-</span> <span class="va">gisaid_brazil_weekwise</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lineage_collapsed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">voc_to_keep</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">brazil_cases_pred_prob_sel_long</span> <span class="op">&lt;-</span> <span class="fu">FitMultinomWeekly</span><span class="op">(</span><span class="va">gisaid_brazil_weekwise</span>, <span class="va">confirmed_subset_dateweekwise_long</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # weights:  12 (6 variable)</span></span>
-<span><span class="co">#&gt; initial  value 6014.902280 </span></span>
-<span><span class="co">#&gt; iter  10 value 2614.497681</span></span>
-<span><span class="co">#&gt; iter  20 value 2554.179438</span></span>
-<span><span class="co">#&gt; iter  30 value 2546.094236</span></span>
-<span><span class="co">#&gt; iter  40 value 2544.802563</span></span>
-<span><span class="co">#&gt; iter  50 value 2544.464767</span></span>
-<span><span class="co">#&gt; iter  60 value 2544.297783</span></span>
-<span><span class="co">#&gt; iter  60 value 2544.297759</span></span>
-<span><span class="co">#&gt; iter  60 value 2544.297759</span></span>
-<span><span class="co">#&gt; final  value 2544.297759 </span></span>
+<span><span class="co">#&gt; # weights:  16 (9 variable)</span></span>
+<span><span class="co">#&gt; initial  value 7940.694100 </span></span>
+<span><span class="co">#&gt; iter  10 value 3104.607446</span></span>
+<span><span class="co">#&gt; iter  20 value 2997.139077</span></span>
+<span><span class="co">#&gt; iter  30 value 2993.731269</span></span>
+<span><span class="co">#&gt; iter  40 value 2956.304024</span></span>
+<span><span class="co">#&gt; iter  50 value 2952.890843</span></span>
+<span><span class="co">#&gt; iter  60 value 2950.735702</span></span>
+<span><span class="co">#&gt; iter  70 value 2950.052341</span></span>
+<span><span class="co">#&gt; iter  80 value 2949.972461</span></span>
+<span><span class="co">#&gt; iter  90 value 2949.948498</span></span>
+<span><span class="co">#&gt; iter 100 value 2949.919800</span></span>
+<span><span class="co">#&gt; iter 110 value 2949.905345</span></span>
+<span><span class="co">#&gt; iter 120 value 2949.876499</span></span>
+<span><span class="co">#&gt; iter 130 value 2949.856253</span></span>
+<span><span class="co">#&gt; iter 140 value 2949.842265</span></span>
+<span><span class="co">#&gt; final  value 2949.839140 </span></span>
 <span><span class="co">#&gt; converged</span></span>
 <span><span class="va">the_anim</span> <span class="op">&lt;-</span> <span class="fu">PlotVariantPrevalenceAnimated</span><span class="op">(</span><span class="va">brazil_cases_pred_prob_sel_long</span>, title <span class="op">=</span> <span class="st">"Estimated cases (weekly average) in Brazil by variant"</span>, caption <span class="op">=</span> <span class="st">"**Source: gisaid.org and ourworldindata.org/coronavirus**&lt;br&gt;"</span><span class="op">)</span></span>
 <span><span class="fu">gganimate</span><span class="fu">::</span><span class="fu"><a href="https://gganimate.com/reference/anim_save.html" class="external-link">anim_save</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/articles/Brazil_animated_2024.gif"</span><span class="op">)</span>, animation <span class="op">=</span> <span class="va">the_anim</span><span class="op">)</span></span></code></pre></div>
