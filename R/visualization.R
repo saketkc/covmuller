@@ -243,7 +243,8 @@ PlotMullerDailyPrevalence <- function(df, ncol = 4) {
 #' @importFrom patchwork wrap_plots
 #' @export
 #'
-PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source: gisaid.org** <br>", colors = NULL, date_breaks = "14 days", trans_y = "identity") {
+PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source: gisaid.org** <br>",
+                                          colors = NULL, date_breaks = "14 days", trans_y = "identity") {
   if (!is.null(colors)) {
     color_values <- colors
   } else {
@@ -255,7 +256,8 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
   ) +
     geom_line() +
     scale_x_yearweek(date_breaks = date_breaks, date_labels = "%d %b %Y", guide = guide_axis(angle = 90)) +
-    scale_y_continuous(labels = label_number(accuracy = 1, scale_cut = cut_short_scale())) + # , trans = trans_y) +
+    scale_y_continuous(labels = label_number(accuracy = NULL, scale_cut = cut_short_scale())) + # , trans = trans_y) +
+    #scale_y_continuous(labels = label_number(accuracy = 1, scale_cut = cut_short_scale()), trans = trans_y) +
     geom_label(hjust = 0, aes(label = variant), nudge_x = 10, show.legend = FALSE) +
     geom_point() +
     coord_cartesian(ylim = c(0, NA), clip = "off") +
@@ -269,7 +271,7 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
       caption = paste0(caption, Sys.Date())
     ) +
     theme(legend.position = "bottom", axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
-  anim <- the_anim + transition_reveal(Date) + view_follow(fixed_y = c(0, NA), fixed_x = T)
+  anim <- the_anim + transition_reveal(Date) + view_follow(fixed_y = T, fixed_x = T)
   anim <- animate(anim, renderer = gifski_renderer(), height = 900, width = 1100, res = 150, nframes = 300, rewind = T, end_pause = 30)
   return(anim)
 }

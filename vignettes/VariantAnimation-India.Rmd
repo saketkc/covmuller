@@ -38,7 +38,16 @@ custom_voc_mapping <- list(
   `JN.1` = "JN.1",
   `JN.1.*` = "JN.1",
   `HV.1` = "HV.1",
-  `HV.1.*` = "HV.1"
+  `HV.1.*` = "HV.1",
+  "B.1" = "B.1",
+  "B.1.1.306*" = "B.1",
+  "B.1.1.326" = "B.1",
+  "B.1.36.29" =  "B.1",
+  "B.1.560" = "B.1",
+  "B.1.1" =  "B.1",
+  "B.1.210" = "B.1",
+  "B.1.36.8" = "B.1",
+  "B.1.36." = "B.1"
 )
 gisaid_india <- gisaid_india %>%
   filter(pangolin_lineage != "None") %>%
@@ -111,13 +120,13 @@ gisaid_india_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
 voc_to_keep <- gisaid_india_weekwise %>%
   group_by(lineage_collapsed) %>%
   summarise(n_sum = sum(n)) %>%
-  filter(n_sum > 50) %>%
+  filter(n_sum > 10) %>%
   pull(lineage_collapsed) %>%
   unique()
 gisaid_india_weekwise <- gisaid_india_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
 
 india_cases_pred_prob_sel_long <- FitMultinomWeekly(gisaid_india_weekwise, confirmed_subset_dateweekwise_long_india)
-the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**", date_breaks = "120 days") # , trans_y="log10")
+the_anim <- PlotVariantPrevalenceAnimated(india_cases_pred_prob_sel_long, title = "Estimated cases (weekly average) in India by variant", caption = "**Source: gisaid.org and ourworldindata.org/coronavirus**", date_breaks = "120 days")
 gganimate::anim_save(filename = here::here("docs/articles/IN_animated.gif"), animation = the_anim)
 ```
 ![](IN_animated.gif)
@@ -135,7 +144,7 @@ gisaid_weekwise <- SummarizeVariantsWeekwise(gisaid_india)
 voc_to_keep <- gisaid_weekwise %>%
   group_by(lineage_collapsed) %>%
   summarise(n_sum = sum(n)) %>%
-  filter(n_sum > 50) %>%
+  filter(n_sum > 10) %>%
   pull(lineage_collapsed) %>%
   unique()
 gisaid_weekwise <- gisaid_weekwise %>% filter(lineage_collapsed %in% voc_to_keep)
