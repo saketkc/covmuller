@@ -257,7 +257,7 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
     geom_line() +
     scale_x_yearweek(date_breaks = date_breaks, date_labels = "%d %b %Y", guide = guide_axis(angle = 90)) +
     scale_y_continuous(labels = label_number(accuracy = NULL, scale_cut = cut_short_scale())) + # , trans = trans_y) +
-    #scale_y_continuous(labels = label_number(accuracy = 1, scale_cut = cut_short_scale()), trans = trans_y) +
+    # scale_y_continuous(labels = label_number(accuracy = 1, scale_cut = cut_short_scale()), trans = trans_y) +
     geom_label(hjust = 0, aes(label = variant), nudge_x = 10, show.legend = FALSE) +
     geom_point() +
     coord_cartesian(ylim = c(0, NA), clip = "off") +
