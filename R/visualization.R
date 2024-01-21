@@ -250,7 +250,11 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
     color_values <- colors
   } else {
     color_values <- as.character(x = paletteer::paletteer_d("ggsci::default_igv"))
+    color_values <- as.character(x = paletteer::paletteer_d("ggsci::category20_d3"))
   }
+  color_values <- setdiff(color_values, "#7F7F7FFF")
+  color_values <- as.character(ggsci::pal_npg("nrc")(10))
+  color_values <- color_values[sapply(color_values, KeepNonYellow)]
   the_anim <- ggplot(
     df,
     aes(x = WeekYearCollected, color = variant, y = value, group = variant)
@@ -273,6 +277,12 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
     ) +
     theme(legend.position = "bottom", axis.title.y = element_text(margin = margin(t = 0, r = 20, b = 0, l = 0)))
   anim <- the_anim + transition_reveal(Date) + view_follow(fixed_y = T, fixed_x = T)
-  anim <- animate(anim, renderer = gifski_renderer(), height = 900, width = 1100, res = 150, nframes = 300, rewind = T, end_pause = 30)
+  anim <- animate(anim,
+    renderer = gifski_renderer(), height = 900, width = 1100,
+    fps = 10, duration = 12,
+    res = 150,
+    # nframes = 100,
+    rewind = F, end_pause = 10
+  )
   return(anim)
 }

@@ -499,3 +499,24 @@ TotalSequencesPerMonthCountrywise <- function(variant_df, rename_country_as_stat
   }
   return(df)
 }
+
+
+KeepNonYellow <- function(hex_color) {
+  rgb.array <- col2rgb(hex_color)
+
+  # Convert hex color code to RGB values
+  r <- rgb.array[1, ]
+  g <- rgb.array[2, ]
+  b <- rgb.array[3, ]
+
+
+  # Define thresholds for yellow-like colors (adjust as needed)
+  r_threshold <- 200
+  g_threshold <- 190
+  b_threshold <- 150
+
+  # Check if the color is yellow-like
+  is_yellow_like <- (r > r_threshold) && (g > g_threshold) && (b < b_threshold)
+
+  return(!is_yellow_like)
+}
