@@ -14,7 +14,8 @@ CovmullerTheme <- function() {
     panel.grid.minor.x = element_blank(),
     panel.border = element_blank(),
     strip.text.x = element_text(size = 12, face = "bold", hjust = 0, color = "#225ea8"),
-    strip.background = element_blank()
+    strip.background = element_blank(),
+    plot.background = element_rect(colour = "white")
   )
   return(themex)
 }
