@@ -279,10 +279,11 @@ PlotVariantPrevalenceAnimated <- function(df, title = NULL, caption = "**Source:
   anim <- the_anim + transition_reveal(Date) + view_follow(fixed_y = T, fixed_x = T)
   anim <- animate(anim,
     renderer = gifski_renderer(), height = 900, width = 1100,
-    fps = 10, duration = 12,
+    fps = 10,
+    duration = 6,
     res = 150,
     # nframes = 100,
-    rewind = F, end_pause = 10
+    rewind = F, end_pause = 5
   )
   return(anim)
 }
