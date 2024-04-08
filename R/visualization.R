@@ -114,7 +114,7 @@ PlotSequencedPropHeatmap <- function(df) {
 #' @importFrom magrittr %>%
 #' @importFrom tibble deframe
 #' @importFrom ggplot2 aes_string coord_cartesian ggplot geom_bar geom_text labs scale_y_continuous scale_x_discrete xlab ylab guide_axis position_dodge
-#' @importFrom scales comma label_percent label_number cut_short_scale
+#' @importFrom scales append comma label_percent label_number cut_short_scale
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
@@ -150,7 +150,7 @@ BarPlot <- function(df, xaxis = "MonthYear",
         size = 3
       )
     } else {
-      df[, paste0(yaxis, "_acc")] <- label_number(accuracy = 1, scale_cut = cut_short_scale())(values)
+      df[, paste0(yaxis, "_acc")] <- label_number(accuracy = 1, scale_cut = append(cut_short_scale(), 1, 1))(values)
       p <- p + geom_text(
         data = df,
         mapping = aes_string(
@@ -180,7 +180,7 @@ BarPlot <- function(df, xaxis = "MonthYear",
       size = 3
     )
   }
-  p <- p + scale_y_continuous(labels = label_number(accuracy = 1, scale_cut = cut_short_scale())) +
+  p <- p + scale_y_continuous(labels = label_number(accuracy = 1, scale_cut = append(cut_short_scale(), 1, 1))) +
     scale_x_discrete(guide = guide_axis(angle = xangle)) +
     xlab("") +
     ylab(ylabel) +
