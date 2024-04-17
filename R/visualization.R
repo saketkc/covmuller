@@ -114,7 +114,7 @@ PlotSequencedPropHeatmap <- function(df) {
 #' @importFrom magrittr %>%
 #' @importFrom tibble deframe
 #' @importFrom ggplot2 aes_string coord_cartesian ggplot geom_bar geom_text labs scale_y_continuous scale_x_discrete xlab ylab guide_axis position_dodge
-#' @importFrom scales append comma label_percent label_number cut_short_scale
+#' @importFrom scales comma label_percent label_number cut_short_scale
 #' @importFrom ggtext element_markdown
 #' @importFrom patchwork wrap_plots
 #' @export
